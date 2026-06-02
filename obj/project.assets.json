@@ -14,9 +14,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Vishal\\source\\repos\\LocalHiringPlatform\\LocalHiringPlatform.csproj",
-      "projectName": "LocalHiringPlatform",
-      "projectPath": "C:\\Users\\Vishal\\source\\repos\\LocalHiringPlatform\\LocalHiringPlatform.csproj",
+      "projectUniqueName": "C:\\Users\\Vishal\\source\\repos\\LocalHiringPlatform\\Frontend.csproj",
+      "projectName": "Frontend",
+      "projectPath": "C:\\Users\\Vishal\\source\\repos\\LocalHiringPlatform\\Frontend.csproj",
       "packagesPath": "C:\\Users\\Vishal\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\Vishal\\source\\repos\\LocalHiringPlatform\\obj\\",
       "projectStyle": "PackageReference",
