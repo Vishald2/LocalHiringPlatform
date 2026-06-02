@@ -1,0 +1,47 @@
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+.vscode/
+
+# Build folders
+bin/
+obj/
+
+# NuGet
+*.nupkg
+packages/
+project.lock.json
+project.fragment.lock.json
+
+# Rider
+.idea/
+
+# DotNet local
+*.pidb
+*.pdb
+*.mdb
+
+# Visual Studio Code workspace
+*.code-workspace
+
+# SQLite, VS workspace files
+*.sqlite
+*.db
+
+# VS FileContentIndex & copilot chat cache
+.vs/*/FileContentIndex/
+.vs/*/copilot-chat/
+.vs/*/v*/.wsuo
+
+# Release folder
+obj/Release/
+
+# Other
+*.log
+
+# Ignore Rider and ReSharper files
+_ReSharper*/
+*.DotSettings.user

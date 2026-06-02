@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("LocalHiringPlatform")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7957e39af7534afb049f20195f14ac981c64e576")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3fb41c5c6fabc1c24cb5e66dd74c39dee36f8f23")]
 [assembly: System.Reflection.AssemblyProductAttribute("LocalHiringPlatform")]
 [assembly: System.Reflection.AssemblyTitleAttribute("LocalHiringPlatform")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
