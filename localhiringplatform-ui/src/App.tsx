@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
-import RegisterPage from "./pages/RegisterPage";
+import RegisterPage from "./pages/CandidateRegisterPage";
 import CandidateDashboardPage from "./pages/candidate/CandidateDashboardPage";
 import CandidateProfilePage from "./pages/candidate/CandidateProfilePage";
 import MyApplicationsPage from "./pages/candidate/MyApplicationsPage";
@@ -10,6 +10,8 @@ import CompanyProfilePage from "./pages/employer/CompanyProfilePage";
 import EmployerDashboardPage from "./pages/employer/EmployerDashboardPage";
 import JobsPage from "./pages/JobsPage";
 import MainLayout from "./layouts/MainLayout";
+import type { CandidateRegisterRequest } from "./types/CandidateRegisterRequest";
+import CandidateRegisterPage from "./pages/CandidateRegisterPage";
 
 
 function App() {
@@ -28,6 +30,8 @@ function App() {
                     <Route path="/eprofile" element={<CompanyProfilePage />} />
                     <Route path="/edashboard" element={<EmployerDashboardPage />} />
                     <Route path="/ejobs" element={<JobsPage />} />
+                    <Route path="/candidate/register" element={<CandidateRegisterPage />}
+                    />
                 </Route>
             </Routes>
         </BrowserRouter>
