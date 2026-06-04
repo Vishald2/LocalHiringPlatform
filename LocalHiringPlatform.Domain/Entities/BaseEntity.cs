@@ -1,10 +1,13 @@
-﻿namespace LocalHiringPlatform.Domain.Entities
-{
-    public class BaseEntity
-    {
-        public Guid EntityId { get; set; }
-        public DateTime CreatedOn { get; set; }
+﻿using System.ComponentModel.DataAnnotations;
 
-        public DateTime UpdatedOn { get; set; }
-    }
+namespace LocalHiringPlatform.Domain.Entities;
+
+public abstract class BaseEntity
+{
+    [Key]
+    public Guid EntityId { get; set; } = Guid.NewGuid();
+
+    public DateTime CreatedOn { get; set; } = DateTime.UtcNow;
+
+    public DateTime UpdatedOn { get; set; } = DateTime.UtcNow;
 }

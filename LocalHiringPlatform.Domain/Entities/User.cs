@@ -1,11 +1,8 @@
-﻿using LocalHiringPlatform.Domain.Enums;
+﻿using LocalHiringPlatform.Domain.Entities;
+using LocalHiringPlatform.Domain.Enums;
 
-namespace LocalHiringPlatform.Domain.Entities;
-
-public class User:BaseEntity
+public class User : BaseEntity
 {
-    public Guid Id { get; set; }
-
     public string Email { get; set; } = string.Empty;
 
     public string MobileNumber { get; set; } = string.Empty;
@@ -15,4 +12,5 @@ public class User:BaseEntity
     public UserRole Role { get; set; }
 
     public bool IsActive { get; set; } = true;
+    public CandidateProfile? CandidateProfile { get; set; }
 }

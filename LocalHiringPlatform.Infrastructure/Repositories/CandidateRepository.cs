@@ -1,12 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using LocalHiringPlatform.Domain.Entities;
+using LocalHiringPlatform.Domain.Interfaces;
+using LocalHiringPlatform.Infrastructure.Data;
 
-namespace LocalHiringPlatform.Infrastructure.Repositories
+namespace LocalHiringPlatform.Infrastructure.Repositories;
+
+public class CandidateProfileRepository
+    : ICandidateProfileRepository
 {
-    internal class CandidateRepository
+    private readonly ApplicationDbContext _dbContext;
+
+    public CandidateProfileRepository(
+        ApplicationDbContext dbContext)
     {
+        _dbContext = dbContext;
+    }
+
+    public async Task AddAsync(
+        CandidateProfile profile)
+    {
+        _dbContext.CandidateProfiles.Add(profile);
+
+        await _dbContext.SaveChangesAsync();
     }
 }

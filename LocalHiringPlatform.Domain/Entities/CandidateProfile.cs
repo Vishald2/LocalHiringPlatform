@@ -1,9 +1,7 @@
-﻿namespace LocalHiringPlatform.Domain.Entities;
+﻿using LocalHiringPlatform.Domain.Entities;
 
-public class CandidateProfile:BaseEntity
+public class CandidateProfile : BaseEntity
 {
-    public Guid Id { get; set; }
-
     public Guid UserId { get; set; }
 
     public string FullName { get; set; } = string.Empty;
@@ -29,4 +27,5 @@ public class CandidateProfile:BaseEntity
     public int ProfileCompletionPercentage { get; set; }
 
     public bool IsOpenToWork { get; set; } = true;
+    public User User { get; set; } = null!;
 }

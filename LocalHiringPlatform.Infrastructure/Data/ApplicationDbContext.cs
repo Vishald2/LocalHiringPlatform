@@ -15,13 +15,21 @@ public class ApplicationDbContext : DbContext
 
     public DbSet<CandidateProfile> CandidateProfiles => Set<CandidateProfile>();
 
-    public DbSet<CandidateSkill> CandidateSkills => Set<CandidateSkill>();
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
 
-    public DbSet<CandidateEducation> CandidateEducations => Set<CandidateEducation>();
+        modelBuilder.Entity<User>()
+            .HasIndex(x => x.Email)
+            .IsUnique();
 
-    public DbSet<CandidateExperience> CandidateExperiences => Set<CandidateExperience>();
+        modelBuilder.Entity<User>()
+            .HasIndex(x => x.MobileNumber)
+            .IsUnique();
 
-    public DbSet<CandidateResume> CandidateResumes => Set<CandidateResume>();
-
-    public DbSet<Skill> Skills => Set<Skill>();
+        modelBuilder.Entity<User>()
+            .HasOne(x => x.CandidateProfile)
+            .WithOne(x => x.User)
+            .HasForeignKey<CandidateProfile>(x => x.UserId);
+    }
 }
