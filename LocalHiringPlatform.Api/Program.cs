@@ -37,9 +37,21 @@ builder.Services.AddScoped<
     IAuthService,
 
     AuthService>();
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(
+        "ReactPolicy",
+        policy =>
+        {
+            policy
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowAnyOrigin();
+        });
+});
+
 var app = builder.Build();
-
-
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -47,6 +59,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+
+app.UseCors("ReactPolicy");
 
 app.UseAuthorization();
 

@@ -48,7 +48,27 @@ export default function CandidateRegisterPage() {
             return;
         }
 
-        await registerCandidate(form);
+        try {
+
+            // await registerCandidate(form);
+            await registerCandidate({
+                fullName: form.fullName,
+                email: form.email,
+                mobileNumber: form.mobileNumber,
+                password: form.password
+            });
+
+            alert(
+                "Candidate registered successfully");
+
+        }
+        catch (error) {
+
+            console.error(error);
+
+            alert(
+                "Registration failed");
+        }
     }
     function validateForm() {
 
