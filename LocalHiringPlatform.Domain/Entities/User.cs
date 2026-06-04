@@ -2,7 +2,7 @@
 
 namespace LocalHiringPlatform.Domain.Entities;
 
-public class User
+public class User:BaseEntity
 {
     public Guid Id { get; set; }
 
@@ -15,7 +15,4 @@ public class User
     public UserRole Role { get; set; }
 
     public bool IsActive { get; set; } = true;
-
-    public DateTime CreatedOn { get; set; }
-    public DateTime UpdatedOn { get; set; }
 }

@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace LocalHiringPlatform.Domain.Interfaces
+﻿namespace LocalHiringPlatform.Domain.Interfaces
 {
-    internal class IAuthService
+    public interface IAuthService
     {
+        Task RegisterCandidateAsync(
+            string fullName,
+            string email,
+            string mobileNumber,
+            string password);
     }
 }

@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using LocalHiringPlatform.Domain.Entities;
 
-namespace LocalHiringPlatform.Domain.Interfaces
+namespace LocalHiringPlatform.Domain.Interfaces;
+
+public interface IUserRepository
 {
-    internal class IUserRepository
-    {
-    }
+    Task AddAsync(User user);
+
+    Task<User?> GetByEmailAsync(string email);
+
+    Task<User?> GetByMobileAsync(string mobileNumber);
 }

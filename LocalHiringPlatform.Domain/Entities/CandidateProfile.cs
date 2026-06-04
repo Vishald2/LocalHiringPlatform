@@ -1,6 +1,6 @@
 ﻿namespace LocalHiringPlatform.Domain.Entities;
 
-public class CandidateProfile
+public class CandidateProfile:BaseEntity
 {
     public Guid Id { get; set; }
 
@@ -29,8 +29,4 @@ public class CandidateProfile
     public int ProfileCompletionPercentage { get; set; }
 
     public bool IsOpenToWork { get; set; } = true;
-
-    public DateTime CreatedOn { get; set; }
-
-    public DateTime UpdatedOn { get; set; }
 }
