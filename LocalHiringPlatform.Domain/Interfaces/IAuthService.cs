@@ -1,11 +1,9 @@
-﻿namespace LocalHiringPlatform.Domain.Interfaces
+﻿using LocalHiringPlatform.Domain.Models;
+
+namespace LocalHiringPlatform.Domain.Interfaces;
+
+public interface IAuthService
 {
-    public interface IAuthService
-    {
-        Task RegisterCandidateAsync(
-            string fullName,
-            string email,
-            string mobileNumber,
-            string password);
-    }
+    Task RegisterCandidateAsync(
+        RegisterCandidateModel model);
 }
