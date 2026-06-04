@@ -9,6 +9,7 @@
   <ItemGroup>
     <ProjectReference Include="..\LocalHiringPlatform.Domain\LocalHiringPlatform.Domain.csproj" />
     <ProjectReference Include="..\LocalHiringPlatform.Infrastructure\LocalHiringPlatform.Infrastructure.csproj" />
+    <ProjectReference Include="..\UI\UI.csproj" />
   </ItemGroup>
 
 </Project>
