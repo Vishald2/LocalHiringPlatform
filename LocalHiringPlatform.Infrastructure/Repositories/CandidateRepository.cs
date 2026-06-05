@@ -19,7 +19,5 @@ public class CandidateProfileRepository
         CandidateProfile profile)
     {
         _dbContext.CandidateProfiles.Add(profile);
-
-        await _dbContext.SaveChangesAsync();
     }
 }

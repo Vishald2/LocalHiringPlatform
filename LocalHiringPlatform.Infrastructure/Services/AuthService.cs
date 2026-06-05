@@ -31,8 +31,7 @@ public class AuthService : IAuthService
 
         if (existingEmail != null)
         {
-            throw new BusinessException(
-                "Email already exists");
+            throw new BusinessException("Email already exists");
         }
 
         var existingMobile =
@@ -41,8 +40,7 @@ public class AuthService : IAuthService
 
         if (existingMobile != null)
         {
-            throw new BusinessException(
-                "Mobile number already exists");
+            throw new BusinessException("Mobile number already exists");
         }
 
         var user = new User
