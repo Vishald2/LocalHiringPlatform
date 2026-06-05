@@ -68,4 +68,30 @@ public class AuthService : IAuthService
 
         await _unitOfWork.SaveChangesAsync();
     }
+
+    public async Task LoginAsync(
+    LoginModel model)
+    {
+        var user =
+            await _userRepository
+                .GetByEmailOrMobileAsync(
+                    model.EmailOrMobile);
+
+        if (user == null)
+        {
+            throw new BusinessException(
+                "Invalid credentials");
+        }
+
+        bool passwordValid =
+            BCrypt.Net.BCrypt.Verify(
+                model.Password,
+                user.PasswordHash);
+
+        if (!passwordValid)
+        {
+            throw new BusinessException(
+                "Invalid credentials");
+        }
+    }
 }

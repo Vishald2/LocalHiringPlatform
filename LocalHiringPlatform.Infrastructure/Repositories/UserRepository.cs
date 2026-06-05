@@ -36,4 +36,13 @@ public class UserRepository : IUserRepository
             .FirstOrDefaultAsync(
                 x => x.MobileNumber == mobileNumber);
     }
+    public async Task<User?> GetByEmailOrMobileAsync(
+    string emailOrMobile)
+    {
+        return await _dbContext.Users
+            .FirstOrDefaultAsync(
+                x =>
+                    x.Email == emailOrMobile ||
+                    x.MobileNumber == emailOrMobile);
+    }
 }
