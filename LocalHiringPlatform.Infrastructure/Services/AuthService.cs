@@ -49,8 +49,7 @@ public class AuthService : IAuthService
             Email = model.Email,
             MobileNumber = model.MobileNumber,
 
-            // Temporary
-            PasswordHash = model.Password,
+            PasswordHash =  BCrypt.Net.BCrypt.HashPassword(model.Password),
 
             Role = UserRole.Candidate
         };
