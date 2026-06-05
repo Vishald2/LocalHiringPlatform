@@ -1,4 +1,5 @@
 using LocalHiringPlatform.Domain.Interfaces;
+using LocalHiringPlatform.Domain.Models;
 using LocalHiringPlatform.Infrastructure;
 using LocalHiringPlatform.Infrastructure.Data;
 using LocalHiringPlatform.Infrastructure.Repositories;
@@ -50,6 +51,13 @@ builder.Services.AddCors(options =>
                 .AllowAnyOrigin();
         });
 });
+
+builder.Services.Configure<JwtSettings>(
+    builder.Configuration.GetSection("Jwt"));
+
+builder.Services.AddScoped<
+    IJwtTokenService,
+    JwtTokenService>();
 
 var app = builder.Build();
 

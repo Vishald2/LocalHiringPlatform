@@ -6,5 +6,6 @@ public interface IAuthService
 {
     Task RegisterCandidateAsync(
         RegisterCandidateModel model);
-    Task LoginAsync(LoginModel model);
+    Task<string> LoginAsync(
+     LoginModel model);
 }

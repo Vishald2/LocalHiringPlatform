@@ -68,12 +68,11 @@ public class AuthController : ControllerBase
                     request.Password
             };
 
-            await _authService.LoginAsync(
-                model);
+            var token = await _authService.LoginAsync(model);
 
             return Ok(new
             {
-                Message = "Login successful"
+                Token = token
             });
         }
         catch (BusinessException ex)

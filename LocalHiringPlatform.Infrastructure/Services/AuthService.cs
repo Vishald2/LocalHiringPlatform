@@ -12,14 +12,18 @@ public class AuthService : IAuthService
     private readonly ICandidateProfileRepository _candidateProfileRepository;
     private readonly IUnitOfWork _unitOfWork;
 
+    private readonly IJwtTokenService _jwtTokenService;
+
     public AuthService(
         IUserRepository userRepository,
         ICandidateProfileRepository candidateProfileRepository,
-        IUnitOfWork unitOfWork)
+        IUnitOfWork unitOfWork,
+        IJwtTokenService jwtTokenService)
     {
         _userRepository = userRepository;
         _candidateProfileRepository = candidateProfileRepository;
         _unitOfWork = unitOfWork;
+        _jwtTokenService = jwtTokenService;
     }
 
     public async Task RegisterCandidateAsync(
@@ -67,8 +71,8 @@ public class AuthService : IAuthService
         await _unitOfWork.SaveChangesAsync();
     }
 
-    public async Task LoginAsync(
-    LoginModel model)
+    public async Task<string> LoginAsync(
+     LoginModel model)
     {
         var user =
             await _userRepository
@@ -91,5 +95,8 @@ public class AuthService : IAuthService
             throw new BusinessException(
                 "Invalid credentials");
         }
+
+        return _jwtTokenService
+            .GenerateToken(user);
     }
 }
