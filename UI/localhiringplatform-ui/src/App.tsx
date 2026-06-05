@@ -10,17 +10,15 @@ import CompanyProfilePage from "./pages/employer/CompanyProfilePage";
 import EmployerDashboardPage from "./pages/employer/EmployerDashboardPage";
 import JobsPage from "./pages/JobsPage";
 import MainLayout from "./layouts/MainLayout";
-import type { CandidateRegisterRequest } from "./types/CandidateRegisterRequest";
 import CandidateRegisterPage from "./pages/CandidateRegisterPage";
-
-
+import ProtectedRoute from "./components/ProtectedRoute";
+import DashboardPage from "./pages/DashboardPage";
 function App() {
     return (
         <BrowserRouter>
             <Routes>
                 <Route element={<MainLayout />}>
                     <Route path="/" element={<HomePage />} />
-                    <Route path="/login" element={<LoginPage />} />
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/register" element={<RegisterPage />} />
                     <Route path="/cdashboard" element={<CandidateDashboardPage />} />
@@ -30,7 +28,14 @@ function App() {
                     <Route path="/eprofile" element={<CompanyProfilePage />} />
                     <Route path="/edashboard" element={<EmployerDashboardPage />} />
                     <Route path="/ejobs" element={<JobsPage />} />
-                    <Route path="/candidate/register" element={<CandidateRegisterPage />}
+                    <Route path="/candidate/register" element={<CandidateRegisterPage />}/>
+                    <Route
+                        path="/dashboard"
+                        element={
+                            <ProtectedRoute>
+                                <DashboardPage />
+                            </ProtectedRoute>
+                        }
                     />
                 </Route>
             </Routes>
