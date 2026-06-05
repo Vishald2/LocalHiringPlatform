@@ -6,8 +6,6 @@ export async function registerCandidate(
     request: RegisterCandidateApiRequest
 ): Promise<void> {
 
-
-    console.log(`${API_BASE_URL}/api/auth/register-candidate`);
     const response = await fetch(
         `${API_BASE_URL}/api/auth/register-candidate`,
         {
@@ -21,8 +19,8 @@ export async function registerCandidate(
     if (!response.ok) {
 
         const errorText =
-            await response.text();
+            await response.json();
 
-        throw new Error(errorText);
+        throw new Error(errorText.message);
     }
 }

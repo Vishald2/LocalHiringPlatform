@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import type { CandidateRegisterRequest } from "../types/CandidateRegisterRequest";
 import type { CandidateRegisterErrors } from "../types/CandidateRegisterErrors";
 import "../styles/CandidateRegisterPage.css";
-import { registerCandidate }  from "../services/AuthService";
+import { registerCandidate } from "../services/AuthService";
+import { useNavigate } from "react-router-dom";
 
 export default function CandidateRegisterPage() {
 
@@ -29,6 +30,8 @@ export default function CandidateRegisterPage() {
             confirmPassword: "",
             acceptTerms: ""
         });
+
+    const navigate = useNavigate();
 
     function handleInputChange(
         field: keyof CandidateRegisterRequest,
@@ -61,13 +64,12 @@ export default function CandidateRegisterPage() {
             alert(
                 "Candidate registered successfully");
 
+            navigate("/login");
         }
         catch (error) {
-
-            console.error(error);
-
-            alert(
-                "Registration failed");
+            if (error instanceof Error) {
+                alert(error.message);
+            }
         }
     }
     function validateForm() {

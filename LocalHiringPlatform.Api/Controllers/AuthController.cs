@@ -1,4 +1,5 @@
 ﻿using LocalHiringPlatform.Api.DTOs;
+using LocalHiringPlatform.Domain.Exceptions;
 using LocalHiringPlatform.Domain.Interfaces;
 using LocalHiringPlatform.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -22,20 +23,33 @@ public class AuthController : ControllerBase
         RegisterCandidate(
             RegisterCandidateRequest request)
     {
-        var model = new RegisterCandidateModel
+        try
         {
-            FullName = request.FullName,
-            Email = request.Email,
-            MobileNumber = request.MobileNumber,
-            Password = request.Password
-        };
+            var model =
+                new RegisterCandidateModel
+                {
+                    FullName = request.FullName,
+                    Email = request.Email,
+                    MobileNumber =
+                        request.MobileNumber,
+                    Password = request.Password
+                };
 
-        await _authService
-            .RegisterCandidateAsync(model);
+            await _authService
+                .RegisterCandidateAsync(model);
 
-        return Ok(new
+            return Ok(new
+            {
+                Message =
+                    "Candidate registered successfully"
+            });
+        }
+        catch (BusinessException ex)
         {
-            Message = "Candidate registered successfully"
-        });
+            return BadRequest(new
+            {
+                Message = ex.Message
+            });
+        }
     }
 }

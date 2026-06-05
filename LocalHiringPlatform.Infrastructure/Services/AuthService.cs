@@ -1,5 +1,6 @@
 ﻿using LocalHiringPlatform.Domain.Entities;
 using LocalHiringPlatform.Domain.Enums;
+using LocalHiringPlatform.Domain.Exceptions;
 using LocalHiringPlatform.Domain.Interfaces;
 using LocalHiringPlatform.Domain.Models;
 
@@ -30,7 +31,7 @@ public class AuthService : IAuthService
 
         if (existingEmail != null)
         {
-            throw new Exception(
+            throw new BusinessException(
                 "Email already exists");
         }
 
@@ -40,7 +41,7 @@ public class AuthService : IAuthService
 
         if (existingMobile != null)
         {
-            throw new Exception(
+            throw new BusinessException(
                 "Mobile number already exists");
         }
 
