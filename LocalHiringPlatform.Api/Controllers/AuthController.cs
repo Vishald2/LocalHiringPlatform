@@ -70,9 +70,10 @@ public class AuthController : ControllerBase
 
             var token = await _authService.LoginAsync(model);
 
-            return Ok(new
+            return Ok(new LoginResponse
             {
-                Token = token
+                Token = token,
+                Role = "Candidate"
             });
         }
         catch (BusinessException ex)
