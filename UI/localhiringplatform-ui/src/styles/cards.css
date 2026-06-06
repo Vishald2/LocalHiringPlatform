@@ -1,0 +1,99 @@
+﻿/* Base Card */
+
+.card {
+    background-color: var(--surface-color);
+    border-radius: var(--border-radius-large);
+    box-shadow: var(--shadow-small);
+    padding: var(--spacing-lg);
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+    .card:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-medium);
+    }
+
+/* Card Header */
+
+.card-header {
+    margin-bottom: var(--spacing-md);
+}
+
+/* Card Title */
+
+.card-title {
+    margin: 0;
+    color: var(--text-primary-color);
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+/* Card Subtitle */
+
+.card-subtitle {
+    margin-top: var(--spacing-xs);
+    color: var(--text-secondary-color);
+    font-size: 0.9rem;
+}
+
+/* Card Body */
+
+.card-body {
+    margin-top: var(--spacing-md);
+}
+
+/* Card Footer */
+
+.card-footer {
+    margin-top: var(--spacing-lg);
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--spacing-sm);
+}
+
+/* Job Card */
+
+.job-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.job-company {
+    color: var(--text-secondary-color);
+    font-size: 0.9rem;
+}
+
+.job-location {
+    color: var(--text-secondary-color);
+    font-size: 0.9rem;
+}
+
+.job-salary {
+    color: var(--success-color);
+    font-weight: 600;
+}
+
+/* Statistics Card */
+
+.stat-card {
+    text-align: center;
+}
+
+.stat-number {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.stat-label {
+    color: var(--text-secondary-color);
+}
+
+/* Profile Card */
+
+.profile-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}

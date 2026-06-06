@@ -41,44 +41,74 @@ export default function LoginPage() {
     }
 
     return (
-        <div>
-            <h2>Candidate Login</h2>
+        <div className="center-page">
 
-            <div>
-                <label>Email or Mobile</label>
+            <div className="form-card">
 
-                <input
-                    type="text"
-                    value={form.emailOrMobile}
-                    onChange={(e) =>
-                        setForm({
-                            ...form,
-                            emailOrMobile: e.target.value
-                        })
-                    }
-                />
+                <h2 className="form-title">
+                    Candidate Login
+                </h2>
+
+                <div className="form-group">
+
+                    <label className="form-label">
+                        Email or Mobile
+                    </label>
+
+                    <input
+                        className="form-control"
+                        type="text"
+                        value={form.emailOrMobile}
+                        onChange={(e) =>
+                            setForm({
+                                ...form,
+                                emailOrMobile: e.target.value
+                            })
+                        }
+                    />
+                </div>
+
+                <div className="form-group">
+
+                    <label className="form-label">
+                        Password
+                    </label>
+
+                    <input
+                        className="form-control"
+                        type="password"
+                        value={form.password}
+                        onChange={(e) =>
+                            setForm({
+                                ...form,
+                                password: e.target.value
+                            })
+                        }
+                    />
+                </div>
+
+                <button
+                    className="primary-button"
+                    onClick={handleLogin}>
+                    Login
+                </button>
+
+                <div className="form-footer">
+
+                    <span>
+                        Don't have an account?
+                    </span>
+
+                    <br />
+
+                    <a href="/register">
+                        Register Here
+                    </a>
+
+                </div>
+
             </div>
 
-            <div>
-                <label>Password</label>
-
-                <input
-                    type="password"
-                    value={form.password}
-                    onChange={(e) =>
-                        setForm({
-                            ...form,
-                            password: e.target.value
-                        })
-                    }
-                />
-            </div>
-
-            <button
-                type="button"
-                onClick={handleLogin}>
-                Login
-            </button>
         </div>
     );
 }

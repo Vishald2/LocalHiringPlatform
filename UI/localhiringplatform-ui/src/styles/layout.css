@@ -1,0 +1,124 @@
+﻿/* Page Container */
+
+.page-container {
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding: var(--spacing-lg);
+}
+
+/* Full Width Container */
+
+.page-container-fluid {
+    width: 100%;
+    padding: var(--spacing-lg);
+}
+
+/* Center Page */
+
+.center-page {
+    min-height: calc(100vh - var(--navbar-height));
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Vertical Stack */
+
+.stack {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+/* Horizontal Stack */
+
+.inline-stack {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+/* Flex Row */
+
+.flex-row {
+    display: flex;
+}
+
+/* Flex Column */
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Space Between */
+
+.space-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Center Content */
+
+.flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Grid Layout */
+
+.grid {
+    display: grid;
+    gap: var(--spacing-lg);
+}
+
+/* Two Column Grid */
+
+.grid-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-lg);
+}
+
+/* Three Column Grid */
+
+.grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-lg);
+}
+
+/* Four Column Grid */
+
+.grid-4 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing-lg);
+}
+
+/* Responsive */
+
+@media (max-width: 768px) {
+
+    .grid-2,
+    .grid-3,
+    .grid-4 {
+        grid-template-columns: 1fr;
+    }
+
+    .page-container {
+        padding: var(--spacing-md);
+    }
+}
+
+.app-layout {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.app-content {
+    flex: 1;
+}
