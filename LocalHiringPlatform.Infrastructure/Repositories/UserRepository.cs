@@ -18,8 +18,6 @@ public class UserRepository : IUserRepository
     public async Task AddAsync(User user)
     {
         _dbContext.Users.Add(user);
-
-        await _dbContext.SaveChangesAsync();
     }
 
     public async Task<User?> GetByEmailAsync(
@@ -35,5 +33,14 @@ public class UserRepository : IUserRepository
         return await _dbContext.Users
             .FirstOrDefaultAsync(
                 x => x.MobileNumber == mobileNumber);
+    }
+    public async Task<User?> GetByEmailOrMobileAsync(
+    string emailOrMobile)
+    {
+        return await _dbContext.Users
+            .FirstOrDefaultAsync(
+                x =>
+                    x.Email == emailOrMobile ||
+                    x.MobileNumber == emailOrMobile);
     }
 }

@@ -52,4 +52,36 @@ public class AuthController : ControllerBase
             });
         }
     }
+
+    [HttpPost("login")]
+    public async Task<IActionResult>
+    Login(LoginRequest request)
+    {
+        try
+        {
+            var model = new LoginModel
+            {
+                EmailOrMobile =
+                    request.EmailOrMobile,
+
+                Password =
+                    request.Password
+            };
+
+            var token = await _authService.LoginAsync(model);
+
+            return Ok(new LoginResponse
+            {
+                Token = token,
+                Role = "Candidate"
+            });
+        }
+        catch (BusinessException ex)
+        {
+            return BadRequest(new
+            {
+                message = ex.Message
+            });
+        }
+    }
 }

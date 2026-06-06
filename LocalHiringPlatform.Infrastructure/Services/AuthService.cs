@@ -12,14 +12,18 @@ public class AuthService : IAuthService
     private readonly ICandidateProfileRepository _candidateProfileRepository;
     private readonly IUnitOfWork _unitOfWork;
 
+    private readonly IJwtTokenService _jwtTokenService;
+
     public AuthService(
         IUserRepository userRepository,
         ICandidateProfileRepository candidateProfileRepository,
-        IUnitOfWork unitOfWork)
+        IUnitOfWork unitOfWork,
+        IJwtTokenService jwtTokenService)
     {
         _userRepository = userRepository;
         _candidateProfileRepository = candidateProfileRepository;
         _unitOfWork = unitOfWork;
+        _jwtTokenService = jwtTokenService;
     }
 
     public async Task RegisterCandidateAsync(
@@ -31,8 +35,7 @@ public class AuthService : IAuthService
 
         if (existingEmail != null)
         {
-            throw new BusinessException(
-                "Email already exists");
+            throw new BusinessException("Email already exists");
         }
 
         var existingMobile =
@@ -41,8 +44,7 @@ public class AuthService : IAuthService
 
         if (existingMobile != null)
         {
-            throw new BusinessException(
-                "Mobile number already exists");
+            throw new BusinessException("Mobile number already exists");
         }
 
         var user = new User
@@ -67,5 +69,34 @@ public class AuthService : IAuthService
             .AddAsync(profile);
 
         await _unitOfWork.SaveChangesAsync();
+    }
+
+    public async Task<string> LoginAsync(
+     LoginModel model)
+    {
+        var user =
+            await _userRepository
+                .GetByEmailOrMobileAsync(
+                    model.EmailOrMobile);
+
+        if (user == null)
+        {
+            throw new BusinessException(
+                "Invalid credentials");
+        }
+
+        bool passwordValid =
+            BCrypt.Net.BCrypt.Verify(
+                model.Password,
+                user.PasswordHash);
+
+        if (!passwordValid)
+        {
+            throw new BusinessException(
+                "Invalid credentials");
+        }
+
+        return _jwtTokenService
+            .GenerateToken(user);
     }
 }

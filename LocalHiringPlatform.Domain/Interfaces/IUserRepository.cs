@@ -9,4 +9,7 @@ public interface IUserRepository
     Task<User?> GetByEmailAsync(string email);
 
     Task<User?> GetByMobileAsync(string mobileNumber);
+
+    Task<User?> GetByEmailOrMobileAsync(
+    string emailOrMobile);
 }

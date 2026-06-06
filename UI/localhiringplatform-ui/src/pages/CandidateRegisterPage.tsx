@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import type { CandidateRegisterRequest } from "../types/CandidateRegisterRequest";
 import type { CandidateRegisterErrors } from "../types/CandidateRegisterErrors";
-import "../styles/CandidateRegisterPage.css";
 import { registerCandidate } from "../services/AuthService";
 import { useNavigate } from "react-router-dom";
 
@@ -183,107 +182,138 @@ export default function CandidateRegisterPage() {
     }
 
     return (
-        <div className="register-page">
+        <div className="center-page">
 
-            <div className="register-card">
+            <div className="form-card form-card-large">
 
-                <h1>Candidate Registration</h1>
+                <h2 className="form-title">
+                    Candidate Registration
+                </h2>
 
                 <div className="form-group">
-                    <label className="form-label">Full Name</label>
+
+                    <label className="form-label">
+                        Full Name
+                    </label>
 
                     <input
-                        className="form-input"
+                        className="form-control"
                         type="text"
                         value={form.fullName}
                         onChange={(e) =>
-                            handleInputChange("fullName", e.target.value)
+                            handleInputChange(
+                                "fullName",
+                                e.target.value)
                         }
                     />
 
                     {
                         errors.fullName &&
-                        <span className="error-message">
+                        <span className="validation-error">
                             {errors.fullName}
                         </span>
                     }
+
                 </div>
 
                 <div className="form-group">
-                    <label className="form-label">Email</label>
+
+                    <label className="form-label">
+                        Email
+                    </label>
 
                     <input
-                        className="form-input"
+                        className="form-control"
                         type="text"
                         value={form.email}
                         onChange={(e) =>
-                            handleInputChange("email", e.target.value)
+                            handleInputChange(
+                                "email",
+                                e.target.value)
                         }
                     />
 
                     {
                         errors.email &&
-                        <span className="error-message">
+                        <span className="validation-error">
                             {errors.email}
                         </span>
                     }
+
                 </div>
 
                 <div className="form-group">
-                    <label className="form-label">Mobile Number</label>
+
+                    <label className="form-label">
+                        Mobile Number
+                    </label>
 
                     <input
-                        className="form-input"
+                        className="form-control"
                         type="text"
                         value={form.mobileNumber}
                         onChange={(e) =>
-                            handleInputChange("mobileNumber", e.target.value)
+                            handleInputChange(
+                                "mobileNumber",
+                                e.target.value)
                         }
                     />
 
                     {
                         errors.mobileNumber &&
-                        <span className="error-message">
+                        <span className="validation-error">
                             {errors.mobileNumber}
                         </span>
                     }
+
                 </div>
 
                 <div className="form-group">
-                    <label className="form-label">Password</label>
+
+                    <label className="form-label">
+                        Password
+                    </label>
 
                     <input
-                        className="form-input"
+                        className="form-control"
                         type="password"
                         value={form.password}
                         onChange={(e) =>
-                            handleInputChange("password", e.target.value)
+                            handleInputChange(
+                                "password",
+                                e.target.value)
                         }
                     />
 
                     {
                         errors.password &&
-                        <span className="error-message">
+                        <span className="validation-error">
                             {errors.password}
                         </span>
                     }
+
                 </div>
 
                 <div className="form-group">
-                    <label className="form-label">Confirm Password</label>
+
+                    <label className="form-label">
+                        Confirm Password
+                    </label>
 
                     <input
-                        className="form-input"
+                        className="form-control"
                         type="password"
                         value={form.confirmPassword}
                         onChange={(e) =>
-                            handleInputChange("confirmPassword", e.target.value)
+                            handleInputChange(
+                                "confirmPassword",
+                                e.target.value)
                         }
                     />
 
                     {
                         errors.confirmPassword &&
-                        <span className="error-message">
+                        <span className="validation-error">
                             {errors.confirmPassword}
                         </span>
                     }
@@ -293,17 +323,20 @@ export default function CandidateRegisterPage() {
                         !errors.confirmPassword &&
                         form.confirmPassword.length > 0 &&
                         (
-                            <span className="error-message">
+                            <span className="validation-error">
                                 Passwords do not match
                             </span>
                         )
                     }
+
                 </div>
 
                 <div className="form-group checkbox-group">
 
-                    <label>
+                    <label className="checkbox-label">
+
                         <input
+                            className="form-checkbox"
                             type="checkbox"
                             checked={form.acceptTerms}
                             onChange={(e) =>
@@ -314,12 +347,13 @@ export default function CandidateRegisterPage() {
                             }
                         />
 
-                        {" "}I accept Terms & Conditions
+                        I accept Terms & Conditions
+
                     </label>
 
                     {
                         errors.acceptTerms &&
-                        <span className="error-message">
+                        <span className="validation-error">
                             {errors.acceptTerms}
                         </span>
                     }
@@ -327,27 +361,27 @@ export default function CandidateRegisterPage() {
                 </div>
 
                 <button
-                    className="register-button"
+                    className="primary-button"
                     onClick={handleRegister}
                 >
                     Register
                 </button>
-                <p></p>
-                <div className="login-link-container">
+
+                <div className="form-footer">
 
                     <span>
                         Already have an account?
                     </span>
 
-                    {" "}
+                    <br />
 
                     <Link to="/login">
                         Login
                     </Link>
 
                 </div>
-            </div>
 
+            </div>
 
         </div>
     );

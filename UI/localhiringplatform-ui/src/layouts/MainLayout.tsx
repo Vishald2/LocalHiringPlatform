@@ -5,13 +5,19 @@ import Footer from "../components/Footer";
 export default function MainLayout() {
     return (
         <>
-            <Navbar />
+            <div className="app-layout">
 
-            <main>
-                <Outlet />
-            </main>
+                <Navbar />
 
-            <Footer />
+                <main className="app-content">
+
+                    <Outlet />
+
+                </main>
+
+                <Footer />
+
+            </div>
         </>
     );
 }
