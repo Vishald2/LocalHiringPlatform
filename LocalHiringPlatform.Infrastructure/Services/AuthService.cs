@@ -59,14 +59,17 @@ public class AuthService : IAuthService
 
         await _userRepository.AddAsync(user);
 
-        var profile = new CandidateProfile
+        if (user.Role == UserRole.Candidate)
         {
-            UserId = user.EntityId,
-            FullName = model.FullName
-        };
+            var profile = new CandidateProfile
+            {
+                UserId = user.EntityId,
+                FullName = model.FullName
+            };
 
-        await _candidateProfileRepository
-            .AddAsync(profile);
+            await _candidateProfileRepository
+                .AddAsync(profile);
+        }
 
         await _unitOfWork.SaveChangesAsync();
     }
