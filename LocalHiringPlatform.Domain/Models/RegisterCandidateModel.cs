@@ -1,4 +1,6 @@
-﻿namespace LocalHiringPlatform.Domain.Models;
+﻿using LocalHiringPlatform.Domain.Enums;
+
+namespace LocalHiringPlatform.Domain.Models;
 
 public class RegisterCandidateModel
 {
@@ -9,4 +11,6 @@ public class RegisterCandidateModel
     public string MobileNumber { get; set; } = string.Empty;
 
     public string Password { get; set; } = string.Empty;
+
+    public UserRole Role { get; set; }
 }

@@ -32,7 +32,9 @@ public class AuthController : ControllerBase
                     Email = request.Email,
                     MobileNumber =
                         request.MobileNumber,
-                    Password = request.Password
+                    Password = request.Password,
+                    Role=request.Role,
+                    
                 };
 
             await _authService

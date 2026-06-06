@@ -54,7 +54,7 @@ public class AuthService : IAuthService
 
             PasswordHash =  BCrypt.Net.BCrypt.HashPassword(model.Password),
 
-            Role = UserRole.Candidate
+            Role = model.Role
         };
 
         await _userRepository.AddAsync(user);
