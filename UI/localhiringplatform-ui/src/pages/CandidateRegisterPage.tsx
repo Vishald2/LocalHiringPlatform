@@ -8,13 +8,13 @@ import { useNavigate } from "react-router-dom";
 export default function CandidateRegisterPage() {
 
     const [form, setForm] = useState<CandidateRegisterRequest>({
-        fullName: "",
         email: "",
         mobileNumber: "",
         password: "",
         confirmPassword: "",
 
-        acceptTerms: false
+        acceptTerms: false,
+        role: 0
     });
 
     const passwordsMatch =
@@ -22,42 +22,52 @@ export default function CandidateRegisterPage() {
 
     const [errors, setErrors] =
         useState<CandidateRegisterErrors>({
-            fullName: "",
             email: "",
             mobileNumber: "",
             password: "",
             confirmPassword: "",
-            acceptTerms: ""
+            acceptTerms: "",
+            role: ""
         });
 
     const navigate = useNavigate();
 
     function handleInputChange(
         field: keyof CandidateRegisterRequest,
-        value: string | boolean
+        value: string | boolean | number
     ) {
-        setForm({
-            ...form,
-            [field]: value
-        });
+        let v: string | boolean | number = value;
+
+        if (field === "role") {
+            // ensure role is stored as a number
+            v = Number(value);
+        }
+
+        setForm(prev => ({ ...prev, [field]: v } as CandidateRegisterRequest));
     }
 
     async function handleRegister() {
 
+        console.log("Form Data:", form);
+
         const isValid = validateForm();
 
         if (!isValid) {
+            console.log("Form validation failed. Errors:", errors);
             return;
         }
 
+
+        console.log("Form is valid. Proceeding with registration...");
         try {
 
             // await registerCandidate(form);
             await registerCandidate({
-                fullName: form.fullName,
+                fullname: "",
                 email: form.email,
                 mobileNumber: form.mobileNumber,
-                password: form.password
+                password: form.password,
+                role: Number(form.role)
             });
 
             alert(
@@ -74,27 +84,27 @@ export default function CandidateRegisterPage() {
     function validateForm() {
 
         const newErrors: CandidateRegisterErrors = {
-            fullName: "",
             email: "",
             mobileNumber: "",
             password: "",
             confirmPassword: "",
-            acceptTerms: ""
+            acceptTerms: "",
+            role: ""
         };
 
         // Full Name
 
-        if (!form.fullName.trim()) {
-            newErrors.fullName = "Full Name is required";
-        }
-        else if (form.fullName.trim().length < 3) {
-            newErrors.fullName =
-                "Full Name must be at least 3 characters";
-        }
-        else if (form.fullName.trim().length > 100) {
-            newErrors.fullName =
-                "Full Name cannot exceed 100 characters";
-        }
+        //if (!form.fullName || !form.fullName.trim()) {
+        //    newErrors.fullName = "Full Name is required";
+        //}
+        //else if (form.fullName.trim().length < 3) {
+        //    newErrors.fullName =
+        //        "Full Name must be at least 3 characters";
+        //}
+        //else if (form.fullName.trim().length > 100) {
+        //    newErrors.fullName =
+        //        "Full Name cannot exceed 100 characters";
+        //}
 
         // Email
 
@@ -155,6 +165,11 @@ export default function CandidateRegisterPage() {
                 "Password must contain a special character";
         }
 
+        if (form.role == 0) {
+            newErrors.role =
+                "Register As is required";
+        }
+
         // Confirm Password
 
         if (!form.confirmPassword.trim()) {
@@ -189,32 +204,6 @@ export default function CandidateRegisterPage() {
                 <h2 className="form-title">
                     Candidate Registration
                 </h2>
-
-                <div className="form-group">
-
-                    <label className="form-label">
-                        Full Name
-                    </label>
-
-                    <input
-                        className="form-control"
-                        type="text"
-                        value={form.fullName}
-                        onChange={(e) =>
-                            handleInputChange(
-                                "fullName",
-                                e.target.value)
-                        }
-                    />
-
-                    {
-                        errors.fullName &&
-                        <span className="validation-error">
-                            {errors.fullName}
-                        </span>
-                    }
-
-                </div>
 
                 <div className="form-group">
 
@@ -266,6 +255,41 @@ export default function CandidateRegisterPage() {
                         </span>
                     }
 
+                </div>
+
+                <div className="form-group">
+
+                    <label className="form-label">
+                        Register As
+                    </label>
+
+                    <select
+                        className="form-control"
+                        value={form.role}
+                        onChange={(e) =>
+                            handleInputChange(
+                                "role",
+                                e.target.value)
+                        }
+                    >
+                        <option value="0">
+                            ---Select Role ---
+                        </option>
+                        <option value="1">
+                            Candidate
+                        </option>
+
+                        <option value="2">
+                            Employer
+                        </option>
+
+                    </select>
+                    {
+                        errors.role &&
+                        <span className="validation-error">
+                            {errors.role}
+                        </span>
+                    }
                 </div>
 
                 <div className="form-group">

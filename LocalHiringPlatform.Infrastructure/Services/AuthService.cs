@@ -54,19 +54,22 @@ public class AuthService : IAuthService
 
             PasswordHash =  BCrypt.Net.BCrypt.HashPassword(model.Password),
 
-            Role = UserRole.Candidate
+            Role = model.Role
         };
 
         await _userRepository.AddAsync(user);
 
-        var profile = new CandidateProfile
+        if (user.Role == UserRole.Candidate)
         {
-            UserId = user.EntityId,
-            FullName = model.FullName
-        };
+            var profile = new CandidateProfile
+            {
+                UserId = user.EntityId,
+                FullName = model.FullName
+            };
 
-        await _candidateProfileRepository
-            .AddAsync(profile);
+            await _candidateProfileRepository
+                .AddAsync(profile);
+        }
 
         await _unitOfWork.SaveChangesAsync();
     }
