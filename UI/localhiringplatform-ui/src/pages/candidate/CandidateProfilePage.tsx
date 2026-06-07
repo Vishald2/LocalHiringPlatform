@@ -1,3 +1,340 @@
-﻿export default function CandidateProfilePage() {
-    return <h1>This Is Candidate Profile Page</h1>;
+﻿import { useEffect, useState } from "react";
+
+import {
+    getProfile,
+    updateProfile
+} from "../../services/CandidateProfileService";
+
+import type{ CandidateProfile }
+    from "../../types/CandidateProfile";
+
+export default function CandidateProfilePage() {
+
+    const [profile, setProfile] =
+        useState<CandidateProfile>({
+            fullName: "",
+            dateOfBirth: null,
+            gender: null,
+            city: "",
+            state: "",
+            currentSalary: null,
+            expectedSalary: null,
+            totalExperienceYears: null,
+            profileSummary: "",
+            isOpenToWork: false,
+            profileCompletionPercentage: 0
+        });
+
+    const [successMessage, setSuccessMessage] =
+        useState("");
+
+    async function loadProfile() {
+
+        const result =
+            await getProfile();
+
+        setProfile(result);
+    }
+
+    useEffect(() => {
+
+        loadProfile();
+
+    }, []);
+
+  
+
+    async function handleSave() {
+
+        await updateProfile(profile);
+
+        setSuccessMessage(
+            "Profile updated successfully.");
+    }
+
+    function handleChange(
+        field: keyof CandidateProfile,
+        value: any) {
+
+        setProfile({
+            ...profile,
+            [field]: value
+        });
+    }
+
+    return (
+
+        <div className="page-container">
+
+            <div className="form-card form-card-large">
+
+                <h2 className="form-title">
+                    Candidate Profile
+                </h2>
+
+                <div className="form-group">
+
+                    <label className="form-label">
+                        Full Name
+                    </label>
+
+                    <input
+                        className="form-control"
+                        value={profile.fullName}
+                        onChange={(e) =>
+                            handleChange(
+                                "fullName",
+                                e.target.value)}
+                    />
+
+                </div>
+
+                <div className="form-group">
+
+                    <label className="form-label">
+                        Date Of Birth
+                    </label>
+
+                    <input
+                        className="form-control"
+                        type="date"
+                        value={
+                            profile.dateOfBirth
+                                ? profile.dateOfBirth
+                                    .substring(0, 10)
+                                : ""
+                        }
+                        onChange={(e) =>
+                            handleChange(
+                                "dateOfBirth",
+                                e.target.value)}
+                    />
+
+                </div>
+
+                <div className="form-group">
+
+                    <label className="form-label">
+                        Gender
+                    </label>
+
+                    <select
+                        className="form-control"
+                        value={profile.gender ?? ""}
+                        onChange={(e) =>
+                            handleChange(
+                                "gender",
+                                Number(e.target.value))}
+                    >
+                        <option value="">
+                            Select Gender
+                        </option>
+
+                        <option value="1">
+                            Male
+                        </option>
+
+                        <option value="2">
+                            Female
+                        </option>
+
+                        <option value="3">
+                            Other
+                        </option>
+
+                        <option value="4">
+                            Prefer Not To Say
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <div className="form-group">
+
+                    <label className="form-label">
+                        City
+                    </label>
+
+                    <input
+                        className="form-control"
+                        value={profile.city}
+                        onChange={(e) =>
+                            handleChange(
+                                "city",
+                                e.target.value)}
+                    />
+
+                </div>
+
+                <div className="form-group">
+
+                    <label className="form-label">
+                        State
+                    </label>
+
+                    <input
+                        className="form-control"
+                        value={profile.state}
+                        onChange={(e) =>
+                            handleChange(
+                                "state",
+                                e.target.value)}
+                    />
+
+                </div>
+
+                <div className="form-group">
+
+                    <label className="form-label">
+                        Current Salary
+                    </label>
+
+                    <input
+                        className="form-control"
+                        type="number"
+                        value={
+                            profile.currentSalary ?? ""
+                        }
+                        onChange={(e) =>
+                            handleChange(
+                                "currentSalary",
+                                Number(
+                                    e.target.value))}
+                    />
+
+                </div>
+
+                <div className="form-group">
+
+                    <label className="form-label">
+                        Expected Salary
+                    </label>
+
+                    <input
+                        className="form-control"
+                        type="number"
+                        value={
+                            profile.expectedSalary ?? ""
+                        }
+                        onChange={(e) =>
+                            handleChange(
+                                "expectedSalary",
+                                Number(
+                                    e.target.value))}
+                    />
+
+                </div>
+
+                <div className="form-group">
+
+                    <label className="form-label">
+                        Total Experience (Years)
+                    </label>
+
+                    <input
+                        className="form-control"
+                        type="number"
+                        value={
+                            profile.totalExperienceYears
+                            ?? ""
+                        }
+                        onChange={(e) =>
+                            handleChange(
+                                "totalExperienceYears",
+                                Number(
+                                    e.target.value))}
+                    />
+
+                </div>
+
+                <div className="form-group">
+
+                    <label className="form-label">
+                        Profile Summary
+                    </label>
+
+                    <textarea
+                        className="form-textarea"
+                        value={
+                            profile.profileSummary
+                        }
+                        onChange={(e) =>
+                            handleChange(
+                                "profileSummary",
+                                e.target.value)}
+                    />
+
+                </div>
+
+                <div className="checkbox-group">
+
+                    <label className="checkbox-label">
+
+                        <input
+                            className="form-checkbox"
+                            type="checkbox"
+                            checked={
+                                profile.isOpenToWork
+                            }
+                            onChange={(e) =>
+                                handleChange(
+                                    "isOpenToWork",
+                                    e.target.checked)}
+                        />
+
+                        Open To Work
+
+                    </label>
+
+                </div>
+
+                <div
+                    style={{
+                        marginTop: "20px"
+                    }}
+                >
+
+                    <strong>
+                        Profile Completion:
+                    </strong>
+
+                    {" "}
+                    {
+                        profile
+                            .profileCompletionPercentage
+                    }
+                    %
+
+                </div>
+
+                {
+                    successMessage &&
+                    <div
+                        className=
+                        "validation-success"
+                    >
+                        {successMessage}
+                    </div>
+                }
+
+                <div
+                    style={{
+                        marginTop: "20px"
+                    }}
+                >
+
+                    <button
+                        className="primary-button"
+                        onClick={handleSave}
+                    >
+                        Save Profile
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+    );
 }
