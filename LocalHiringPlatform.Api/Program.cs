@@ -73,18 +73,17 @@ builder.Services.AddScoped<
     ICandidateProfileRepository,
     CandidateProfileRepository>();
 
-builder.Services.AddScoped<
-    IEmployerProfileRepository,
+builder.Services.AddScoped<IEmployerProfileRepository,
     EmployerProfileRepository>();
 
-builder.Services.AddScoped<
-    IUnitOfWork,
+builder.Services.AddScoped<IUnitOfWork,
     UnitOfWork>();
 
-builder.Services.AddScoped<
-    IAuthService,
-
+builder.Services.AddScoped<IAuthService,
     AuthService>();
+
+builder.Services.AddScoped<ICandidateProfileService,
+    CandidateProfileService>();
 
 builder.Services.AddCors(options =>
 {
