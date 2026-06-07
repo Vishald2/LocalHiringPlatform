@@ -1,5 +1,4 @@
-﻿using LocalHiringPlatform.Domain.Entities;
-using LocalHiringPlatform.Domain.Interfaces;
+﻿using LocalHiringPlatform.Domain.Interfaces;
 using LocalHiringPlatform.Infrastructure.Data;
 
 namespace LocalHiringPlatform.Infrastructure.Repositories;

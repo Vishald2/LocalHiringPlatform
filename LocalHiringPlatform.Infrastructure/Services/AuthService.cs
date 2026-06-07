@@ -10,6 +10,7 @@ public class AuthService : IAuthService
 {
     private readonly IUserRepository _userRepository;
     private readonly ICandidateProfileRepository _candidateProfileRepository;
+    private readonly IEmployerProfileRepository _employerProfileRepository;
     private readonly IUnitOfWork _unitOfWork;
 
     private readonly IJwtTokenService _jwtTokenService;
@@ -17,11 +18,13 @@ public class AuthService : IAuthService
     public AuthService(
         IUserRepository userRepository,
         ICandidateProfileRepository candidateProfileRepository,
+        IEmployerProfileRepository employerProfileRepository,
         IUnitOfWork unitOfWork,
         IJwtTokenService jwtTokenService)
     {
         _userRepository = userRepository;
         _candidateProfileRepository = candidateProfileRepository;
+        _employerProfileRepository = employerProfileRepository;
         _unitOfWork = unitOfWork;
         _jwtTokenService = jwtTokenService;
     }
@@ -69,6 +72,15 @@ public class AuthService : IAuthService
 
             await _candidateProfileRepository
                 .AddAsync(profile);
+        }
+        else if (user.Role == UserRole.Employer)
+        {
+            var profile = new EmployerProfile
+            {
+                UserId = user.EntityId
+            };
+
+            await _employerProfileRepository.AddAsync(profile);
         }
 
         await _unitOfWork.SaveChangesAsync();

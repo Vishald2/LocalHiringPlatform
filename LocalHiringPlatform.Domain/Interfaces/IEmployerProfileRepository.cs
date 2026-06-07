@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace LocalHiringPlatform.Domain.Interfaces
 {
-    internal class ICandidateRepository
+    public interface IEmployerProfileRepository
     {
+        Task AddAsync(EmployerProfile profile);
     }
 }

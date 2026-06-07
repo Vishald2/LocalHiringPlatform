@@ -15,6 +15,7 @@ public class ApplicationDbContext : DbContext
 
     public DbSet<CandidateProfile> CandidateProfiles => Set<CandidateProfile>();
 
+    public DbSet<EmployerProfile> EmployerProfiles => Set<EmployerProfile>();
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -27,9 +28,5 @@ public class ApplicationDbContext : DbContext
             .HasIndex(x => x.MobileNumber)
             .IsUnique();
 
-        modelBuilder.Entity<User>()
-            .HasOne(x => x.CandidateProfile)
-            .WithOne(x => x.User)
-            .HasForeignKey<CandidateProfile>(x => x.UserId);
     }
 }

@@ -74,6 +74,10 @@ builder.Services.AddScoped<
     CandidateProfileRepository>();
 
 builder.Services.AddScoped<
+    IEmployerProfileRepository,
+    EmployerProfileRepository>();
+
+builder.Services.AddScoped<
     IUnitOfWork,
     UnitOfWork>();
 
