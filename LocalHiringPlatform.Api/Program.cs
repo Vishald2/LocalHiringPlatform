@@ -1,4 +1,6 @@
 using LocalHiringPlatform.Domain.Interfaces;
+using LocalHiringPlatform.Domain.Interfaces.MasterDataRepositories;
+using LocalHiringPlatform.Domain.Interfaces.MasterDataServices;
 using LocalHiringPlatform.Domain.Models;
 using LocalHiringPlatform.Infrastructure;
 using LocalHiringPlatform.Infrastructure.Data;
@@ -84,6 +86,12 @@ builder.Services.AddScoped<IAuthService,
 
 builder.Services.AddScoped<ICandidateProfileService,
     CandidateProfileService>();
+
+builder.Services.AddScoped<ISkillService,
+    SkillService>();
+
+builder.Services.AddScoped<ISkillRepository,
+    SkillRepository>();
 
 builder.Services.AddCors(options =>
 {
