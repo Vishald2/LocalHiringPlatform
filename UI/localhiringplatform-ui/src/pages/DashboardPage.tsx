@@ -1,8 +1,27 @@
 ﻿import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { getProfile } from "../services/CandidateProfileService";
 
 export default function DashboardPage() {
 
     const navigate = useNavigate();
+    const [profileCompletion, setProfileCompletion] =
+        useState<number>(0);
+
+    useEffect(() => {
+
+        async function loadProfile() {
+
+            const profile =
+                await getProfile();
+
+            setProfileCompletion(
+                profile.profileCompletionPercentage);
+        }
+
+        loadProfile();
+
+    }, []);
 
     return (
 
@@ -22,10 +41,14 @@ export default function DashboardPage() {
 
             <div className="stats-grid">
 
-                <div className="card stat-card">
+                <div className="card stat-card"
+                    onClick={() => navigate("/cprofile")}
+                    style={{ cursor: "pointer" }}>
 
                     <div className="stat-number">
-                        20%
+
+                        {profileCompletion}%
+
                     </div>
 
                     <div className="stat-label">

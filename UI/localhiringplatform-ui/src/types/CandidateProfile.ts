@@ -1,4 +1,4 @@
-﻿export interface CandidateProfile {
+﻿export type  CandidateProfile {
     fullName: string;
     dateOfBirth: string | null;
     gender: number | null;

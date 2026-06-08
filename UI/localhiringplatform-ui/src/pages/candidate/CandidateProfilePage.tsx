@@ -28,34 +28,44 @@ export default function CandidateProfilePage() {
     const [successMessage, setSuccessMessage] =
         useState("");
 
-    async function loadProfile() {
-
-        const result =
-            await getProfile();
-
-        setProfile(result);
-    }
-
     useEffect(() => {
+
+        async function loadProfile() {
+
+            const result =
+                await getProfile();
+
+            setProfile(result);
+        }
 
         loadProfile();
 
     }, []);
 
-  
-
     async function handleSave() {
 
-        await updateProfile(profile);
+        try {
 
-        setSuccessMessage(
-            "Profile updated successfully.");
+            await updateProfile(profile);
+
+            const updatedProfile =
+                await getProfile();
+
+            setProfile(updatedProfile);
+
+            setSuccessMessage(
+                "Profile updated successfully.");
+        }
+        catch {
+
+            setSuccessMessage(
+                "Unable to update profile.");
+        }
     }
 
     function handleChange(
         field: keyof CandidateProfile,
-        value: any) {
-
+        value: CandidateProfile[keyof CandidateProfile]) {
         setProfile({
             ...profile,
             [field]: value
@@ -199,8 +209,10 @@ export default function CandidateProfilePage() {
                         onChange={(e) =>
                             handleChange(
                                 "currentSalary",
-                                Number(
-                                    e.target.value))}
+                                e.target.value === ""
+                                    ? null
+                                    : Number(e.target.value))
+                        }
                     />
 
                 </div>

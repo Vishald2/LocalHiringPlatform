@@ -1,5 +1,5 @@
 ﻿import axios from "axios";
-import { CandidateProfile } from "../types/CandidateProfile";
+import type { CandidateProfile } from "../types/CandidateProfile";
 
 const API_URL =
     "http://localhost:5271/api/candidate/profile";
