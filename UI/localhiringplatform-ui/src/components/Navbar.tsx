@@ -39,6 +39,11 @@ export default function Navbar() {
                     <>
                         <Link
                             className="navbar-link"
+                            to="/mskill">
+                            Manage Skills
+                        </Link>
+                        <Link
+                            className="navbar-link"
                             to="/dashboard">
                             Dashboard
                         </Link>

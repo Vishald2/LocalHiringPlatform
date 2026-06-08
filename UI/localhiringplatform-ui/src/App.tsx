@@ -13,6 +13,7 @@ import MainLayout from "./layouts/MainLayout";
 import CandidateRegisterPage from "./pages/CandidateRegisterPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import DashboardPage from "./pages/DashboardPage";
+import ManageSkills from "./pages/master/ManageSkills";
 function App() {
     return (
         <BrowserRouter>
@@ -27,6 +28,14 @@ function App() {
                         element={
                             <ProtectedRoute>
                                 <CandidateProfilePage />
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
+                        path="/mskill"
+                        element={
+                            <ProtectedRoute>
+                                <ManageSkills />
                             </ProtectedRoute>
                         }
                     />

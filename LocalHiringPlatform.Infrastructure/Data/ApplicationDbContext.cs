@@ -1,4 +1,5 @@
-﻿using LocalHiringPlatform.Domain.Entities;
+﻿using Azure.Core.Pipeline;
+using LocalHiringPlatform.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace LocalHiringPlatform.Infrastructure.Data;
@@ -16,6 +17,8 @@ public class ApplicationDbContext : DbContext
     public DbSet<CandidateProfile> CandidateProfiles => Set<CandidateProfile>();
 
     public DbSet<EmployerProfile> EmployerProfiles => Set<EmployerProfile>();
+
+    public DbSet<Skill> Skills { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -27,6 +30,5 @@ public class ApplicationDbContext : DbContext
         modelBuilder.Entity<User>()
             .HasIndex(x => x.MobileNumber)
             .IsUnique();
-
     }
 }
