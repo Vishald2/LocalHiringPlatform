@@ -22,7 +22,14 @@ function App() {
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/register" element={<RegisterPage />} />
                     <Route path="/cdashboard" element={<CandidateDashboardPage />} />
-                    <Route path="/cprofile" element={<CandidateProfilePage />} />
+                    <Route
+                        path="/cprofile"
+                        element={
+                            <ProtectedRoute>
+                                <CandidateProfilePage />
+                            </ProtectedRoute>
+                        }
+                    />
                     <Route path="/capps" element={<MyApplicationsPage />} />
                     <Route path="/eapps" element={<ApplicantsPage />} />
                     <Route path="/eprofile" element={<CompanyProfilePage />} />

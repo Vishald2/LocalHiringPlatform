@@ -1,4 +1,5 @@
 ﻿using LocalHiringPlatform.Domain.Entities;
+using LocalHiringPlatform.Domain.Enums;
 
 public class CandidateProfile : BaseEntity
 {
@@ -12,7 +13,7 @@ public class CandidateProfile : BaseEntity
 
     public DateTime? DateOfBirth { get; set; }
 
-    public string Gender { get; set; } = string.Empty;
+    public Gender? Gender { get; set; }
 
     public string ProfileSummary { get; set; } = string.Empty;
 
