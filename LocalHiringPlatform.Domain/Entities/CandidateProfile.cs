@@ -29,4 +29,7 @@ public class CandidateProfile : BaseEntity
 
     public bool IsOpenToWork { get; set; } = true;
     public User User { get; set; } = null!;
+
+    public ICollection<JobApplication>
+    JobApplications { get; set; } = new List<JobApplication>();
 }

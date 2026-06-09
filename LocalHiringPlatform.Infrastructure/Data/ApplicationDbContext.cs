@@ -21,6 +21,8 @@ public class ApplicationDbContext : DbContext
     public DbSet<Skill> Skills { get; set; }
 
     public DbSet<Job> Jobs { get; set; }
+
+    public DbSet<JobApplication> JobApplications { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -37,5 +39,24 @@ public class ApplicationDbContext : DbContext
             .HasOne(x => x.EmployerProfile)
             .WithMany(x => x.Jobs)
             .HasForeignKey(x => x.EmployerProfileId);
+
+        modelBuilder.Entity<JobApplication>()
+            .HasOne(x => x.Job)
+            .WithMany(x => x.JobApplications)
+            .HasForeignKey(x => x.JobId);
+
+        modelBuilder.Entity<JobApplication>()
+            .HasOne(x => x.CandidateProfile)
+            .WithMany(x => x.JobApplications)
+            .HasForeignKey(x => x.CandidateProfileId);
+
+        modelBuilder.Entity<JobApplication>()
+            .HasIndex(x =>
+                new
+                {
+                    x.JobId,
+                    x.CandidateProfileId
+                })
+            .IsUnique();
     }
 }
