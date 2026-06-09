@@ -44,6 +44,11 @@ export default function Navbar() {
                         </Link>
                         <Link
                             className="navbar-link"
+                            to="/jobs">
+                            List Jobs
+                        </Link>
+                        <Link
+                            className="navbar-link"
                             to="/mskill">
                             Manage Skills
                         </Link>

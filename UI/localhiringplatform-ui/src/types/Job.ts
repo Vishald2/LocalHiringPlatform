@@ -1,7 +1,21 @@
-﻿export type Job = {
-    id: number;
+﻿export interface Job {
+    entityId: string;
+
     title: string;
-    company: string;
-    location: string;
-    salary: string;
-};
+
+    description: string;
+
+    city: string;
+
+    state: string;
+
+    minSalary?: number;
+
+    maxSalary?: number;
+
+    experienceRequired: number;
+
+    requiredSkills?: string;
+
+    isActive: boolean;
+}
