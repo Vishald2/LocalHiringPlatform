@@ -47,4 +47,30 @@ public class JobController
 
         return Ok();
     }
+
+    [HttpGet]
+    public async Task<IActionResult> GetAllJobs()
+    {
+        var jobs =
+            await _jobService
+                .GetAllJobsAsync();
+
+        return Ok(jobs);
+    }
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetJob(
+    Guid id)
+    {
+        var job =
+            await _jobService
+                .GetJobAsync(id);
+
+        if (job == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(job);
+    }
 }

@@ -8,7 +8,7 @@ import MyApplicationsPage from "./pages/candidate/MyApplicationsPage";
 import ApplicantsPage from "./pages/employer/ApplicantsPage";
 import CompanyProfilePage from "./pages/employer/CompanyProfilePage";
 import EmployerDashboardPage from "./pages/employer/EmployerDashboardPage";
-import JobsPage from "./pages/JobsPage";
+import JobList from "./pages/JobsPage";
 import MainLayout from "./layouts/MainLayout";
 import CandidateRegisterPage from "./pages/CandidateRegisterPage";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -41,6 +41,12 @@ function App() {
                         }
                     />
                     <Route
+                        path="/jobs"
+                        element={
+                            <JobList />
+                        }
+                    />
+                    <Route
                         path="/mskill"
                         element={
                             <ProtectedRoute>
@@ -52,7 +58,6 @@ function App() {
                     <Route path="/eapps" element={<ApplicantsPage />} />
                     <Route path="/eprofile" element={<CompanyProfilePage />} />
                     <Route path="/edashboard" element={<EmployerDashboardPage />} />
-                    <Route path="/ejobs" element={<JobsPage />} />
                     <Route path="/candidate/register" element={<CandidateRegisterPage />}/>
                     <Route
                         path="/dashboard"
