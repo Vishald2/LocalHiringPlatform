@@ -93,6 +93,14 @@ builder.Services.AddScoped<ISkillService,
 builder.Services.AddScoped<ISkillRepository,
     SkillRepository>();
 
+builder.Services.AddScoped<
+    IJobRepository,
+    JobRepository>();
+
+builder.Services.AddScoped<
+    IJobService,
+    JobService>();
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(

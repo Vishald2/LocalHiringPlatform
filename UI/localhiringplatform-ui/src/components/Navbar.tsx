@@ -39,6 +39,11 @@ export default function Navbar() {
                     <>
                         <Link
                             className="navbar-link"
+                            to="/createjob">
+                            Create Job
+                        </Link>
+                        <Link
+                            className="navbar-link"
                             to="/mskill">
                             Manage Skills
                         </Link>
@@ -52,12 +57,6 @@ export default function Navbar() {
                             className="navbar-link"
                             to="/cprofile">
                             Profile
-                        </Link>
-
-                        <Link
-                            className="navbar-link"
-                            to="/jobs">
-                            Jobs
                         </Link>
 
                         <button

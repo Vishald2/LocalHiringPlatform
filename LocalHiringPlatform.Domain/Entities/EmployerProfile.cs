@@ -15,4 +15,6 @@ public class EmployerProfile : BaseEntity
     public string? CompanyDescription { get; set; }
 
     public User? User { get; set; } = null;
+
+    public ICollection<Job> Jobs { get; set; }  = new List<Job>();
 }

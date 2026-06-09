@@ -1,0 +1,20 @@
+﻿namespace LocalHiringPlatform.Api.DTOs;
+
+public class CreateJobRequestDto
+{
+    public string Title { get; set; } = string.Empty;
+
+    public string Description { get; set; } = string.Empty;
+
+    public string City { get; set; } = string.Empty;
+
+    public string State { get; set; } = string.Empty;
+
+    public decimal? MinSalary { get; set; }
+
+    public decimal? MaxSalary { get; set; }
+
+    public int ExperienceRequired { get; set; }
+
+    public string? RequiredSkills { get; set; }
+}

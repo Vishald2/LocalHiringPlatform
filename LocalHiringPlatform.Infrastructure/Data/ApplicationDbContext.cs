@@ -19,6 +19,8 @@ public class ApplicationDbContext : DbContext
     public DbSet<EmployerProfile> EmployerProfiles => Set<EmployerProfile>();
 
     public DbSet<Skill> Skills { get; set; }
+
+    public DbSet<Job> Jobs { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -30,5 +32,10 @@ public class ApplicationDbContext : DbContext
         modelBuilder.Entity<User>()
             .HasIndex(x => x.MobileNumber)
             .IsUnique();
+
+        modelBuilder.Entity<Job>()
+            .HasOne(x => x.EmployerProfile)
+            .WithMany(x => x.Jobs)
+            .HasForeignKey(x => x.EmployerProfileId);
     }
 }

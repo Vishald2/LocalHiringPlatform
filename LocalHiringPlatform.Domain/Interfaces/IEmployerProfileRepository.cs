@@ -9,5 +9,8 @@ namespace LocalHiringPlatform.Domain.Interfaces
     public interface IEmployerProfileRepository
     {
         Task AddAsync(EmployerProfile profile);
+        Task<EmployerProfile?> GetByUserIdAsync(
+        Guid userId);
     }
 }
+
