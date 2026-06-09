@@ -1,5 +1,6 @@
 ﻿using LocalHiringPlatform.Domain.Interfaces;
 using LocalHiringPlatform.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace LocalHiringPlatform.Infrastructure.Repositories
 {
@@ -14,6 +15,14 @@ namespace LocalHiringPlatform.Infrastructure.Repositories
         public async Task AddAsync(EmployerProfile profile)
         {
             _dbContext.EmployerProfiles.Add(profile);
+        }
+
+        public async Task<EmployerProfile?> GetByUserIdAsync(
+            Guid userId)
+        {
+            return await _dbContext.EmployerProfiles
+                .FirstOrDefaultAsync(
+                    x => x.UserId == userId);
         }
     }
 }

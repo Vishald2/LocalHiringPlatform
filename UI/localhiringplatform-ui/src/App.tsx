@@ -14,6 +14,7 @@ import CandidateRegisterPage from "./pages/CandidateRegisterPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import DashboardPage from "./pages/DashboardPage";
 import ManageSkills from "./pages/master/ManageSkills";
+import CreateJobPage from "./pages/master/CreateJobPage";
 function App() {
     return (
         <BrowserRouter>
@@ -28,6 +29,14 @@ function App() {
                         element={
                             <ProtectedRoute>
                                 <CandidateProfilePage />
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
+                        path="/createjob"
+                        element={
+                            <ProtectedRoute>
+                                <CreateJobPage />
                             </ProtectedRoute>
                         }
                     />
