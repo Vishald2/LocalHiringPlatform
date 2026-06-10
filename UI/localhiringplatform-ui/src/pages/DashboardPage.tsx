@@ -1,4 +1,4 @@
-﻿import { useNavigate } from "react-router-dom";
+﻿import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getProfile } from "../services/CandidateProfileService";
 
@@ -64,9 +64,10 @@ export default function DashboardPage() {
                     </div>
 
                     <div className="stat-label">
-                        Applications
+                        <Link to="/candidate/myapplications">
+                            Applications
+                        </Link>
                     </div>
-
                 </div>
 
                 <div className="card stat-card">

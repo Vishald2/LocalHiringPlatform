@@ -24,6 +24,19 @@ namespace LocalHiringPlatform.Infrastructure.Repositories
                 .AddAsync(application);
         }
 
+        public async Task<List<JobApplication>>
+            GetByCandidateProfileIdAsync(
+                Guid candidateProfileId)
+        {
+            return await _dbContext
+                .JobApplications
+                .Include(x => x.Job)
+                .Where(x =>
+                    x.CandidateProfileId
+                    == candidateProfileId)
+                .ToListAsync();
+        }
+
         public async Task<JobApplication?>
             GetByJobAndCandidateAsync(
                 Guid jobId,

@@ -4,7 +4,8 @@ namespace LocalHiringPlatform.Domain.Interfaces;
 
 public interface IJobApplicationService
 {
-    Task ApplyToJobAsync(
-        ApplyToJobModel model,
-        Guid userId);
+    Task ApplyToJobAsync(ApplyToJobModel model, Guid userId);
+
+    Task<List<MyApplicationModel>>
+    GetMyApplicationsAsync(Guid userId);
 }

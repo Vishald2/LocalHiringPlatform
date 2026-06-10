@@ -11,5 +11,9 @@ namespace LocalHiringPlatform.Domain.Interfaces
             GetByJobAndCandidateAsync(
                 Guid jobId,
                 Guid candidateProfileId);
+
+        Task<List<JobApplication>>
+    GetByCandidateProfileIdAsync(
+        Guid candidateProfileId);
     }
 }
