@@ -81,4 +81,41 @@ public class JobApplicationService
         await _unitOfWork
             .SaveChangesAsync();
     }
+
+    public async Task<List<MyApplicationModel>>
+        GetMyApplicationsAsync(
+            Guid userId)
+    {
+        var candidateProfile =
+            await _candidateProfileRepository
+                .GetByUserIdAsync(userId);
+
+        if (candidateProfile == null)
+        {
+            throw new BusinessException(
+                "Candidate profile not found");
+        }
+
+        var applications =
+            await _jobApplicationRepository
+                .GetByCandidateProfileIdAsync(
+                    candidateProfile.EntityId);
+
+        return applications
+            .Select(x =>
+                new MyApplicationModel
+                {
+                    JobId = x.JobId,
+
+                    JobTitle =
+                        x.Job.Title,
+
+                    AppliedOn =
+                        x.AppliedOn,
+
+                    Status =
+                        x.Status
+                })
+            .ToList();
+    }
 }

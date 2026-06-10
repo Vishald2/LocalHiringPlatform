@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/CandidateRegisterPage";
-import CandidateDashboardPage from "./pages/candidate/CandidateDashboardPage";
+import CandidateDashboardPage from "./pages/DashboardPage";
 import CandidateProfilePage from "./pages/candidate/CandidateProfilePage";
 import MyApplicationsPage from "./pages/candidate/MyApplicationsPage";
 import ApplicantsPage from "./pages/employer/ApplicantsPage";
@@ -67,7 +67,14 @@ function App() {
                             </ProtectedRoute>
                         }
                     />
+                    <Route
+                        path="/candidate/myapplications"
+                        element={
+                            <MyApplicationsPage />
+                        }
+                    />
                 </Route>
+              
             </Routes>
         </BrowserRouter>
     );

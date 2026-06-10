@@ -46,4 +46,22 @@ public class JobApplicationController
 
         return Ok();
     }
+
+    [HttpGet("my")]
+    public async Task<IActionResult>
+    GetMyApplications()
+    {
+        Guid userId =
+            Guid.Parse(
+                User.FindFirst(
+                    ClaimTypes.NameIdentifier)!
+                .Value);
+
+        var result =
+            await _jobApplicationService
+                .GetMyApplicationsAsync(
+                    userId);
+
+        return Ok(result);
+    }
 }
