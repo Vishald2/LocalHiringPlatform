@@ -1,24 +1,13 @@
-﻿import axios from "axios";
-import type { CandidateProfile } from "../types/CandidateProfile";
+﻿import type { CandidateProfile } from "../types/CandidateProfile";
+import { api } from "./api";
+import { API_ENDPOINTS } from "../End_Points/apiEndpoints";
 
-const API_URL =
-    "http://localhost:5271/api/candidate/profile";
-
-function getToken() {
-    return localStorage.getItem("token");
+function getBaseUrl() {
+    return API_ENDPOINTS.candidate.profile;
 }
 
 export async function getProfile() {
-
-    const response =
-        await axios.get<CandidateProfile>(
-            API_URL,
-            {
-                headers: {
-                    Authorization:
-                        `Bearer ${getToken()}`
-                }
-            });
+    const response = await api.get(getBaseUrl());
 
     return response.data;
 }
@@ -26,13 +15,5 @@ export async function getProfile() {
 export async function updateProfile(
     profile: CandidateProfile) {
 
-    await axios.put(
-        API_URL,
-        profile,
-        {
-            headers: {
-                Authorization:
-                    `Bearer ${getToken()}`
-            }
-        });
+    await api.put(getBaseUrl(), profile);
 }

@@ -1,5 +1,4 @@
-﻿using Azure.Core.Pipeline;
-using LocalHiringPlatform.Domain.Entities;
+﻿using LocalHiringPlatform.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace LocalHiringPlatform.Infrastructure.Data;

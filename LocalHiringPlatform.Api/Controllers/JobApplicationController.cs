@@ -1,9 +1,9 @@
-﻿using System.Security.Claims;
-using LocalHiringPlatform.Api.DTOs;
+﻿using LocalHiringPlatform.Api.DTOs;
 using LocalHiringPlatform.Domain.Interfaces;
 using LocalHiringPlatform.Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace LocalHiringPlatform.Api.Controllers;
 

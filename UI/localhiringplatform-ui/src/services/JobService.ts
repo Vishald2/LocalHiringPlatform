@@ -1,57 +1,21 @@
-﻿import { API_BASE_URL } from "../config/api";
+﻿
+import type { CreateJobApiRequest} from "../types/CreateJobApiRequest";
+import { api } from "./api";
+import { API_ENDPOINTS } from "../End_Points/apiEndpoints";
+import type { Job } from "../types/Job";
 
-import type {
-    CreateJobApiRequest
-} from "../types/CreateJobApiRequest";
+function getBaseUrl() {
+    return API_ENDPOINTS.job.root;
+}
 
 export async function addJob(
     request: CreateJobApiRequest) {
-    const token =
-        localStorage.getItem("token");
 
-    const response =
-        await fetch(
-            `${API_BASE_URL}/api/job`,
-            {
-                method: "POST",
-                headers:
-                {
-                    "Content-Type":
-                        "application/json",
-
-                    "Authorization":
-                        `Bearer ${token}`
-                },
-                body:
-                    JSON.stringify(
-                        request)
-            });
-
-    if (!response.ok) {
-        throw new Error(
-            "Unable to create job");
-    }
+    await api.post(getBaseUrl(), request);
 }
 
 export async function getJobs() {
-    const token =
-        localStorage.getItem("token");
+    const response = await api.get<Job[]>(getBaseUrl());
 
-    const response =
-        await fetch(
-            `${API_BASE_URL}/api/job`,
-            {
-                headers:
-                {
-                    Authorization:
-                        `Bearer ${token}`
-                }
-            });
-
-    if (!response.ok) {
-        throw new Error(
-            `HTTP ${response.status}`);
-    }
-
-    return await response.json();
+    return response.data;
 }

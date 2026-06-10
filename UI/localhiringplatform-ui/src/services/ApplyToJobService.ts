@@ -1,31 +1,17 @@
-﻿import { API_BASE_URL } from "../config/api";
+﻿
 import type { ApplyToJobRequest } from "../types/ApplyToJobRequest";
+import { api } from "./api";
+import { API_ENDPOINTS } from "../End_Points/apiEndpoints";
+
+function getBaseUrl() {
+    return API_ENDPOINTS.jobApplication.root;
+}
 
 export async function applyToJob(
     request: ApplyToJobRequest) {
-    const token =
-        localStorage.getItem("token");
 
-    const response =
-        await fetch(
-            `${API_BASE_URL}/api/jobapplication`,
-            {
-                method: "POST",
-                headers:
-                {
-                    "Content-Type":
-                        "application/json",
+    console.log(request);
 
-                    "Authorization":
-                        `Bearer ${token}`
-                },
-                body:
-                    JSON.stringify(
-                        request)
-            });
+    await api.post(getBaseUrl(), request);
 
-    if (!response.ok) {
-        throw new Error(
-            "Unable to apply");
-    }
 }
