@@ -7,9 +7,27 @@ import { useState }
 import { getJobs }
     from "../services/JobService";
 
+import { applyToJob }
+    from "../services/ApplyToJobService";
+
 import type { Job }
     from "../types/Job";
 
+async function handleApply(
+    jobId: string) {
+    try {
+        await applyToJob({
+            jobId
+        });
+
+        alert(
+            "Application submitted");
+    }
+    catch {
+        alert(
+            "Already applied");
+    }
+}
 export default function JobList() {
     const [jobs, setJobs] =  useState<Job[]>([]);
 
@@ -66,6 +84,16 @@ export default function JobList() {
                             {job.maxSalary}
                         </p>
 
+                        <p>
+                        <button
+                            onClick={() =>
+                                handleApply(
+                                    job.entityId)
+                            }
+                        >
+                            Apply
+                        </button>
+                        </p>
                     </div>
 
                 ))
