@@ -1,13 +1,23 @@
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function HomePage() {
-
+    const navigate = useNavigate();
     return (
 
         <div className="page-container">
 
             <section className="hero-section">
-
+                <div>
+                    <button
+                        onClick={() =>
+                            navigate(
+                                `/employer/jobs/BFF90B01-77E6-4B5E-A333-3E48C942357D/applicants`)
+                        }
+                    >
+                        View Applicants
+                    </button>
+                </div>
                 <h1 className="hero-title">
                     Find Local Jobs Faster
                 </h1>
