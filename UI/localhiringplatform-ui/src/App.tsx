@@ -15,6 +15,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import DashboardPage from "./pages/DashboardPage";
 import ManageSkills from "./pages/master/ManageSkills";
 import CreateJobPage from "./pages/master/CreateJobPage";
+import ApplicantListPage from "./pages/employer/ApplicantListPage";
 function App() {
     return (
         <BrowserRouter>
@@ -71,6 +72,13 @@ function App() {
                         path="/candidate/myapplications"
                         element={
                             <MyApplicationsPage />
+                        }
+                    />
+
+                    <Route
+                        path="/employer/jobs/:jobId/applicants"
+                        element={
+                            <ApplicantListPage />
                         }
                     />
                 </Route>

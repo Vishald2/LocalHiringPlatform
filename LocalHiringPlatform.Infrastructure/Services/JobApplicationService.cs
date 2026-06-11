@@ -82,6 +82,39 @@ public class JobApplicationService
             .SaveChangesAsync();
     }
 
+    public async Task<List<ApplicantModel>> GetApplicantsAsync(Guid jobId, Guid userId)
+    {
+        var applications = await _jobApplicationRepository.GetByJobIdAsync(jobId);
+
+        return applications
+            .Select(x =>
+                new ApplicantModel
+                {
+                    CandidateProfileId =
+                        x.CandidateProfileId,
+
+                    CandidateName =
+                        $"{x.CandidateProfile.FullName}",
+
+                    Email =
+                        x.CandidateProfile
+                            .User
+                            .Email,
+
+                    MobileNumber =
+                        x.CandidateProfile
+                            .User
+                            .MobileNumber,
+
+                    AppliedOn =
+                        x.AppliedOn,
+
+                    Status =
+                        x.Status
+                })
+            .ToList();
+    }
+
     public async Task<List<MyApplicationModel>>
         GetMyApplicationsAsync(
             Guid userId)
