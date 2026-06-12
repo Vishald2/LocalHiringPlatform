@@ -4,12 +4,46 @@ import { useState } from "react";
 
 import { getApplicantsByEmployer } from "../../services/JobApplicationService";
 
-import type {Applicant} from "../../types/Applicant";
+import type { Applicant } from "../../types/Applicant";
+
+import { updateApplicationStatus }from "../../services/JobApplicationService";
 
 export default function ApplicantListPage() {
 
     const [applicants, setApplicants] = useState<Applicant[]>([]);
 
+    const statuses = [
+        "Applied",
+        "Shortlisted",
+        "Interview Scheduled",
+        "Rejected",
+        "Hired"
+    ];
+
+    async function handleStatusChange(
+        jobApplicationId: string,
+        status: string) {
+        try {
+            await updateApplicationStatus({
+                jobApplicationId,
+                status
+            });
+
+            setApplicants(
+                applicants.map(a =>
+                    a.jobApplicationId === jobApplicationId
+                        ? {
+                            ...a,
+                            status
+                        }
+                        : a
+                )
+            );
+        }
+        catch (error) {
+            console.error(error);
+        }
+    }
 
     useEffect(() => {
         async function loadApplicants() {
@@ -32,9 +66,8 @@ export default function ApplicantListPage() {
                 applicants.map(
                     applicant => (
 
-                        <div
-                            key={
-                                applicant.candidateProfileId
+                        <div key={
+                            applicant.jobApplicationId
                             }
                             className="card"
                         >
@@ -43,6 +76,14 @@ export default function ApplicantListPage() {
                                     applicant.candidateName
                                 }
                             </h3>
+
+                            <p>
+                                Application Id:
+                                {" "}
+                                {
+                                    applicant.jobApplicationId
+                                }
+                            </p>
 
                             <p>
                                 Job Title:
@@ -72,7 +113,18 @@ export default function ApplicantListPage() {
                                 Status:
                                 {" "}
                                 {
-                                    applicant.status
+                                    <select
+                                        value={applicant.status}
+                                        onChange={(e) =>
+                                            handleStatusChange(applicant.jobApplicationId,
+                                                e.target.value)}
+                                    >
+                                        {statuses.map(status => (
+                                            <option key={status} value={status}>
+                                                {status}
+                                            </option>
+                                        ))}
+                                    </select>
                                 }
                             </p>
 

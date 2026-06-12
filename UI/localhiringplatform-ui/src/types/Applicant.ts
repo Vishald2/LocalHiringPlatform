@@ -1,4 +1,7 @@
 ﻿export interface Applicant {
+
+    jobApplicationId: string;
+
     candidateProfileId: string;
 
     candidateName: string;

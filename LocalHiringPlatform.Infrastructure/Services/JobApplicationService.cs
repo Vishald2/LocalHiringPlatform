@@ -2,6 +2,7 @@
 using LocalHiringPlatform.Domain.Exceptions;
 using LocalHiringPlatform.Domain.Interfaces;
 using LocalHiringPlatform.Domain.Models;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace LocalHiringPlatform.Infrastructure.Services;
 
@@ -94,6 +95,7 @@ public class JobApplicationService
         var applications = await _jobApplicationRepository.GetAllApplicantsByEmployerProfile(employerProfile.EntityId);
         return applications.Select(x => new ApplicantModel
         {
+            JobApplicationId = x.EntityId,
             CandidateProfileId = x.CandidateProfileId,
             CandidateName = $"{x.CandidateProfile.FullName}",
             Email = x.CandidateProfile.User.Email,
@@ -138,8 +140,7 @@ public class JobApplicationService
             .ToList();
     }
 
-    public async Task<List<MyApplicationModel>>
-        GetMyApplicationsAsync(
+    public async Task<List<MyApplicationModel>>  GetMyApplicationsAsync(
             Guid userId)
     {
         var candidateProfile =
@@ -173,5 +174,37 @@ public class JobApplicationService
                         x.Status
                 })
             .ToList();
+    }
+
+    public async Task UpdateStatusAsync(UpdateApplicationStatusModel model, Guid userId)
+    {
+        var employerProfile =
+            await _employerProfileRepository
+                .GetByUserIdAsync(userId);
+
+        if (employerProfile == null)
+        {
+            throw new Exception(
+                "Employer profile not found.");
+        }
+
+        var application =
+            await _jobApplicationRepository.GetByIdAsync(model.JobApplicationId);
+
+        if (application == null)
+        {
+            throw new Exception(
+                "Application not found.");
+        }
+
+        if (application.Job.EmployerProfileId != employerProfile.EntityId)
+        {
+            throw new UnauthorizedAccessException(
+                "You cannot update this application.");
+        }
+
+        application.Status = model.Status;
+
+        await _unitOfWork.SaveChangesAsync();
     }
 }
