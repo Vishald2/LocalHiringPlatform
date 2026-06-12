@@ -19,6 +19,23 @@ public class JobController
         _jobService = jobService;
     }
 
+    [HttpGet("myjobs")]
+    [Authorize(Roles = "Employer")]
+    public async Task<IActionResult> GetMyJobs()
+    {
+        var userId =
+            Guid.Parse(
+                User.FindFirst(
+                    ClaimTypes.NameIdentifier)!
+                    .Value);
+
+        var jobs =
+            await _jobService
+                .GetEmployerJobsAsync(userId);
+
+        return Ok(jobs);
+    }
+
     [HttpPost]
     public async Task<IActionResult> AddJob(
         CreateJobRequestDto dto)

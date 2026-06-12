@@ -9,4 +9,6 @@ public interface IJobApplicationService
     Task<List<MyApplicationModel>>
     GetMyApplicationsAsync(Guid userId);
     Task<List<ApplicantModel>>GetApplicantsAsync(Guid jobId, Guid userId);
+
+    Task<List<ApplicantModel>> GetAllApplicantsByEmployerProfile(Guid userId);
 }

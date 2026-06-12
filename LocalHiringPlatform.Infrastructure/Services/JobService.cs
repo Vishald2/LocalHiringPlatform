@@ -68,8 +68,7 @@ public class JobService : IJobService
             .SaveChangesAsync();
     }
 
-    public async Task<List<JobModel>>
-        GetAllJobsAsync()
+    public async Task<List<JobModel>> GetAllJobsAsync()
     {
         var jobs =
             await _jobRepository
@@ -85,19 +84,54 @@ public class JobService : IJobService
                 State = job.State,
                 MinSalary = job.MinSalary,
                 MaxSalary = job.MaxSalary,
-                ExperienceRequired =
-                    job.ExperienceRequired,
-
-                RequiredSkills =
-                    job.RequiredSkills,
-
+                ExperienceRequired = job.ExperienceRequired,
+                RequiredSkills = job.RequiredSkills,
                 IsActive = job.IsActive
             })
             .ToList();
     }
 
-    public async Task<JobModel?>
-        GetJobAsync(Guid id)
+    public async Task<List<JobModel>> GetEmployerJobsAsync(Guid userId)
+    {
+        var employerProfile =
+            await _employerProfileRepository.GetByUserIdAsync(userId);
+
+        if (employerProfile == null)
+        {
+            throw new Exception(
+                "Employer profile not found.");
+        }
+
+        var jobs =
+            await _jobRepository
+                .GetByEmployerProfileIdAsync(
+                    employerProfile.EntityId);
+
+        return jobs.Select(j => new JobModel
+        {
+            EntityId = j.EntityId,
+
+            Title = j.Title,
+
+            Description = j.Description,
+
+            City = j.City,
+
+            State = j.State,
+
+            MinSalary = j.MinSalary,
+
+            MaxSalary = j.MaxSalary,
+
+            ExperienceRequired = j.ExperienceRequired,
+
+            RequiredSkills = j.RequiredSkills,
+
+            IsActive = j.IsActive
+        }).ToList();
+    }
+
+    public async Task<JobModel?> GetJobAsync(Guid id)
     {
         var job =
             await _jobRepository
@@ -126,4 +160,6 @@ public class JobService : IJobService
             IsActive = job.IsActive
         };
     }
+
+
 }

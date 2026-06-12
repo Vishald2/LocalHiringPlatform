@@ -15,6 +15,7 @@ public class JobApplicationService
     private readonly
         ICandidateProfileRepository
         _candidateProfileRepository;
+    private IEmployerProfileRepository _employerProfileRepository;
 
     private readonly IUnitOfWork
         _unitOfWork;
@@ -24,6 +25,7 @@ public class JobApplicationService
             jobApplicationRepository,
         ICandidateProfileRepository
             candidateProfileRepository,
+        IEmployerProfileRepository employerProfileRepository,
         IUnitOfWork unitOfWork)
     {
         _jobApplicationRepository =
@@ -31,6 +33,8 @@ public class JobApplicationService
 
         _candidateProfileRepository =
             candidateProfileRepository;
+
+        _employerProfileRepository = employerProfileRepository;
 
         _unitOfWork = unitOfWork;
     }
@@ -80,6 +84,25 @@ public class JobApplicationService
 
         await _unitOfWork
             .SaveChangesAsync();
+    }
+
+    public async Task<List<ApplicantModel>> GetAllApplicantsByEmployerProfile(Guid userId)
+    {
+        var employerProfile =  await _employerProfileRepository
+               .GetByUserIdAsync(userId);
+
+        var applications = await _jobApplicationRepository.GetAllApplicantsByEmployerProfile(employerProfile.EntityId);
+        return applications.Select(x => new ApplicantModel
+        {
+            CandidateProfileId = x.CandidateProfileId,
+            CandidateName = $"{x.CandidateProfile.FullName}",
+            Email = x.CandidateProfile.User.Email,
+            MobileNumber = x.CandidateProfile.User.MobileNumber,
+            AppliedOn = x.AppliedOn,
+            Status = x.Status,
+            JobId = x.JobId,
+            JobTitle = x.Job.Title
+        }).ToList();
     }
 
     public async Task<List<ApplicantModel>> GetApplicantsAsync(Guid jobId, Guid userId)

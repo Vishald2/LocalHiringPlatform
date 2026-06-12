@@ -10,4 +10,6 @@
     appliedOn: string;
 
     status: string;
+
+    jobTitle: string;
 }

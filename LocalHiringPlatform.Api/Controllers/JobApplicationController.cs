@@ -47,9 +47,8 @@ public class JobApplicationController
         return Ok();
     }
 
-    [HttpGet("my")]
-    public async Task<IActionResult>
-    GetMyApplications()
+    [HttpGet("candidate/my")]
+    public async Task<IActionResult> GetMyApplications()
     {
         Guid userId =
             Guid.Parse(
@@ -65,10 +64,8 @@ public class JobApplicationController
         return Ok(result);
     }
 
-    [HttpGet("job/{jobId}")]
-    public async Task<IActionResult>
-    GetApplicants(
-        Guid jobId)
+    [HttpGet("job/{jobId}")] public async Task<IActionResult>
+    GetApplicants(Guid jobId)
     {
         Guid userId =
             Guid.Parse(
@@ -83,5 +80,44 @@ public class JobApplicationController
                     userId);
 
         return Ok(result);
+    }
+
+    [HttpGet("employer/my")]
+    public async Task<IActionResult>GetAllApplicantsByEmployerProfile()
+    {
+        Guid userId =
+            Guid.Parse(
+                User.FindFirst(
+                    ClaimTypes.NameIdentifier)!
+                .Value);
+
+        var model =
+    await _jobApplicationService
+        .GetAllApplicantsByEmployerProfile(
+            userId);
+
+        var response =
+    model.Select(x =>
+        new ApplicantResponseDto
+        {
+            CandidateProfileId =  x.CandidateProfileId,
+
+            CandidateName = x.CandidateName,
+
+            Email =  x.Email,
+
+            MobileNumber =   x.MobileNumber,
+
+            JobTitle = x.JobTitle,
+            
+            JobId =  x.JobId,
+
+            AppliedOn = x.AppliedOn,
+
+            Status = x.Status
+        })
+    .ToList();
+
+        return Ok(response);
     }
 }
