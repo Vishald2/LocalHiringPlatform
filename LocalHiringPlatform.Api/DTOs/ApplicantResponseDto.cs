@@ -1,5 +1,6 @@
 ﻿public class ApplicantResponseDto
 {
+    public Guid JobApplicationId {get; set; }
     public Guid CandidateProfileId { get; set; }
 
     public string CandidateName { get; set; } = string.Empty;

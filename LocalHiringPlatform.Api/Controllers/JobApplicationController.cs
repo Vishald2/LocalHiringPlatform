@@ -4,6 +4,7 @@ using LocalHiringPlatform.Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace LocalHiringPlatform.Api.Controllers;
 
@@ -100,6 +101,7 @@ public class JobApplicationController
     model.Select(x =>
         new ApplicantResponseDto
         {
+            JobApplicationId = x.JobApplicationId,
             CandidateProfileId =  x.CandidateProfileId,
 
             CandidateName = x.CandidateName,

@@ -2,6 +2,7 @@
 using LocalHiringPlatform.Domain.Exceptions;
 using LocalHiringPlatform.Domain.Interfaces;
 using LocalHiringPlatform.Domain.Models;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace LocalHiringPlatform.Infrastructure.Services;
 
@@ -94,6 +95,7 @@ public class JobApplicationService
         var applications = await _jobApplicationRepository.GetAllApplicantsByEmployerProfile(employerProfile.EntityId);
         return applications.Select(x => new ApplicantModel
         {
+            JobApplicationId = x.EntityId,
             CandidateProfileId = x.CandidateProfileId,
             CandidateName = $"{x.CandidateProfile.FullName}",
             Email = x.CandidateProfile.User.Email,

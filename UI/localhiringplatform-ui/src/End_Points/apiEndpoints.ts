@@ -18,7 +18,8 @@ export const API_ENDPOINTS =
     {
         root: "/jobapplication",
         employer: {
-                applicants: "/jobapplication/employer/my"
+            applicants: "/jobapplication/employer/my",
+            updatestatus:"/jobapplication/status"
             }
     },
 
