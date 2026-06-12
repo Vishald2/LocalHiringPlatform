@@ -99,7 +99,9 @@ public class JobApplicationService
             Email = x.CandidateProfile.User.Email,
             MobileNumber = x.CandidateProfile.User.MobileNumber,
             AppliedOn = x.AppliedOn,
-            Status = x.Status
+            Status = x.Status,
+            JobId = x.JobId,
+            JobTitle = x.Job.Title
         }).ToList();
     }
 

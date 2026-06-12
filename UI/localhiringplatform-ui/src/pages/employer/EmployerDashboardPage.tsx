@@ -150,7 +150,7 @@ export default function EmployerDashboardPage() {
 
                 <div
                     className="card stat-card"
-                    onClick={() => navigate("/eapps")}
+                    onClick={() => navigate("/employer/jobs/applicants")}
                     style={{ cursor: "pointer" }}
                 >
                     <div className="stat-number">

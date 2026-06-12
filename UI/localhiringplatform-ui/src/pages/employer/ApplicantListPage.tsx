@@ -45,6 +45,14 @@ export default function ApplicantListPage() {
                             </h3>
 
                             <p>
+                                Job Title:
+                                {" "}
+                                {
+                                    applicant.jobTitle
+                                }
+                            </p>
+
+                            <p>
                                 Email:
                                 {" "}
                                 {

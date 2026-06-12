@@ -91,10 +91,33 @@ public class JobApplicationController
                     ClaimTypes.NameIdentifier)!
                 .Value);
 
-        var result =
-            await _jobApplicationService
-                .GetAllApplicantsByEmployerProfile(userId);
+        var model =
+    await _jobApplicationService
+        .GetAllApplicantsByEmployerProfile(
+            userId);
 
-        return Ok(result);
+        var response =
+    model.Select(x =>
+        new ApplicantResponseDto
+        {
+            CandidateProfileId =  x.CandidateProfileId,
+
+            CandidateName = x.CandidateName,
+
+            Email =  x.Email,
+
+            MobileNumber =   x.MobileNumber,
+
+            JobTitle = x.JobTitle,
+            
+            JobId =  x.JobId,
+
+            AppliedOn = x.AppliedOn,
+
+            Status = x.Status
+        })
+    .ToList();
+
+        return Ok(response);
     }
 }

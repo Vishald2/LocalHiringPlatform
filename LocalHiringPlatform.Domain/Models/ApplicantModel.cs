@@ -15,4 +15,7 @@
 
     public string Status { get; set; }
         = string.Empty;
+
+    public Guid JobId { get; set; } = Guid.Empty;
+    public string JobTitle { get; set; } = string.Empty;
 }
