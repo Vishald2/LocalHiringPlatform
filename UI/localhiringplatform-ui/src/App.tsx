@@ -5,7 +5,6 @@ import RegisterPage from "./pages/CandidateRegisterPage";
 import CandidateDashboardPage from "./pages/DashboardPage";
 import CandidateProfilePage from "./pages/candidate/CandidateProfilePage";
 import MyApplicationsPage from "./pages/candidate/MyApplicationsPage";
-import ApplicantsPage from "./pages/employer/ApplicantsPage";
 import CompanyProfilePage from "./pages/employer/CompanyProfilePage";
 import EmployerDashboardPage from "./pages/employer/EmployerDashboardPage";
 import JobList from "./pages/JobsPage";
@@ -16,6 +15,9 @@ import DashboardPage from "./pages/DashboardPage";
 import ManageSkills from "./pages/master/ManageSkills";
 import CreateJobPage from "./pages/master/CreateJobPage";
 import ApplicantListPage from "./pages/employer/ApplicantListPage";
+import EmployerActiveJobsPage from "./pages/employer/EmployerActiveJobsPage";
+
+
 function App() {
     return (
         <BrowserRouter>
@@ -56,7 +58,6 @@ function App() {
                         }
                     />
                     <Route path="/capps" element={<MyApplicationsPage />} />
-                    <Route path="/eapps" element={<ApplicantsPage />} />
                     <Route path="/eprofile" element={<CompanyProfilePage />} />
                     <Route path="/edashboard" element={<EmployerDashboardPage />} />
                     <Route path="/candidate/register" element={<CandidateRegisterPage />}/>
@@ -76,7 +77,14 @@ function App() {
                     />
 
                     <Route
-                        path="/employer/jobs/:jobId/applicants"
+                        path="/employer/activejobs"
+                        element={
+                            <EmployerActiveJobsPage />
+                        }
+                    />
+
+                    <Route
+                        path="/employer/jobs/applicants"
                         element={
                             <ApplicantListPage />
                         }

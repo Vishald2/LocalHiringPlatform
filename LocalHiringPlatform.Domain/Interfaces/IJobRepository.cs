@@ -9,4 +9,7 @@ public interface IJobRepository
     Task<List<Job>> GetAllAsync();
 
     Task<Job?> GetByIdAsync(Guid id);
+
+    Task<List<Job>> GetByEmployerProfileIdAsync(
+    Guid employerProfileId);
 }

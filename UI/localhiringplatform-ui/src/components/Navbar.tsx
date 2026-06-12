@@ -55,7 +55,11 @@ export default function Navbar() {
                         <Link
                             className="navbar-link"
                             to="/dashboard">
-                            Dashboard
+                            Candidate Dashboard
+                        </Link>
+
+                        <Link to="/edashboard">
+                            Employer Dashboard
                         </Link>
 
                         <Link

@@ -109,6 +109,10 @@ builder.Services.AddScoped<
     IJobApplicationService,
     JobApplicationService>();
 
+builder.Services.AddScoped<
+    IEmployerDashboardService,
+    EmployerDashboardService>();
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(

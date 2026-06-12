@@ -19,3 +19,12 @@ export async function getJobs() {
 
     return response.data;
 }
+
+export async function getMyJobs() {
+
+    const response =
+        await api.get<Job[]>(
+            `${getBaseUrl()}/myjobs`);
+
+    return response.data;
+}

@@ -4,7 +4,7 @@
 import { useState }
     from "react";
 
-import { getMyApplications } from "../../services/ApplyToJobService";
+import { getMyApplications } from "../../services/JobApplicationService";
 import type { MyApplication } from "../../types/MyApplication";
 
 export default function MyApplicationsPage() {

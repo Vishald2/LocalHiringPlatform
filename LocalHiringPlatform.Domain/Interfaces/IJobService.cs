@@ -10,6 +10,7 @@ public interface IJobService
 
     Task<List<JobModel>> GetAllJobsAsync();
 
-    Task<JobModel?> GetJobAsync(
-        Guid id);
+    Task<JobModel?> GetJobAsync(Guid id);
+
+    Task<List<JobModel>> GetEmployerJobsAsync(Guid userId);
 }

@@ -1,27 +1,29 @@
 ﻿
+/*GET FROM SWAGGER*/
 export const API_ENDPOINTS =
 {
     candidate:
     {
-        profile:
-            "/candidate/profile"
+        profile: "/candidate/profile"
     },
-
+    employer:
+    {
+        dashboard:"EmployerDashboard"
+    },
     job:
     {
-        root:
-            "/job"
+        root: "/job"
     },
-
     jobApplication:
     {
-        root:
-            "/jobapplication"
+        root: "/jobapplication",
+        employer: {
+                applicants: "/jobapplication/employer/my"
+            }
     },
 
     skill:
     {
-        root:
-            "/master/skill"
+        root: "/master/skill"
     }
 };

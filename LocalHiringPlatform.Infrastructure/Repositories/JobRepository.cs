@@ -26,6 +26,14 @@ public class JobRepository : IJobRepository
             .ToListAsync();
     }
 
+    public async Task<List<Job>> GetByEmployerProfileIdAsync(Guid employerProfileId)
+    {
+        var abc = await _dbContext.Jobs
+            .Where(j => j.EmployerProfileId == employerProfileId)
+            .ToListAsync();
+        return abc;
+    }
+
     public async Task<Job?> GetByIdAsync(Guid id)
     {
         return await _dbContext.Jobs

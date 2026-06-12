@@ -8,7 +8,7 @@ import { getJobs }
     from "../services/JobService";
 
 import { applyToJob }
-    from "../services/ApplyToJobService";
+    from "../services/JobApplicationService";
 
 import type { Job }
     from "../types/Job";

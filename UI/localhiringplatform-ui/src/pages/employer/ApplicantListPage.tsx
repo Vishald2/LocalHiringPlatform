@@ -1,45 +1,21 @@
-﻿import { useEffect }
-    from "react";
+﻿import { useEffect } from "react";
 
-import { useState }
-    from "react";
+import { useState } from "react";
 
-import { useParams }
-    from "react-router-dom";
+import { getApplicantsByEmployer } from "../../services/JobApplicationService";
 
-import {
-    getApplicants
-}
-    from "../../services/ApplyToJobService";
-
-import type {
-    Applicant
-}
-    from "../../types/Applicant";
+import type {Applicant} from "../../types/Applicant";
 
 export default function ApplicantListPage() {
-    const { jobId } =
-        useParams();
 
-    const [applicants,
-        setApplicants]
-        = useState<
-            Applicant[]
-        >([]);
+    const [applicants, setApplicants] = useState<Applicant[]>([]);
 
 
     useEffect(() => {
         async function loadApplicants() {
-            if (!jobId) {
-                return;
-            }
+            const result = await getApplicantsByEmployer();
 
-            const result =
-                await getApplicants(
-                    jobId);
-
-            setApplicants(
-                result);
+            setApplicants(result);
         }
 
         loadApplicants();
