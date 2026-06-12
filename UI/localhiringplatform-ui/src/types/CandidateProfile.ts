@@ -10,4 +10,6 @@
     profileSummary: string;
     isOpenToWork: boolean;
     profileCompletionPercentage: number;
+    resumeFileName?: string;
+    resumeFilePath?: string;
 }

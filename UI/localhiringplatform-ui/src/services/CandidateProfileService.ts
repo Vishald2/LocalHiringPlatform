@@ -17,3 +17,23 @@ export async function updateProfile(
 
     await api.put(getBaseUrl(), profile);
 }
+
+export async function uploadResume(
+    file: File) {
+    const formData =
+        new FormData();
+
+    formData.append(
+        "resume",
+        file);
+
+    await api.post(
+        `${API_ENDPOINTS.candidate.profile}/resume`,
+        formData,
+        {
+            headers:
+            {
+                "Content-Type": "multipart/form-data"
+            }
+        });
+}

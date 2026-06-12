@@ -8,6 +8,8 @@ import {
 import type{ CandidateProfile }
     from "../../types/CandidateProfile";
 
+import { uploadResume } from "../../services/CandidateProfileService";
+
 export default function CandidateProfilePage() {
 
     const [profile, setProfile] =
@@ -27,6 +29,42 @@ export default function CandidateProfilePage() {
 
     const [successMessage, setSuccessMessage] =
         useState("");
+
+    const [selectedFile,
+        setSelectedFile] =
+        useState<File | null>(null);
+
+    function handleFileChange(
+        e: React.ChangeEvent<HTMLInputElement>) {
+        if (e.target.files &&
+            e.target.files.length > 0) {
+            setSelectedFile(
+                e.target.files[0]);
+        }
+    }
+
+    async function handleUploadResume() {
+        if (!selectedFile) {
+            alert(
+                "Please select a file.");
+
+            return;
+        }
+
+        try {
+            await uploadResume(
+                selectedFile);
+
+            alert(
+                "Resume uploaded successfully.");
+
+           // loadProfile();
+        }
+        catch {
+            alert(
+                "Resume upload failed.");
+        }
+    }
 
     useEffect(() => {
 
@@ -261,7 +299,6 @@ export default function CandidateProfilePage() {
                 </div>
 
                 <div className="form-group">
-
                     <label className="form-label">
                         Profile Summary
                     </label>
@@ -274,8 +311,7 @@ export default function CandidateProfilePage() {
                         onChange={(e) =>
                             handleChange(
                                 "profileSummary",
-                                e.target.value)}
-                    />
+                                e.target.value)} />
 
                 </div>
 
@@ -299,6 +335,44 @@ export default function CandidateProfilePage() {
 
                     </label>
 
+                </div>
+
+                <div className="card">
+
+                    <h3>
+                        Resume
+                    </h3>
+
+                    <input
+                        type="file"
+                        accept=".pdf,.doc,.docx"
+                        onChange={handleFileChange}
+                    />
+
+                    <button
+                        onClick={
+                            handleUploadResume
+                        }
+                    >
+                        Upload Resume
+                    </button>
+                    <p>aaaa{profile.resumeFileName}</p>
+                    {
+                        profile.resumeFileName &&
+                        (
+                            <p>
+
+                                Uploaded Resume:
+
+                                {" "}
+
+                                {
+                                    profile.resumeFileName
+                                }
+
+                            </p>
+                        )
+                    }
                 </div>
 
                 <div

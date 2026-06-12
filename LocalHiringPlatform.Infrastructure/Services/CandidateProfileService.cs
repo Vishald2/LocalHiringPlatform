@@ -2,6 +2,7 @@
 using LocalHiringPlatform.Domain.Interfaces;
 using LocalHiringPlatform.Domain.Models;
 using LocalHiringPlatform.Domain.Entities;
+using Microsoft.AspNetCore.Http;
 
 namespace LocalHiringPlatform.Infrastructure.Services;
 
@@ -145,5 +146,57 @@ public class CandidateProfileService
             score += 20;
 
         return score;
+    }
+
+    public async Task UploadResumeAsync(Guid userId, IFormFile file)
+    {
+        var profile =
+            await _candidateProfileRepository
+                .GetByUserIdAsync(userId);
+
+        if (profile == null)
+        {
+            throw new Exception("Candidate profile not found.");
+        }
+
+        if (file == null || file.Length == 0)
+        {
+            throw new Exception("No file uploaded.");
+        }
+
+        var uploadsFolder =
+            Path.Combine(Directory.GetCurrentDirectory(),
+                "wwwroot",
+                "resumes");
+
+        if (!Directory.Exists(uploadsFolder))
+        {
+            Directory.CreateDirectory(
+                uploadsFolder);
+        }
+
+        var fileName =
+            $"{Guid.NewGuid()}_{file.FileName}";
+
+        var filePath =
+            Path.Combine(
+                uploadsFolder,
+                fileName);
+
+        using (var stream =
+            new FileStream(
+                filePath,
+                FileMode.Create))
+        {
+            await file.CopyToAsync(stream);
+        }
+
+        profile.ResumeFileName =
+            file.FileName;
+
+        profile.ResumeFilePath =
+            $"/resumes/{fileName}";
+
+        await _unitOfWork.SaveChangesAsync();
     }
 }

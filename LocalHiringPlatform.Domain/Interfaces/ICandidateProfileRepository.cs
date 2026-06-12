@@ -5,9 +5,7 @@ public interface ICandidateProfileRepository
 {
     Task AddAsync(CandidateProfile profile);
 
-    Task<CandidateProfile?> GetByUserIdAsync(
-        Guid userId);
+    Task<CandidateProfile?> GetByUserIdAsync(Guid userId);
 
-    void Update(
-        CandidateProfile profile);
+    void Update(CandidateProfile profile);
 }

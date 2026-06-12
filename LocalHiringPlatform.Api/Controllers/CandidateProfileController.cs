@@ -128,4 +128,22 @@ public class CandidateProfileController : ControllerBase
 
         return Ok();
     }
+
+    [HttpPost("resume")]
+    public async Task<IActionResult> UploadResume(
+    IFormFile resume)
+    {
+        Guid userId =
+            Guid.Parse(
+                User.FindFirst(
+                    ClaimTypes.NameIdentifier)!
+                .Value);
+
+        await _candidateProfileService
+            .UploadResumeAsync(
+                userId,
+                resume);
+
+        return NoContent();
+    }
 }
