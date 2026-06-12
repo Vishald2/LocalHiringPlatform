@@ -49,6 +49,14 @@ namespace LocalHiringPlatform.Infrastructure.Repositories
                 .ToListAsync();
         }
 
+        public async Task<JobApplication?> GetByIdAsync(Guid id)
+        {
+            return await _dbContext
+                .JobApplications
+                .Include(x => x.Job)
+                .FirstOrDefaultAsync(x => x.EntityId == id);
+        }
+
         public async Task<JobApplication?>
             GetByJobAndCandidateAsync(
                 Guid jobId,

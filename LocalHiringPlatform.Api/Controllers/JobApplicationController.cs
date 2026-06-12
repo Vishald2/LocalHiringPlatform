@@ -115,9 +115,30 @@ public class JobApplicationController
             AppliedOn = x.AppliedOn,
 
             Status = x.Status
-        })
-    .ToList();
+        }).ToList();
 
         return Ok(response);
+    }
+
+    [HttpPut("status")]
+    [Authorize(Roles = "Employer")]
+    public async Task<IActionResult>
+    UpdateStatus(UpdateApplicationStatusRequestDto request)
+    {
+        Guid userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+
+        var model = new UpdateApplicationStatusModel
+            {
+                JobApplicationId = request.JobApplicationId,
+
+                Status = request.Status
+            };
+
+        await _jobApplicationService
+            .UpdateStatusAsync(
+                model,
+                userId);
+
+        return NoContent();
     }
 }
