@@ -40,4 +40,11 @@ public class JobRepository : IJobRepository
             .FirstOrDefaultAsync(
                 x => x.EntityId == id);
     }
+
+    public Task UpdateAsync(Job job)
+    {
+        _dbContext.Jobs.Update(job);
+
+        return Task.CompletedTask;
+    }
 }

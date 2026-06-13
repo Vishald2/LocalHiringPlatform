@@ -90,4 +90,39 @@ public class JobController
 
         return Ok(job);
     }
+
+    [HttpPut]
+    public async Task<IActionResult>
+    UpdateJob(UpdateJobRequestDto request)
+    {
+        Guid userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!
+                .Value);
+
+        var model = new UpdateJobModel
+            {
+                EntityId = request.EntityId,
+
+                Title = request.Title,
+
+                Description = request.Description,
+
+                City = request.City,
+
+                State = request.State,
+
+                MinSalary = request.MinSalary,
+
+                MaxSalary = request.MaxSalary,
+
+                ExperienceRequired = request.ExperienceRequired,
+
+                RequiredSkills = request.RequiredSkills,
+
+                IsActive = request.IsActive
+            };
+
+        await _jobService.UpdateJobAsync(userId, model);
+
+        return NoContent();
+    }
 }

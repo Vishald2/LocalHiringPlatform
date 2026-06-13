@@ -13,4 +13,6 @@ public interface IJobService
     Task<JobModel?> GetJobAsync(Guid id);
 
     Task<List<JobModel>> GetEmployerJobsAsync(Guid userId);
+
+    Task UpdateJobAsync(Guid userId, UpdateJobModel model);
 }

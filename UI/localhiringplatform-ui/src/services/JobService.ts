@@ -3,6 +3,7 @@ import type { CreateJobApiRequest} from "../types/CreateJobApiRequest";
 import { api } from "./api";
 import { API_ENDPOINTS } from "../End_Points/apiEndpoints";
 import type { Job } from "../types/Job";
+import type { UpdateJobRequest } from "../types/UpdateJobRequest";
 
 function getBaseUrl() {
     return API_ENDPOINTS.job.root;
@@ -27,4 +28,18 @@ export async function getMyJobs() {
             `${getBaseUrl()}/myjobs`);
 
     return response.data;
+}
+
+export async function getJobById(
+    id: string) {
+    const response =
+        await api.get<Job>(
+            `${getBaseUrl()}/${id}`);
+
+    return response.data;
+}
+
+export async function updateJob(
+    request: UpdateJobRequest) {
+    await api.put(getBaseUrl(),request);
 }
