@@ -72,7 +72,11 @@ public class CandidateProfileController : ControllerBase
                     profile.IsOpenToWork,
 
                 ProfileCompletionPercentage =
-                    profile.ProfileCompletionPercentage
+                    profile.ProfileCompletionPercentage,
+
+                    ResumeFileName = profile.ResumeFileName,
+
+                ResumeFilePath = profile.ResumeFilePath,
             };
 
         return Ok(response);
@@ -127,5 +131,23 @@ public class CandidateProfileController : ControllerBase
                 model);
 
         return Ok();
+    }
+
+    [HttpPost("resume")]
+    public async Task<IActionResult> UploadResume(
+    IFormFile resume)
+    {
+        Guid userId =
+            Guid.Parse(
+                User.FindFirst(
+                    ClaimTypes.NameIdentifier)!
+                .Value);
+
+        await _candidateProfileService
+            .UploadResumeAsync(
+                userId,
+                resume);
+
+        return NoContent();
     }
 }

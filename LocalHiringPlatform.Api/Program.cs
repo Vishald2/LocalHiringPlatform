@@ -178,6 +178,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseCors("ReactPolicy");
 
+app.UseStaticFiles();
+
 app.UseAuthentication();
 
 app.UseAuthorization();

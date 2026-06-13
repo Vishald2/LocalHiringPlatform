@@ -32,4 +32,7 @@ public class CandidateProfile : BaseEntity
 
     public ICollection<JobApplication>
     JobApplications { get; set; } = new List<JobApplication>();
+
+    public string? ResumeFileName{get; set;}
+    public string? ResumeFilePath { get; set; }
 }

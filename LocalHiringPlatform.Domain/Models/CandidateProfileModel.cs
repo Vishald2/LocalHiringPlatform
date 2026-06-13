@@ -30,5 +30,9 @@ namespace LocalHiringPlatform.Domain.Models
         public bool IsOpenToWork { get; set; }
 
         public int ProfileCompletionPercentage { get; set; }
+
+        public string? ResumeFileName { get; set; }
+
+        public string? ResumeFilePath { get; set; }
     }
 }
