@@ -52,8 +52,11 @@ export default function CandidateProfilePage() {
         }
 
         try {
-            await uploadResume(
-                selectedFile);
+            await uploadResume(selectedFile);
+
+            const result = await getProfile();
+
+            setProfile(result);
 
             alert(
                 "Resume uploaded successfully.");
@@ -70,8 +73,7 @@ export default function CandidateProfilePage() {
 
         async function loadProfile() {
 
-            const result =
-                await getProfile();
+            const result = await getProfile();
 
             setProfile(result);
         }
@@ -356,13 +358,12 @@ export default function CandidateProfilePage() {
                     >
                         Upload Resume
                     </button>
-                    <p>aaaa{profile.resumeFileName}</p>
                     {
                         profile.resumeFileName &&
                         (
                             <p>
-
-                                Uploaded Resume:
+                            <br></br>
+                                <b>Uploaded Resume:</b>
 
                                 {" "}
 

@@ -26,8 +26,7 @@ public class CandidateProfileService
             unitOfWork;
     }
 
-    public async Task<CandidateProfileModel?>
-        GetProfileAsync(Guid userId)
+    public async Task<CandidateProfileModel?> GetProfileAsync(Guid userId)
     {
         var profile =
             await _candidateProfileRepository
@@ -47,14 +46,12 @@ public class CandidateProfileService
             State = profile.State,
             CurrentSalary = profile.CurrentSalary,
             ExpectedSalary = profile.ExpectedSalary,
-            TotalExperienceYears =
-                profile.TotalExperienceYears,
-            ProfileSummary =
-                profile.ProfileSummary,
-            IsOpenToWork =
-                profile.IsOpenToWork,
-            ProfileCompletionPercentage =
-                profile.ProfileCompletionPercentage
+            TotalExperienceYears = profile.TotalExperienceYears,
+            ProfileSummary = profile.ProfileSummary,
+            IsOpenToWork = profile.IsOpenToWork,
+            ProfileCompletionPercentage =  profile.ProfileCompletionPercentage,
+            ResumeFileName = profile.ResumeFileName,
+            ResumeFilePath = profile.ResumeFilePath,
         };
     }
 

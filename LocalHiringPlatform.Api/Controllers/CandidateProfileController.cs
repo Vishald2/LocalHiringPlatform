@@ -72,7 +72,11 @@ public class CandidateProfileController : ControllerBase
                     profile.IsOpenToWork,
 
                 ProfileCompletionPercentage =
-                    profile.ProfileCompletionPercentage
+                    profile.ProfileCompletionPercentage,
+
+                    ResumeFileName = profile.ResumeFileName,
+
+                ResumeFilePath = profile.ResumeFilePath,
             };
 
         return Ok(response);
