@@ -1,9 +1,12 @@
 ﻿import { useEffect, useState } from "react";
 import { getMyJobs } from "../../services/JobService";
 import type { Job } from "../../types/Job";
+import { useNavigate } from "react-router-dom";
 export default function EmployerActiveJobsPage() {
 
     const [jobs, setJobs] = useState<Job[]>([]);
+
+    const navigate = useNavigate();
 
     useEffect(() => {
 
@@ -64,6 +67,14 @@ export default function EmployerActiveJobsPage() {
                             <p>
                                 {job.city}
                             </p>
+                            <button
+                                onClick={() =>
+                                    navigate(
+                                        `/jobs/edit/${job.entityId}`)
+                                }
+                            >
+                                Edit
+                            </button>
                         </div>
                     ))}
 

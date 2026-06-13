@@ -161,5 +161,60 @@ public class JobService : IJobService
         };
     }
 
+    public async Task UpdateJobAsync(Guid userId, UpdateJobModel model)
+    {
+        var employerProfile = await _employerProfileRepository
+                .GetByUserIdAsync(userId);
 
+        if (employerProfile == null)
+        {
+            throw new Exception("Employer profile not found.");
+        }
+
+        var job = await _jobRepository.GetByIdAsync(model.EntityId);
+
+        if (job == null)
+        {
+            throw new Exception("Job not found.");
+        }
+
+        if (job.EmployerProfileId != employerProfile.EntityId)
+        {
+            throw new UnauthorizedAccessException(
+                "You cannot edit this job.");
+        }
+
+        job.Title =
+            model.Title;
+
+        job.Description =
+            model.Description;
+
+        job.City =
+            model.City;
+
+        job.State =
+            model.State;
+
+        job.MinSalary =
+            model.MinSalary;
+
+        job.MaxSalary =
+            model.MaxSalary;
+
+        job.ExperienceRequired =
+            model.ExperienceRequired;
+
+        job.RequiredSkills =
+            model.RequiredSkills;
+
+        job.IsActive =
+            model.IsActive;
+
+        await _jobRepository
+            .UpdateAsync(job);
+
+        await _unitOfWork
+            .SaveChangesAsync();
+    }
 }

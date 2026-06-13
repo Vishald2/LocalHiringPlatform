@@ -16,6 +16,7 @@ import ManageSkills from "./pages/master/ManageSkills";
 import CreateJobPage from "./pages/master/CreateJobPage";
 import ApplicantListPage from "./pages/employer/ApplicantListPage";
 import EmployerActiveJobsPage from "./pages/employer/EmployerActiveJobsPage";
+import EditJobPage from "./pages/master/EditJobPage";
 
 
 function App() {
@@ -88,6 +89,10 @@ function App() {
                         element={
                             <ApplicantListPage />
                         }
+                    />
+                    <Route
+                        path="/jobs/edit/:id"
+                        element={<EditJobPage />}
                     />
                 </Route>
               
