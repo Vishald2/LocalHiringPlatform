@@ -17,6 +17,7 @@ import CreateJobPage from "./pages/master/CreateJobPage";
 import ApplicantListPage from "./pages/employer/ApplicantListPage";
 import EmployerActiveJobsPage from "./pages/employer/EmployerActiveJobsPage";
 import EditJobPage from "./pages/master/EditJobPage";
+import EmployerCandidateSearchPage from "./pages/candidate/EmployerCandidateSearchPage";
 function App() {
     return (
         <BrowserRouter>
@@ -89,6 +90,12 @@ function App() {
                     <Route
                         path="/jobs/edit/:id"
                         element={<EditJobPage />}
+                    />
+                    <Route
+                        path="/employer/candidates"
+                        element={
+                            <EmployerCandidateSearchPage />
+                        }
                     />
                 </Route>
               

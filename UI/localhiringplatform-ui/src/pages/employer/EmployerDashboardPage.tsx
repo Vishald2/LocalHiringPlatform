@@ -46,7 +46,9 @@ export default function EmployerDashboardPage() {
                 <p className="dashboard-subtitle">
                     Manage jobs and track applicants.
                 </p>
-
+                <p>
+                
+                </p>
             </div>
 
             <div className="stats-grid">
@@ -106,6 +108,23 @@ export default function EmployerDashboardPage() {
                         New Applications
                     </div>
 
+                </div>
+
+                <div
+                    className="card stat-card"
+                    onClick={() =>
+                        navigate(
+                            "/employer/candidates")
+                    }
+                    style={{ cursor: "pointer" }}
+                >
+                    <div className="stat-number">
+                        🔍
+                    </div>
+
+                    <div className="stat-label">
+                        Search Candidates
+                    </div>
                 </div>
 
             </div>

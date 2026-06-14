@@ -36,4 +36,44 @@ public class CandidateProfileRepository
         _dbContext.CandidateProfiles.Update(
             profile);
     }
+
+    public async Task<List<CandidateProfile>>
+    SearchAsync(
+        string? name,
+        string? city,
+        Guid? skillId)
+    {
+        var query =
+            _dbContext.CandidateProfiles
+                .Include(x => x.User)
+                .Include(x => x.CandidateSkills)
+                    .ThenInclude(x => x.Skill)
+                .AsQueryable();
+
+        if (!string.IsNullOrWhiteSpace(name))
+        {
+            query =
+                query.Where(x =>
+                    x.FullName.Contains(name));
+        }
+
+        if (!string.IsNullOrWhiteSpace(city))
+        {
+            query =
+                query.Where(x =>
+                    x.City.Contains(city));
+        }
+
+        if (skillId.HasValue)
+        {
+            query =
+                query.Where(x =>
+                    x.CandidateSkills
+                        .Any(cs =>
+                            cs.SkillId ==
+                            skillId.Value));
+        }
+
+        return await query.ToListAsync();
+    }
 }
