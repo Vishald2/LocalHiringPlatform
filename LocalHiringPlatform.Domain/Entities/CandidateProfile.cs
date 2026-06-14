@@ -28,11 +28,17 @@ public class CandidateProfile : BaseEntity
     public int ProfileCompletionPercentage { get; set; }
 
     public bool IsOpenToWork { get; set; } = true;
+
+    public string? ResumeFileName { get; set; }
+    public string? ResumeFilePath { get; set; }
+
     public User User { get; set; } = null!;
+
+    /* Navigation Properties*/
 
     public ICollection<JobApplication>
     JobApplications { get; set; } = new List<JobApplication>();
 
-    public string? ResumeFileName{get; set;}
-    public string? ResumeFilePath { get; set; }
+    public ICollection<CandidateSkill> CandidateSkills { get; set; }
+    = new List<CandidateSkill>();
 }

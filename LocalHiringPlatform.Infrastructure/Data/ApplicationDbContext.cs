@@ -19,9 +19,13 @@ public class ApplicationDbContext : DbContext
 
     public DbSet<Skill> Skills { get; set; }
 
+    public DbSet<CandidateSkill> CandidateSkills {get; set;}
+
     public DbSet<Job> Jobs { get; set; }
 
     public DbSet<JobApplication> JobApplications { get; set; }
+
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -57,5 +61,15 @@ public class ApplicationDbContext : DbContext
                     x.CandidateProfileId
                 })
             .IsUnique();
+
+        modelBuilder.Entity<CandidateSkill>()
+            .HasOne(x => x.CandidateProfile)
+            .WithMany(x => x.CandidateSkills)
+            .HasForeignKey(x => x.CandidateProfileId);
+
+        modelBuilder.Entity<CandidateSkill>()
+            .HasOne(x => x.Skill)
+            .WithMany()
+            .HasForeignKey(x => x.SkillId);
     }
 }
