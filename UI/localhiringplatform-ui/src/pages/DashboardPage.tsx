@@ -1,12 +1,21 @@
 ﻿import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getProfile } from "../services/CandidateProfileService";
-
+import { getCandidateDashboard} from "../services/CandidateDashboardService";
+import type { CandidateDashboardResponse } from "../types/CandidateDashboardResponse";
 export default function DashboardPage() {
 
     const navigate = useNavigate();
     const [profileCompletion, setProfileCompletion] =
         useState<number>(0);
+
+    const [dashboard, setDashboard] = useState<CandidateDashboardResponse>({
+        totalApplications: 0,
+        shortlisted: 0,
+        interviewScheduled: 0,
+        rejected: 0,
+        hired: 0
+    });
 
     useEffect(() => {
 
@@ -20,6 +29,20 @@ export default function DashboardPage() {
         }
 
         loadProfile();
+
+    }, []);
+
+    useEffect(() => {
+
+        async function loadDashboard() {
+            const result = await getCandidateDashboard();
+
+            console.log("Dashboard data:", result);
+
+            setDashboard(result);
+        }
+
+        loadDashboard();
 
     }, []);
 
@@ -41,43 +64,80 @@ export default function DashboardPage() {
 
             <div className="stats-grid">
 
-                <div className="card stat-card"
+                <div
+                    className="card stat-card"
                     onClick={() => navigate("/cprofile")}
-                    style={{ cursor: "pointer" }}>
-
+                    style={{ cursor: "pointer" }}
+                >
                     <div className="stat-number">
-
                         {profileCompletion}%
-
                     </div>
 
                     <div className="stat-label">
                         Profile Completion
                     </div>
+                </div>
+
+                <div
+                    className="card stat-card"
+                    onClick={() =>
+                        navigate("/candidate/myapplications")
+                    }
+                    style={{ cursor: "pointer" }}
+                >
+                    <div className="stat-number">
+                        {dashboard.totalApplications}
+                    </div>
+
+                    <div className="stat-label">
+                        Applications
+                    </div>
+                </div>
+
+                <div className="card stat-card">
+
+                    <div className="stat-number">
+                        {dashboard.shortlisted}
+                    </div>
+
+                    <div className="stat-label">
+                        Shortlisted
+                    </div>
 
                 </div>
 
                 <div className="card stat-card">
 
                     <div className="stat-number">
-                        0
+                        {dashboard.interviewScheduled}
                     </div>
 
                     <div className="stat-label">
-                        <Link to="/candidate/myapplications">
-                            Applications
-                        </Link>
+                        Interviews
                     </div>
+
                 </div>
 
                 <div className="card stat-card">
 
                     <div className="stat-number">
-                        0
+                        {dashboard.rejected}
                     </div>
 
                     <div className="stat-label">
-                        Saved Jobs
+                        Rejected
+                    </div>
+
+                </div>
+
+                <div className="card stat-card">
+
+                    <div className="stat-number">
+                        {dashboard.hired}
+                    </div>
+
+                    <div className="stat-label">
+                        Hired
                     </div>
 
                 </div>
@@ -126,7 +186,7 @@ export default function DashboardPage() {
                         </p>
 
                         <p>
-                            Resume Uploaded: No
+                            Resume Uploaded: Yes
                         </p>
 
                     </div>

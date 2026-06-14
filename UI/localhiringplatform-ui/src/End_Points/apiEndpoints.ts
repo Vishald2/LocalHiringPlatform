@@ -4,7 +4,8 @@ export const API_ENDPOINTS =
 {
     candidate:
     {
-        profile: "/candidate/profile"
+        profile: "/candidate/profile",
+        CandidateDashboard: "CandidateDashboard"
     },
     employer:
     {

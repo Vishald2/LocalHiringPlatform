@@ -113,6 +113,10 @@ builder.Services.AddScoped<
     IEmployerDashboardService,
     EmployerDashboardService>();
 
+builder.Services.AddScoped<
+    ICandidateDashboardService,
+    CandidateDashboardService>();
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(
