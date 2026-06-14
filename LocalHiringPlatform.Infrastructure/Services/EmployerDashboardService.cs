@@ -30,8 +30,7 @@ namespace LocalHiringPlatform.Infrastructure.Services
                 jobApplicationRepository;
         }
 
-        public async Task<EmployerDashboardModel>
-            GetDashboardAsync(Guid userId)
+        public async Task<EmployerDashboardModel>  GetDashboardAsync(Guid userId)
         {
             var employerProfile =
                 await _employerProfileRepository
