@@ -18,4 +18,6 @@
     requiredSkills?: string;
 
     isActive: boolean;
+
+    applicantCount?: number;
 }

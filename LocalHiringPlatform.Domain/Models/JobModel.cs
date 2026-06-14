@@ -21,4 +21,6 @@ public class JobModel
     public string? RequiredSkills { get; set; }
 
     public bool IsActive { get; set; }
+
+    public int ApplicantCount { get; set; }
 }

@@ -127,7 +127,9 @@ public class JobService : IJobService
 
             RequiredSkills = j.RequiredSkills,
 
-            IsActive = j.IsActive
+            IsActive = j.IsActive,
+
+            ApplicantCount = j.JobApplications.Count
         }).ToList();
     }
 

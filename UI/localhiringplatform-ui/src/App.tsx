@@ -18,6 +18,7 @@ import ApplicantListPage from "./pages/employer/ApplicantListPage";
 import EmployerActiveJobsPage from "./pages/employer/EmployerActiveJobsPage";
 import EditJobPage from "./pages/master/EditJobPage";
 import EmployerCandidateSearchPage from "./pages/candidate/EmployerCandidateSearchPage";
+import ManageJobsPage from "./pages/employer/ManageJobsPage";
 function App() {
     return (
         <BrowserRouter>
@@ -96,6 +97,10 @@ function App() {
                         element={
                             <EmployerCandidateSearchPage />
                         }
+                    />
+                    <Route
+                        path="/managejobs"
+                        element={<ManageJobsPage />}
                     />
                 </Route>
               

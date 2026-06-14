@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace LocalHiringPlatform.Domain.Interfaces
 {
-        public interface IEmployerDashboardService
-        {
-            Task<EmployerDashboardModel>
-                GetDashboardAsync(Guid userId);
-        }
+    public interface IEmployerDashboardService
+    {
+        Task<EmployerDashboardModel>
+            GetDashboardAsync(Guid userId);
+    }
 }
