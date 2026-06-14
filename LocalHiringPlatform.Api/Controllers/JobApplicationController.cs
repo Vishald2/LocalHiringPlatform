@@ -116,7 +116,12 @@ public class JobApplicationController
 
             AppliedOn = x.AppliedOn,
 
-            Status = x.Status
+            Status = x.Status,
+
+            ResumeFileName = x.ResumeFileName,
+
+            ResumeFilePath = x.ResumeFilePath
+
         }).ToList();
 
         return Ok(response);

@@ -103,7 +103,9 @@ public class JobApplicationService
             AppliedOn = x.AppliedOn,
             Status = x.Status,
             JobId = x.JobId,
-            JobTitle = x.Job.Title
+            JobTitle = x.Job.Title,
+            ResumeFileName = x.CandidateProfile.ResumeFileName,
+            ResumeFilePath = x.CandidateProfile.ResumeFilePath,
         }).ToList();
     }
 

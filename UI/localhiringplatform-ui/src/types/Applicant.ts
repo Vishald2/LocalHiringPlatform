@@ -15,4 +15,8 @@
     status: string;
 
     jobTitle: string;
+
+    resumeFileName?: string;
+
+    resumeFilePath?: string;
 }
