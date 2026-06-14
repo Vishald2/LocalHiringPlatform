@@ -17,8 +17,6 @@ import CreateJobPage from "./pages/master/CreateJobPage";
 import ApplicantListPage from "./pages/employer/ApplicantListPage";
 import EmployerActiveJobsPage from "./pages/employer/EmployerActiveJobsPage";
 import EditJobPage from "./pages/master/EditJobPage";
-
-
 function App() {
     return (
         <BrowserRouter>
@@ -36,16 +34,14 @@ function App() {
                             </ProtectedRoute>
                         }
                     />
-                    <Route
-                        path="/createjob"
+                    <Route path="/createjob"
                         element={
                             <ProtectedRoute>
                                 <CreateJobPage />
                             </ProtectedRoute>
                         }
                     />
-                    <Route
-                        path="/jobs"
+                    <Route path="/jobs"
                         element={
                             <JobList />
                         }

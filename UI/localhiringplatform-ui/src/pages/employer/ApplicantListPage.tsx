@@ -7,6 +7,7 @@ import { getApplicantsByEmployer } from "../../services/JobApplicationService";
 import type { Applicant } from "../../types/Applicant";
 
 import { updateApplicationStatus }from "../../services/JobApplicationService";
+import { API_BASE_URL } from "../../config/api";
 
 export default function ApplicantListPage() {
 
@@ -138,6 +139,23 @@ export default function ApplicantListPage() {
                                         .toLocaleDateString()
                                 }
                             </p>
+
+                            <p>
+                                Resume:
+                                {" "}
+
+                                <a
+                                    href={`${API_BASE_URL}${applicant.resumeFilePath}`}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                >
+                                    {applicant.resumeFileName}
+                                </a>
+
+                                
+                            </p>
+
+                            
 
                         </div>
                     ))

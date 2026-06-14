@@ -17,4 +17,8 @@
 
     public Guid JobId { get; set; } = Guid.Empty;
     public string JobTitle { get; set; } = string.Empty;
+
+    public string? ResumeFileName { get; set; }
+
+    public string? ResumeFilePath { get; set; }
 }
