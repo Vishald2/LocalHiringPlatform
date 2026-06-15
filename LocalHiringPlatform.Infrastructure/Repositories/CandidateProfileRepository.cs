@@ -25,9 +25,8 @@ public class CandidateProfileRepository
     public async Task<CandidateProfile?> GetByUserIdAsync(
         Guid userId)
     {
-        return await _dbContext.CandidateProfiles
-            .FirstOrDefaultAsync(
-                x => x.UserId == userId);
+        return await _dbContext.CandidateProfiles.Include(x => x.User)
+            .FirstOrDefaultAsync(x => x.UserId == userId);
     }
 
     public void Update(

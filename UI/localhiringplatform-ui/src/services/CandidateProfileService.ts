@@ -6,8 +6,10 @@ function getBaseUrl() {
     return API_ENDPOINTS.candidate.profile;
 }
 
-export async function getProfile() {
-    const response = await api.get(getBaseUrl());
+export async function getProfile(): Promise<CandidateProfile> {
+    const response =
+        await api.get<CandidateProfile>(
+            getBaseUrl());
 
     return response.data;
 }

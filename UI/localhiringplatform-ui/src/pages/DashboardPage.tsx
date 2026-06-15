@@ -17,6 +17,8 @@ export default function DashboardPage() {
         hired: 0
     });
 
+    const [emailVerified, setEmailVerified] = useState(true);
+
     useEffect(() => {
 
         async function loadProfile() {
@@ -24,8 +26,9 @@ export default function DashboardPage() {
             const profile =
                 await getProfile();
 
-            setProfileCompletion(
-                profile.profileCompletionPercentage);
+            setProfileCompletion(profile.profileCompletionPercentage);
+
+            setEmailVerified(profile.emailVerified);
         }
 
         loadProfile();
@@ -55,7 +58,28 @@ export default function DashboardPage() {
                 <h1 className="dashboard-title">
                     Candidate Dashboard
                 </h1>
+                {
+                    !emailVerified && (
 
+                        <div
+                            className="card"
+                            style={{
+                                marginBottom: "20px",
+                                border: "1px solid orange"
+                            }}
+                        >
+                            <h3>
+                                Email Not Verified
+                            </h3>
+
+                            <p>
+                                Please verify your email before
+                                applying for jobs.
+                            </p>
+
+                        </div>
+                    )
+                }
                 <p className="dashboard-subtitle">
                     Welcome back. Complete your profile and start applying for jobs.
                 </p>

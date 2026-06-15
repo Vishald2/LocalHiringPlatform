@@ -1,17 +1,9 @@
-﻿import { useEffect }
-    from "react";
-
-import { useState }
-    from "react";
-
-import { getJobs }
-    from "../services/JobService";
-
-import { applyToJob }
-    from "../services/JobApplicationService";
-
-import type { Job }
-    from "../types/Job";
+﻿import { useEffect }  from "react";
+import { useState } from "react";
+import { getJobs } from "../services/JobService";
+import { applyToJob } from "../services/JobApplicationService";
+import type { Job } from "../types/Job";
+import { getErrorMessage } from "../utils/errorHelper";
 
 async function handleApply(
     jobId: string) {
@@ -20,12 +12,10 @@ async function handleApply(
             jobId
         });
 
-        alert(
-            "Application submitted");
+        alert("Application submitted");
     }
-    catch {
-        alert(
-            "Already applied");
+    catch (error) {
+        alert(getErrorMessage(error));
     }
 }
 export default function JobList() {
@@ -98,7 +88,6 @@ export default function JobList() {
 
                 ))
             }
-
         </div>
     );
 }

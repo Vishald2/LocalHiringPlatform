@@ -1,3 +1,4 @@
+using LocalHiringPlatform.Api.Middleware;
 using LocalHiringPlatform.Domain.Interfaces;
 using LocalHiringPlatform.Domain.Interfaces.MasterDataRepositories;
 using LocalHiringPlatform.Domain.Interfaces.MasterDataServices;
@@ -187,6 +188,8 @@ if (app.Environment.IsDevelopment())
 app.UseCors("ReactPolicy");
 
 app.UseStaticFiles();
+
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.UseAuthentication();
 

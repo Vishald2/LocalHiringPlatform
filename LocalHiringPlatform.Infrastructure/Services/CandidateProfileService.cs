@@ -15,15 +15,16 @@ public class CandidateProfileService
     private readonly IUnitOfWork
         _unitOfWork;
 
+    private readonly IUserRepository _userRepository;
+
     public CandidateProfileService(
         ICandidateProfileRepository candidateProfileRepository,
+        IUserRepository userRepository,
         IUnitOfWork unitOfWork)
     {
-        _candidateProfileRepository =
-            candidateProfileRepository;
-
-        _unitOfWork =
-            unitOfWork;
+        _candidateProfileRepository = candidateProfileRepository;
+        _userRepository = userRepository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<CandidateProfileModel?> GetProfileAsync(Guid userId)
@@ -52,15 +53,13 @@ public class CandidateProfileService
             ProfileCompletionPercentage =  profile.ProfileCompletionPercentage,
             ResumeFileName = profile.ResumeFileName,
             ResumeFilePath = profile.ResumeFilePath,
+            EmailVerified =  profile.User.EmailVerified
         };
     }
 
-    public async Task UpdateProfileAsync(
-        Guid userId,
-        UpdateCandidateProfileModel model)
+    public async Task UpdateProfileAsync(Guid userId, UpdateCandidateProfileModel model)
     {
-        var profile =
-            await _candidateProfileRepository
+        var profile = await _candidateProfileRepository
                 .GetByUserIdAsync(userId);
 
         if (profile == null)

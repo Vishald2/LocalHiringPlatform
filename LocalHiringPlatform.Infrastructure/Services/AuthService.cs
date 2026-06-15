@@ -29,12 +29,10 @@ public class AuthService : IAuthService
         _jwtTokenService = jwtTokenService;
     }
 
-    public async Task RegisterCandidateAsync(
-        RegisterCandidateModel model)
+    public async Task RegisterCandidateAsync(RegisterCandidateModel model)
     {
         var existingEmail =
-            await _userRepository.GetByEmailAsync(
-                model.Email);
+            await _userRepository.GetByEmailAsync(model.Email);
 
         if (existingEmail != null)
         {
@@ -42,8 +40,7 @@ public class AuthService : IAuthService
         }
 
         var existingMobile =
-            await _userRepository.GetByMobileAsync(
-                model.MobileNumber);
+            await _userRepository.GetByMobileAsync(model.MobileNumber);
 
         if (existingMobile != null)
         {
@@ -54,10 +51,10 @@ public class AuthService : IAuthService
         {
             Email = model.Email,
             MobileNumber = model.MobileNumber,
-
             PasswordHash =  BCrypt.Net.BCrypt.HashPassword(model.Password),
-
-            Role = model.Role
+            Role = model.Role,
+            EmailVerified = false,
+            EmailVerificationToken = Guid.NewGuid().ToString(),
         };
 
         await _userRepository.AddAsync(user);
@@ -70,8 +67,7 @@ public class AuthService : IAuthService
                 FullName = model.FullName
             };
 
-            await _candidateProfileRepository
-                .AddAsync(profile);
+            await _candidateProfileRepository.AddAsync(profile);
         }
         else if (user.Role == UserRole.Employer)
         {
@@ -117,5 +113,25 @@ public class AuthService : IAuthService
 
             Role = user.Role.ToString()
         };
+    }
+
+    public async Task VerifyEmailAsync(string token)
+    {
+        var user = await _userRepository
+                .GetByEmailVerificationTokenAsync(token);
+
+        if (user == null)
+        {
+            throw new BusinessException(
+                "Invalid token");
+        }
+
+        user.EmailVerified = true;
+
+        user.EmailVerifiedOn = DateTime.UtcNow;
+
+        user.EmailVerificationToken = null;
+
+        await _unitOfWork.SaveChangesAsync();
     }
 }
