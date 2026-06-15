@@ -26,8 +26,6 @@ export async function getMyApplications() {
         await api.get<MyApplication[]>("/jobapplication/candidate/my");
 
     return response.data;
-
-    //one more line.
 }
 
 export async function getApplicants(
