@@ -2,6 +2,7 @@
 using LocalHiringPlatform.Domain.Exceptions;
 using LocalHiringPlatform.Domain.Interfaces;
 using LocalHiringPlatform.Domain.Models;
+using LocalHiringPlatform.Infrastructure.Repositories;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace LocalHiringPlatform.Infrastructure.Services;
@@ -17,7 +18,7 @@ public class JobApplicationService
         ICandidateProfileRepository
         _candidateProfileRepository;
     private IEmployerProfileRepository _employerProfileRepository;
-
+    private IUserRepository _userRepository;
     private readonly IUnitOfWork
         _unitOfWork;
 
@@ -27,15 +28,16 @@ public class JobApplicationService
         ICandidateProfileRepository
             candidateProfileRepository,
         IEmployerProfileRepository employerProfileRepository,
+        IUserRepository userRepository,
         IUnitOfWork unitOfWork)
     {
-        _jobApplicationRepository =
-            jobApplicationRepository;
+        _jobApplicationRepository = jobApplicationRepository;
 
-        _candidateProfileRepository =
-            candidateProfileRepository;
+        _candidateProfileRepository = candidateProfileRepository;
 
         _employerProfileRepository = employerProfileRepository;
+
+        _userRepository = userRepository;
 
         _unitOfWork = unitOfWork;
     }
@@ -44,6 +46,22 @@ public class JobApplicationService
         ApplyToJobModel model,
         Guid userId)
     {
+        /*VERIFY YOUR EMAIL BEFORE APPLYING FOR JOBS*/
+        var user = await _userRepository.GetByIdAsync(userId);
+
+        if (user == null)
+        {
+            throw new BusinessException(
+                "User not found.");
+        }
+
+        if (!user.EmailVerified)
+        {
+            throw new BusinessException(
+                "Please verify your email before applying for jobs.");
+        }
+
+
         var candidateProfile =
             await _candidateProfileRepository
                 .GetByUserIdAsync(userId);

@@ -43,4 +43,15 @@ public class UserRepository : IUserRepository
                     x.Email == emailOrMobile ||
                     x.MobileNumber == emailOrMobile);
     }
+
+    public async Task<User?>GetByEmailVerificationTokenAsync(string token)
+    {
+        return await _dbContext.Users
+            .FirstOrDefaultAsync(x => x.EmailVerificationToken == token);
+    }
+
+    public async Task<User?> GetByIdAsync(Guid userId)
+    {
+        return await _dbContext.Users.FirstOrDefaultAsync(x => x.EntityId == userId);
+    }
 }

@@ -4,8 +4,7 @@ namespace LocalHiringPlatform.Domain.Interfaces;
 
 public interface IAuthService
 {
-    Task RegisterCandidateAsync(
-        RegisterCandidateModel model);
-    Task<LoginResponseModel> LoginAsync(
-        LoginModel model);
+    Task RegisterCandidateAsync(RegisterCandidateModel model);
+    Task<LoginResponseModel> LoginAsync(LoginModel model);
+    Task VerifyEmailAsync(string token);
 }
