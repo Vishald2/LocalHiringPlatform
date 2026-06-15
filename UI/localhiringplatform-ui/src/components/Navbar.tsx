@@ -7,6 +7,12 @@ export default function Navbar() {
     const token =
         localStorage.getItem("token");
 
+    const role =
+        localStorage.getItem("role");
+
+    console.log("Navbar - token:", token);
+    console.log("Navbar - role:", role);
+
     function handleLogout() {
 
         localStorage.removeItem("token");
@@ -35,37 +41,70 @@ export default function Navbar() {
                     Home
                 </Link>
 
-                {token && (
+                {token && role === "Candidate" && (
                     <>
                         <Link
                             className="navbar-link"
-                            to="/createjob">
-                            Create Job
+                            to="/dashboard">
+                            Dashboard
                         </Link>
+
                         <Link
                             className="navbar-link"
                             to="/jobs">
-                            List Jobs
-                        </Link>
-                        <Link
-                            className="navbar-link"
-                            to="/mskill">
-                            Manage Skills
-                        </Link>
-                        <Link
-                            className="navbar-link"
-                            to="/dashboard">
-                            Candidate Dashboard
+                            Jobs
                         </Link>
 
-                        <Link to="/edashboard">
-                            Employer Dashboard
+                        <Link
+                            className="navbar-link"
+                            to="/candidate/myapplications">
+                            My Applications
                         </Link>
 
                         <Link
                             className="navbar-link"
                             to="/cprofile">
                             Profile
+                        </Link>
+
+                        <button
+                            className="navbar-button navbar-logout"
+                            onClick={handleLogout}>
+                            Logout
+                        </button>
+                    </>
+                )}
+
+                {token && role === "Employer" && (
+                    <>
+                        <Link
+                            className="navbar-link"
+                            to="/edashboard">
+                            Dashboard
+                        </Link>
+
+                        <Link
+                            className="navbar-link"
+                            to="/companyprofile">
+                            Company Profile
+                        </Link>
+
+                        <Link
+                            className="navbar-link"
+                            to="/createjob">
+                            Create Job
+                        </Link>
+
+                        <Link
+                            className="navbar-link"
+                            to="/managejobs">
+                            Manage Jobs
+                        </Link>
+
+                        <Link
+                            className="navbar-link"
+                            to="/employer/candidates">
+                            Search Candidates
                         </Link>
 
                         <button

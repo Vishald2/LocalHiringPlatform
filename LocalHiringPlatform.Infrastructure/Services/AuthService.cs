@@ -86,8 +86,8 @@ public class AuthService : IAuthService
         await _unitOfWork.SaveChangesAsync();
     }
 
-    public async Task<string> LoginAsync(
-     LoginModel model)
+    public async Task<LoginResponseModel> LoginAsync(
+    LoginModel model)
     {
         var user =
             await _userRepository
@@ -111,7 +111,11 @@ public class AuthService : IAuthService
                 "Invalid credentials");
         }
 
-        return _jwtTokenService
-            .GenerateToken(user);
+        return new LoginResponseModel
+        {
+            Token = _jwtTokenService.GenerateToken(user),
+
+            Role = user.Role.ToString()
+        };
     }
 }

@@ -70,13 +70,9 @@ public class AuthController : ControllerBase
                     request.Password
             };
 
-            var token = await _authService.LoginAsync(model);
+            var response = await _authService.LoginAsync(model);
 
-            return Ok(new LoginResponse
-            {
-                Token = token,
-                Role = "Candidate"
-            });
+            return Ok(response);
         }
         catch (BusinessException ex)
         {

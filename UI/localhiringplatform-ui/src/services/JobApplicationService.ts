@@ -8,7 +8,7 @@ import type { Applicant } from "../types/Applicant";
 import type { UpdateApplicationStatusRequest } from "../types/UpdateApplicationStatusRequest";
 
 function getBaseUrl() {
-    return API_ENDPOINTS.jobApplication.employer.updatestatus;
+    return API_ENDPOINTS.jobApplication.root;
 }
 
 export async function applyToJob(
@@ -23,7 +23,7 @@ export async function applyToJob(
 
 export async function getMyApplications() {
     const response =
-        await api.get<MyApplication[]>("/jobapplication/employer/my");
+        await api.get<MyApplication[]>("/jobapplication/candidate/my");
 
     return response.data;
 }

@@ -15,22 +15,23 @@ export default function LoginPage() {
 
         try {
 
-            const result = await login({
+            const response = await login({
                 emailOrMobile: form.emailOrMobile,
                 password: form.password
             });
 
             localStorage.setItem(
                 "token",
-                result.token);
+                response.token);
 
-            localStorage.setItem(
-                "role",
-                result.role);
+            localStorage.setItem("role", response.role);
 
-            localStorage.setItem("token", result.token);
-
-            navigate("/dashboard");
+            if (response.role === "Employer") {
+                navigate("/edashboard");
+            }
+            else {
+                navigate("/dashboard");
+            }
         }
         catch (error) {
 
