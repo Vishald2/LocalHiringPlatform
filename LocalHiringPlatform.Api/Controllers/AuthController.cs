@@ -85,8 +85,7 @@ public class AuthController : ControllerBase
 
     [HttpGet("verify-email")]
     public async Task<IActionResult>
-    VerifyEmail(
-        string token)
+    VerifyEmail(string token)
     {
         await _authService
             .VerifyEmailAsync(token);

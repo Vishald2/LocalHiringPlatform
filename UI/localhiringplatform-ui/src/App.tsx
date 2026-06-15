@@ -19,6 +19,7 @@ import EmployerActiveJobsPage from "./pages/employer/EmployerActiveJobsPage";
 import EditJobPage from "./pages/master/EditJobPage";
 import EmployerCandidateSearchPage from "./pages/candidate/EmployerCandidateSearchPage";
 import ManageJobsPage from "./pages/employer/ManageJobsPage";
+import VerifyEmailPage from "./pages/VerifyEmailPage";
 function App() {
     return (
         <BrowserRouter>
@@ -100,6 +101,12 @@ function App() {
                     <Route
                         path="/managejobs"
                         element={<ManageJobsPage />}
+                    />
+                    <Route
+                        path="/verify-email"
+                        element={
+                            <VerifyEmailPage />
+                        }
                     />
                 </Route>
               

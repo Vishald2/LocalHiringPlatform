@@ -29,4 +29,6 @@ public class CandidateProfileResponseDto
     public string? ResumeFileName { get; set; }
 
     public string? ResumeFilePath { get; set; }
+
+    public bool EmailVerified { get; set; }
 }

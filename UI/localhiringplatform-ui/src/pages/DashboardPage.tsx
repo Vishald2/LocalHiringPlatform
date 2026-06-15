@@ -23,8 +23,10 @@ export default function DashboardPage() {
 
         async function loadProfile() {
 
-            const profile =
-                await getProfile();
+            const profile = await getProfile();
+
+            console.log("Profile");
+            console.log(profile);
 
             setProfileCompletion(profile.profileCompletionPercentage);
 

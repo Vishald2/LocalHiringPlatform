@@ -3,6 +3,7 @@ import type { LoginRequest } from "../types/LoginRequest";
 import type { LoginResponse } from "../types/LoginResponse";
 
 import type { RegisterCandidateApiRequest } from "../types/RegisterCandidateApiRequest";
+import { api } from "./api";
 
 export async function registerCandidate(
     request: RegisterCandidateApiRequest
@@ -50,4 +51,10 @@ export async function login(
     }
 
     return await response.json();
+}
+
+export async function verifyEmail(
+    token: string) {
+
+    await api.get(`/auth/verify-email?token=${token}`);
 }

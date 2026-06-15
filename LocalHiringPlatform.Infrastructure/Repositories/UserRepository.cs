@@ -47,7 +47,8 @@ public class UserRepository : IUserRepository
     public async Task<User?>GetByEmailVerificationTokenAsync(string token)
     {
         return await _dbContext.Users
-            .FirstOrDefaultAsync(x => x.EmailVerificationToken == token);
+            .FirstOrDefaultAsync(x => x.EmailVerificationToken == token
+            && x.CreatedOn.AddDays(2) > DateTime.UtcNow );
     }
 
     public async Task<User?> GetByIdAsync(Guid userId)
