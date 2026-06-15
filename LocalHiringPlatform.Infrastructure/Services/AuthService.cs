@@ -122,15 +122,14 @@ public class AuthService : IAuthService
 
         if (user == null)
         {
-            throw new BusinessException(
-                "Invalid token");
+            throw new BusinessException("Invalid token");
         }
 
         user.EmailVerified = true;
 
         user.EmailVerifiedOn = DateTime.UtcNow;
 
-        user.EmailVerificationToken = null;
+       // user.EmailVerificationToken = null;
 
         await _unitOfWork.SaveChangesAsync();
     }

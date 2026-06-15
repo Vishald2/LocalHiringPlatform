@@ -8,8 +8,7 @@ function getBaseUrl() {
 
 export async function getProfile(): Promise<CandidateProfile> {
     const response =
-        await api.get<CandidateProfile>(
-            getBaseUrl());
+        await api.get<CandidateProfile>(getBaseUrl());
 
     return response.data;
 }
