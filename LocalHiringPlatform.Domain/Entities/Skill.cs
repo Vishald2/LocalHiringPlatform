@@ -5,7 +5,7 @@ using System.Text;
 
 namespace LocalHiringPlatform.Domain.Entities
 {
-    public class Skill:BaseEntity
+    public class Skill : BaseEntity
     {
         public Guid Id { get; set; }
 

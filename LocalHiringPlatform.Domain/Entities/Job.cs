@@ -24,7 +24,6 @@ public class Job : BaseEntity
 
     public bool IsActive { get; set; } = true;
 
-    public ICollection<JobApplication> JobApplications
-    { get; set; }
-    = new List<JobApplication>();
+    public ICollection<JobApplication> 
+        JobApplications{ get; set; } = new List<JobApplication>();
 }
