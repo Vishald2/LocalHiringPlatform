@@ -9,7 +9,7 @@ namespace LocalHiringPlatform.Domain.Models
 {
     public class SkillModel
     {
-        public  Guid Id { get; set; }
+        public  Guid EntityId { get; set; }
         public string SkillName { get; set; } = string.Empty;
 
         public SkillCategory SkillCategory { get; set; }

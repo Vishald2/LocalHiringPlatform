@@ -9,7 +9,7 @@ namespace LocalHiringPlatform.Domain.Interfaces.MasterDataServices
 {
     public interface ISkillService
     {
-        Task<SkillModel>GetSkillAsync(Guid Id);
+        Task<SkillModel?>GetSkillAsync(Guid EntityId);
 
         Task<List<SkillModel>> GetAllSkillsAsync();
 

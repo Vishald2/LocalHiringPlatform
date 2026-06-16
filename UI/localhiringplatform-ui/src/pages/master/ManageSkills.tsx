@@ -54,7 +54,7 @@ export default function ManageSkills() {
             <div className="form-card form-card-large">
 
                 <h2 className="form-title">
-                    Candidate Profile
+                    Create Skill
                 </h2>
 
                 <div className="form-group">
