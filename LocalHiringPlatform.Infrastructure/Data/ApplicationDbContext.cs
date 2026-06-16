@@ -71,5 +71,12 @@ public class ApplicationDbContext : DbContext
             .HasOne(x => x.Skill)
             .WithMany()
             .HasForeignKey(x => x.SkillId);
+
+        modelBuilder.Entity<Skill>()
+            .HasIndex(x => new
+            {
+                x.SkillName,
+                x.SkillCategory
+            }).IsUnique();
     }
 }

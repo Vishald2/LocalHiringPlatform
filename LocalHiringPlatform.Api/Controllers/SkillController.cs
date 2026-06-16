@@ -24,14 +24,15 @@ namespace LocalHiringPlatform.Api.Controllers
         {
             List<SkillModel> skillModel = await _skillService.GetAllSkillsAsync();
 
-            return Ok(
-                skillModel.Select(s => new SkillResponseDto
-                {
-                    SkillName = s.SkillName,
-                    SkillCategory = s.SkillCategory,
-                    IsApproved = s.IsApproved
-                })
-                );
+            var skillResponseDto = skillModel.Select(s => new SkillResponseDto
+            {
+                EntityId = s.EntityId,
+                SkillName = s.SkillName,
+                SkillCategory = s.SkillCategory,
+                IsApproved = s.IsApproved
+            }).ToList();
+
+            return Ok(skillResponseDto);
         }
 
         [HttpPost]
@@ -39,6 +40,7 @@ namespace LocalHiringPlatform.Api.Controllers
         {
            await _skillService.AddSkillAsync(
                 new SkillModel {
+                 EntityId = Guid.NewGuid(),
                  SkillName=skillRequestDto.SkillName,
                   IsApproved=skillRequestDto.IsApproved,
                    SkillCategory=skillRequestDto.SkillCategory

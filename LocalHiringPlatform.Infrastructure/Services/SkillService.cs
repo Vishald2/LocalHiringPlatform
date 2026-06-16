@@ -41,7 +41,7 @@ namespace LocalHiringPlatform.Infrastructure.Services
 
             var skillModel = skills.Select(skill => new SkillModel
             {
-                Id = skill.Id,
+                EntityId = skill.EntityId,
                 SkillName = skill.SkillName,
                 SkillCategory = skill.SkillCategory,
                 IsApproved = skill.IsApproved
@@ -51,15 +51,15 @@ namespace LocalHiringPlatform.Infrastructure.Services
             return skillModel;
         }
 
-        public async Task<SkillModel> GetSkillAsync(Guid Id)
+        public async Task<SkillModel?> GetSkillAsync(Guid EntityId)
         {
-            Skill? skill = await _skillRepository.GetSkillAsync(Id);
+            Skill? skill = await _skillRepository.GetSkillAsync(EntityId);
 
             if (skill is not null)
             {
                 return new SkillModel
                 {
-                    Id = skill.Id,
+                    EntityId = skill.EntityId,
                     SkillName = skill.SkillName,
                     SkillCategory = skill.SkillCategory,
                     IsApproved = skill.IsApproved

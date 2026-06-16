@@ -27,9 +27,9 @@ namespace LocalHiringPlatform.Infrastructure.Repositories
            return  _dbContext.Skills.ToList();
         }
 
-        public async Task<Skill?> GetSkillAsync(Guid Id)
+        public async Task<Skill?> GetSkillAsync(Guid EntityId)
         {
-           return await _dbContext.Skills.Where(s => s.Id == Id).FirstOrDefaultAsync();
+           return await _dbContext.Skills.Where(s => s.EntityId == EntityId).FirstOrDefaultAsync();
         }
     }
 }

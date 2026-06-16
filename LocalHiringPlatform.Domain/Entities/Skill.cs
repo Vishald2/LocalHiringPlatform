@@ -7,8 +7,6 @@ namespace LocalHiringPlatform.Domain.Entities
 {
     public class Skill : BaseEntity
     {
-        public Guid Id { get; set; }
-
         public string SkillName { get; set; } = string.Empty;
 
         public SkillCategory SkillCategory { get; set; }
