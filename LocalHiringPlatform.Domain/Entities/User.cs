@@ -1,6 +1,5 @@
 ﻿using LocalHiringPlatform.Domain.Entities;
 using LocalHiringPlatform.Domain.Enums;
-
 public class User : BaseEntity
 {
     public string Email { get; set; } = string.Empty;

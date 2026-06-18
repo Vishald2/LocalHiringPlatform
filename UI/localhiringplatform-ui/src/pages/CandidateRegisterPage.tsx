@@ -4,6 +4,7 @@ import type { CandidateRegisterRequest } from "../types/CandidateRegisterRequest
 import type { CandidateRegisterErrors } from "../types/CandidateRegisterErrors";
 import { registerCandidate } from "../services/AuthService";
 import { useNavigate } from "react-router-dom";
+import type { RegisterCandidateApiRequest } from "../types/RegisterCandidateApiRequest";
 
 export default function CandidateRegisterPage() {
 
@@ -12,13 +13,11 @@ export default function CandidateRegisterPage() {
         mobileNumber: "",
         password: "",
         confirmPassword: "",
-
         acceptTerms: false,
         role: 0
     });
 
-    const passwordsMatch =
-        form.password === form.confirmPassword;
+    const passwordsMatch = form.password === form.confirmPassword;
 
     const [errors, setErrors] =
         useState<CandidateRegisterErrors>({
@@ -62,13 +61,15 @@ export default function CandidateRegisterPage() {
         try {
 
             // await registerCandidate(form);
-            await registerCandidate({
-                fullname: "",
+            const request: RegisterCandidateApiRequest = {
+                fullName: "",
                 email: form.email,
                 mobileNumber: form.mobileNumber,
                 password: form.password,
                 role: Number(form.role)
-            });
+            };
+
+            await registerCandidate(request);
 
             alert(
                 "Candidate registered successfully");
@@ -192,8 +193,7 @@ export default function CandidateRegisterPage() {
 
         setErrors(newErrors);
 
-        return Object.values(newErrors)
-            .every(error => error === "");
+        return Object.values(newErrors).every(error => error === "");
     }
 
     return (

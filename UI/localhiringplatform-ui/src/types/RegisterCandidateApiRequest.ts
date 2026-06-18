@@ -1,5 +1,5 @@
 ﻿export interface RegisterCandidateApiRequest {
-    fullname: string;
+    fullName: string;
     email: string;
     mobileNumber: string;
     password: string;

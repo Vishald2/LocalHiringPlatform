@@ -15,8 +15,7 @@ public class AuthService : IAuthService
 
     private readonly IJwtTokenService _jwtTokenService;
 
-    public AuthService(
-        IUserRepository userRepository,
+    public AuthService(IUserRepository userRepository,
         ICandidateProfileRepository candidateProfileRepository,
         IEmployerProfileRepository employerProfileRepository,
         IUnitOfWork unitOfWork,
@@ -31,16 +30,14 @@ public class AuthService : IAuthService
 
     public async Task RegisterCandidateAsync(RegisterCandidateModel model)
     {
-        var existingEmail =
-            await _userRepository.GetByEmailAsync(model.Email);
+        var existingEmail = await _userRepository.GetByEmailAsync(model.Email);
 
         if (existingEmail != null)
         {
             throw new BusinessException("Email already exists");
         }
 
-        var existingMobile =
-            await _userRepository.GetByMobileAsync(model.MobileNumber);
+        var existingMobile = await _userRepository.GetByMobileAsync(model.MobileNumber);
 
         if (existingMobile != null)
         {
@@ -82,13 +79,10 @@ public class AuthService : IAuthService
         await _unitOfWork.SaveChangesAsync();
     }
 
-    public async Task<LoginResponseModel> LoginAsync(
-    LoginModel model)
+    public async Task<LoginResponseModel> LoginAsync(LoginModel model)
     {
-        var user =
-            await _userRepository
-                .GetByEmailOrMobileAsync(
-                    model.EmailOrMobile);
+        var user = await _userRepository
+                .GetByEmailOrMobileAsync(model.EmailOrMobile);
 
         if (user == null)
         {
@@ -96,8 +90,7 @@ public class AuthService : IAuthService
                 "Invalid credentials");
         }
 
-        bool passwordValid =
-            BCrypt.Net.BCrypt.Verify(
+        bool passwordValid = BCrypt.Net.BCrypt.Verify(
                 model.Password,
                 user.PasswordHash);
 
@@ -110,7 +103,6 @@ public class AuthService : IAuthService
         return new LoginResponseModel
         {
             Token = _jwtTokenService.GenerateToken(user),
-
             Role = user.Role.ToString()
         };
     }
@@ -129,7 +121,9 @@ public class AuthService : IAuthService
 
         user.EmailVerifiedOn = DateTime.UtcNow;
 
-       // user.EmailVerificationToken = null;
+        /*TOKEN IS VALID NOT FOR TWO DAYS*/
+        if(user.CreatedOn.AddDays(2) > DateTime.UtcNow)
+            user.EmailVerificationToken = null;
 
         await _unitOfWork.SaveChangesAsync();
     }
