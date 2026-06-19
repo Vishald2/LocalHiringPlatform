@@ -18,6 +18,7 @@ public class ApplicationDbContext : DbContext
     public DbSet<Job> Jobs { get; set; }
     public DbSet<JobApplication> JobApplications { get; set; }
     public DbSet<Notification> Notifications { get; set; }
+    public DbSet<SavedJob> SavedJobs { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -71,5 +72,13 @@ public class ApplicationDbContext : DbContext
                 x.SkillName,
                 x.SkillCategory
             }).IsUnique();
+
+        modelBuilder.Entity<SavedJob>().HasIndex(
+            x => new
+            {
+                x.UserId,
+                x.JobId
+            })
+            .IsUnique();
     }
 }
