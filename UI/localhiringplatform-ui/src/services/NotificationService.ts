@@ -10,3 +10,16 @@ export async function getMyNotifications() {
 
     return response.data;
 }
+
+export async function getUnreadCount() {
+    const response =
+        await api.get<number>(
+            "/notification/unread-count");
+
+    return response.data;
+}
+
+export async function markAsRead(notificationId: string) {
+
+    await api.put(`/notification/${notificationId}/read`);
+}

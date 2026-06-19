@@ -7,6 +7,8 @@ import { getMyNotifications }
 import type { Notification }
     from "../types/Notification";
 
+import {markAsRead} from "../services/NotificationService";
+
 export default function NotificationsPage() {
 
     const [notifications,
@@ -26,6 +28,23 @@ export default function NotificationsPage() {
         loadNotifications();
 
     }, []);
+
+    async function
+        handleMarkAsRead(
+            notificationId: string) {
+        await markAsRead(
+            notificationId);
+
+        setNotifications(
+            notifications.map(
+                x =>
+                    x.entityId === notificationId
+                        ? {
+                            ...x,
+                            isRead: true
+                        }
+                        : x));
+    }
 
     return (
 
@@ -68,15 +87,15 @@ export default function NotificationsPage() {
                                     }
                                     className="card"
                                     style={{
-                                        marginBottom:
-                                            "15px"
+                                        marginBottom: "15px",
+                                        backgroundColor:
+                                            notification.isRead
+                                                ? "white"
+                                                : "#eef6ff"
                                     }}
                                 >
 
-                                    <div
-                                        className="card-body"
-                                    >
-
+                                    <div className="card-body">
                                         <h3>
                                             {
                                                 notification.title
@@ -96,6 +115,25 @@ export default function NotificationsPage() {
                                                 ).toLocaleString()
                                             }
                                         </small>
+                                        {
+                                            !notification.isRead &&
+                                            (
+                                                <div
+                                                    style={{
+                                                        marginTop: "10px"
+                                                    }}
+                                                >
+                                                    <button
+                                                        className="primary-button"
+                                                        onClick={() =>
+                                                            handleMarkAsRead(
+                                                                notification.entityId)}
+                                                    >
+                                                        Mark As Read
+                                                    </button>
+                                                </div>
+                                            )
+                                        }
 
                                     </div>
 
@@ -103,6 +141,7 @@ export default function NotificationsPage() {
                             ))
                     )
             }
+
 
         </div>
     );

@@ -36,5 +36,30 @@ namespace LocalHiringPlatform.Api.Controllers
             return Ok(
                 notifications);
         }
+
+        [HttpGet("unread-count")]
+        public async Task<IActionResult> GetUnreadCount()
+        {
+            Guid userId = User.GetUserId();
+
+            var count = await _notificationService
+                    .GetUnreadCountAsync(
+                        userId);
+
+            return Ok(count);
+        }
+
+        [HttpPut("{id}/read")]
+        public async Task<IActionResult> MarkAsRead(Guid id)
+        {
+            Guid userId = User.GetUserId();
+
+            await _notificationService
+                .MarkAsReadAsync(
+                    id,
+                    userId);
+
+            return Ok();
+        }
     }
 }
