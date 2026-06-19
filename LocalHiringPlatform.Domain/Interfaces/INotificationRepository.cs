@@ -12,5 +12,6 @@ namespace LocalHiringPlatform.Domain.Interfaces
         Task AddAsync(Notification notification);
         Task<List<Notification>> GetByUserIdAsync(Guid userId);
         Task<Notification?> GetByIdAsync(Guid id);
+        Task<int> GetUnreadCountAsync(Guid userId);
     }
 }

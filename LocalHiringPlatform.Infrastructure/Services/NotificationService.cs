@@ -1,4 +1,5 @@
 ﻿using LocalHiringPlatform.Domain.Entities;
+using LocalHiringPlatform.Domain.Exceptions;
 using LocalHiringPlatform.Domain.Interfaces;
 using LocalHiringPlatform.Domain.Models;
 using System;
@@ -76,6 +77,39 @@ namespace LocalHiringPlatform.Infrastructure.Services
                         CreatedOn = x.CreatedOn
                     })
                 .ToList();
+        }
+
+        public async Task<int> GetUnreadCountAsync(
+        Guid userId)
+        {
+            return await _notificationRepository
+                .GetUnreadCountAsync(
+                    userId);
+        }
+
+        public async Task MarkAsReadAsync(Guid notificationId, Guid userId)
+        {
+            var notification =
+                await _notificationRepository
+                    .GetByIdAsync(
+                        notificationId);
+
+            if (notification == null)
+            {
+                throw new BusinessException(
+                    "Notification not found.");
+            }
+
+            if (notification.UserId != userId)
+            {
+                throw new BusinessException(
+                    "Unauthorized.");
+            }
+
+            notification.IsRead = true;
+
+            await _unitOfWork
+                .SaveChangesAsync();
         }
     }
 }

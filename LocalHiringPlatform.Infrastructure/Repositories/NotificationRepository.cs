@@ -32,5 +32,13 @@ namespace LocalHiringPlatform.Infrastructure.Repositories
             return await _dbContext.Notifications
                 .FirstOrDefaultAsync(x => x.EntityId == id);
         }
+
+        public async Task<int> GetUnreadCountAsync(Guid userId)
+        {
+            return await _dbContext
+                .Notifications
+                .CountAsync(x => x.UserId == userId
+                         && !x.IsRead);
+        }
     }
 }

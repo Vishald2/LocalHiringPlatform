@@ -1,4 +1,6 @@
 ﻿import { Link, useNavigate } from "react-router-dom";
+import { getUnreadCount } from "../services/NotificationService";
+import { useState, useEffect } from "react";
 
 export default function Navbar() {
 
@@ -10,8 +12,29 @@ export default function Navbar() {
     const role =
         localStorage.getItem("role");
 
-    console.log("Navbar - token:", token);
-    console.log("Navbar - role:", role);
+    const [unreadCount, setUnreadCount] = useState(0);
+
+    useEffect(() => {
+
+        async function
+            loadUnreadCount() {
+            try {
+                const count =
+                    await getUnreadCount();
+
+                setUnreadCount(
+                    count);
+            }
+            catch(e) {
+                console.error("Error fetching unread count:", e);
+            }
+        }
+
+        if (token) {
+            loadUnreadCount();
+        }
+
+    }, [token]);
 
     function handleLogout() {
 
@@ -71,6 +94,10 @@ export default function Navbar() {
                             className="navbar-link"
                             to="/notifications">
                             Notifications
+                            {
+                                unreadCount > 0 &&
+                                ` (${unreadCount})`
+                            }
                         </Link>
 
                         <button
