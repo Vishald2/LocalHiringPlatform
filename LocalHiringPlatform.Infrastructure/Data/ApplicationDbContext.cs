@@ -5,26 +5,19 @@ namespace LocalHiringPlatform.Infrastructure.Data;
 
 public class ApplicationDbContext : DbContext
 {
-    public ApplicationDbContext(
-        DbContextOptions<ApplicationDbContext> options)
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)
     {
     }
 
     public DbSet<User> Users => Set<User>();
-
     public DbSet<CandidateProfile> CandidateProfiles => Set<CandidateProfile>();
-
     public DbSet<EmployerProfile> EmployerProfiles => Set<EmployerProfile>();
-
     public DbSet<Skill> Skills { get; set; }
-
     public DbSet<CandidateSkill> CandidateSkills {get; set;}
-
     public DbSet<Job> Jobs { get; set; }
-
     public DbSet<JobApplication> JobApplications { get; set; }
-
+    public DbSet<Notification> Notifications { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

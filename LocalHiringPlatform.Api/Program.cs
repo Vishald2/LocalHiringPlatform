@@ -113,7 +113,7 @@ builder.Services.AddScoped<
 builder.Services.AddScoped<
     IEmployerDashboardService,
     EmployerDashboardService>();
-
+ 
 builder.Services.AddScoped<
     ICandidateDashboardService,
     CandidateDashboardService>();
@@ -121,6 +121,14 @@ builder.Services.AddScoped<
 builder.Services.AddScoped<
     ICandidateSearchService,
     CandidateSearchService>();
+
+builder.Services.AddScoped<
+    INotificationRepository,
+    NotificationRepository>();
+
+builder.Services.AddScoped<
+    INotificationService,
+    NotificationService>();
 
 builder.Services.AddCors(options =>
 {

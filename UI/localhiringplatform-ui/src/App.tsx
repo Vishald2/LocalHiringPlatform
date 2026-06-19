@@ -20,6 +20,8 @@ import EditJobPage from "./pages/master/EditJobPage";
 import EmployerCandidateSearchPage from "./pages/candidate/EmployerCandidateSearchPage";
 import ManageJobsPage from "./pages/employer/ManageJobsPage";
 import VerifyEmailPage from "./pages/VerifyEmailPage";
+import NotificationsPage from "./pages/NotificationsPage";
+
 function App() {
     return (
         <BrowserRouter>
@@ -107,6 +109,9 @@ function App() {
                         element={
                             <VerifyEmailPage />
                         }
+                    />
+                    <Route path="/notifications"
+                        element={<NotificationsPage />}
                     />
                 </Route>
               
