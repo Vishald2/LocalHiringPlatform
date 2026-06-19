@@ -14,31 +14,24 @@ public class JobApplicationService
         IJobApplicationRepository
         _jobApplicationRepository;
 
-    private readonly
-        ICandidateProfileRepository
-        _candidateProfileRepository;
+    private readonly ICandidateProfileRepository _candidateProfileRepository;
     private IEmployerProfileRepository _employerProfileRepository;
     private IUserRepository _userRepository;
-    private readonly IUnitOfWork
-        _unitOfWork;
-
+    private readonly IUnitOfWork _unitOfWork;
+    private readonly INotificationService _notificationService;
     public JobApplicationService(
-        IJobApplicationRepository
-            jobApplicationRepository,
-        ICandidateProfileRepository
-            candidateProfileRepository,
+        IJobApplicationRepository jobApplicationRepository,
+        ICandidateProfileRepository candidateProfileRepository,
         IEmployerProfileRepository employerProfileRepository,
         IUserRepository userRepository,
+        INotificationService notificationService,
         IUnitOfWork unitOfWork)
     {
         _jobApplicationRepository = jobApplicationRepository;
-
         _candidateProfileRepository = candidateProfileRepository;
-
         _employerProfileRepository = employerProfileRepository;
-
         _userRepository = userRepository;
-
+        _notificationService = notificationService;
         _unitOfWork = unitOfWork;
     }
 
@@ -225,6 +218,10 @@ public class JobApplicationService
 
         application.Status = model.Status;
 
+        await _notificationService
+        .CreateAsync( application.CandidateProfile.UserId, "Application Status Updated",
+        $"Your application for '{application.Job.Title}' is now '{model.Status}'.");
+        
         await _unitOfWork.SaveChangesAsync();
     }
 }

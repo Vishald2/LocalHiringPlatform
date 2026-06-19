@@ -122,6 +122,14 @@ builder.Services.AddScoped<
     ICandidateSearchService,
     CandidateSearchService>();
 
+builder.Services.AddScoped<
+    INotificationRepository,
+    NotificationRepository>();
+
+builder.Services.AddScoped<
+    INotificationService,
+    NotificationService>();
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(

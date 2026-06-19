@@ -6,8 +6,7 @@ using Microsoft.EntityFrameworkCore;
 namespace LocalHiringPlatform.Infrastructure.Repositories
 {
 
-    public class JobApplicationRepository
-        : IJobApplicationRepository
+    public class JobApplicationRepository : IJobApplicationRepository
     {
         private readonly ApplicationDbContext _dbContext;
 
@@ -54,6 +53,7 @@ namespace LocalHiringPlatform.Infrastructure.Repositories
             return await _dbContext
                 .JobApplications
                 .Include(x => x.Job)
+                .Include(x => x.CandidateProfile)
                 .FirstOrDefaultAsync(x => x.EntityId == id);
         }
 

@@ -67,6 +67,12 @@ export default function Navbar() {
                             Profile
                         </Link>
 
+                        <Link
+                            className="navbar-link"
+                            to="/notifications">
+                            Notifications
+                        </Link>
+
                         <button
                             className="navbar-button navbar-logout"
                             onClick={handleLogout}>
