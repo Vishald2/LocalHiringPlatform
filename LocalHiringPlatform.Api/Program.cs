@@ -113,7 +113,7 @@ builder.Services.AddScoped<
 builder.Services.AddScoped<
     IEmployerDashboardService,
     EmployerDashboardService>();
-
+ 
 builder.Services.AddScoped<
     ICandidateDashboardService,
     CandidateDashboardService>();
