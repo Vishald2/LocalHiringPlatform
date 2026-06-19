@@ -50,4 +50,53 @@ public class JobRepository : IJobRepository
 
         return Task.CompletedTask;
     }
+
+    public async Task<List<Job>>SearchAsync(string? keyword, string? city)
+    {
+        var jobs = await _dbContext.Jobs.ToListAsync();
+
+        jobs = await _dbContext.Jobs.Where(j=> j.Title.Contains("Manager")).ToListAsync();
+
+        Console.WriteLine(
+            $"Total Jobs: {jobs.Count}");
+
+        Console.WriteLine(
+            $"Active Jobs: {jobs.Count(x => x.IsActive)}");
+
+        IQueryable<Job> query =
+            _dbContext.Jobs
+                .Where(x => x.IsActive);
+
+        keyword = keyword?.Trim().ToLower();
+        city = city?.Trim().ToLower();
+
+        if (!string.IsNullOrWhiteSpace(keyword))
+        {
+            query = query.Where(
+                x =>
+                    x.Title.ToLower().Contains(keyword)
+                    ||
+                    (x.Description ?? "")
+                        .ToLower()
+                        .Contains(keyword)
+                    ||
+                    (x.RequiredSkills ?? "")
+                        .ToLower()
+                        .Contains(keyword));
+        }
+
+        if (!string.IsNullOrWhiteSpace(city))
+        {
+            query = query.Where(
+                x =>
+                    (x.City ?? "")
+                        .ToLower()
+                        .Contains(city));
+        }
+
+        //  return result;
+
+        return await query
+            .ToListAsync();
+    }
 }

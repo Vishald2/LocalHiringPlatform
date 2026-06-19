@@ -13,4 +13,5 @@ public interface IJobRepository
     Task<List<Job>> GetByEmployerProfileIdAsync(Guid employerProfileId);
 
     Task UpdateAsync(Job job);
+    Task<List<Job>>SearchAsync(string? keyword, string? city);
 }

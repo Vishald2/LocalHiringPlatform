@@ -125,4 +125,12 @@ public class JobController
 
         return NoContent();
     }
+
+    [HttpPost("search")]
+    public async Task<IActionResult>SearchJobs(SearchJobsModel model)
+    {
+        var jobs = await _jobService.SearchJobsAsync(model);
+
+        return Ok(jobs);
+    }
 }

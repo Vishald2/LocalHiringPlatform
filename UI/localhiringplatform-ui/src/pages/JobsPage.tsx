@@ -1,6 +1,6 @@
 ﻿import { useEffect }  from "react";
 import { useState } from "react";
-import { getJobs } from "../services/JobService";
+import {getJobs, searchJobs} from "../services/JobService";
 import { applyToJob } from "../services/JobApplicationService";
 import type { Job } from "../types/Job";
 import { getErrorMessage } from "../utils/errorHelper";
@@ -19,7 +19,16 @@ async function handleApply(
     }
 }
 export default function JobList() {
-    const [jobs, setJobs] =  useState<Job[]>([]);
+
+    const [jobs, setJobs] = useState<Job[]>([]);
+
+    const [keyword,
+        setKeyword] =
+        useState("");
+
+    const [city,
+        setCity] =
+        useState("");
 
     useEffect(() => {
 
@@ -33,12 +42,81 @@ export default function JobList() {
         loadJobs();
     }, []);
 
+    async function handleSearch() {
+
+        const result =
+            await searchJobs({
+                keyword,
+                city
+            });
+
+        setJobs(result);
+    }
+
+    async function handleClear() {
+
+        setKeyword("");
+        setCity("");
+
+        const result =
+            await getJobs();
+
+        setJobs(result);
+    }
+
     return (
         <div>
 
             <h2>
                 Available Jobs
             </h2>
+
+            <div
+                style={{
+                    marginBottom: "20px"
+                }}
+            >
+                <input
+                    type="text"
+                    placeholder="Keyword"
+                    value={keyword}
+                    onChange={
+                        e =>
+                            setKeyword(
+                                e.target.value)
+                    }
+                />
+
+                <input
+                    type="text"
+                    placeholder="City"
+                    value={city}
+                    onChange={
+                        e =>
+                            setCity(
+                                e.target.value)
+                    }
+                    style={{
+                        marginLeft: "10px"
+                    }}
+                />
+
+                <button
+                    onClick={handleSearch}
+                    style={{
+                        marginLeft: "10px"
+                    }}
+                >
+                    Search
+                </button>
+
+                <button
+                    onClick={handleClear}
+                >
+                    Clear
+                </button>
+
+            </div>
 
             {
                 jobs.map(job => (
