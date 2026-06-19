@@ -219,4 +219,49 @@ public class JobService : IJobService
         await _unitOfWork
             .SaveChangesAsync();
     }
+
+    public async Task<List<JobModel>>SearchJobsAsync(SearchJobsModel model)
+    {
+        var jobs =
+            await _jobRepository
+                .SearchAsync(
+                    model.Keyword,
+                    model.City);
+
+        return jobs
+            .Select(job =>
+                new JobModel
+                {
+                    EntityId =
+                        job.EntityId,
+
+                    Title =
+                        job.Title,
+
+                    Description =
+                        job.Description,
+
+                    City =
+                        job.City,
+
+                    State =
+                        job.State,
+
+                    MinSalary =
+                        job.MinSalary,
+
+                    MaxSalary =
+                        job.MaxSalary,
+
+                    ExperienceRequired =
+                        job.ExperienceRequired,
+
+                    RequiredSkills =
+                        job.RequiredSkills,
+
+                    IsActive =
+                        job.IsActive
+                })
+            .ToList();
+    }
 }
