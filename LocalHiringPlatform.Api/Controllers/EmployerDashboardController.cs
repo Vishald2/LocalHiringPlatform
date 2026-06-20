@@ -59,5 +59,44 @@ namespace LocalHiringPlatform.API.Controllers
 
             return Ok(response);
         }
+
+        [HttpGet("profile")]
+        public async Task<IActionResult> GetProfileAsync()
+        {
+            var userIdClaim =
+                User.FindFirst(
+                    ClaimTypes.NameIdentifier);
+
+            if (userIdClaim == null)
+            {
+                return Unauthorized();
+            }
+
+            var userId =
+                Guid.Parse(
+                    userIdClaim.Value);
+
+            var profile =
+                await _employerDashboardService
+                    .GetProfileAsync(userId);
+
+            if (profile == null)
+            {
+                return NotFound();
+            }
+
+            var response =
+                new EmployerProfileCto
+                {
+                    UserId = profile.Id,
+                    CompanyName = profile.CompanyName,
+                    Industry = profile.Industry,
+                    Website = profile.Website,
+                    CompanyDescription = profile.CompanyDescription,
+                    IsEmailVerified = profile.IsEmailVerified
+                };
+
+            return Ok(response);
+        }
     }
 }

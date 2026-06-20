@@ -9,7 +9,9 @@ namespace LocalHiringPlatform.Domain.Interfaces
 {
     public interface IEmployerDashboardService
     {
-        Task<EmployerDashboardModel>
-            GetDashboardAsync(Guid userId);
+        Task<EmployerDashboardModel> GetDashboardAsync(Guid userId);
+
+        Task<EmployerProfileModel?> GetProfileAsync(Guid userId);
+
     }
 }

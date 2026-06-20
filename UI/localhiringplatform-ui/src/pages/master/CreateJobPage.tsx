@@ -1,6 +1,7 @@
 ﻿import { useState } from "react";
 
 import { addJob } from "../../services/JobService";
+import { getErrorMessage } from "../../utils/errorHelper";
 
 export default function CreateJobPage() {
 
@@ -20,21 +21,28 @@ export default function CreateJobPage() {
 
         e.preventDefault();
 
-        await addJob(job);
+        try {
 
-        alert(
-            "Job created successfully");
+            await addJob(job);
 
-        setJob({
-            title: "",
-            description: "",
-            city: "",
-            state: "",
-            minSalary: 0,
-            maxSalary: 0,
-            experienceRequired: 0,
-            requiredSkills: ""
-        });
+            alert(
+                "Job created successfully");
+
+            setJob({
+                title: "",
+                description: "",
+                city: "",
+                state: "",
+                minSalary: 0,
+                maxSalary: 0,
+                experienceRequired: 0,
+                requiredSkills: ""
+            });
+        }
+        catch (error) {
+            alert(getErrorMessage(error));
+            console.log(error);
+        }
     }
 
     return (

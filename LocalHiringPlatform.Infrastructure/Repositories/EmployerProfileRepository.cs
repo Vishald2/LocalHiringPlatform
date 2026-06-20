@@ -20,7 +20,7 @@ namespace LocalHiringPlatform.Infrastructure.Repositories
         public async Task<EmployerProfile?> GetByUserIdAsync(
             Guid userId)
         {
-            return await _dbContext.EmployerProfiles
+            return await _dbContext.EmployerProfiles.Include(x=>x.User)
                 .FirstOrDefaultAsync(
                     x => x.UserId == userId);
         }
