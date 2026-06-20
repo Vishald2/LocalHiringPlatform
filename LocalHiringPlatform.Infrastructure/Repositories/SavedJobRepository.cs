@@ -11,23 +11,12 @@ namespace LocalHiringPlatform.Infrastructure.Repositories
     using LocalHiringPlatform.Infrastructure.Data;
     using Microsoft.EntityFrameworkCore;
 
-    public class SavedJobRepository : ISavedJobRepository
+    public class SavedJobRepository : Repository<SavedJob>, ISavedJobRepository
     {
-        private readonly
-            ApplicationDbContext
-            _dbContext;
-
         public SavedJobRepository(ApplicationDbContext dbContext)
+                                : base(dbContext)
         {
-            _dbContext = dbContext;
-        }
 
-        public async Task AddAsync(
-            SavedJob savedJob)
-        {
-            await _dbContext
-                .SavedJobs
-                .AddAsync(savedJob);
         }
 
         public async Task<SavedJob?>
@@ -56,14 +45,6 @@ namespace LocalHiringPlatform.Infrastructure.Repositories
                 .OrderByDescending(
                     x => x.CreatedOn)
                 .ToListAsync();
-        }
-
-        public void Remove(
-            SavedJob savedJob)
-        {
-            _dbContext
-                .SavedJobs
-                .Remove(savedJob);
         }
     }
 }

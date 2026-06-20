@@ -26,6 +26,8 @@ export default function LoginPage() {
 
             localStorage.setItem("role", response.role);
 
+            console.log("Login successful. Token:", response.token, "Role:", response.role);
+
             if (response.role === "Employer") {
                 navigate("/edashboard");
             }

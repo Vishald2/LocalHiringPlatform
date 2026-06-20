@@ -2,11 +2,6 @@
 using LocalHiringPlatform.Domain.Exceptions;
 using LocalHiringPlatform.Domain.Interfaces;
 using LocalHiringPlatform.Domain.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LocalHiringPlatform.Infrastructure.Repositories
 {
@@ -31,14 +26,11 @@ namespace LocalHiringPlatform.Infrastructure.Repositories
         {
             var existing =
                 await _savedJobRepository
-                    .GetAsync(
-                        userId,
-                        jobId);
+                    .GetAsync(userId, jobId);
 
             if (existing != null)
             {
-                throw new BusinessException(
-                    "Job already saved.");
+                return;
             }
 
             await _savedJobRepository

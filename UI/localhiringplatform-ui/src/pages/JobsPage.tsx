@@ -4,6 +4,7 @@ import {getJobs, searchJobs} from "../services/JobService";
 import { applyToJob } from "../services/JobApplicationService";
 import type { Job } from "../types/Job";
 import { getErrorMessage } from "../utils/errorHelper";
+import { saveJob } from "../services/SavedJobService";
 
 async function handleApply(
     jobId: string) {
@@ -62,6 +63,20 @@ export default function JobList() {
             await getJobs();
 
         setJobs(result);
+    }
+
+    async function handleSave(
+        jobId: string) {
+        try {
+
+            await saveJob(jobId);
+
+            alert("Job saved");
+        }
+        catch (error) {
+            alert(
+                getErrorMessage(error));
+        }
     }
 
     return (
@@ -153,14 +168,26 @@ export default function JobList() {
                         </p>
 
                         <p>
-                        <button
-                            onClick={() =>
-                                handleApply(
-                                    job.entityId)
-                            }
-                        >
-                            Apply
-                        </button>
+                            <button
+                                onClick={() =>
+                                    handleApply(
+                                        job.entityId)
+                                }
+                            >
+                                Apply
+                            </button>
+
+                            <button
+                                onClick={() =>
+                                    handleSave(
+                                        job.entityId)
+                                }
+                                style={{
+                                    marginLeft: "10px"
+                                }}
+                            >
+                                Save
+                            </button>
                         </p>
                     </div>
 

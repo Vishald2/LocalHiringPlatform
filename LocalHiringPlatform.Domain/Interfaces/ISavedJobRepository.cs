@@ -7,11 +7,8 @@ using System.Threading.Tasks;
 
 namespace LocalHiringPlatform.Domain.Interfaces
 {
-    public interface ISavedJobRepository
+    public interface ISavedJobRepository : IRepository<SavedJob>
     {
-        Task AddAsync(
-            SavedJob savedJob);
-
         Task<SavedJob?>
             GetAsync(
                 Guid userId,
@@ -20,8 +17,5 @@ namespace LocalHiringPlatform.Domain.Interfaces
         Task<List<SavedJob>>
             GetByUserIdAsync(
                 Guid userId);
-
-        void Remove(
-            SavedJob savedJob);
     }
 }
