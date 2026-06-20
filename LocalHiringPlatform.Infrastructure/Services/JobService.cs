@@ -41,6 +41,13 @@ public class JobService : IJobService
                 "Employer profile not found");
         }
 
+        if (employerProfile.User?.EmailVerified == false)
+        {
+            throw new BusinessException(
+                "Please verify your email before posting jobs.");
+        }
+        
+
         var job = new Job
         {
             EmployerProfileId =

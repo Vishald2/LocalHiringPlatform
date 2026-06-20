@@ -30,6 +30,8 @@ namespace LocalHiringPlatform.Infrastructure.Services
                 jobApplicationRepository;
         }
 
+
+
         public async Task<EmployerDashboardModel>  GetDashboardAsync(Guid userId)
         {
             var employerProfile =
@@ -73,6 +75,26 @@ namespace LocalHiringPlatform.Infrastructure.Services
 
                 NewApplications = 0
             };
+        }
+
+        public async Task<EmployerProfileModel?> GetProfileAsync(Guid userId)
+        {
+            var employerProfile =
+                await _employerProfileRepository
+                    .GetByUserIdAsync(userId);
+            if(employerProfile == null)
+                return null;
+            else
+                return new EmployerProfileModel
+                {
+                    Id = employerProfile.EntityId,
+                    UserId = employerProfile.UserId,
+                    CompanyName = employerProfile.CompanyName,
+                    Industry = employerProfile.Industry,
+                    Website = employerProfile.Website,
+                    CompanyDescription = employerProfile.CompanyDescription,
+                    IsEmailVerified = employerProfile.User?.EmailVerified ?? false
+                };
         }
     }
 }

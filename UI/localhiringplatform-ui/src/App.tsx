@@ -60,7 +60,7 @@ function App() {
                             </ProtectedRoute>
                         }
                     />
-                    <Route path="/eprofile" element={<CompanyProfilePage />} />
+                    <Route path="/companyprofile" element={<CompanyProfilePage />} />
                     <Route path="/edashboard" element={<EmployerDashboardPage />} />
                     <Route path="/candidate/register" element={<CandidateRegisterPage />}/>
                     <Route

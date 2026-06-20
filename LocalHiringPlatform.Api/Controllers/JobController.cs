@@ -1,4 +1,5 @@
 ﻿using LocalHiringPlatform.Api.DTOs;
+using LocalHiringPlatform.Domain.Exceptions;
 using LocalHiringPlatform.Domain.Interfaces;
 using LocalHiringPlatform.Domain.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -37,14 +38,12 @@ public class JobController
     }
 
     [HttpPost]
-    public async Task<IActionResult> AddJob(
-        CreateJobRequestDto dto)
+    public async Task<IActionResult> AddJob(CreateJobRequestDto dto)
     {
         var claims = User.Claims.ToList();
 
         Guid userId =
-            Guid.Parse(
-                User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
         await _jobService.AddJobAsync(
             new CreateJobModel

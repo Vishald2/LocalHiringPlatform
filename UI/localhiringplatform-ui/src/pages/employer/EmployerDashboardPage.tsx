@@ -1,6 +1,6 @@
 ﻿import { useEffect, useState } from "react";
 import type { EmployerDashboard } from "../../types/EmployerDashboard";
-import { getEmployerDashboard } from "../../services/employerDashboardService";
+import { getEmployerDashboard, getEmployerProfile } from "../../services/employerDashboardService";
 import { Link, useNavigate } from "react-router-dom";
 export default function EmployerDashboardPage() {
 
@@ -8,13 +8,30 @@ export default function EmployerDashboardPage() {
 
     const navigate = useNavigate();
 
+    const [emailVerified, setEmailVerified] = useState(true);
+
+    useEffect(() => {
+
+        async function loadProfile() {
+
+            const profile = await getEmployerProfile();
+
+            console.log("Profile");
+            console.log(profile);
+
+            setEmailVerified(profile.isEmailVerified);
+        }
+
+        loadProfile();
+
+    }, []);
+
     useEffect(() => {
         async function loadDashboard() {
 
             try {
 
-                const data =
-                    await getEmployerDashboard();
+                const data = await getEmployerDashboard();
 
                 setDashboard(data);
             }
@@ -42,7 +59,28 @@ export default function EmployerDashboardPage() {
                 <h1 className="dashboard-title">
                     Employer Dashboard
                 </h1>
+                {
+                    !emailVerified && (
 
+                        <div
+                            className="card"
+                            style={{
+                                marginBottom: "20px",
+                                border: "1px solid orange"
+                            }}
+                        >
+                            <h3>
+                                Email Not Verified
+                            </h3>
+
+                            <p>
+                                Please verify your email before
+                                applying for jobs.
+                            </p>
+
+                        </div>
+                    )
+                }
                 <p className="dashboard-subtitle">
                     Manage jobs and track applicants.
                 </p>

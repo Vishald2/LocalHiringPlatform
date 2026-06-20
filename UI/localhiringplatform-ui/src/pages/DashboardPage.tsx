@@ -40,6 +40,7 @@ export default function DashboardPage() {
     useEffect(() => {
 
         async function loadDashboard() {
+
             const result = await getCandidateDashboard();
 
             console.log("Dashboard data:", result);
