@@ -21,6 +21,7 @@ import EmployerCandidateSearchPage from "./pages/candidate/EmployerCandidateSear
 import ManageJobsPage from "./pages/employer/ManageJobsPage";
 import VerifyEmailPage from "./pages/VerifyEmailPage";
 import NotificationsPage from "./pages/NotificationsPage";
+import SavedJobsPage from "./pages/candidate/SavedJobsPage";
 
 function App() {
     return (
@@ -112,6 +113,13 @@ function App() {
                     />
                     <Route path="/notifications"
                         element={<NotificationsPage />}
+                    />
+
+                    <Route
+                        path="/savedjobs"
+                        element={
+                            <SavedJobsPage />
+                        }
                     />
                 </Route>
               

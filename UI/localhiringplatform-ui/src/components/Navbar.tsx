@@ -12,6 +12,8 @@ export default function Navbar() {
     const role =
         localStorage.getItem("role");
 
+    console.log("Token:", token, "Role:", role);
+
     const [unreadCount, setUnreadCount] = useState(0);
 
     useEffect(() => {
@@ -66,6 +68,11 @@ export default function Navbar() {
 
                 {token && role === "Candidate" && (
                     <>
+                        <Link
+                            className="navbar-link"
+                            to="/savedjobs">
+                            Saved Jobs
+                        </Link>
                         <Link
                             className="navbar-link"
                             to="/dashboard">

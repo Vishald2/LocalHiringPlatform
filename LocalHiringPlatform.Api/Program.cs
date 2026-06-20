@@ -130,6 +130,14 @@ builder.Services.AddScoped<
     INotificationService,
     NotificationService>();
 
+builder.Services.AddScoped<
+    ISavedJobRepository,
+    SavedJobRepository>();
+
+builder.Services.AddScoped<
+    ISavedJobService,
+    SavedJobService>();
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(
