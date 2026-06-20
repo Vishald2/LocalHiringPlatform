@@ -1,5 +1,6 @@
 ﻿using LocalHiringPlatform.Api.DTOs;
 using LocalHiringPlatform.Domain.Interfaces;
+using LocalHiringPlatform.Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -86,9 +87,9 @@ namespace LocalHiringPlatform.API.Controllers
             }
 
             var response =
-                new EmployerProfileCto
+                new EmployerProfileResponseCto
                 {
-                    UserId = profile.Id,
+                    //UserId = profile.Id,
                     CompanyName = profile.CompanyName,
                     Industry = profile.Industry,
                     Website = profile.Website,
@@ -97,6 +98,35 @@ namespace LocalHiringPlatform.API.Controllers
                 };
 
             return Ok(response);
+        }
+
+        [HttpPut("profile")]
+        public async Task<IActionResult> UpdateProfileAsync(EmployerProfileRequestCto request)
+        {
+            var userIdClaim =
+                User.FindFirst(
+                    ClaimTypes.NameIdentifier);
+
+            if (userIdClaim == null)
+            {
+                return Unauthorized();
+            }
+
+            var userId =
+                Guid.Parse(
+                    userIdClaim.Value);
+
+            EmployerProfileModel employerProfileModel = new EmployerProfileModel
+            {
+                CompanyDescription = request.CompanyDescription,
+                CompanyName = request.CompanyName,
+                Industry = request.Industry,
+                Website = request.Website
+            };
+
+            await _employerDashboardService.UpdateProfileAsync(userId, employerProfileModel);
+
+            return Ok();
         }
     }
 }

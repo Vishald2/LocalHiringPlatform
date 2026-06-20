@@ -1,5 +1,5 @@
 ﻿
-export type EmployerProfile = {
+export interface EmployerProfile {
     userId: string;
 
     companyName?: string;

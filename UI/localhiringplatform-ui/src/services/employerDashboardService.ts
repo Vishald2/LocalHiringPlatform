@@ -25,3 +25,22 @@ export const getEmployerProfile =
 
         return response.data;
     };
+
+export async function getProfile():
+    Promise<EmployerProfile> {
+
+    const response =
+        await api.get(
+            "/EmployerDashboard/profile");
+
+    return response.data;
+}
+
+export async function updateProfile(
+    profile: EmployerProfile)
+    : Promise<void> {
+
+    await api.put(
+        "/EmployerDashboard/profile",
+        profile);
+}

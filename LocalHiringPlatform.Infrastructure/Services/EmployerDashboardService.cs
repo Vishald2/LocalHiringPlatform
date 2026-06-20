@@ -1,10 +1,10 @@
-﻿using LocalHiringPlatform.Domain.Interfaces;
+﻿using LocalHiringPlatform.Domain.Exceptions;
+using LocalHiringPlatform.Domain.Interfaces;
 using LocalHiringPlatform.Domain.Models;
 
 namespace LocalHiringPlatform.Infrastructure.Services
 {
-    public class EmployerDashboardService
-        : IEmployerDashboardService
+    public class EmployerDashboardService : IEmployerDashboardService
     {
         private readonly IEmployerProfileRepository
             _employerProfileRepository;
@@ -14,11 +14,13 @@ namespace LocalHiringPlatform.Infrastructure.Services
 
         private readonly IJobApplicationRepository
             _jobApplicationRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
         public EmployerDashboardService(
             IEmployerProfileRepository employerProfileRepository,
             IJobRepository jobRepository,
-            IJobApplicationRepository jobApplicationRepository)
+            IJobApplicationRepository jobApplicationRepository,
+            IUnitOfWork unitOfWork)
         {
             _employerProfileRepository =
                 employerProfileRepository;
@@ -28,6 +30,9 @@ namespace LocalHiringPlatform.Infrastructure.Services
 
             _jobApplicationRepository =
                 jobApplicationRepository;
+
+            _unitOfWork =
+                unitOfWork;
         }
 
 
@@ -87,14 +92,43 @@ namespace LocalHiringPlatform.Infrastructure.Services
             else
                 return new EmployerProfileModel
                 {
-                    Id = employerProfile.EntityId,
-                    UserId = employerProfile.UserId,
+                    //Id = employerProfile.EntityId,
+                    //UserId = employerProfile.UserId,
                     CompanyName = employerProfile.CompanyName,
                     Industry = employerProfile.Industry,
                     Website = employerProfile.Website,
                     CompanyDescription = employerProfile.CompanyDescription,
                     IsEmailVerified = employerProfile.User?.EmailVerified ?? false
                 };
+        }
+
+        public async Task UpdateProfileAsync(
+            Guid userId, EmployerProfileModel profile)
+        {
+            var employerProfile =
+                await _employerProfileRepository
+                    .GetByUserIdAsync(userId);
+
+            if (employerProfile == null)
+            {
+                throw new BusinessException(
+                    "Employer profile not found.");
+            }
+
+            employerProfile.CompanyName =
+                profile.CompanyName;
+
+            employerProfile.Industry =
+                profile.Industry;
+
+            employerProfile.Website =
+                profile.Website;
+
+            employerProfile.CompanyDescription =
+                profile.CompanyDescription;
+
+            await _unitOfWork
+                .SaveChangesAsync();
         }
     }
 }

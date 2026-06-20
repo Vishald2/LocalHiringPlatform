@@ -13,5 +13,7 @@ namespace LocalHiringPlatform.Domain.Interfaces
 
         Task<EmployerProfileModel?> GetProfileAsync(Guid userId);
 
+        Task UpdateProfileAsync(Guid userId, EmployerProfileModel profile);
+
     }
 }
