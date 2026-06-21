@@ -138,6 +138,14 @@ builder.Services.AddScoped<
     ISavedJobService,
     SavedJobService>();
 
+builder.Services.AddScoped<
+    ICandidateSkillRepository,
+    CandidateSkillRepository>();
+
+builder.Services.AddScoped<
+    ICandidateSkillService,
+    CandidateSkillService>();
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(

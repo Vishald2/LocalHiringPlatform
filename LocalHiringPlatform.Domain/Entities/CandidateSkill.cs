@@ -1,7 +1,11 @@
 ﻿namespace LocalHiringPlatform.Domain.Entities;
 public class CandidateSkill : BaseEntity
 {
-    public Guid Id { get; set; }
+    public Guid CandidateSkillId
+    {
+        get => EntityId;
+        set => EntityId = value;
+    }
 
     public Guid CandidateProfileId { get; set; }
 
