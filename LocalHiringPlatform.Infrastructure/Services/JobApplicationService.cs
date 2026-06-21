@@ -122,6 +122,28 @@ public class JobApplicationService
 
     public async Task<List<ApplicantModel>> GetApplicantsAsync(Guid jobId, Guid userId)
     {
+
+        var employerProfile = await _employerProfileRepository
+            .GetByUserIdAsync(userId);
+
+        if (employerProfile == null)
+        {
+            throw new BusinessException("Employer profile not found.");
+        }
+
+        var jobApplication = await _jobApplicationRepository.GetByIdAsync(jobId);
+
+        if (jobApplication == null)
+        {
+            throw new BusinessException("No application found for this job.");
+        }
+
+        if (jobApplication.Job.EmployerProfileId != employerProfile.EntityId)
+        {
+            throw new BusinessException(
+                "You are not authorized to view applicants for this job.");
+        }
+
         var applications = await _jobApplicationRepository.GetByJobIdAsync(jobId);
 
         return applications

@@ -68,17 +68,10 @@ public class JobApplicationController
     [HttpGet("job/{jobId}")] public async Task<IActionResult>
     GetApplicants(Guid jobId)
     {
-        Guid userId =
-            Guid.Parse(
-                User.FindFirst(
-                    ClaimTypes.NameIdentifier)!
-                .Value);
+        Guid userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
 
         var result =
-            await _jobApplicationService
-                .GetApplicantsAsync(
-                    jobId,
-                    userId);
+            await _jobApplicationService.GetApplicantsAsync(jobId, userId);
 
         return Ok(result);
     }
