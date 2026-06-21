@@ -152,7 +152,7 @@ export default function ManageJobsPage() {
                                     width: "auto"
                                 }}
                                 onClick={() =>
-                                    navigate("/eapps")
+                                    navigate(`/ejobapplicants/${job.entityId}`)
                                 }
                             >
                                 View Applicants
