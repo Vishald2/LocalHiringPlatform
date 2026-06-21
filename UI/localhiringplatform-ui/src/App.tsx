@@ -22,6 +22,7 @@ import ManageJobsPage from "./pages/employer/ManageJobsPage";
 import VerifyEmailPage from "./pages/VerifyEmailPage";
 import NotificationsPage from "./pages/NotificationsPage";
 import SavedJobsPage from "./pages/candidate/SavedJobsPage";
+import JobApplicantsPage from "./pages/employer/JobApplicantsPage";
 
 function App() {
     return (
@@ -119,6 +120,13 @@ function App() {
                         path="/savedjobs"
                         element={
                             <SavedJobsPage />
+                        }
+                    />
+
+                    <Route
+                        path="/ejobapplicants/:jobId"
+                        element={
+                            <JobApplicantsPage />
                         }
                     />
                 </Route>

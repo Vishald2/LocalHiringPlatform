@@ -67,14 +67,31 @@ export default function EmployerActiveJobsPage() {
                             <p>
                                 {job.city}
                             </p>
-                            <button
-                                onClick={() =>
-                                    navigate(
-                                        `/jobs/edit/${job.entityId}`)
-                                }
+                            <div
+                                style={{
+                                    display: "flex",
+                                    gap: "10px",
+                                    marginTop: "10px"
+                                }}
                             >
-                                Edit
-                            </button>
+                                <button
+                                    onClick={() =>
+                                        navigate(
+                                            `/jobs/edit/${job.entityId}`)
+                                    }
+                                >
+                                    Edit
+                                </button>
+
+                                <button
+                                    onClick={() =>
+                                        navigate(
+                                            `/ejobapplicants/${job.entityId}`)
+                                    }
+                                >
+                                    View Applicants
+                                </button>
+                            </div>
                         </div>
                     ))}
 

@@ -19,12 +19,14 @@ public class JobApplicationService
     private IUserRepository _userRepository;
     private readonly IUnitOfWork _unitOfWork;
     private readonly INotificationService _notificationService;
+    IJobRepository _jobRepository;
     public JobApplicationService(
         IJobApplicationRepository jobApplicationRepository,
         ICandidateProfileRepository candidateProfileRepository,
         IEmployerProfileRepository employerProfileRepository,
         IUserRepository userRepository,
         INotificationService notificationService,
+        IJobRepository jobRepository,
         IUnitOfWork unitOfWork)
     {
         _jobApplicationRepository = jobApplicationRepository;
@@ -32,7 +34,28 @@ public class JobApplicationService
         _employerProfileRepository = employerProfileRepository;
         _userRepository = userRepository;
         _notificationService = notificationService;
+        _jobRepository = jobRepository;
         _unitOfWork = unitOfWork;
+    }
+
+    private async Task<bool> IsEmployerOwnsJobAsync(Guid userId, Guid jobId)
+    {
+        var employerProfile = await _employerProfileRepository.GetByUserIdAsync(userId);
+
+        var job = await _jobRepository.GetByIdAsync(jobId);
+
+        if(employerProfile == null || job == null)
+        {
+            return false;
+        }
+        else if (job.EmployerProfileId == employerProfile.EntityId)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     public async Task ApplyToJobAsync(
@@ -123,22 +146,9 @@ public class JobApplicationService
     public async Task<List<ApplicantModel>> GetApplicantsAsync(Guid jobId, Guid userId)
     {
 
-        var employerProfile = await _employerProfileRepository
-            .GetByUserIdAsync(userId);
+        bool isEmployerOwnsJob = await IsEmployerOwnsJobAsync(userId, jobId);
 
-        if (employerProfile == null)
-        {
-            throw new BusinessException("Employer profile not found.");
-        }
-
-        var jobApplication = await _jobApplicationRepository.GetByIdAsync(jobId);
-
-        if (jobApplication == null)
-        {
-            throw new BusinessException("No application found for this job.");
-        }
-
-        if (jobApplication.Job.EmployerProfileId != employerProfile.EntityId)
+        if (isEmployerOwnsJob == false)
         {
             throw new BusinessException(
                 "You are not authorized to view applicants for this job.");
@@ -170,7 +180,8 @@ public class JobApplicationService
                         x.AppliedOn,
 
                     Status =
-                        x.Status
+                        x.Status,
+                    JobTitle= x.Job.Title,
                 })
             .ToList();
     }

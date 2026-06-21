@@ -28,13 +28,16 @@ export async function getMyApplications() {
     return response.data;
 }
 
-export async function getApplicants(
-    jobId: string) {
-    const response =
-        await api.get<Applicant[]>(`/jobapplication/job/${jobId}`);
+export const getApplicantsByJobId = async (
+    jobId: string
+): Promise<Applicant[]> => {
+
+    const response = await api.get<Applicant[]>(
+        `${getBaseUrl()}/job/${jobId}`
+    );
 
     return response.data;
-}
+};
 
 export async function getApplicantsByEmployer() {
     const response =
