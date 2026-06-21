@@ -59,127 +59,147 @@ export default function EmployerProfilePage() {
         }
         catch (error) {
 
-            handleError(error);
+            alert(error);
         }
     }
 
     return (
-        <div className="container mt-4">
 
-            <h2>
-                Employer Profile
-            </h2>
+        <div className="page-container">
 
-            <form
-                onSubmit={handleSubmit}>
+            <div className="form-card form-card-large">
 
-                <div className="mb-3">
+                <h2 className="form-title">
+                    Employer Profile
+                </h2>
 
-                    <label>
-                        Company Name
-                    </label>
+                <form onSubmit={handleSubmit}>
 
-                    <input
-                        className="form-control"
-                        value={
-                            profile.companyName ?? ""
-                        }
-                        onChange={(e) =>
-                            setProfile({
-                                ...profile,
-                                companyName:
-                                    e.target.value
-                            })
-                        }
-                    />
-                </div>
+                    <div className="form-group">
 
-                <div className="mb-3">
+                        <label className="form-label">
+                            Company Name
+                        </label>
 
-                    <label>
-                        Industry
-                    </label>
+                        <input
+                            className="form-control"
+                            value={
+                                profile.companyName ?? ""
+                            }
+                            onChange={(e) =>
+                                setProfile({
+                                    ...profile,
+                                    companyName:
+                                        e.target.value
+                                })
+                            }
+                        />
 
-                    <input
-                        className="form-control"
-                        value={
-                            profile.industry ?? ""
-                        }
-                        onChange={(e) =>
-                            setProfile({
-                                ...profile,
-                                industry:
-                                    e.target.value
-                            })
-                        }
-                    />
-                </div>
+                    </div>
 
-                <div className="mb-3">
+                    <div className="form-group">
 
-                    <label>
-                        Website
-                    </label>
+                        <label className="form-label">
+                            Industry
+                        </label>
 
-                    <input
-                        className="form-control"
-                        value={
-                            profile.website ?? ""
-                        }
-                        onChange={(e) =>
-                            setProfile({
-                                ...profile,
-                                website:
-                                    e.target.value
-                            })
-                        }
-                    />
-                </div>
+                        <input
+                            className="form-control"
+                            value={
+                                profile.industry ?? ""
+                            }
+                            onChange={(e) =>
+                                setProfile({
+                                    ...profile,
+                                    industry:
+                                        e.target.value
+                                })
+                            }
+                        />
 
-                <div className="mb-3">
+                    </div>
 
-                    <label>
-                        Company Description
-                    </label>
+                    <div className="form-group">
 
-                    <textarea
-                        className="form-control"
-                        rows={5}
-                        value={
-                            profile.companyDescription ?? ""
-                        }
-                        onChange={(e) =>
-                            setProfile({
-                                ...profile,
-                                companyDescription:
-                                    e.target.value
-                            })
-                        }
-                    />
-                </div>
+                        <label className="form-label">
+                            Website
+                        </label>
 
-                <div className="mb-3">
+                        <input
+                            className="form-control"
+                            value={
+                                profile.website ?? ""
+                            }
+                            onChange={(e) =>
+                                setProfile({
+                                    ...profile,
+                                    website:
+                                        e.target.value
+                                })
+                            }
+                        />
 
-                    <strong>
-                        Email Verification:
-                    </strong>
+                    </div>
 
-                    {" "}
+                    <div className="form-group">
 
-                    {profile.isEmailVerified
-                        ? "Verified"
-                        : "Not Verified"}
-                </div>
+                        <label className="form-label">
+                            Company Description
+                        </label>
 
-                <button
-                    type="submit"
-                    className="btn btn-primary">
+                        <textarea
+                            className="form-textarea"
+                            rows={5}
+                            value={
+                                profile.companyDescription ?? ""
+                            }
+                            onChange={(e) =>
+                                setProfile({
+                                    ...profile,
+                                    companyDescription:
+                                        e.target.value
+                                })
+                            }
+                        />
 
-                    Save Profile
+                    </div>
 
-                </button>
+                    <div
+                        style={{
+                            marginTop: "20px"
+                        }}
+                    >
 
-            </form>
+                        <strong>
+                            Email Verification:
+                        </strong>
+
+                        {" "}
+
+                        {profile.isEmailVerified
+                            ? "Verified"
+                            : "Not Verified"}
+
+                    </div>
+
+                    <div
+                        style={{
+                            marginTop: "20px"
+                        }}
+                    >
+
+                        <button
+                            type="submit"
+                            className="primary-button"
+                        >
+                            Save Profile
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
 
         </div>
     );
