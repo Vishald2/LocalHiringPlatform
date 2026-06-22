@@ -14,6 +14,8 @@ namespace LocalHiringPlatform.Domain.Models
 
         public SkillCategory SkillCategory { get; set; }
 
+        public string IndustryType { get; set; } = string.Empty;
+
         public bool IsApproved { get; set; } = true;
     }
 }
