@@ -146,6 +146,10 @@ builder.Services.AddScoped<
     ICandidateSkillService,
     CandidateSkillService>();
 
+builder.Services.AddScoped<
+    IMobileVerificationService,
+    MobileVerificationService>();
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(
