@@ -12,6 +12,13 @@ export default function JobApplicantsPage() {
         setApplicants] =
         useState<Applicant[]>([]);
 
+    const sortedApplicants =
+        [...applicants]
+            .sort(
+                (a, b) =>
+                    b.matchPercentage
+                    - a.matchPercentage);
+
     const [loading,
         setLoading] =
         useState(true);
@@ -27,6 +34,7 @@ export default function JobApplicantsPage() {
                 }
 
                 const data = await getApplicantsByJobId(jobId);
+                console.log("getApplicantsByJobId");
                 console.log(data);
                 setApplicants(data);
 
@@ -78,7 +86,7 @@ export default function JobApplicantsPage() {
 
                 <div className="jobs-grid">
 
-                    {applicants.map(
+                        {sortedApplicants.map(
                         applicant => (
 
                             <div
@@ -111,6 +119,27 @@ export default function JobApplicantsPage() {
                                     {new Date(
                                         applicant.appliedOn
                                     ).toLocaleDateString()}
+                                </p>
+                                <p>
+                                    Match %
+                                    {" "}
+                                    {applicant.matchPercentage }
+                                </p>
+
+                                <p>
+
+                                    <strong>
+                                        Skills:
+                                    </strong>
+
+                                    {" "}
+
+                                    {
+                                        applicant.skills.length > 0
+                                            ? applicant.skills.join(", ")
+                                            : "No Skills"
+                                    }
+
                                 </p>
 
                             </div>

@@ -113,7 +113,11 @@ public class JobApplicationController
 
             ResumeFileName = x.ResumeFileName,
 
-            ResumeFilePath = x.ResumeFilePath
+            ResumeFilePath = x.ResumeFilePath,
+
+            MatchPercentage = x.MatchPercentage,
+
+            Skills = x.Skills
 
         }).ToList();
 
