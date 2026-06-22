@@ -1,7 +1,7 @@
-﻿
-export interface Skill {
-    SkillName: string;
-    SkillCategory: number;
-    IsApproved: boolean;
-    IndustryType: string;
+﻿export interface Skill {
+    entityId: string;
+    skillName: string;
+    skillCategory: number;
+    isApproved: boolean;
+    industryType: string;
 }

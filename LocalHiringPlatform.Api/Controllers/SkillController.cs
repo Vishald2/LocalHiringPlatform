@@ -29,7 +29,8 @@ namespace LocalHiringPlatform.Api.Controllers
                 EntityId = s.EntityId,
                 SkillName = s.SkillName,
                 SkillCategory = s.SkillCategory,
-                IsApproved = s.IsApproved
+                IsApproved = s.IsApproved,
+                IndustryType = s.IndustryType
             }).ToList();
 
             return Ok(skillResponseDto);
