@@ -20,6 +20,7 @@ public class JobApplicationService
     private readonly IUnitOfWork _unitOfWork;
     private readonly INotificationService _notificationService;
     IJobRepository _jobRepository;
+    ICandidateSkillRepository _candidateSkillRepository;
     public JobApplicationService(
         IJobApplicationRepository jobApplicationRepository,
         ICandidateProfileRepository candidateProfileRepository,
@@ -27,6 +28,7 @@ public class JobApplicationService
         IUserRepository userRepository,
         INotificationService notificationService,
         IJobRepository jobRepository,
+        ICandidateSkillRepository candidateSkillRepository,
         IUnitOfWork unitOfWork)
     {
         _jobApplicationRepository = jobApplicationRepository;
@@ -35,6 +37,7 @@ public class JobApplicationService
         _userRepository = userRepository;
         _notificationService = notificationService;
         _jobRepository = jobRepository;
+        _candidateSkillRepository = candidateSkillRepository;
         _unitOfWork = unitOfWork;
     }
 
@@ -140,6 +143,7 @@ public class JobApplicationService
             JobTitle = x.Job.Title,
             ResumeFileName = x.CandidateProfile.ResumeFileName,
             ResumeFilePath = x.CandidateProfile.ResumeFilePath,
+            MatchPercentage = 0 // This will be calculated later in the GetApplicantsAsync method
         }).ToList();
     }
 
@@ -156,34 +160,73 @@ public class JobApplicationService
 
         var applications = await _jobApplicationRepository.GetByJobIdAsync(jobId);
 
+            var candidateProfileIds =
+                applications
+            .Select(x => x.CandidateProfileId)
+            .Distinct()
+            .ToList();
+
+            var candidateSkills = await _candidateSkillRepository
+                .GetByCandidateProfileIdsAsync(candidateProfileIds);
+
+        var job = applications.FirstOrDefault()?.Job;
+
+            var requiredSkills = (job?.RequiredSkills ?? "")
+            .Split(',',  StringSplitOptions.RemoveEmptyEntries)
+                .Select(x => x.Trim())
+                .ToList();
+
         return applications
             .Select(x =>
-                new ApplicantModel
+            {
+                var applicantSkills =
+                    candidateSkills
+                        .Where(cs =>
+                            cs.CandidateProfileId
+                            == x.CandidateProfileId)
+                        .Select(cs =>
+                            cs.Skill.SkillName)
+                        .ToList();
+
+                int matchPercentage = 0;
+
+                if (requiredSkills.Any())
                 {
-                    CandidateProfileId =
-                        x.CandidateProfileId,
+                    var matchedSkills =
+                        applicantSkills.Count(
+                            skill =>
+                                requiredSkills.Any(
+                                    rs =>
+                                        rs.Equals(
+                                            skill,
+                                            StringComparison.OrdinalIgnoreCase)));
 
-                    CandidateName =
-                        $"{x.CandidateProfile.FullName}",
+                    matchPercentage =
+                        (matchedSkills * 100)
+                        / requiredSkills.Count;
+                }
 
-                    Email =
-                        x.CandidateProfile
-                            .User
-                            .Email,
+                return new ApplicantModel
+                {
+                    CandidateProfileId = x.CandidateProfileId,
 
-                    MobileNumber =
-                        x.CandidateProfile
-                            .User
-                            .MobileNumber,
+                    CandidateName = x.CandidateProfile.FullName,
 
-                    AppliedOn =
-                        x.AppliedOn,
+                    Email = x.CandidateProfile.User.Email,
 
-                    Status =
-                        x.Status,
-                    JobTitle= x.Job.Title,
-                })
-            .ToList();
+                    MobileNumber = x.CandidateProfile.User.MobileNumber,
+
+                    AppliedOn = x.AppliedOn,
+
+                    Status = x.Status,
+
+                    JobTitle = x.Job.Title,
+
+                    MatchPercentage = matchPercentage,
+
+                    Skills = applicantSkills,
+                };
+            }).OrderByDescending(x => x.MatchPercentage).ToList();
     }
 
     public async Task<List<MyApplicationModel>>  GetMyApplicationsAsync(

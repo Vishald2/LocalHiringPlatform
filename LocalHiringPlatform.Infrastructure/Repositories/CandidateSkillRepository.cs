@@ -29,23 +29,30 @@ namespace LocalHiringPlatform.Infrastructure.Repositories
                 .ToListAsync();
         }
 
-        public async Task AddRangeAsync(
-            List<CandidateSkill> candidateSkills)
+        public async Task AddRangeAsync(List<CandidateSkill> candidateSkills)
         {
             await _dbContext
                 .CandidateSkills
                 .AddRangeAsync(candidateSkills);
         }
 
-        public Task RemoveRangeAsync(
-            List<CandidateSkill> candidateSkills)
+        public Task RemoveRangeAsync(List<CandidateSkill> candidateSkills)
         {
-            _dbContext
-                .CandidateSkills
+            _dbContext.CandidateSkills
                 .RemoveRange(candidateSkills);
 
             return Task.CompletedTask;
         }
-    }
 
+        public async Task<List<CandidateSkill>> GetByCandidateProfileIdsAsync(
+        List<Guid> candidateProfileIds)
+        {
+            return await _dbContext
+                .CandidateSkills
+                .Include(x => x.Skill)
+                .Where(x => candidateProfileIds
+                        .Contains(x.CandidateProfileId))
+                .ToListAsync();
+        }
+    }
 }

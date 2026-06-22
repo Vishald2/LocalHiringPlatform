@@ -19,4 +19,8 @@
     resumeFileName?: string;
 
     resumeFilePath?: string;
+
+    matchPercentage: number;
+
+    skills: string[];
 }

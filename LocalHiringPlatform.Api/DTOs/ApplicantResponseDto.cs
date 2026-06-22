@@ -20,4 +20,8 @@
     public string? ResumeFileName { get; set; }
 
     public string? ResumeFilePath { get; set; }
+
+    public int MatchPercentage { get; set; }
+
+    public List<string> Skills { get; set; } = new List<string>();
 }
