@@ -29,7 +29,8 @@ namespace LocalHiringPlatform.Api.Controllers
                 EntityId = s.EntityId,
                 SkillName = s.SkillName,
                 SkillCategory = s.SkillCategory,
-                IsApproved = s.IsApproved
+                IsApproved = s.IsApproved,
+                IndustryType = s.IndustryType
             }).ToList();
 
             return Ok(skillResponseDto);
@@ -40,10 +41,11 @@ namespace LocalHiringPlatform.Api.Controllers
         {
            await _skillService.AddSkillAsync(
                 new SkillModel {
-                 EntityId = Guid.NewGuid(),
-                 SkillName=skillRequestDto.SkillName,
-                  IsApproved=skillRequestDto.IsApproved,
-                   SkillCategory=skillRequestDto.SkillCategory
+                    EntityId = Guid.NewGuid(),
+                    SkillName=skillRequestDto.SkillName,
+                    IsApproved=skillRequestDto.IsApproved,
+                    SkillCategory=skillRequestDto.SkillCategory,
+                    IndustryType = skillRequestDto.IndustryType
                 });
 
             return Ok();

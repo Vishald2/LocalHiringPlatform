@@ -27,7 +27,8 @@ namespace LocalHiringPlatform.Infrastructure.Services
             {
                 SkillName = skillModel.SkillName,
                 SkillCategory = skillModel.SkillCategory,
-                IsApproved = skillModel.IsApproved
+                IsApproved = skillModel.IsApproved,
+                IndustryType=skillModel.IndustryType
             };
 
            await _skillRepository.AddAsync(skill);
@@ -44,7 +45,8 @@ namespace LocalHiringPlatform.Infrastructure.Services
                 EntityId = skill.EntityId,
                 SkillName = skill.SkillName,
                 SkillCategory = skill.SkillCategory,
-                IsApproved = skill.IsApproved
+                IsApproved = skill.IsApproved,
+                IndustryType=skill.IndustryType
 
             }).ToList();
 
@@ -62,7 +64,8 @@ namespace LocalHiringPlatform.Infrastructure.Services
                     EntityId = skill.EntityId,
                     SkillName = skill.SkillName,
                     SkillCategory = skill.SkillCategory,
-                    IsApproved = skill.IsApproved
+                    IsApproved = skill.IsApproved,
+                    IndustryType=skill.IndustryType
                 };
             }
             else

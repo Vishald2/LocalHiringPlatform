@@ -8,5 +8,6 @@ namespace LocalHiringPlatform.Api.DTOs
         public string SkillName { get; set; } = string.Empty;
         public SkillCategory SkillCategory { get; set; }
         public bool IsApproved { get; set; } = true;
+        public string IndustryType { get; set; } = string.Empty;
     }
 }
