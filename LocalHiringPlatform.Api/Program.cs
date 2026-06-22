@@ -156,6 +156,10 @@ builder.Services.AddScoped<
     IMobileVerificationService,
     MobileVerificationService>();
 
+builder.Services.AddScoped<
+    IAiMatchingService,
+    AiMatchingService>();
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(

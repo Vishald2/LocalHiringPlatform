@@ -1,43 +1,57 @@
 ﻿using LocalHiringPlatform.Domain.Configuration;
 using LocalHiringPlatform.Domain.Interfaces;
-using Microsoft.AspNetCore.Mvc;
+using LocalHiringPlatform.Domain.Models;
 using Microsoft.Extensions.Options;
+using System.Net.Http;
+using System.Net.Http.Json;
 
-namespace LocalHiringPlatform.Api.Controllers
+namespace LocalHiringPlatform.Infrastructure.Services
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class GeminiTestController
-    : ControllerBase
+    public class AiMatchingService
+        : IAiMatchingService
     {
         private readonly HttpClient _httpClient;
 
         private readonly GeminiOptions _options;
 
-        private readonly IAiMatchingService _aiMatchingService;
-
-        public GeminiTestController(
-                IHttpClientFactory httpClientFactory,
-                IOptions<GeminiOptions> options,
-                IAiMatchingService aiMatchingService
-        )
+        public AiMatchingService(
+            IHttpClientFactory httpClientFactory,
+            IOptions<GeminiOptions> options)
         {
             _httpClient =
                 httpClientFactory.CreateClient();
 
             _options =
                 options.Value;
-
-            _aiMatchingService =
-                aiMatchingService;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<AiMatchResultModel>
+    AnalyzeAsync(
+        string jobDescription,
+        string candidateProfile)
         {
             var url =
                 $"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key={_options.ApiKey}";
 
+            var prompt =
+    "You are an expert recruiter.\n\n" +
+
+    $"Job Description:\n{jobDescription}\n\n" +
+
+    $"Candidate Profile:\n{candidateProfile}\n\n" +
+
+    "Return ONLY valid JSON.\n\n" +
+
+    "{\n" +
+    "  \"score\": 80,\n" +
+    "  \"recommendation\": \"Interview\",\n" +
+    "  \"strengths\": [\n" +
+    "    \"Strong ASP.NET Core experience\"\n" +
+    "  ],\n" +
+    "  \"gaps\": [\n" +
+    "    \"No Azure experience\"\n" +
+    "  ]\n" +
+    "}";
             var requestBody =
                 new
                 {
@@ -51,8 +65,7 @@ namespace LocalHiringPlatform.Api.Controllers
                             {
                                 new
                                 {
-                                    text =
-                                        "What is 2 + 2? Reply with only the answer."
+                                    text = prompt
                                 }
                             }
                     }
@@ -67,19 +80,11 @@ namespace LocalHiringPlatform.Api.Controllers
             var responseContent =
                 await response.Content.ReadAsStringAsync();
 
-            return Ok(responseContent);
-        }
-
-        [HttpGet("match")]
-        public async Task<IActionResult> Match()
-        {
-            var result =
-                await _aiMatchingService
-                    .AnalyzeAsync(
-                        ".NET Developer with ASP.NET Core, SQL Server and Azure",
-                        "5 years ASP.NET Core, SQL Server, React");
-
-            return Ok(result);
+            return new AiMatchResultModel
+            {
+                Score = 0,
+                Recommendation = responseContent
+            };
         }
     }
 }
