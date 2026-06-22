@@ -1,4 +1,5 @@
 using LocalHiringPlatform.Api.Middleware;
+using LocalHiringPlatform.Domain.Configuration;
 using LocalHiringPlatform.Domain.Interfaces;
 using LocalHiringPlatform.Domain.Interfaces.MasterDataRepositories;
 using LocalHiringPlatform.Domain.Interfaces.MasterDataServices;
@@ -14,6 +15,11 @@ using Microsoft.OpenApi.Models;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.Configure<GeminiOptions>(
+    builder.Configuration.GetSection("Gemini"));
+
+builder.Services.AddHttpClient();
 
 builder.Services.AddEndpointsApiExplorer();
 
