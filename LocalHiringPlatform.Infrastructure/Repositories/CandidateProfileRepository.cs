@@ -75,4 +75,13 @@ public class CandidateProfileRepository
 
         return await query.ToListAsync();
     }
+
+    public async Task<CandidateProfile?> GetByProfileIdAsync(Guid candidateProfileId)
+    {
+        return await _dbContext
+        .CandidateProfiles
+        .Include(x => x.CandidateSkills).ThenInclude(cs => cs.Skill)
+        .FirstOrDefaultAsync(
+            x => x.EntityId == candidateProfileId);
+    }
 }

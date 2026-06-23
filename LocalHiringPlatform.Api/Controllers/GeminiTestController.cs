@@ -71,13 +71,11 @@ namespace LocalHiringPlatform.Api.Controllers
         }
 
         [HttpGet("match")]
-        public async Task<IActionResult> Match()
+        public async Task<IActionResult> Match(Guid jobId, Guid candidateProfileId)
         {
             var result =
-                await _aiMatchingService
-                    .AnalyzeAsync(
-                        ".NET Developer with ASP.NET Core, SQL Server and Azure",
-                        "5 years ASP.NET Core, SQL Server, React");
+                await _aiMatchingService.AnalyzeAsync(jobId, candidateProfileId);
+                        
 
             return Ok(result);
         }

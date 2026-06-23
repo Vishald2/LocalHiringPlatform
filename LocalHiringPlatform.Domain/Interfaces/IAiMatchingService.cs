@@ -10,8 +10,6 @@ namespace LocalHiringPlatform.Domain.Interfaces
     public interface IAiMatchingService
     {
         Task<AiMatchResultModel>
-            AnalyzeAsync(
-                string jobDescription,
-                string candidateProfile);
+            AnalyzeAsync(Guid jobId, Guid candidateProfileId);
     }
 }
