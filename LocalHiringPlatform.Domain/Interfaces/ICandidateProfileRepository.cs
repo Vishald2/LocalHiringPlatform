@@ -7,10 +7,9 @@ public interface ICandidateProfileRepository
 
     Task<CandidateProfile?> GetByUserIdAsync(Guid userId);
 
+    Task<CandidateProfile?> GetByProfileIdAsync(Guid candidateProfileId);
+
     void Update(CandidateProfile profile);
 
-    Task<List<CandidateProfile>>SearchAsync(
-        string? name,
-        string? city,
-        Guid? skillId);
+    Task<List<CandidateProfile>>SearchAsync(string? name, string? city, Guid? skillId);
 }

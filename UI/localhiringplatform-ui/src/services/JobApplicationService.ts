@@ -6,6 +6,8 @@ import type { MyApplication } from "../types/MyApplication";
 import type { Applicant } from "../types/Applicant";
 
 import type { UpdateApplicationStatusRequest } from "../types/UpdateApplicationStatusRequest";
+import { API_BASE_URL } from "../config/api";
+import type { AiMatchResult } from "../types/AiMatchResult";
 
 function getBaseUrl() {
     return API_ENDPOINTS.jobApplication.root;
@@ -49,4 +51,24 @@ export async function getApplicantsByEmployer() {
 export async function updateApplicationStatus(
     request: UpdateApplicationStatusRequest) {
     await api.put(`${API_ENDPOINTS.jobApplication.root}/status`, request);
+}
+
+export async function getAiAnalysis(
+    jobId: string,
+    candidateProfileId: string
+): Promise<AiMatchResult> {
+
+    try {
+
+        const response = await api.get<AiMatchResult>(
+                `/GeminiTest/match?jobId=${jobId}&candidateProfileId=${candidateProfileId}`);
+
+        return response.data;
+
+    } catch (error) {
+
+        console.error(error);
+
+        throw error;
+    }
 }

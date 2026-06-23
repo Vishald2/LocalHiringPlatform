@@ -21,6 +21,8 @@ export default function ApplicantListPage() {
         "Hired"
     ];
 
+
+
     async function handleStatusChange(
         jobApplicationId: string,
         status: string) {
@@ -163,4 +165,8 @@ export default function ApplicantListPage() {
 
         </div>
     );
+}
+
+function getAiAnalysis(jobId: any, candidateProfileId: any) {
+    throw new Error("Function not implemented.");
 }

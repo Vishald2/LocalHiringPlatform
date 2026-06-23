@@ -39,6 +39,5 @@ public class CandidateProfile : BaseEntity
     public ICollection<JobApplication>
     JobApplications { get; set; } = new List<JobApplication>();
 
-    public ICollection<CandidateSkill> CandidateSkills { get; set; }
-    = new List<CandidateSkill>();
+    public ICollection<CandidateSkill> CandidateSkills { get; set; } = new List<CandidateSkill>();
 }
