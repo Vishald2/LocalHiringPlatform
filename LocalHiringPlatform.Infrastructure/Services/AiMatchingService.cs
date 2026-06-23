@@ -35,7 +35,7 @@ namespace LocalHiringPlatform.Infrastructure.Services
             _candidateProfileRepository = candidateProfileRepository;
             _userRepository = userRepository;
         }
-
+         
         public async Task<AiMatchResultModel> AnalyzeAsync(
                     Guid jobId, Guid candidateProfileId)
         {
