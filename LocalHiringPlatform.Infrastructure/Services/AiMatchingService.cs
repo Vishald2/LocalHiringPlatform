@@ -5,7 +5,11 @@ using LocalHiringPlatform.Domain.Models;
 using Microsoft.Extensions.Options;
 using System.Net.Http;
 using System.Net.Http.Json;
+using System.Reflection;
+using System.Reflection.PortableExecutable;
 using System.Text.Json;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using Microsoft.AspNetCore.Hosting;
 
 namespace LocalHiringPlatform.Infrastructure.Services
 {
@@ -21,7 +25,7 @@ namespace LocalHiringPlatform.Infrastructure.Services
                 IHttpClientFactory httpClientFactory,
                 IOptions<GeminiOptions> options,
                 IJobRepository jobRepository,
-                ICandidateProfileRepository candidateProfileRepository  ,
+                ICandidateProfileRepository candidateProfileRepository,
                 IUserRepository userRepository
             )
         {
@@ -33,8 +37,7 @@ namespace LocalHiringPlatform.Infrastructure.Services
         }
 
         public async Task<AiMatchResultModel> AnalyzeAsync(
-                    Guid jobId,
-                    Guid candidateProfileId)
+                    Guid jobId, Guid candidateProfileId)
         {
             string jobDescription, candidateProfileSummary, candidateSkills, candidateSkillsSummary;
 
@@ -57,25 +60,40 @@ namespace LocalHiringPlatform.Infrastructure.Services
             var url =
                 $"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key={_options.ApiKey}";
 
+            Console.WriteLine(
+    Directory.GetCurrentDirectory());
+
+            Console.WriteLine(
+    $"Candidate: {candidateProfile.EntityId}");
+
+            Console.WriteLine(
+                $"Profile Summary: {candidateProfile.ProfileSummary}");
+
+            Console.WriteLine(
+                $"Skills: {candidateSkills}");
+
+            var filePath =
+    Path.Combine(
+        Directory.GetCurrentDirectory(),
+        "Prompts",
+        "CandidateMatchingPrompt.txt");
+
+            var promptTemplate =
+                await File.ReadAllTextAsync(
+                    filePath);
+
+
             var prompt =
-    "You are an expert recruiter.\n\n" +
+                promptTemplate
+                    .Replace(
+                        "{{JOB_DESCRIPTION}}",
+                        jobDescription)
+                    .Replace(
+                        "{{CANDIDATE_PROFILE}}",
+                        candidateSkillsSummary);
 
-    $"Job Description:\n{jobDescription}\n\n" +
+            
 
-    $"Candidate Profile:\n{candidateSkillsSummary}\n\n" +
-
-    "Return ONLY valid JSON.\n\n" +
-
-    "{\n" +
-    "  \"score\": 80,\n" +
-    "  \"recommendation\": \"Interview\",\n" +
-    "  \"strengths\": [\n" +
-    "    \"Strong ASP.NET Core experience\"\n" +
-    "  ],\n" +
-    "  \"gaps\": [\n" +
-    "    \"No Azure experience\"\n" +
-    "  ]\n" +
-    "}";
             var requestBody =
                 new
                 {

@@ -1,8 +1,9 @@
 ﻿
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import {getApplicantsByJobId} from "../../services/JobApplicationService";
+import {getApplicantsByJobId, getAiAnalysis} from "../../services/JobApplicationService";
 import type { Applicant } from "../../types/Applicant";
+import type { AiMatchResult } from "../../types/AiMatchResult";
 
 export default function JobApplicantsPage() {
 
@@ -19,9 +20,16 @@ export default function JobApplicantsPage() {
                     b.matchPercentage
                     - a.matchPercentage);
 
-    const [loading,
-        setLoading] =
-        useState(true);
+    const [loading, setLoading] = useState(true);
+
+    const [aiResults,
+        setAiResults] =
+        useState<
+            Record<
+                string,
+                AiMatchResult
+            >
+        >({});
 
     useEffect(() => {
 
@@ -51,6 +59,24 @@ export default function JobApplicantsPage() {
         loadApplicants();
 
     }, [jobId]);
+
+    async function handleAiAnalysis(jobId: string, candidateProfileId: string) {
+
+        console.log(jobId);
+        console.log(candidateProfileId);
+
+        const result = await getAiAnalysis(jobId, candidateProfileId);
+
+        setAiResults(
+            prev => ({
+                ...prev,
+                [candidateProfileId]: result
+            }));
+
+        console.log("AI Analysis Result:");
+
+        console.log(result);
+    }
 
     if (loading) {
 
@@ -125,7 +151,43 @@ export default function JobApplicantsPage() {
                                     {" "}
                                     {applicant.matchPercentage }
                                 </p>
+                                    <button
+                                        onClick={() =>
+                                            handleAiAnalysis(
+                                                jobId,
+                                                applicant.candidateProfileId)
+                                        }
+                                    >
+                                        AI Analysis
+                                    </button>
+                                    {
+                                        aiResults[
+                                        applicant.candidateProfileId
+                                        ] && (
+                                            <div className="card">
 
+                                                <p>
+                                                    AI Score:
+                                                    {" "}
+                                                    {
+                                                        aiResults[
+                                                            applicant.candidateProfileId
+                                                        ].score
+                                                    }%
+                                                </p>
+
+                                                <p>
+                                                    Recommendation:
+                                                    {" "}
+                                                    {
+                                                        aiResults[
+                                                            applicant.candidateProfileId
+                                                        ].recommendation
+                                                    }
+                                                </p>
+                                            </div>
+                                        )
+                                    }
                                 <p>
 
                                     <strong>
