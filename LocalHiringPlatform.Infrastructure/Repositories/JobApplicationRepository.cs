@@ -57,8 +57,7 @@ namespace LocalHiringPlatform.Infrastructure.Repositories
                 .FirstOrDefaultAsync(x => x.EntityId == id);
         }
 
-        public async Task<JobApplication?>
-            GetByJobAndCandidateAsync(
+        public async Task<JobApplication?> GetByJobAndCandidateAsync(
                 Guid jobId,
                 Guid candidateProfileId)
         {
@@ -76,6 +75,7 @@ namespace LocalHiringPlatform.Infrastructure.Repositories
                 .JobApplications
                 .Include(x => x.CandidateProfile)
                 .ThenInclude(x => x.User)
+                .Include(x => x.AiAnalysis)
                 .Where(x => x.JobId == jobId)
                 .ToListAsync();
         }

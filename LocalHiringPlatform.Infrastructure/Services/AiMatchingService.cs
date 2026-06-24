@@ -1,8 +1,10 @@
 ﻿using LocalHiringPlatform.Domain.Configuration;
+using LocalHiringPlatform.Domain.Entities;
 using LocalHiringPlatform.Domain.Exceptions;
 using LocalHiringPlatform.Domain.Interfaces;
 using LocalHiringPlatform.Domain.Models;
 using LocalHiringPlatform.Infrastructure.Helpers;
+using LocalHiringPlatform.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Options;
 using System.Net.Http;
@@ -21,13 +23,19 @@ namespace LocalHiringPlatform.Infrastructure.Services
         private readonly IJobRepository _jobRepository;
         private readonly ICandidateProfileRepository _candidateProfileRepository;
         private readonly IUserRepository _userRepository;
+        private readonly IAiAnalysisRepository _aiAnalysisRepository;
+        private readonly IJobApplicationRepository _jobApplicationRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
         public AiMatchingService(
                 IHttpClientFactory httpClientFactory,
                 IOptions<GeminiOptions> options,
                 IJobRepository jobRepository,
                 ICandidateProfileRepository candidateProfileRepository,
-                IUserRepository userRepository
+                IUserRepository userRepository,
+                IAiAnalysisRepository aiAnalysisRepository,
+                IJobApplicationRepository jobApplicationRepository,
+                IUnitOfWork unitOfWork
             )
         {
             _httpClient = httpClientFactory.CreateClient();
@@ -35,6 +43,9 @@ namespace LocalHiringPlatform.Infrastructure.Services
             _jobRepository = jobRepository;
             _candidateProfileRepository = candidateProfileRepository;
             _userRepository = userRepository;
+            _aiAnalysisRepository = aiAnalysisRepository;
+            _jobApplicationRepository = jobApplicationRepository;
+            _unitOfWork = unitOfWork;
         }
 
         string GetResumeText(CandidateProfile candidateProfile)
@@ -115,6 +126,48 @@ namespace LocalHiringPlatform.Infrastructure.Services
             Console.WriteLine(
                 $"Skills: {candidateSkills}");
 
+
+            var jobApplication =
+                await _jobApplicationRepository
+                        .GetByJobAndCandidateAsync(
+                            jobId,
+                            candidateProfileId);
+
+            if (jobApplication == null)
+            {
+                throw new BusinessException(
+                    "Job application not found.");
+            }
+
+            var existingAnalysis = await _aiAnalysisRepository
+                                    .GetByJobApplicationIdAsync(
+                                    jobApplication.EntityId);
+
+            if (existingAnalysis != null)
+            {
+                return new AiMatchResultModel
+                {
+                    Score =
+                        existingAnalysis.Score,
+
+                    Recommendation =
+                        existingAnalysis.Recommendation,
+
+                    Strengths =
+                        JsonSerializer.Deserialize<
+                            List<string>>(
+                            existingAnalysis.Strengths)
+                        ?? new List<string>(),
+
+                    Gaps =
+                        JsonSerializer.Deserialize<
+                            List<string>>(
+                            existingAnalysis.Gaps)
+                        ?? new List<string>()
+                };
+            }
+
+
             var filePath =
                 Path.Combine(Directory.GetCurrentDirectory(),
                 "Prompts", "CandidateMatchingPrompt.txt");
@@ -132,8 +185,6 @@ namespace LocalHiringPlatform.Infrastructure.Services
                     .Replace(
                         "{{CANDIDATE_PROFILE}}",
                         candidateSkillsSummary);
-
-            
 
             var requestBody =
                 new
@@ -189,13 +240,42 @@ namespace LocalHiringPlatform.Infrastructure.Services
                 throw new BusinessException("AI service returned an empty response.");
             }
 
-            var result =
-                JsonSerializer.Deserialize<AiMatchResultModel>(
+            var result = JsonSerializer.Deserialize<AiMatchResultModel>(
                     aiJson!,
                     new JsonSerializerOptions
                     {
                         PropertyNameCaseInsensitive = true
                     });
+
+            var aiAnalysis =
+                new AiAnalysis
+                {
+                    JobApplicationId =
+                        jobApplication.EntityId,
+
+                    Score =
+                        result!.Score,
+
+                    Recommendation =
+                        result.Recommendation,
+
+                    Strengths =
+                        JsonSerializer.Serialize(
+                            result.Strengths),
+
+                    Gaps =
+                        JsonSerializer.Serialize(
+                            result.Gaps),
+
+                    AnalyzedOn =
+                        DateTime.UtcNow
+                };
+
+            await _aiAnalysisRepository
+                 .AddAsync(aiAnalysis);
+
+            await _unitOfWork
+                .SaveChangesAsync();
 
             return result!;
         }

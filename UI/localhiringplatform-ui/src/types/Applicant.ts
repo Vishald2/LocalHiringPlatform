@@ -22,5 +22,9 @@
 
     matchPercentage: number;
 
+    hasAiAnalysis: boolean;
+
+    aiMatchScore: number | null;
+
     skills: string[];
 }

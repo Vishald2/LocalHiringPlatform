@@ -20,6 +20,8 @@ public class ApplicationDbContext : DbContext
     public DbSet<Notification> Notifications { get; set; }
     public DbSet<SavedJob> SavedJobs { get; set; }
 
+    public DbSet<AiAnalysis> AiAnalyses {get; set;}
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -80,5 +82,13 @@ public class ApplicationDbContext : DbContext
                 x.JobId
             })
             .IsUnique();
+
+        modelBuilder.Entity<AiAnalysis>()
+        .HasOne(
+            x => x.JobApplication)
+        .WithOne(
+            x => x.AiAnalysis)
+        .HasForeignKey<AiAnalysis>(
+            x => x.JobApplicationId);
     }
 }

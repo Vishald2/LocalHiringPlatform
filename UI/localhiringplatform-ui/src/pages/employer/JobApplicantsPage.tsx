@@ -1,5 +1,4 @@
-﻿
-import { useEffect, useState } from "react";
+﻿import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import {getApplicantsByJobId, getAiAnalysis} from "../../services/JobApplicationService";
 import type { Applicant } from "../../types/Applicant";
@@ -29,7 +28,11 @@ export default function JobApplicantsPage() {
                 string,
                 AiMatchResult
             >
-        >({});
+            >({});
+
+    const [visibleAiResults,
+        setVisibleAiResults] =
+        useState<Record<string, boolean>>({});
 
     useEffect(() => {
 
@@ -42,8 +45,6 @@ export default function JobApplicantsPage() {
                 }
 
                 const data = await getApplicantsByJobId(jobId);
-                console.log("getApplicantsByJobId");
-                console.log(data);
                 setApplicants(data);
 
             } catch (error) {
@@ -60,22 +61,50 @@ export default function JobApplicantsPage() {
 
     }, [jobId]);
 
-    async function handleAiAnalysis(jobId: string, candidateProfileId: string) {
+    async function handleAiAnalysis(
+        jobId: string,
+        candidateProfileId: string) {
 
-        console.log(jobId);
-        console.log(candidateProfileId);
+        const existingResult =
+            aiResults[candidateProfileId];
 
-        const result = await getAiAnalysis(jobId, candidateProfileId);
+        if (existingResult) {
 
-        setAiResults(
-            prev => ({
-                ...prev,
-                [candidateProfileId]: result
-            }));
+            setVisibleAiResults(
+                prev => ({
+                    ...prev,
+                    [candidateProfileId]:
+                        !prev[candidateProfileId]
+                }));
 
-        console.log("AI Analysis Result:");
+            return;
+        }
 
-        console.log(result);
+        try {
+
+            const result =
+                await getAiAnalysis(
+                    jobId,
+                    candidateProfileId);
+
+            setAiResults(
+                prev => ({
+                    ...prev,
+                    [candidateProfileId]:
+                        result
+                }));
+
+            setVisibleAiResults(
+                prev => ({
+                    ...prev,
+                    [candidateProfileId]:
+                        true
+                }));
+
+        } catch (error) {
+
+            console.error(error);
+        }
     }
 
     if (loading) {
@@ -101,19 +130,11 @@ export default function JobApplicantsPage() {
                 </p>
 
             </div>
+            {
+                sortedApplicants.map(
+                    applicant => {
 
-            {applicants.length === 0 ? (
-
-                <div className="card">
-                    No applicants found.
-                </div>
-
-            ) : (
-
-                <div className="jobs-grid">
-
-                        {sortedApplicants.map(
-                        applicant => (
+                        return (
 
                             <div
                                 key={
@@ -142,15 +163,20 @@ export default function JobApplicantsPage() {
                                 <p>
                                     Applied:
                                     {" "}
-                                    {new Date(
-                                        applicant.appliedOn
-                                    ).toLocaleDateString()}
+                                    {
+                                        new Date(
+                                            applicant.appliedOn
+                                        ).toLocaleDateString()
+                                    }
                                 </p>
+
                                 <p>
                                     Match %
                                     {" "}
-                                    {applicant.matchPercentage }
+                                    {applicant.matchPercentage}
                                 </p>
+
+                                {
                                     <button
                                         onClick={() =>
                                             handleAiAnalysis(
@@ -160,36 +186,43 @@ export default function JobApplicantsPage() {
                                     >
                                         AI Analysis
                                     </button>
-                                    {
-                                        aiResults[
-                                        applicant.candidateProfileId
-                                        ] && (
-                                            <div className="card">
+                                }
 
-                                                <p>
-                                                    AI Score:
-                                                    {" "}
-                                                    {
-                                                        aiResults[
-                                                            applicant.candidateProfileId
-                                                        ].score
-                                                    }%
-                                                </p>
+                                {
+                                    visibleAiResults[
+                                    applicant.candidateProfileId
+                                    ] &&
+                                    aiResults[
+                                    applicant.candidateProfileId
+                                    ] && ( (
+                                        <div className="card">
 
-                                                <p>
-                                                    Recommendation:
-                                                    {" "}
-                                                    {
-                                                        aiResults[
-                                                            applicant.candidateProfileId
-                                                        ].recommendation
-                                                    }
-                                                </p>
-                                            </div>
-                                        )
-                                    }
+                                            <p>
+                                                AI Score:
+                                                {" "}
+                                                {
+                                                    aiResults[
+                                                        applicant.candidateProfileId
+                                                    ].score
+                                                }
+                                                %
+                                            </p>
+
+                                            <p>
+                                                Recommendation:
+                                                {" "}
+                                                {
+                                                    aiResults[
+                                                        applicant.candidateProfileId
+                                                    ].recommendation
+                                                }
+                                            </p>
+
+                                        </div>
+                                    )
+                                )}
+
                                 <p>
-
                                     <strong>
                                         Skills:
                                     </strong>
@@ -201,15 +234,12 @@ export default function JobApplicantsPage() {
                                             ? applicant.skills.join(", ")
                                             : "No Skills"
                                     }
-
                                 </p>
-
                             </div>
-                        )
-                    )}
-
-                </div>
-            )}
+                        );
+                    }
+                )
+            }
 
         </div>
     );
