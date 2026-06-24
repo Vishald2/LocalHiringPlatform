@@ -20,3 +20,8 @@ Do not invent experience, skills, certifications, technologies, or qualification
 Only use information explicitly present in the candidate profile.
 If information is missing, state that it is missing.
 If no relevant skills are provided, score must be below 30.
+
+Resume Text is the most reliable source of information.
+
+If Candidate Profile and Resume Text conflict,
+prefer Resume Text.

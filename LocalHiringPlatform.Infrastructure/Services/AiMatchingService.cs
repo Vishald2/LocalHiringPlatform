@@ -2,6 +2,8 @@
 using LocalHiringPlatform.Domain.Exceptions;
 using LocalHiringPlatform.Domain.Interfaces;
 using LocalHiringPlatform.Domain.Models;
+using LocalHiringPlatform.Infrastructure.Helpers;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Options;
 using System.Net.Http;
 using System.Net.Http.Json;
@@ -9,7 +11,6 @@ using System.Reflection;
 using System.Reflection.PortableExecutable;
 using System.Text.Json;
 using static System.Runtime.InteropServices.JavaScript.JSType;
-using Microsoft.AspNetCore.Hosting;
 
 namespace LocalHiringPlatform.Infrastructure.Services
 {
@@ -35,6 +36,44 @@ namespace LocalHiringPlatform.Infrastructure.Services
             _candidateProfileRepository = candidateProfileRepository;
             _userRepository = userRepository;
         }
+
+        string GetResumeText(CandidateProfile candidateProfile)
+        {
+            string resumeText = string.Empty;
+
+            if (!string.IsNullOrEmpty(
+                    candidateProfile.ResumeFilePath))
+            {
+                var physicalPath =
+                    Path.Combine(
+                        Directory.GetCurrentDirectory(),
+                        "wwwroot",
+                        candidateProfile.ResumeFilePath
+                            .TrimStart('/')
+                            .Replace(
+                                '/',
+                                Path.DirectorySeparatorChar));
+
+                if (File.Exists(
+                        physicalPath))
+                {
+                    try
+                    {
+                        resumeText =
+                            PdfHelper.ExtractText(
+                                physicalPath);
+                    }
+                    catch (Exception ex)
+                    {
+
+                        throw;
+                    }
+
+                }
+            }
+
+            return resumeText;
+        }
          
         public async Task<AiMatchResultModel> AnalyzeAsync(
                     Guid jobId, Guid candidateProfileId)
@@ -57,6 +96,10 @@ namespace LocalHiringPlatform.Infrastructure.Services
             
             candidateSkillsSummary =  candidateProfileSummary + ", Skills: " + candidateSkills;
 
+           string  resumeText = GetResumeText(candidateProfile);
+
+            candidateSkillsSummary = candidateSkillsSummary + ", Resume Text:- " +   resumeText;
+
             var url =
                 $"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key={_options.ApiKey}";
 
@@ -73,10 +116,8 @@ namespace LocalHiringPlatform.Infrastructure.Services
                 $"Skills: {candidateSkills}");
 
             var filePath =
-    Path.Combine(
-        Directory.GetCurrentDirectory(),
-        "Prompts",
-        "CandidateMatchingPrompt.txt");
+                Path.Combine(Directory.GetCurrentDirectory(),
+                "Prompts", "CandidateMatchingPrompt.txt");
 
             var promptTemplate =
                 await File.ReadAllTextAsync(
