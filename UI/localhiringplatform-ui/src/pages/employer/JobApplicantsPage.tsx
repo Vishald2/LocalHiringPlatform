@@ -34,6 +34,10 @@ export default function JobApplicantsPage() {
         setVisibleAiResults] =
         useState<Record<string, boolean>>({});
 
+    const [loadingAi,
+        setLoadingAi] =
+        useState<Record<string, boolean>>({});
+
     useEffect(() => {
 
         async function loadApplicants() {
@@ -82,11 +86,25 @@ export default function JobApplicantsPage() {
 
         try {
 
+            // Set loading state for this candidate
+            setLoadingAi(
+                prev => ({
+                    ...prev,
+                    [candidateProfileId]:
+                        true
+                }));
+
             const result =
                 await getAiAnalysis(
                     jobId,
                     candidateProfileId);
 
+            setLoadingAi(
+                prev => ({
+                    ...prev,
+                    [candidateProfileId]:
+                        false
+                }));
             setAiResults(
                 prev => ({
                     ...prev,
@@ -104,6 +122,14 @@ export default function JobApplicantsPage() {
         } catch (error) {
 
             console.error(error);
+        }
+        finally {
+            setLoadingAi(
+                prev => ({
+                    ...prev,
+                    [candidateProfileId]:
+                        false
+                }));
         }
     }
 
@@ -183,8 +209,19 @@ export default function JobApplicantsPage() {
                                                 jobId,
                                                 applicant.candidateProfileId)
                                         }
+                                        disabled={
+                                            loadingAi[
+                                            applicant.candidateProfileId
+                                            ]
+                                        }
                                     >
-                                        AI Analysis
+                                        {
+                                            loadingAi[
+                                                applicant.candidateProfileId
+                                            ]
+                                                ? "Analyzing..."
+                                                : "AI Analysis"
+                                        }
                                     </button>
                                 }
 
