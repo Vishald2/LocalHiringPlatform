@@ -232,7 +232,9 @@ public class JobApplicationService
 
                     AiMatchScore = x.AiAnalysis?.Score,
                 };
-            }).OrderByDescending(x => x.MatchPercentage).ToList();
+            }).OrderByDescending(x => x.AiMatchScore ?? -1)
+                .ThenByDescending(x => x.MatchPercentage)
+                .ToList();
     }
 
     public async Task<List<MyApplicationModel>>  GetMyApplicationsAsync(

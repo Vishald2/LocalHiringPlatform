@@ -198,7 +198,10 @@ export default function JobApplicantsPage() {
                                         <div className="card">
 
                                             <p>
-                                                AI Score:
+                                                <strong>
+                                                    AI Score:
+                                                </strong>
+                                                
                                                 {" "}
                                                 {
                                                     aiResults[
@@ -217,6 +220,44 @@ export default function JobApplicantsPage() {
                                                     ].recommendation
                                                 }
                                             </p>
+
+                                            <p>
+                                                <strong>
+                                                    Strengths:
+                                                </strong>
+                                            </p>
+
+                                            <ul>
+                                                {
+                                                    aiResults[
+                                                        applicant.candidateProfileId
+                                                    ].strengths.map(
+                                                        (strength, index) => (
+                                                            <li key={index}>
+                                                                {strength}
+                                                            </li>
+                                                        ))
+                                                }
+                                            </ul>
+
+                                            <p>
+                                                <strong>
+                                                    Gaps:
+                                                </strong>
+                                            </p>
+
+                                            <ul>
+                                                {
+                                                    aiResults[
+                                                        applicant.candidateProfileId
+                                                    ].gaps.map(
+                                                        (gap, index) => (
+                                                            <li key={index}>
+                                                                {gap}
+                                                            </li>
+                                                        ))
+                                                }
+                                            </ul>
 
                                         </div>
                                     )
