@@ -13,4 +13,10 @@ public class JobApplication : BaseEntity
     public DateTime AppliedOn { get; set; }
 
     public string Status { get; set; } = "Applied";
+
+    public AiAnalysis? AiAnalysis
+    {
+        get;
+        set;
+    }
 }

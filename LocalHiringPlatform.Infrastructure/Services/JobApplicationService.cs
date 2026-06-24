@@ -143,7 +143,9 @@ public class JobApplicationService
             JobTitle = x.Job.Title,
             ResumeFileName = x.CandidateProfile.ResumeFileName,
             ResumeFilePath = x.CandidateProfile.ResumeFilePath,
-            MatchPercentage = 0 // This will be calculated later in the GetApplicantsAsync method
+            MatchPercentage = 0, // This will be calculated later in the GetApplicantsAsync method
+            HasAiAnalysis = x.AiAnalysis != null,
+            AiMatchScore = x.AiAnalysis?.Score
         }).ToList();
     }
 
@@ -225,8 +227,14 @@ public class JobApplicationService
                     MatchPercentage = matchPercentage,
 
                     Skills = applicantSkills,
+
+                    HasAiAnalysis = x.AiAnalysis != null,
+
+                    AiMatchScore = x.AiAnalysis?.Score,
                 };
-            }).OrderByDescending(x => x.MatchPercentage).ToList();
+            }).OrderByDescending(x => x.AiMatchScore ?? -1)
+                .ThenByDescending(x => x.MatchPercentage)
+                .ToList();
     }
 
     public async Task<List<MyApplicationModel>>  GetMyApplicationsAsync(

@@ -24,5 +24,9 @@
 
     public int MatchPercentage { get; set; }
 
+    public bool HasAiAnalysis {get; set;}
+
+    public int? AiMatchScore {get; set;}
+
     public List<string> Skills { get; set; } = new List<string>();
 }

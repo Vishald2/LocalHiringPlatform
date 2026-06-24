@@ -160,6 +160,10 @@ builder.Services.AddScoped<
     IAiMatchingService,
     AiMatchingService>();
 
+builder.Services.AddScoped<
+        IAiAnalysisRepository,
+        AiAnalysisRepository>();
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(
