@@ -2,6 +2,7 @@
 using LocalHiringPlatform.Domain.Exceptions;
 using LocalHiringPlatform.Domain.Interfaces;
 using LocalHiringPlatform.Domain.Models;
+using LocalHiringPlatform.Infrastructure.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -13,6 +14,7 @@ public class JobController
     : ControllerBase
 {
     private readonly IJobService _jobService;
+    private readonly object _candidateProfileService;
 
     public JobController(
         IJobService jobService)
