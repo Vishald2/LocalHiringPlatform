@@ -153,4 +153,28 @@ public class CandidateProfileController : ControllerBase
 
         return NoContent();
     }
+
+    [HttpGet("recommended-jobs")]
+    public async Task<ActionResult<List<RecommendedJobModel>>> GetRecommendedJobs()
+    {
+        var userIdClaim =
+            User.FindFirst(
+                ClaimTypes.NameIdentifier);
+
+        if (userIdClaim == null)
+        {
+            return Unauthorized();
+        }
+
+        var userId =
+            Guid.Parse(
+                userIdClaim.Value);
+
+        var result =
+            await _candidateProfileService
+                .GetRecommendedJobsAsync(
+                    userId);
+
+        return Ok(result);
+    }
 }

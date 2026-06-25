@@ -25,8 +25,13 @@ public class CandidateProfileRepository
     public async Task<CandidateProfile?> GetByUserIdAsync(
         Guid userId)
     {
-        return await _dbContext.CandidateProfiles.Include(x => x.User)
-            .FirstOrDefaultAsync(x => x.UserId == userId);
+        return await _dbContext
+    .CandidateProfiles
+    .Include(x => x.User)
+    .Include(x => x.CandidateSkills)
+        .ThenInclude(x => x.Skill)
+    .FirstOrDefaultAsync(
+        x => x.UserId == userId);
     }
 
     public void Update(
