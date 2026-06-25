@@ -34,8 +34,10 @@ export default function JobList() {
     useEffect(() => {
 
         async function loadJobs() {
-            const result =
-                await getJobs();
+
+            console.log("const result = await getJobs();");
+
+            const result = await getJobs();
 
             setJobs(result);
 
@@ -124,7 +126,7 @@ export default function JobList() {
                 >
                     Search
                 </button>
-
+                <span>&nbsp;&nbsp;</span>
                 <button
                     onClick={handleClear}
                 >
@@ -132,7 +134,6 @@ export default function JobList() {
                 </button>
 
             </div>
-
             {
                 jobs.map(job => (
 

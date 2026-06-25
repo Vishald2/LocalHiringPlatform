@@ -9,5 +9,5 @@ public interface ICandidateProfileService
 
     Task UploadResumeAsync(Guid userId, IFormFile file);
 
-    Task<List<RecommendedJobModel>> GetRecommendedJobsAsync(Guid userId);
+    Task<List<JobModel>> GetRecommendedJobsAsync(Guid userId);
 }

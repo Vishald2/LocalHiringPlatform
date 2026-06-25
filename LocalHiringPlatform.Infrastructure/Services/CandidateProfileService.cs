@@ -201,8 +201,8 @@ public class CandidateProfileService
         await _unitOfWork.SaveChangesAsync();
     }
 
-    public async Task<List<RecommendedJobModel>> GetRecommendedJobsAsync(
-                                Guid userId)
+    public async Task<List<JobModel>> GetRecommendedJobsAsync(
+        Guid userId)
     {
         var candidateProfile =
             await _candidateProfileRepository
@@ -233,8 +233,7 @@ public class CandidateProfileService
                     (job.RequiredSkills ?? "")
                     .Split(
                         ',',
-                        StringSplitOptions
-                            .RemoveEmptyEntries)
+                        StringSplitOptions.RemoveEmptyEntries)
                     .Select(x => x.Trim())
                     .ToList();
 
@@ -249,40 +248,34 @@ public class CandidateProfileService
                                     rs =>
                                         rs.Equals(
                                             cs,
-                                            StringComparison
-                                                .OrdinalIgnoreCase)));
+                                            StringComparison.OrdinalIgnoreCase)));
 
                     matchPercentage =
                         (matchedSkills * 100)
                         / requiredSkills.Count;
                 }
 
-                return new RecommendedJobModel
+                return new
                 {
-                    JobId =
-                        job.EntityId,
-
-                    Title =
-                        job.Title,
-
-                    City =
-                        job.City,
-
-                    State =
-                        job.State,
-
-                    MinSalary =
-                        job.MinSalary,
-
-                    MaxSalary =
-                        job.MaxSalary,
-
-                    MatchPercentage =
-                        matchPercentage
+                    Job = job,
+                    MatchPercentage = matchPercentage
                 };
             })
-            .OrderByDescending(
-                x => x.MatchPercentage).Where(x => x.MatchPercentage > 0)
+            .Where(x => x.MatchPercentage > 0)
+            .OrderByDescending(x => x.MatchPercentage)
+            .Select(x => new JobModel
+            {
+                EntityId = x.Job.EntityId,
+                Title = x.Job.Title,
+                Description = x.Job.Description,
+                City = x.Job.City,
+                State = x.Job.State,
+                MinSalary = x.Job.MinSalary,
+                MaxSalary = x.Job.MaxSalary,
+                ExperienceRequired = x.Job.ExperienceRequired,
+                RequiredSkills = x.Job.RequiredSkills,
+                IsActive = x.Job.IsActive
+            })
             .ToList();
 
         return recommendedJobs;

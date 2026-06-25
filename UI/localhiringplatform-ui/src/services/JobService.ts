@@ -4,7 +4,7 @@ import { api } from "./api";
 import { API_ENDPOINTS } from "../End_Points/apiEndpoints";
 import type { Job } from "../types/Job";
 import type { UpdateJobRequest } from "../types/UpdateJobRequest";
-import type {SearchJobsRequest} from "../types/SearchJobsRequest";
+import type { SearchJobsRequest } from "../types/SearchJobsRequest";
 
 function getBaseUrl() {
     return API_ENDPOINTS.job.root;
@@ -17,7 +17,12 @@ export async function addJob(
 }
 
 export async function getJobs() {
-    const response = await api.get<Job[]>(getBaseUrl());
+
+    console.log("calling -  const response = await api.get<Job[]>(`/candidate/profile/recommended-jobs`);");
+
+    const response = await api.get<Job[]>(`/candidate/profile/recommended-jobs`);
+
+    console.log("called -  const response = await api.get<Job[]>(`/candidate/profile/recommended-jobs`);");
 
     return response.data;
 }

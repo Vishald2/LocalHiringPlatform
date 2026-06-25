@@ -27,6 +27,7 @@ public class CandidateProfileRepository
     {
         return await _dbContext
     .CandidateProfiles
+    .Include(x => x.User)
     .Include(x => x.CandidateSkills)
         .ThenInclude(x => x.Skill)
     .FirstOrDefaultAsync(
