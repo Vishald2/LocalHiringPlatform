@@ -4,8 +4,6 @@ using LocalHiringPlatform.Domain.Exceptions;
 using LocalHiringPlatform.Domain.Interfaces;
 using LocalHiringPlatform.Domain.Models;
 using LocalHiringPlatform.Infrastructure.Helpers;
-using LocalHiringPlatform.Infrastructure.Repositories;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Options;
 using System.Net.Http;
 using System.Net.Http.Json;
@@ -13,6 +11,9 @@ using System.Reflection;
 using System.Reflection.PortableExecutable;
 using System.Text.Json;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using DocumentFormat.OpenXml.Packaging;
+using DocumentFormat.OpenXml.Wordprocessing;
+using System.Text;
 
 namespace LocalHiringPlatform.Infrastructure.Services
 {
@@ -48,7 +49,95 @@ namespace LocalHiringPlatform.Infrastructure.Services
             _unitOfWork = unitOfWork;
         }
 
-        string GetResumeText(CandidateProfile candidateProfile)
+        private string GetResumeText(CandidateProfile candidateProfile)
+        {
+            if (string.IsNullOrWhiteSpace(
+                candidateProfile.ResumeFilePath))
+            {
+                return string.Empty;
+            }
+
+            var extension =
+                Path.GetExtension(
+                    candidateProfile.ResumeFilePath)
+                .ToLowerInvariant();
+
+            return extension switch
+            {
+                ".pdf" =>
+                    GetPdfResumeText(
+                        candidateProfile),
+
+                ".docx" =>
+                    GetDocxResumeText(candidateProfile),
+
+                _ => string.Empty
+            };
+        }
+
+        private string GetDocxResumeText(CandidateProfile candidateProfile)
+        {
+            string filePath = candidateProfile?.ResumeFilePath ?? string.Empty;
+
+            if(string.IsNullOrWhiteSpace(filePath))
+            {
+                return string.Empty;
+            }
+
+            var physicalPath =
+                    Path.Combine(
+                        Directory.GetCurrentDirectory(),
+                        "wwwroot",
+                        filePath
+                            .TrimStart('/')
+                            .Replace(
+                                '/',
+                                Path.DirectorySeparatorChar));
+
+
+            var text = new StringBuilder();
+
+            if (File.Exists(
+              physicalPath))
+            {
+                try
+                {
+
+                    using var document =
+                        WordprocessingDocument.Open(
+                            physicalPath,
+                            false);
+
+                    var body =
+                        document.MainDocumentPart?
+                            .Document
+                            .Body;
+
+                    if (body == null)
+                    {
+                        return string.Empty;
+                    }
+
+                    foreach (Text item in body.Descendants<Text>())
+                    {
+                        text.AppendLine(item.Text);
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                    throw;
+                }
+
+            }
+
+
+
+
+            return text.ToString();
+        }
+
+        private string GetPdfResumeText(CandidateProfile candidateProfile)
         {
             string resumeText = string.Empty;
 
@@ -71,8 +160,7 @@ namespace LocalHiringPlatform.Infrastructure.Services
                     try
                     {
                         resumeText =
-                            PdfHelper.ExtractText(
-                                physicalPath);
+                            PdfHelper.ExtractText(physicalPath);
                     }
                     catch (Exception ex)
                     {
