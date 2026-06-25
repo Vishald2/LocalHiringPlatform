@@ -26,6 +26,8 @@ namespace LocalHiringPlatform.Domain.Entities
 
         public DateTime AnalyzedOn { get; set; }
 
+        public int AnalysisCount { get; set; } = 0;
+
         /* Navigation */
 
         public JobApplication JobApplication { get; set; } = null!;

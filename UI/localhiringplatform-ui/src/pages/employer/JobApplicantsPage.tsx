@@ -97,7 +97,76 @@ export default function JobApplicantsPage() {
             const result =
                 await getAiAnalysis(
                     jobId,
-                    candidateProfileId);
+                    candidateProfileId,
+                    false);
+
+            setLoadingAi(
+                prev => ({
+                    ...prev,
+                    [candidateProfileId]:
+                        false
+                }));
+            setAiResults(
+                prev => ({
+                    ...prev,
+                    [candidateProfileId]:
+                        result
+                }));
+
+            setVisibleAiResults(
+                prev => ({
+                    ...prev,
+                    [candidateProfileId]:
+                        true
+                }));
+
+        } catch (error) {
+
+            console.error(error);
+        }
+        finally {
+            setLoadingAi(
+                prev => ({
+                    ...prev,
+                    [candidateProfileId]:
+                        false
+                }));
+        }
+    }
+
+    async function handleReAiAnalysis(
+        jobId: string,
+        candidateProfileId: string) {
+
+        // const existingResult = aiResults[candidateProfileId];
+
+        // if (existingResult) {
+
+        //     setVisibleAiResults(
+        //         prev => ({
+        //             ...prev,
+        //             [candidateProfileId]:
+        //                 !prev[candidateProfileId]
+        //         }));
+
+        //     return;
+        // }
+
+        try {
+
+            // Set loading state for this candidate
+            setLoadingAi(
+                prev => ({
+                    ...prev,
+                    [candidateProfileId]:
+                        true
+                }));
+
+            const result =
+                await getAiAnalysis(
+                    jobId,
+                    candidateProfileId,
+                    true);
 
             setLoadingAi(
                 prev => ({
@@ -223,6 +292,31 @@ export default function JobApplicantsPage() {
                                                 : "AI Analysis"
                                         }
                                     </button>
+
+                                }
+                                <span>&nbsp;</span>
+                                {
+                                    <button
+                                        onClick={() =>
+                                            handleReAiAnalysis(
+                                                jobId,
+                                                applicant.candidateProfileId)
+                                        }
+                                        disabled={
+                                            loadingAi[
+                                            applicant.candidateProfileId
+                                            ]
+                                        }
+                                    >
+                                        {
+                                            loadingAi[
+                                                applicant.candidateProfileId
+                                            ]
+                                                ? "Re-Analyzing..."
+                                                : "Re-AI Analysis"
+                                        }
+                                    </button>
+
                                 }
 
                                 {

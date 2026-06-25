@@ -86,7 +86,7 @@ export default function EmployerActiveJobsPage() {
                                 <button
                                     onClick={() =>
                                         navigate(
-                                            `/ejobapplicants/${job.entityId}`)
+                                            `/jobapplicants/${job.entityId}`)
                                     }
                                 >
                                     View Applicants
