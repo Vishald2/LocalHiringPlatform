@@ -1,4 +1,5 @@
 ﻿import { API_BASE_URL } from "../config/api";
+import type { ChangePasswordRequest } from "../types/ChangePasswordRequest";
 import type { LoginRequest } from "../types/LoginRequest";
 import type { LoginResponse } from "../types/LoginResponse";
 
@@ -57,4 +58,11 @@ export async function verifyEmail(
     token: string) {
 
     await api.get(`/auth/verify-email?token=${token}`);
+}
+
+export async function changePassword(
+    request: ChangePasswordRequest) {
+    await api.post(
+        "/auth/change-password",
+        request);
 }

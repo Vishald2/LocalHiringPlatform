@@ -23,6 +23,7 @@ import VerifyEmailPage from "./pages/VerifyEmailPage";
 import NotificationsPage from "./pages/NotificationsPage";
 import SavedJobsPage from "./pages/candidate/SavedJobsPage";
 import JobApplicantsPage from "./pages/employer/JobApplicantsPage";
+import ChangePasswordPage from "./pages/candidate/ChangePassword";
 
 function App() {
     return (
@@ -128,6 +129,10 @@ function App() {
                         element={
                             <JobApplicantsPage />
                         }
+                    />
+                    <Route
+                        path="/changepassword"
+                        element={<ChangePasswordPage />}
                     />
                 </Route>
               

@@ -2,7 +2,9 @@
 using LocalHiringPlatform.Domain.Exceptions;
 using LocalHiringPlatform.Domain.Interfaces;
 using LocalHiringPlatform.Domain.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace LocalHiringPlatform.Api.Controllers
 {
@@ -15,6 +17,39 @@ namespace LocalHiringPlatform.Api.Controllers
         public AuthController(IAuthService authService)
         {
             _authService = authService;
+        }
+
+        private void ValidatePassword(string password)
+        {
+            if (string.IsNullOrWhiteSpace(password))
+            {
+                throw new BusinessException(
+                    "Password is required.");
+            }
+
+            if (password.Length < 8)
+            {
+                throw new BusinessException(
+                    "Password must be at least 8 characters.");
+            }
+
+            if (!password.Any(char.IsUpper))
+            {
+                throw new BusinessException(
+                    "Password must contain at least one uppercase letter.");
+            }
+
+            if (!password.Any(char.IsLower))
+            {
+                throw new BusinessException(
+                    "Password must contain at least one lowercase letter.");
+            }
+
+            if (!password.Any(char.IsDigit))
+            {
+                throw new BusinessException(
+                    "Password must contain at least one number.");
+            }
         }
 
         [HttpPost("register-candidate")]
@@ -31,6 +66,8 @@ namespace LocalHiringPlatform.Api.Controllers
                         Password = request.Password,
                         Role = request.Role,
                     };
+
+                ValidatePassword(request.Password);
 
                 await _authService.RegisterCandidateAsync(model);
 
@@ -79,6 +116,32 @@ namespace LocalHiringPlatform.Api.Controllers
         {
             await _authService.VerifyEmailAsync(token);
             return Ok("Email verified successfully");
+        }
+
+        [Authorize]
+        [HttpPost("change-password")]
+        public async Task<IActionResult> ChangePassword(
+        ChangePasswordModel model)
+        {
+            var userId =
+                Guid.Parse(
+                    User.FindFirst(
+                        ClaimTypes.NameIdentifier)!
+                    .Value);
+
+            ValidatePassword(model.NewPassword);
+
+            await _authService
+                .ChangePasswordAsync(
+                    userId,
+                    model);
+
+            return Ok(
+                new
+                {
+                    message =
+                        "Password changed successfully."
+                });
         }
     }
 }

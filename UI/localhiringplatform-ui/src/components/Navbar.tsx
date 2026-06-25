@@ -96,7 +96,10 @@ export default function Navbar() {
                             to="/cprofile">
                             Profile
                         </Link>
-
+                        <Link className="navbar-link"
+                            to="/changepassword">
+                            Change Password
+                        </Link>
                         <Link
                             className="navbar-link"
                             to="/notifications">
@@ -133,7 +136,9 @@ export default function Navbar() {
                             to="/companyprofile">
                             Company Profile
                         </Link>
-
+                        <Link to="/changepassword">
+                            Change Password
+                        </Link>
                         <Link
                             className="navbar-link"
                             to="/createjob">
