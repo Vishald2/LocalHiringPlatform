@@ -55,13 +55,14 @@ export async function updateApplicationStatus(
 
 export async function getAiAnalysis(
     jobId: string,
-    candidateProfileId: string
+    candidateProfileId: string,
+    reanalyse: boolean = false
 ): Promise<AiMatchResult> {
 
     try {
 
         const response = await api.get<AiMatchResult>(
-                `/GeminiTest/match?jobId=${jobId}&candidateProfileId=${candidateProfileId}`);
+                `/GeminiTest/match?jobId=${jobId}&candidateProfileId=${candidateProfileId}&reanalyse=${reanalyse}`);
 
         return response.data;
 

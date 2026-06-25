@@ -85,53 +85,28 @@ namespace LocalHiringPlatform.Infrastructure.Services
 
             return resumeText;
         }
-         
+
         public async Task<AiMatchResultModel> AnalyzeAsync(
-                    Guid jobId, Guid candidateProfileId)
+                    Guid jobId, Guid candidateProfileId, bool reanalyse)
         {
             string jobDescription, candidateProfileSummary, candidateSkills, candidateSkillsSummary;
+
+            /*WILL BE USED TO CHECK IN DB IF ReanalyseAllowed*/
+            bool isReanalyseAllowed = true;
 
             CandidateProfile? candidateProfile = await _candidateProfileRepository.GetByProfileIdAsync(candidateProfileId);
 
             Job? job = await _jobRepository.GetByIdAsync(jobId);
 
-            if(candidateProfile == null || job == null)
+            if (candidateProfile == null || job == null)
             {
                 throw new BusinessException("Invalid job or candidate profile.");
             }
 
-            jobDescription = job.Description;
-
-            candidateProfileSummary = candidateProfile.ProfileSummary;
-            candidateSkills = string.Join(", ", candidateProfile.CandidateSkills.Select(cs => cs.Skill.SkillName));
-            
-            candidateSkillsSummary =  candidateProfileSummary + ", Skills: " + candidateSkills;
-
-           string  resumeText = GetResumeText(candidateProfile);
-
-            candidateSkillsSummary = candidateSkillsSummary + ", Resume Text:- " +   resumeText;
-
-            var url =
-                $"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key={_options.ApiKey}";
-
-            Console.WriteLine(
-    Directory.GetCurrentDirectory());
-
-            Console.WriteLine(
-    $"Candidate: {candidateProfile.EntityId}");
-
-            Console.WriteLine(
-                $"Profile Summary: {candidateProfile.ProfileSummary}");
-
-            Console.WriteLine(
-                $"Skills: {candidateSkills}");
-
-
-            var jobApplication =
-                await _jobApplicationRepository
-                        .GetByJobAndCandidateAsync(
-                            jobId,
-                            candidateProfileId);
+            var jobApplication = await _jobApplicationRepository
+                .GetByJobAndCandidateAsync(
+                    jobId,
+                    candidateProfileId);
 
             if (jobApplication == null)
             {
@@ -143,7 +118,21 @@ namespace LocalHiringPlatform.Infrastructure.Services
                                     .GetByJobApplicationIdAsync(
                                     jobApplication.EntityId);
 
+            int analysisCount = 0;
+
             if (existingAnalysis != null)
+            {
+                analysisCount = existingAnalysis.AnalysisCount;
+            }
+
+            if (analysisCount >= 3) {
+                isReanalyseAllowed = false;
+            }
+
+
+            if (existingAnalysis != null && (reanalyse == false
+                                                || isReanalyseAllowed == false)
+                )
             {
                 return new AiMatchResultModel
                 {
@@ -167,6 +156,16 @@ namespace LocalHiringPlatform.Infrastructure.Services
                 };
             }
 
+            jobDescription = job.Description;
+            candidateProfileSummary = candidateProfile.ProfileSummary;
+            candidateSkills = string.Join(", ", candidateProfile.CandidateSkills.Select(cs => cs.Skill.SkillName));
+            candidateSkillsSummary = candidateProfileSummary + ", Skills: " + candidateSkills;
+
+            string resumeText = GetResumeText(candidateProfile);
+
+            candidateSkillsSummary = candidateSkillsSummary + ", Resume Text:- " + resumeText;
+
+            var url = $"{_options.GeminiEndpoint}{_options.ApiKey}";
 
             var filePath =
                 Path.Combine(Directory.GetCurrentDirectory(),
@@ -176,15 +175,16 @@ namespace LocalHiringPlatform.Infrastructure.Services
                 await File.ReadAllTextAsync(
                     filePath);
 
-
             var prompt =
                 promptTemplate
                     .Replace(
                         "{{JOB_DESCRIPTION}}",
-                        jobDescription)
+                            jobDescription
+                        )
                     .Replace(
                         "{{CANDIDATE_PROFILE}}",
-                        candidateSkillsSummary);
+                            candidateSkillsSummary
+                        );
 
             var requestBody =
                 new
@@ -247,6 +247,8 @@ namespace LocalHiringPlatform.Infrastructure.Services
                         PropertyNameCaseInsensitive = true
                     });
 
+
+
             var aiAnalysis =
                 new AiAnalysis
                 {
@@ -268,11 +270,34 @@ namespace LocalHiringPlatform.Infrastructure.Services
                             result.Gaps),
 
                     AnalyzedOn =
-                        DateTime.UtcNow
+                        DateTime.UtcNow,
+
+                    AnalysisCount = analysisCount + 1,
                 };
 
-            await _aiAnalysisRepository
-                 .AddAsync(aiAnalysis);
+            if (existingAnalysis == null)
+            {
+                await _aiAnalysisRepository
+                    .AddAsync(aiAnalysis);
+            }
+            else
+            {
+                existingAnalysis.Score = result.Score;
+                existingAnalysis.Recommendation = result.Recommendation;
+                existingAnalysis.Strengths =
+                    JsonSerializer.Serialize(result.Strengths);
+                existingAnalysis.Gaps =
+                    JsonSerializer.Serialize(result.Gaps);
+                existingAnalysis.AnalyzedOn =
+                    DateTime.UtcNow;
+                existingAnalysis.AnalysisCount =
+                    analysisCount + 1;
+
+                _aiAnalysisRepository
+                    .Update(existingAnalysis);
+            }
+
+            await _unitOfWork.SaveChangesAsync();
 
             await _unitOfWork
                 .SaveChangesAsync();

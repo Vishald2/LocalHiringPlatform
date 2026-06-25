@@ -124,7 +124,7 @@ function App() {
                     />
 
                     <Route
-                        path="/ejobapplicants/:jobId"
+                        path="/jobapplicants/:jobId"
                         element={
                             <JobApplicantsPage />
                         }
