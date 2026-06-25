@@ -127,4 +127,49 @@ public class AuthService : IAuthService
 
         await _unitOfWork.SaveChangesAsync();
     }
+
+    public async Task ChangePasswordAsync(
+    Guid userId,
+    ChangePasswordModel model)
+    {
+        var user =
+            await _userRepository
+                .GetByIdAsync(userId);
+
+        if (user == null)
+        {
+            throw new BusinessException(
+                "User not found.");
+        }
+
+        if (!BCrypt.Net.BCrypt.Verify(
+                model.CurrentPassword,
+                user.PasswordHash))
+        {
+            throw new BusinessException(
+                "Current password is incorrect.");
+        }
+
+        if (model.NewPassword !=
+            model.ConfirmPassword)
+        {
+            throw new BusinessException(
+                "New password and confirm password do not match.");
+        }
+
+        if (BCrypt.Net.BCrypt.Verify(
+                model.NewPassword,
+                user.PasswordHash))
+        {
+            throw new BusinessException(
+                "New password must be different from the current password.");
+        }
+
+        user.PasswordHash =
+            BCrypt.Net.BCrypt.HashPassword(
+                model.NewPassword);
+
+        await _unitOfWork
+            .SaveChangesAsync();
+    }
 }
