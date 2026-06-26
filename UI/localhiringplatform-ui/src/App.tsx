@@ -1,7 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
-import RegisterPage from "./pages/CandidateRegisterPage";
 import CandidateDashboardPage from "./pages/DashboardPage";
 import CandidateProfilePage from "./pages/candidate/CandidateProfilePage";
 import MyApplicationsPage from "./pages/candidate/MyApplicationsPage";
@@ -9,7 +8,6 @@ import CompanyProfilePage from "./pages/employer/CompanyProfilePage";
 import EmployerDashboardPage from "./pages/employer/EmployerDashboardPage";
 import JobList from "./pages/JobsPage";
 import MainLayout from "./layouts/MainLayout";
-import CandidateRegisterPage from "./pages/CandidateRegisterPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import DashboardPage from "./pages/DashboardPage";
 import ManageSkills from "./pages/master/ManageSkills";
@@ -24,6 +22,7 @@ import NotificationsPage from "./pages/NotificationsPage";
 import SavedJobsPage from "./pages/candidate/SavedJobsPage";
 import JobApplicantsPage from "./pages/employer/JobApplicantsPage";
 import ChangePasswordPage from "./pages/candidate/ChangePassword";
+import CandidateRegisterPage from "./pages/candidate/CandidateRegisterPage";
 
 function App() {
     return (
@@ -32,7 +31,7 @@ function App() {
                 <Route element={<MainLayout />}>
                     <Route path="/" element={<HomePage />} />
                     <Route path="/login" element={<LoginPage />} />
-                    <Route path="/register" element={<RegisterPage />} />
+                    <Route path="/register" element={<CandidateRegisterPage />} />
                     <Route path="/cdashboard" element={<CandidateDashboardPage />} />
                     <Route
                         path="/cprofile"
@@ -64,7 +63,6 @@ function App() {
                     />
                     <Route path="/companyprofile" element={<CompanyProfilePage />} />
                     <Route path="/edashboard" element={<EmployerDashboardPage />} />
-                    <Route path="/candidate/register" element={<CandidateRegisterPage />}/>
                     <Route
                         path="/dashboard"
                         element={
