@@ -19,10 +19,7 @@ namespace LocalHiringPlatform.Infrastructure.Repositories
 
         }
 
-        public async Task<SavedJob?>
-            GetAsync(
-                Guid userId,
-                Guid jobId)
+        public async Task<SavedJob?> GetAsync(Guid userId, Guid jobId)
         {
             return await _dbContext
                 .SavedJobs
@@ -33,9 +30,7 @@ namespace LocalHiringPlatform.Infrastructure.Repositories
                         x.JobId == jobId);
         }
 
-        public async Task<List<SavedJob>>
-            GetByUserIdAsync(
-                Guid userId)
+        public async Task<List<SavedJob>> GetByUserIdAsync(Guid userId)
         {
             return await _dbContext
                 .SavedJobs

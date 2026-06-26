@@ -33,8 +33,24 @@ namespace LocalHiringPlatform.Api.Controllers
         {
             Guid userId = User.GetUserId();
 
-            var jobs = await _savedJobService
+            var result = await _savedJobService
                 .GetMySavedJobsAsync(userId);
+
+
+            var jobs = result.Select(job => new DTOs.JobResponseDto
+            {
+                EntityId = job.EntityId,
+                Title = job.Title,
+                Description = job.Description,
+                City = job.City,
+                State = job.State,
+                MinSalary = job.MinSalary,
+                MaxSalary = job.MaxSalary,
+                ExperienceRequired = job.ExperienceRequired,
+                RequiredSkills = job.RequiredSkills,
+                IsActive = job.IsActive,
+                ApplicantCount = job.ApplicantCount
+            }).ToList();
 
             return Ok(jobs);
         }

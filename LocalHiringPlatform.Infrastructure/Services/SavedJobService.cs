@@ -20,13 +20,10 @@ namespace LocalHiringPlatform.Infrastructure.Repositories
             _unitOfWork = unitOfWork;
         }
 
-        public async Task SaveJobAsync(
-    Guid userId,
-    Guid jobId)
+        public async Task SaveJobAsync(Guid userId, Guid jobId)
         {
             var existing =
-                await _savedJobRepository
-                    .GetAsync(userId, jobId);
+                await _savedJobRepository.GetAsync(userId, jobId);
 
             if (existing != null)
             {
@@ -45,9 +42,7 @@ namespace LocalHiringPlatform.Infrastructure.Repositories
                 .SaveChangesAsync();
         }
 
-        public async Task RemoveSavedJobAsync(
-    Guid userId,
-    Guid jobId)
+        public async Task RemoveSavedJobAsync(Guid userId, Guid jobId)
         {
             var savedJob =
                 await _savedJobRepository
@@ -67,9 +62,7 @@ namespace LocalHiringPlatform.Infrastructure.Repositories
                 .SaveChangesAsync();
         }
 
-        public async Task<List<JobModel>>
-    GetMySavedJobsAsync(
-        Guid userId)
+        public async Task<List<JobModel>> GetMySavedJobsAsync(Guid userId)
         {
             var savedJobs =
                 await _savedJobRepository
@@ -112,6 +105,5 @@ namespace LocalHiringPlatform.Infrastructure.Repositories
                     })
                 .ToList();
         }
-
     }
 }
