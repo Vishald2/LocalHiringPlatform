@@ -7,8 +7,8 @@ using System.Security.Claims;
 namespace LocalHiringPlatform.API.Controllers
 {
 
-    [Authorize(Roles = "Candidate")]
     [ApiController]
+    [Authorize(Roles = "Candidate")]
     [Route("api/[controller]")]
     public class CandidateSkillController : ControllerBase
     {

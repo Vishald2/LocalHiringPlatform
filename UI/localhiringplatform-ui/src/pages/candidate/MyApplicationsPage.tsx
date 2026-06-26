@@ -1,28 +1,22 @@
-﻿import { useEffect }
-    from "react";
-
-import { useState }
-    from "react";
-
+﻿import { useEffect } from "react";
+import { useState } from "react";
 import { getMyApplications } from "../../services/JobApplicationService";
 import type { MyApplication } from "../../types/MyApplication";
 
 export default function MyApplicationsPage() {
     const [applications,
         setApplications]
-        = useState<
-            MyApplication[]
-        >([]);
+        = useState<MyApplication[]>([]);
 
 
 
     useEffect(() => {
         async function loadApplications() {
+
             const result =
                 await getMyApplications();
 
-            setApplications(
-                result);
+            setApplications(result);
         }
         loadApplications();
     }, []);

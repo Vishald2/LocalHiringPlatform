@@ -26,6 +26,7 @@ public class JobApplicationController
     }
 
     [HttpPost]
+    [Authorize(Roles = "Candidate")]
     public async Task<IActionResult> ApplyToJob(
             ApplyToJobRequestDto dto)
     {
@@ -47,6 +48,7 @@ public class JobApplicationController
     }
 
     [HttpGet("candidate/my")]
+    [Authorize(Roles = "Candidate")]
     public async Task<IActionResult> GetMyApplications()
     {
         Guid userId =
@@ -75,6 +77,7 @@ public class JobApplicationController
     }
 
     [HttpGet("employer/my")]
+    [Authorize(Roles = "Employer")]
     public async Task<IActionResult>GetAllApplicantsByEmployerProfile()
     {
         Guid userId =

@@ -40,6 +40,7 @@ public class JobController
     }
 
     [HttpPost]
+    [Authorize(Roles = "Employer")]
     public async Task<IActionResult> AddJob(CreateJobRequestDto dto)
     {
         var claims = User.Claims.ToList();
@@ -93,6 +94,7 @@ public class JobController
     }
 
     [HttpPut]
+    [Authorize(Roles = "Employer")]
     public async Task<IActionResult>
     UpdateJob(UpdateJobRequestDto request)
     {

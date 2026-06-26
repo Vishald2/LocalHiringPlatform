@@ -8,7 +8,7 @@ namespace LocalHiringPlatform.Api.Controllers;
 
 [ApiController]
 [Route("api/candidate/profile")]
-[Authorize]
+[Authorize(Roles = "Candidate")]
 public class CandidateProfileController : ControllerBase
 {
     private readonly ICandidateProfileService

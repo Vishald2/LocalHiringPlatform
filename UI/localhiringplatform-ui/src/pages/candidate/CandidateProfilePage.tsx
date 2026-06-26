@@ -1,16 +1,17 @@
-﻿import { useEffect, useState } from "react";
+﻿import { useEffect, useState }
+    from "react";
 
-import {getProfile, updateProfile} from "../../services/CandidateProfileService";
+import { getProfile, updateProfile, uploadResume }
+    from "../../services/CandidateProfileService";
+import { getMySkills, saveMySkills }
+    from "../../services/CandidateSkillService";
+import { getAllSkills }
+    from "../../services/SkillService";
 
-import type{ CandidateProfile }
+import type { CandidateProfile }
     from "../../types/CandidateProfile";
-
-import { uploadResume } from "../../services/CandidateProfileService";
-
-import { getAllSkills } from "../../services/SkillService";
-
-import type { Skill } from "../../types/Skill";
-import {getMySkills, saveMySkills} from "../../services/CandidateSkillService";
+import type { Skill }
+    from "../../types/Skill";
 
 export default function CandidateProfilePage() {
 
@@ -115,8 +116,7 @@ export default function CandidateProfilePage() {
         }
         catch {
 
-            setSuccessMessage(
-                "Unable to update profile.");
+            setSuccessMessage("Unable to update profile.");
         }
     }
 
