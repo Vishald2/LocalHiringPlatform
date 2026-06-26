@@ -22,7 +22,9 @@ export const API_ENDPOINTS =
         employer: {
             applicants: "/jobapplication/employer/my",
             updatestatus:"/jobapplication/status"
-            }
+        },
+        GetApplicantsByJobId: "/jobapplication/job/:jobId"
+
     },
 
     skill:

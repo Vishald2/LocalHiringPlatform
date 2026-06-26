@@ -1,10 +1,10 @@
 ﻿import { useEffect }  from "react";
 import { useState } from "react";
-import {getJobs, searchJobs} from "../services/JobService";
-import { applyToJob } from "../services/JobApplicationService";
-import type { Job } from "../types/Job";
-import { getErrorMessage } from "../utils/errorHelper";
-import { saveJob } from "../services/SavedJobService";
+import {getJobs, searchJobs} from "../../services/JobService";
+import { applyToJob } from "../../services/JobApplicationService";
+import type { Job } from "../../types/Job";
+import { getErrorMessage } from "../../utils/errorHelper";
+import { saveJob } from "../../services/SavedJobService";
 
 async function handleApply(
     jobId: string) {
@@ -23,9 +23,7 @@ export default function JobList() {
 
     const [jobs, setJobs] = useState<Job[]>([]);
 
-    const [keyword,
-        setKeyword] =
-        useState("");
+    const [keyword, setKeyword] = useState("");
 
     const [city,
         setCity] =
@@ -34,8 +32,6 @@ export default function JobList() {
     useEffect(() => {
 
         async function loadJobs() {
-
-            console.log("const result = await getJobs();");
 
             const result = await getJobs();
 
@@ -98,9 +94,7 @@ export default function JobList() {
                     placeholder="Keyword"
                     value={keyword}
                     onChange={
-                        e =>
-                            setKeyword(
-                                e.target.value)
+                        e => setKeyword(e.target.value)
                     }
                 />
 

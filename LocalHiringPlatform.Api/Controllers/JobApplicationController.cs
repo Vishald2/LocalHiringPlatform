@@ -4,7 +4,6 @@ using LocalHiringPlatform.Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace LocalHiringPlatform.Api.Controllers;
 
@@ -27,8 +26,7 @@ public class JobApplicationController
     }
 
     [HttpPost]
-    public async Task<IActionResult>
-        ApplyToJob(
+    public async Task<IActionResult> ApplyToJob(
             ApplyToJobRequestDto dto)
     {
         Guid userId =

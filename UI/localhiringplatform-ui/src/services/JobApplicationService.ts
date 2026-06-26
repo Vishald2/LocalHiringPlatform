@@ -6,26 +6,23 @@ import type { MyApplication } from "../types/MyApplication";
 import type { Applicant } from "../types/Applicant";
 
 import type { UpdateApplicationStatusRequest } from "../types/UpdateApplicationStatusRequest";
-import { API_BASE_URL } from "../config/api";
 import type { AiMatchResult } from "../types/AiMatchResult";
-
-function getBaseUrl() {
-    return API_ENDPOINTS.jobApplication.root;
-}
 
 export async function applyToJob(
     request: JobApplicationRequest) {
 
-    console.log(request);
-    console.log(getBaseUrl());
+    const endpoint = API_ENDPOINTS.jobApplication.root;
 
-    await api.post(getBaseUrl(), request);
+    await api.post(endpoint, request);
 }
 
-
 export async function getMyApplications() {
+
+    const endpoint =
+        API_ENDPOINTS.jobApplication.root + "/candidate/my";
+
     const response =
-        await api.get<MyApplication[]>("/jobapplication/candidate/my");
+        await api.get<MyApplication[]>(endpoint);
 
     return response.data;
 }
@@ -34,9 +31,9 @@ export const getApplicantsByJobId = async (
     jobId: string
 ): Promise<Applicant[]> => {
 
-    const response = await api.get<Applicant[]>(
-        `${getBaseUrl()}/job/${jobId}`
-    );
+    const endpoint = API_ENDPOINTS.jobApplication.GetApplicantsByJobId.replace(':jobId', jobId);
+
+    const response = await api.get<Applicant[]>(endpoint);
 
     return response.data;
 };
@@ -62,7 +59,9 @@ export async function getAiAnalysis(
     try {
 
         const response = await api.get<AiMatchResult>(
-                `/GeminiTest/match?jobId=${jobId}&candidateProfileId=${candidateProfileId}&reanalyse=${reanalyse}`);
+            `/GeminiTest/match?jobId=${jobId}
+                &candidateProfileId=${candidateProfileId}
+                &reanalyse=${reanalyse}`);
 
         return response.data;
 

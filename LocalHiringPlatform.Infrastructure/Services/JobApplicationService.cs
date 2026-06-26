@@ -61,9 +61,7 @@ public class JobApplicationService
         }
     }
 
-    public async Task ApplyToJobAsync(
-        ApplyToJobModel model,
-        Guid userId)
+    public async Task ApplyToJobAsync(ApplyToJobModel model, Guid userId)
     {
         /*VERIFY YOUR EMAIL BEFORE APPLYING FOR JOBS*/
         var user = await _userRepository.GetByIdAsync(userId);

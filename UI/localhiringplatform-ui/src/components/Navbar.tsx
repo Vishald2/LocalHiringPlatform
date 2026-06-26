@@ -81,7 +81,7 @@ export default function Navbar() {
 
                         <Link
                             className="navbar-link"
-                            to="/jobs">
+                            to="/availablejobs">
                             Jobs
                         </Link>
 
