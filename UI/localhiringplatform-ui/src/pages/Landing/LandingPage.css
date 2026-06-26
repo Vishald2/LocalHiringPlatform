@@ -1,0 +1,16 @@
+﻿.landing-page {
+    width: 100%;
+}
+
+    .landing-page section {
+        padding: 80px 20px;
+    }
+
+.hero-section {
+    min-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
