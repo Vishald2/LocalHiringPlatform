@@ -136,8 +136,10 @@ export default function Navbar() {
                             to="/companyprofile">
                             Company Profile
                         </Link>
-                        <Link to="/changepassword">
-                            Change Password
+                        <Link
+                            className="navbar-link"
+                            to="/changepassword">
+                           Change Password 
                         </Link>
                         <Link
                             className="navbar-link"
