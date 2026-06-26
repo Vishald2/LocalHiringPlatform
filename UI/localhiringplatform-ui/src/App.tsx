@@ -24,12 +24,14 @@ import ChangePasswordPage from "./pages/candidate/ChangePassword";
 import CandidateRegisterPage from "./pages/candidate/CandidateRegisterPage";
 import AvailableJobs from "./pages/candidate/AvailableJobs";
 
+import LandingPage from "./pages/Landing/LandingPage";
+
+
 function App() {
     return (
         <BrowserRouter>
             <Routes>
                 <Route element={<MainLayout />}>
-                    <Route path="/" element={<HomePage />} />
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/register" element={<CandidateRegisterPage />} />
                     <Route path="/cdashboard" element={<CandidateDashboardPage />} />
@@ -131,6 +133,11 @@ function App() {
                     <Route
                         path="/changepassword"
                         element={<ChangePasswordPage />}
+                    />
+
+                    <Route
+                        path="/"
+                        element={<LandingPage />}
                     />
                 </Route>
               
