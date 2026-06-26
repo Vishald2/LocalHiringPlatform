@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import type { CandidateRegisterRequest } from "../types/CandidateRegisterRequest";
-import type { CandidateRegisterErrors } from "../types/CandidateRegisterErrors";
-import { registerCandidate } from "../services/AuthService";
 import { useNavigate } from "react-router-dom";
-import type { RegisterCandidateApiRequest } from "../types/RegisterCandidateApiRequest";
+import { Link } from "react-router-dom";
+import type { CandidateRegisterRequest } from "../../types/CandidateRegisterRequest";
+import type { CandidateRegisterErrors } from "../../types/CandidateRegisterErrors";
+import type { RegisterCandidateApiRequest } from "../../types/RegisterCandidateApiRequest";
+import { registerCandidate } from "../../services/AuthService";
+import { getErrorMessage } from "../../utils/errorHelper";
 
 export default function CandidateRegisterPage() {
 
@@ -29,6 +30,12 @@ export default function CandidateRegisterPage() {
             role: ""
         });
 
+    const [successMessage, setSuccessMessage] =
+        useState("");
+
+    const [errorMessage, setErrorMessage] =
+        useState("");
+
     const navigate = useNavigate();
 
     function handleInputChange(
@@ -47,8 +54,6 @@ export default function CandidateRegisterPage() {
 
     async function handleRegister() {
 
-        console.log("Form Data:", form);
-
         const isValid = validateForm();
 
         if (!isValid) {
@@ -56,8 +61,6 @@ export default function CandidateRegisterPage() {
             return;
         }
 
-
-        console.log("Form is valid. Proceeding with registration...");
         try {
 
             // await registerCandidate(form);
@@ -71,15 +74,19 @@ export default function CandidateRegisterPage() {
 
             await registerCandidate(request);
 
-            alert(
-                "Candidate registered successfully");
+            setSuccessMessage("Candidate registered successfully");
+
+            alert("Candidate registered successfully");
 
             navigate("/login");
         }
         catch (error) {
-            if (error instanceof Error) {
-                alert(error.message);
-            }
+
+            const errorMessage = getErrorMessage(error);
+
+            setErrorMessage(errorMessage);
+
+            alert("Error registering candidate: " + errorMessage);
         }
     }
     function validateForm() {
@@ -202,7 +209,7 @@ export default function CandidateRegisterPage() {
             <div className="form-card form-card-large">
 
                 <h2 className="form-title">
-                    Candidate Registration
+                    Registration
                 </h2>
 
                 <div className="form-group">
@@ -390,6 +397,21 @@ export default function CandidateRegisterPage() {
                 >
                     Register
                 </button>
+
+                {
+                    successMessage &&
+
+                    <div className="validation-success">
+                        {successMessage}
+                    </div>
+                }
+                {
+                    errorMessage &&
+
+                    <div className="validation-error">
+                        {errorMessage}
+                    </div>
+                }
 
                 <div className="form-footer">
 
