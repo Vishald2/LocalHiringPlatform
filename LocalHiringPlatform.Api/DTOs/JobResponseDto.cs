@@ -21,4 +21,6 @@ public class JobResponseDto
     public string? RequiredSkills { get; set; }
 
     public bool IsActive { get; set; }
+
+    public int ApplicantCount { get; set; } = 0;
 }

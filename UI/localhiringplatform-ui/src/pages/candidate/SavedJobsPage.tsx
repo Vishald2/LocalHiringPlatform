@@ -1,5 +1,4 @@
-﻿import { useEffect, useState }
-    from "react";
+﻿import { useEffect, useState } from "react";
 
 import {getMySavedJobs, removeSavedJob} from "../../services/SavedJobService";
 
@@ -25,8 +24,10 @@ export default function SavedJobsPage() {
     async function handleRemove(
         jobId: string) {
 
+            /*REMOVE SAVED JOB FROM DATABASE */
         await removeSavedJob(jobId);
 
+        /*REMOVE SAVED JOB FROM STATE WITHOUT MAKING A ROUND TRIP TO THE DATABASE */
         setJobs(jobs.filter(x => x.entityId !== jobId));
     }
 
