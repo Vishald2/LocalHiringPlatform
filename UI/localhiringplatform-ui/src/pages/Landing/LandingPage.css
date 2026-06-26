@@ -124,3 +124,53 @@
     color: #666;
     line-height: 1.7;
 }
+
+.how-it-works-section {
+    background: #f8fafc;
+}
+
+.steps-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 30px;
+}
+
+.step-card {
+    background: white;
+    border-radius: 14px;
+    padding: 40px;
+    text-align: center;
+    border: 1px solid #e5e7eb;
+}
+
+.step-number {
+    width: 42px;
+    height: 42px;
+    margin: 0 auto 25px;
+    border-radius: 50%;
+    background: #2563eb;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 700;
+}
+
+@media (max-width: 768px) {
+
+    .hero-title {
+        font-size: 48px;
+    }
+
+    .hero-subtitle {
+        font-size: 26px;
+    }
+
+    .feature-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-buttons {
+        flex-direction: column;
+    }
+}
