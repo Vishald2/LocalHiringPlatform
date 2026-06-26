@@ -6,7 +6,6 @@ import CandidateProfilePage from "./pages/candidate/CandidateProfilePage";
 import MyApplicationsPage from "./pages/candidate/MyApplicationsPage";
 import CompanyProfilePage from "./pages/employer/CompanyProfilePage";
 import EmployerDashboardPage from "./pages/employer/EmployerDashboardPage";
-import JobList from "./pages/JobsPage";
 import MainLayout from "./layouts/MainLayout";
 import ProtectedRoute from "./components/ProtectedRoute";
 import DashboardPage from "./pages/DashboardPage";
@@ -23,6 +22,7 @@ import SavedJobsPage from "./pages/candidate/SavedJobsPage";
 import JobApplicantsPage from "./pages/employer/JobApplicantsPage";
 import ChangePasswordPage from "./pages/candidate/ChangePassword";
 import CandidateRegisterPage from "./pages/candidate/CandidateRegisterPage";
+import AvailableJobs from "./pages/candidate/AvailableJobs";
 
 function App() {
     return (
@@ -48,9 +48,9 @@ function App() {
                             </ProtectedRoute>
                         }
                     />
-                    <Route path="/jobs"
+                    <Route path="/availablejobs"
                         element={
-                            <JobList />
+                            <AvailableJobs />
                         }
                     />
                     <Route
