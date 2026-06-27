@@ -1,5 +1,4 @@
-﻿
-import { api } from "./api";
+﻿import { api } from "../infra/apiClient";
 import type { Job } from "../types/Job";
 
 export async function saveJob(jobId: string) {

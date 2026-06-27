@@ -1,6 +1,6 @@
 ﻿
 import type { CreateJobApiRequest} from "../types/CreateJobApiRequest";
-import { api } from "./api";
+import { api } from "../infra/apiClient";
 import { API_ENDPOINTS } from "../End_Points/apiEndpoints";
 import type { Job } from "../types/Job";
 import type { UpdateJobRequest } from "../types/UpdateJobRequest";

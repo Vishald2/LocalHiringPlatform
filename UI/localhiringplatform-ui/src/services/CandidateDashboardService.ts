@@ -1,4 +1,4 @@
-﻿import { api } from "./api";
+﻿import { api } from "../infra/apiClient";
 import { API_ENDPOINTS } from "../End_Points/apiEndpoints";
 import type { CandidateDashboardResponse } from "../types/CandidateDashboardResponse";
 

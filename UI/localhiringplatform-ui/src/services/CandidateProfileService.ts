@@ -1,5 +1,5 @@
 ﻿import type { CandidateProfile } from "../types/CandidateProfile";
-import { api } from "./api";
+import { api } from "../infra/apiClient";
 import { API_ENDPOINTS } from "../End_Points/apiEndpoints";
 
 function getBaseUrl() {

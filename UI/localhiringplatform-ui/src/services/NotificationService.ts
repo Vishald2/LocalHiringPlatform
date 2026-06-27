@@ -1,5 +1,4 @@
-﻿
-import { api } from "./api";
+﻿import { api } from "../infra/apiClient";
 import type { Notification } from "../types/Notification";
 
 export async function getMyNotifications() {

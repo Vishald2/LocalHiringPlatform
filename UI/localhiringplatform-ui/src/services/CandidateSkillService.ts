@@ -1,7 +1,6 @@
 ﻿import { API_BASE_URL } from "../config/api";
 import type { CandidateSkill } from "../types/CandidateSkill";
 
-
 export async function getMySkills()
     : Promise<CandidateSkill[]> {
 

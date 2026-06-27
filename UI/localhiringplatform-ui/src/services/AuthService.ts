@@ -4,7 +4,7 @@ import type { LoginRequest } from "../types/LoginRequest";
 import type { LoginResponse } from "../types/LoginResponse";
 
 import type { RegisterCandidateApiRequest } from "../types/RegisterCandidateApiRequest";
-import { api } from "./api";
+import { api } from "../infra/apiClient";
 
 export async function registerCandidate(
     request: RegisterCandidateApiRequest

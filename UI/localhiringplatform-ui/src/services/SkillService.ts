@@ -1,5 +1,4 @@
-﻿
-import { API_BASE_URL } from "../config/api";
+﻿import { API_BASE_URL } from "../config/api";
 import type { AddSkillApiRequest } from "../types/AddSkillAPiRequest";
 import type { Skill } from "../types/Skill";
 
