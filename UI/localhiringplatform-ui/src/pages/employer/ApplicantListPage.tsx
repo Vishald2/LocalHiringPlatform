@@ -166,7 +166,3 @@ export default function ApplicantListPage() {
         </div>
     );
 }
-
-function getAiAnalysis(jobId: any, candidateProfileId: any) {
-    throw new Error("Function not implemented.");
-}

@@ -1,6 +1,7 @@
 ﻿
 export interface AddSkillApiRequest {
-    SkillName: string;
-    SkillCategory: number;
-    IsApproved: boolean;
+    skillName: string;
+    skillCategory: number;
+    isApproved: boolean;
+    industryType: string;
 }

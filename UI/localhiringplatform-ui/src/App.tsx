@@ -25,8 +25,10 @@ import AvailableJobs from "./pages/candidate/AvailableJobs";
 
 import LandingPage from "./pages/Landing/LandingPage";
 
-
 function App() {
+    console.log("App.tsx");
+    console.log(import.meta.env.VITE_TEST);
+    console.log(import.meta.env.VITE_API_BASE_URL);
     return (
         <BrowserRouter>
             <Routes>

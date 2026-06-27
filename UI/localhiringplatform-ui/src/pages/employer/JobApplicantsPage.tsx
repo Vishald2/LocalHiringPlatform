@@ -38,6 +38,7 @@ export default function JobApplicantsPage() {
         setLoadingAi] =
         useState<Record<string, boolean>>({});
 
+
     useEffect(() => {
 
         async function loadApplicants() {
@@ -64,6 +65,10 @@ export default function JobApplicantsPage() {
         loadApplicants();
 
     }, [jobId]);
+
+    if (!jobId) {
+        return <div>Invalid Job Id</div>;
+    }
 
     async function handleAiAnalysis(
         jobId: string,

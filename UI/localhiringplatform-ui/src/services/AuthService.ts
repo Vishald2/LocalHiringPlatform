@@ -19,6 +19,12 @@ export async function login(
     request: LoginRequest
 ): Promise<LoginResponse> {
 
+    console.log("in service");
+    console.log(import.meta.env);
+    console.log(import.meta.env.VITE_API_BASE_URL);
+
+    console.log({ API_BASE_URL });
+
     const response = await fetch(
         `${API_BASE_URL}/api/auth/login`,
         {

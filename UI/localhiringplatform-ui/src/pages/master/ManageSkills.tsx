@@ -9,9 +9,11 @@ export default function ManageSkills() {
 
     const [skill, setSkill] =
         useState<Skill>({
-            SkillName: "",
-            SkillCategory: null,
-            IsApproved:false
+            skillName: "",
+            skillCategory: 0,
+            isApproved: false,
+            entityId: "",
+            industryType:""
         });
 
     const [successMessage, setSuccessMessage] =
@@ -65,10 +67,10 @@ export default function ManageSkills() {
 
                     <input
                         className="form-control"
-                        value={skill.SkillName}
+                        value={skill.skillName}
                         onChange={(e) =>
                             handleChange(
-                                "SkillName",
+                                "skillName",
                                 e.target.value)}
                     />
 
@@ -82,10 +84,10 @@ export default function ManageSkills() {
 
                     <input
                         className="form-control"
-                        value={skill.SkillCategory}
+                        value={skill.skillCategory}
                         onChange={(e) =>
                             handleChange(
-                                "SkillCategory",
+                                "skillCategory",
                                 Number(e.target.value))}
                     />
 
@@ -99,11 +101,11 @@ export default function ManageSkills() {
                             className="form-checkbox"
                             type="checkbox"
                             checked={
-                                skill.IsApproved
+                                skill.isApproved
                             }
                             onChange={(e) =>
                                 handleChange(
-                                    "IsApproved",
+                                    "isApproved",
                                     e.target.checked)}
                         />
 

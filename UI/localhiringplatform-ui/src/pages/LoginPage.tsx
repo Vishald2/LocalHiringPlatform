@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { login } from "../services/AuthService";
 
@@ -14,7 +14,7 @@ export default function LoginPage() {
     async function handleLogin() {
 
         try {
-
+            console.log("Login...");
             const response = await login({
                 emailOrMobile: form.emailOrMobile,
                 password: form.password

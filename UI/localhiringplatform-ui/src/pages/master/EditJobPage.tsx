@@ -1,13 +1,11 @@
 ﻿import { useEffect, useState } from "react";
 
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import { getJobById, updateJob } from "../../services/JobService";
 
 export default function EditJobPage() {
     const { id } = useParams();
-
-    const navigate = useNavigate();
 
     const [job, setJob] = useState({
         entityId: "",

@@ -1,6 +1,5 @@
 ﻿
-import api from "../config/api";
-import type { Applicant } from "../types/Applicant";
+import { api } from "../config/api";
 import type { CandidateSkill } from "./CandidateSkill";
 
 export interface SaveCandidateSkillsRequest {

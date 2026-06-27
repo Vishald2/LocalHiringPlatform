@@ -27,7 +27,8 @@ export default function CandidateProfilePage() {
             totalExperienceYears: null,
             profileSummary: "",
             isOpenToWork: false,
-            profileCompletionPercentage: 0
+            profileCompletionPercentage: 0,
+            emailVerified: false
         });
 
     const [successMessage, setSuccessMessage] =

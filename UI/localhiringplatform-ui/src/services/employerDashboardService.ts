@@ -1,7 +1,7 @@
 ﻿import { api } from "./api";
 import type { EmployerDashboard } from "../types/EmployerDashboard";
 import { API_ENDPOINTS } from "../End_Points/apiEndpoints";
-import type { EmployerProfile } from "../types/EmployeeProfile";
+import type { EmployerProfile } from "../types/EmployerProfile";
 
 function getBaseUrl() {
     return API_ENDPOINTS.employer.dashboard;
