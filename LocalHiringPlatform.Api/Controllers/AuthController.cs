@@ -118,7 +118,11 @@ namespace LocalHiringPlatform.Api.Controllers
         public async Task<IActionResult> VerifyEmail(string token)
         {
             await _authService.VerifyEmailAsync(token);
-            return Ok("Email verified successfully");
+            return Ok(new VerifyEmailResponseModel
+            {
+                Success = true,
+                Message = "Email verified successfully."
+            });
         }
 
         [Authorize]

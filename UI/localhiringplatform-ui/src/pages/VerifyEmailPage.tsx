@@ -15,7 +15,11 @@ export default function VerifyEmailPage() {
         setMessage] =
         useState("Verifying email...");
 
+    const [isLoading, setIsLoading] = useState(true);
+
     useEffect(() => {
+
+        let mounted = true;
 
         async function verify() {
 
@@ -36,9 +40,11 @@ export default function VerifyEmailPage() {
                 await verifyEmail(
                     token);
 
-                setSuccess(true);
+                if (mounted) {
+                    setSuccess(true);
 
-                setMessage("Email verified successfully.");
+                    setMessage("Email verified successfully.");
+                }
             }
             catch {
 
@@ -46,9 +52,17 @@ export default function VerifyEmailPage() {
 
                 setMessage("Invalid or expired verification link.");
             }
+            finally {
+                setIsLoading(false);
+            }
         }
 
         verify();
+
+        return () => {
+
+            mounted = false;
+        };
 
     }, []);
 
@@ -60,11 +74,13 @@ export default function VerifyEmailPage() {
 
                 <h2>
 
-                    {
-                        success
-                            ? "Email Verified"
-                            : "Verification Failed"
-                    }
+                        {
+                            isLoading
+                            ? "Verifying Email..."
+                                : success
+                                    ? "Email Verified"
+                                    : "Verification Failed"
+                        }
 
                 </h2>
 
@@ -72,13 +88,17 @@ export default function VerifyEmailPage() {
                     {message}
                 </p>
 
-                <Link
-                    to="/login"
-                    className="primary-button">
+                {
+                    !isLoading &&
 
-                    Go To Login
+                    <Link
+                        to="/login"
+                        className="primary-button">
 
-                </Link>
+                        Go To Login
+
+                    </Link>
+                }
 
             </div>
 

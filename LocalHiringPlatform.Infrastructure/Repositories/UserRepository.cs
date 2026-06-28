@@ -43,7 +43,7 @@ public class UserRepository : IUserRepository
         /*TOKEN IS VALID FOR TWO DAYS. IF IT EXISTS AND IS NOT EXPIRED*/
         var user = await _dbContext.Users
             .FirstOrDefaultAsync(x => x.EmailVerificationToken == token
-            && x.CreatedOn.AddDays(2) > DateTime.UtcNow );
+            && x.EmailVerificationTokenExpiry > DateTime.UtcNow );
 
         return user;
     }

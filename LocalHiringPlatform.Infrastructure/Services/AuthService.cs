@@ -149,9 +149,7 @@ public class AuthService : IAuthService
 
         user.EmailVerifiedOn = DateTime.UtcNow;
 
-        /*TOKEN IS VALID NOT FOR TWO DAYS*/
-        if(user.CreatedOn.AddDays(2) > DateTime.UtcNow)
-            user.EmailVerificationToken = null;
+        user.EmailVerificationToken = null;
 
         await _unitOfWork.SaveChangesAsync();
     }
