@@ -1,8 +1,11 @@
-﻿using LocalHiringPlatform.Domain.Entities;
+﻿using LocalHiringPlatform.Domain.Configuration;
+using LocalHiringPlatform.Domain.Entities;
 using LocalHiringPlatform.Domain.Enums;
 using LocalHiringPlatform.Domain.Exceptions;
 using LocalHiringPlatform.Domain.Interfaces;
 using LocalHiringPlatform.Domain.Models;
+using LocalHiringPlatform.Infrastructure.EmailTemplates;
+using Microsoft.Extensions.Options;
 
 namespace LocalHiringPlatform.Infrastructure.Services;
 
@@ -14,18 +17,24 @@ public class AuthService : IAuthService
     private readonly IUnitOfWork _unitOfWork;
 
     private readonly IJwtTokenService _jwtTokenService;
+    private readonly IEmailService _emailService;
+    private readonly IOptions<ApplicationSettings> _applicationSettings;
 
     public AuthService(IUserRepository userRepository,
         ICandidateProfileRepository candidateProfileRepository,
         IEmployerProfileRepository employerProfileRepository,
         IUnitOfWork unitOfWork,
-        IJwtTokenService jwtTokenService)
+        IJwtTokenService jwtTokenService,
+        IEmailService emailService,
+        IOptions<ApplicationSettings> applicationSettings)
     {
         _userRepository = userRepository;
         _candidateProfileRepository = candidateProfileRepository;
         _employerProfileRepository = employerProfileRepository;
         _unitOfWork = unitOfWork;
         _jwtTokenService = jwtTokenService;
+        _emailService = emailService;
+        _applicationSettings = applicationSettings;
     }
 
     public async Task RegisterCandidateAsync(RegisterCandidateModel model)
@@ -52,6 +61,7 @@ public class AuthService : IAuthService
             Role = model.Role,
             EmailVerified = false,
             EmailVerificationToken = Guid.NewGuid().ToString(),
+            EmailVerificationTokenExpiry = DateTime.UtcNow.AddHours(24)
         };
 
         await _userRepository.AddAsync(user);
@@ -76,7 +86,25 @@ public class AuthService : IAuthService
             await _employerProfileRepository.AddAsync(profile);
         }
 
+
+
         await _unitOfWork.SaveChangesAsync();
+
+        /*SEND VERIIFCATION MAIL*/
+
+
+        var verificationUrl =
+    $"{_applicationSettings.Value.FrontendUrl}/verify-email?token={user.EmailVerificationToken}";
+        EmailRequestModel emailRequestModel = new EmailRequestModel() { 
+        To = model.Email,
+        Subject="LocalHire AI Verification Email",
+        HtmlBody= VerificationEmailTemplate.Build(
+            verificationUrl)
+
+        };
+
+       await _emailService?.SendEmailAsync(emailRequestModel);
+
     }
 
     public async Task<LoginResponseModel> LoginAsync(LoginModel model)

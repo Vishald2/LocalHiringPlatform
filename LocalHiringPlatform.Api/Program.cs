@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Resend;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -163,6 +164,32 @@ builder.Services.AddScoped<
 builder.Services.AddScoped<
         IAiAnalysisRepository,
         AiAnalysisRepository>();
+
+builder.Services.Configure<ResendSettings>(
+    builder.Configuration.GetSection("Resend"));
+
+builder.Services.Configure<ApplicationSettings>(
+    builder.Configuration.GetSection("Application"));
+
+builder.Services.AddScoped<IEmailService,
+    ResendEmailService>();
+
+builder.Services.AddHttpClient<IEmailService, ResendEmailService>();
+
+builder.Services.AddOptions();
+
+builder.Services.AddTransient<IEmailService, ResendEmailService>();
+
+/*REGISTER RESEND SDK*/
+builder.Services.AddHttpClient<ResendClient>();
+
+builder.Services.Configure<ResendClientOptions>(o =>
+{
+    o.ApiToken =
+        builder.Configuration["Resend:ApiKey"]!;
+});
+
+builder.Services.AddTransient<IResend, ResendClient>();
 
 builder.Services.AddCors(options =>
 {
