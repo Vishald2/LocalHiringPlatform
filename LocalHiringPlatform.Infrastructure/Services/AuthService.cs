@@ -144,7 +144,7 @@ public class AuthService : IAuthService
         {
             throw new BusinessException("Invalid token");
         }
-
+         
         user.EmailVerified = true;
 
         user.EmailVerifiedOn = DateTime.UtcNow;
