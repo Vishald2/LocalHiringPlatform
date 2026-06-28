@@ -13,10 +13,13 @@ namespace LocalHiringPlatform.Api.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IAuthService _authService;
+        private readonly IEmailService _emailService;
 
-        public AuthController(IAuthService authService)
+        public AuthController(IAuthService authService,
+            IEmailService emailService)
         {
             _authService = authService;
+            _emailService = emailService;
         }
 
         private void ValidatePassword(string password)
@@ -115,7 +118,11 @@ namespace LocalHiringPlatform.Api.Controllers
         public async Task<IActionResult> VerifyEmail(string token)
         {
             await _authService.VerifyEmailAsync(token);
-            return Ok("Email verified successfully");
+            return Ok(new VerifyEmailResponseModel
+            {
+                Success = true,
+                Message = "Email verified successfully."
+            });
         }
 
         [Authorize]

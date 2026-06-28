@@ -9,6 +9,8 @@ public class User : BaseEntity
     public bool IsActive { get; set; } = true;
     public bool EmailVerified { get; set; }
     public string? EmailVerificationToken { get; set; }
+    public DateTime? EmailVerificationTokenExpiry { get; set; }
+    
     public bool MobileVerified { get; set; }
     public string? MobileVerificationCode { get; set; }
     public DateTime? MobileVerificationCodeExpiry { get; set; }
