@@ -73,11 +73,16 @@ namespace LocalHiringPlatform.Api.Controllers
         [HttpGet("match")]
         public async Task<IActionResult> Match(Guid jobId, Guid candidateProfileId, bool reanalyse)
         {
-            var result =
-                await _aiMatchingService.AnalyzeAsync(jobId, candidateProfileId, reanalyse);
-                        
-
-            return Ok(result);
+            try
+            {
+                var result =
+                    await _aiMatchingService.AnalyzeAsync(jobId, candidateProfileId, reanalyse);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.ToString());
+            }
         }
     }
 }
