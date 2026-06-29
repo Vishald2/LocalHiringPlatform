@@ -79,7 +79,6 @@ namespace LocalHiringPlatform.Api.Controllers
         {
             try
             {
-                _logger.LogInformation("Starting AI matching analysis for JobId: {JobId}, CandidateProfileId: {CandidateProfileId}, Reanalyse: {Reanalyse}", jobId, candidateProfileId, reanalyse);
                 var result =
                     await _aiMatchingService.AnalyzeAsync(jobId, candidateProfileId, reanalyse);
                 return Ok(result);
