@@ -57,8 +57,7 @@ public class ApplicationDbContext : DbContext
                 { 
                     x.JobId,
                     x.CandidateProfileId
-                })
-            .IsUnique();
+                }).IsUnique();
 
         modelBuilder.Entity<CandidateSkill>()
             .HasOne(x => x.CandidateProfile)
