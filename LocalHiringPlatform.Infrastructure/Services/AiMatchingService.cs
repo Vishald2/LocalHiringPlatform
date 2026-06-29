@@ -268,8 +268,6 @@ namespace LocalHiringPlatform.Infrastructure.Services
                 _applicationSettings.Value.PromptFolder,
                 "CandidateMatchingPrompt.txt");
 
-            Console.WriteLine(filePath);
-
             var promptTemplate =
                 await File.ReadAllTextAsync(
                     filePath);
