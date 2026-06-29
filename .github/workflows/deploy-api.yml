@@ -22,6 +22,12 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8.x'
+      - name: Install EF Core CLI
+        run: dotnet tool install --global dotnet-ef
+
+
+      - name: Verify EF Core CLI
+        run: dotnet ef --version
 
       - name: Build
         run: dotnet build LocalHiringPlatform.Api/LocalHiringPlatform.Api.csproj --configuration Release
