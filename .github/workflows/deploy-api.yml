@@ -23,7 +23,7 @@ jobs:
         with:
           dotnet-version: '8.x'
       - name: Install EF Core CLI
-        run: dotnet tool install --global dotnet-ef
+        run: dotnet tool install --global dotnet-ef --version 8.0.22
 
 
       - name: Verify EF Core CLI
