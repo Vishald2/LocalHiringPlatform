@@ -29,6 +29,24 @@ jobs:
       - name: Verify EF Core CLI
         run: dotnet ef --version
 
+
+      - name: Verify DbContext
+        env:
+          ConnectionStrings__DefaultConnection: ${{ secrets.ConnectionStrings__DefaultConnection }}
+        run: dotnet ef dbcontext info --project LocalHiringPlatform.Infrastructure --startup-project LocalHiringPlatform.Api
+
+
+      - name: Migration Information
+        if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+        run: echo "Applying Entity Framework Core migrations to the production database..."
+
+    
+      - name: Apply EF Core Migrations
+        if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+        env:
+          ConnectionStrings__DefaultConnection: ${{ secrets.ConnectionStrings__DefaultConnection }}
+        run: dotnet ef database update --project LocalHiringPlatform.Infrastructure --startup-project LocalHiringPlatform.Api
+
       - name: Build
         run: dotnet build LocalHiringPlatform.Api/LocalHiringPlatform.Api.csproj --configuration Release
 
