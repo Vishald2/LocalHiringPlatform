@@ -54,7 +54,7 @@ public class ApplicationDbContext : DbContext
         modelBuilder.Entity<JobApplication>()
             .HasIndex(x =>
                 new
-                {
+                { 
                     x.JobId,
                     x.CandidateProfileId
                 })
