@@ -15,11 +15,13 @@ namespace LocalHiringPlatform.Api.Controllers
         private readonly GeminiOptions _options;
 
         private readonly IAiMatchingService _aiMatchingService;
+        private readonly ILogger<GeminiTestController> _logger;
 
         public GeminiTestController(
                 IHttpClientFactory httpClientFactory,
                 IOptions<GeminiOptions> options,
-                IAiMatchingService aiMatchingService
+                IAiMatchingService aiMatchingService,
+                ILogger<GeminiTestController> logger
         )
         {
             _httpClient =
@@ -30,6 +32,8 @@ namespace LocalHiringPlatform.Api.Controllers
 
             _aiMatchingService =
                 aiMatchingService;
+
+            _logger = logger;
         }
 
         [HttpGet]
@@ -73,11 +77,17 @@ namespace LocalHiringPlatform.Api.Controllers
         [HttpGet("match")]
         public async Task<IActionResult> Match(Guid jobId, Guid candidateProfileId, bool reanalyse)
         {
-            var result =
-                await _aiMatchingService.AnalyzeAsync(jobId, candidateProfileId, reanalyse);
-                        
-
-            return Ok(result);
+            try
+            {
+                var result =
+                    await _aiMatchingService.AnalyzeAsync(jobId, candidateProfileId, reanalyse);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error during AI matching analysis.");
+                return StatusCode(500, ex.ToString());
+            }
         }
     }
 }

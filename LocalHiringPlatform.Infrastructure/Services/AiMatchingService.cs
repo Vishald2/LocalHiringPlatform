@@ -5,6 +5,7 @@ using LocalHiringPlatform.Domain.Interfaces;
 using LocalHiringPlatform.Domain.Models;
 using LocalHiringPlatform.Infrastructure.Helpers;
 using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Hosting;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Reflection;
@@ -14,6 +15,8 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
 using System.Text;
+using Microsoft.AspNetCore.Hosting;
+
 
 namespace LocalHiringPlatform.Infrastructure.Services
 {
@@ -28,6 +31,9 @@ namespace LocalHiringPlatform.Infrastructure.Services
         private readonly IJobApplicationRepository _jobApplicationRepository;
         private readonly IUnitOfWork _unitOfWork;
 
+        private readonly IOptions<ApplicationSettings> _applicationSettings;
+        
+
         public AiMatchingService(
                 IHttpClientFactory httpClientFactory,
                 IOptions<GeminiOptions> options,
@@ -36,7 +42,8 @@ namespace LocalHiringPlatform.Infrastructure.Services
                 IUserRepository userRepository,
                 IAiAnalysisRepository aiAnalysisRepository,
                 IJobApplicationRepository jobApplicationRepository,
-                IUnitOfWork unitOfWork
+                IUnitOfWork unitOfWork,
+                IOptions<ApplicationSettings> applicationSettings
             )
         {
             _httpClient = httpClientFactory.CreateClient();
@@ -47,6 +54,7 @@ namespace LocalHiringPlatform.Infrastructure.Services
             _aiAnalysisRepository = aiAnalysisRepository;
             _jobApplicationRepository = jobApplicationRepository;
             _unitOfWork = unitOfWork;
+            _applicationSettings = applicationSettings;
         }
 
         private string GetResumeText(CandidateProfile candidateProfile)
@@ -255,9 +263,10 @@ namespace LocalHiringPlatform.Infrastructure.Services
 
             var url = $"{_options.GeminiEndpoint}{_options.ApiKey}";
 
-            var filePath =
-                Path.Combine(Directory.GetCurrentDirectory(),
-                "Prompts", "CandidateMatchingPrompt.txt");
+            var filePath = Path.Combine(
+                AppContext.BaseDirectory,
+                _applicationSettings.Value.PromptFolder,
+                "CandidateMatchingPrompt.txt");
 
             var promptTemplate =
                 await File.ReadAllTextAsync(
