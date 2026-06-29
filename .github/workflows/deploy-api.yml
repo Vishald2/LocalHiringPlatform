@@ -32,7 +32,7 @@ jobs:
 
       - name: Verify DbContext
         env:
-          ConnectionStrings__DefaultConnection: ${{ secrets.ConnectionStrings__DefaultConnection }}
+          ConnectionStrings__DefaultConnection: ${{ secrets.AZURE_SQL_CONNECTION_STRING }}
         run: dotnet ef dbcontext info --project LocalHiringPlatform.Infrastructure --startup-project LocalHiringPlatform.Api
 
 
@@ -44,7 +44,7 @@ jobs:
       - name: Apply EF Core Migrations
         if: github.ref == 'refs/heads/master' && github.event_name == 'push'
         env:
-          ConnectionStrings__DefaultConnection: ${{ secrets.ConnectionStrings__DefaultConnection }}
+          ConnectionStrings__DefaultConnection: ${{ secrets.AZURE_SQL_CONNECTION_STRING }}
         run: dotnet ef database update --project LocalHiringPlatform.Infrastructure --startup-project LocalHiringPlatform.Api
 
       - name: Build
