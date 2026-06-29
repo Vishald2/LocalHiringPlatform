@@ -22,6 +22,8 @@ public class ApplicationDbContext : DbContext
 
     public DbSet<AiAnalysis> AiAnalyses {get; set;}
 
+    public DbSet<TestClass> TestClasses { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
