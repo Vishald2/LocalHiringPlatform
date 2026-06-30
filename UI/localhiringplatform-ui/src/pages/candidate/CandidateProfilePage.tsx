@@ -13,6 +13,12 @@ import type { CandidateProfile }
 import type { Skill }
     from "../../types/Skill";
 
+declare global {
+    interface Window {
+        initSendOTP: (config: any) => void;
+        sendOtp: any;
+    }
+}
 export default function CandidateProfilePage() {
 
     const [profile, setProfile] =
@@ -551,6 +557,29 @@ export default function CandidateProfilePage() {
                             Save Skills
                         </button>
 
+                    </div>
+                    <p></p>
+                    <div>
+                        <button
+                            type="button"
+                            onClick={() => {
+
+                                window.sendOtp(
+                                    "919034902189",
+                                    (data) => {
+                                        console.log("SUCCESS");
+                                        console.log(data);
+                                    },
+                                    (error) => {
+                                        console.log("ERROR");
+                                        console.log(error);
+                                    }
+                                );
+
+                            }}
+                        >
+                            Verify Mobile
+                        </button>
                     </div>
                 </div>
 

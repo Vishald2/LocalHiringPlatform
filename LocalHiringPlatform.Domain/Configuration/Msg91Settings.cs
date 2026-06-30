@@ -8,6 +8,7 @@ namespace LocalHiringPlatform.Domain.Configuration
 {
     public class Msg91Settings
     {
+        public string BaseUrl { get; set; } = string.Empty;
         public string AuthKey { get; set; } = string.Empty;
         public string TemplateId { get; set; } = string.Empty;
     }

@@ -5,69 +5,26 @@ using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using static System.Net.WebRequestMethods;
 
-namespace LocalHiringPlatform.Api.Controllers;
-
-[Authorize]
-[ApiController]
-[Route("api/[controller]")]
-public class MobileVerificationController
-    : ControllerBase
+namespace LocalHiringPlatform.Api.Controllers
 {
-    private readonly
-        IMobileVerificationService
-        _mobileVerificationService;
 
-    public MobileVerificationController(
-        IMobileVerificationService
-            mobileVerificationService)
+    [ApiController]
+    [Route("api/[controller]")]
+    public class MobileVerificationController : ControllerBase
     {
-        _mobileVerificationService =
-            mobileVerificationService;
-    }
+        private readonly ISmsService _smsService;
 
-    [HttpPost("send")]
-    public async Task<IActionResult>
-        SendOtp()
-    {
-        Guid userId =
-            Guid.Parse(
-                User.FindFirst(
-                    ClaimTypes.NameIdentifier)!
-                .Value);
-
-      string otp=  await _mobileVerificationService
-            .SendOtpAsync(
-                userId);
-
-
-        return Ok(new
+        public MobileVerificationController(ISmsService smsService)
         {
-            Message = "OTP sent successfully.",
-            Otp = otp
-        });
-    }
+            _smsService = smsService;
+        }
 
-    [HttpPost("verify")]
-    public async Task<IActionResult>
-        VerifyOtp(
-            VerifyMobileOtpRequestDto request)
-    {
-        Guid userId =
-            Guid.Parse(
-                User.FindFirst(
-                    ClaimTypes.NameIdentifier)!
-                .Value);
+        [HttpPost("sendotp")]
+        public async Task<IActionResult> SendOtp([FromBody] string mobileNumber)
+        {
+            await _smsService.SendOtpAsync(mobileNumber);
 
-        await _mobileVerificationService
-            .VerifyOtpAsync(
-                userId,
-                request.Otp);
-
-        return Ok(
-            new
-            {
-                Message =
-                    "Mobile verified successfully."
-            });
+            return Ok();
+        }
     }
 }

@@ -1,13 +1,32 @@
 <!doctype html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <title>localhiringplatform-ui</title>
-  </head>
-  <body>
+</head>
+<body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
-  </body>
+
+
+    <script>
+        window.configuration = {
+            widgetId: "36664465685a333037363339",
+            tokenAuth: "545933T23M2hmZUH06a43a31cP1",
+            exposeMethods: true,
+            success: function (data) {
+                console.log("SUCCESS", data);
+            },
+            failure: function (error) {
+                console.log("FAILURE", error);
+            }
+        };
+    </script>
+
+    <script src="https://verify.msg91.com/otp-provider.js"
+            onload="initSendOTP(window.configuration)"></script>
+</body>
 </html>
