@@ -8,10 +8,8 @@ namespace LocalHiringPlatform.Domain.Interfaces
 {
     public interface IMobileVerificationService
     {
-        Task<string> SendOtpAsync(Guid userId);
-
-        Task VerifyOtpAsync(
+        Task VerifyMobileAsync(
             Guid userId,
-            string otp);
+            string accessToken);
     }
 }
