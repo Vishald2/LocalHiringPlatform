@@ -58,7 +58,9 @@ public class CandidateProfileService
             ProfileCompletionPercentage =  profile.ProfileCompletionPercentage,
             ResumeFileName = profile.ResumeFileName,
             ResumeFilePath = profile.ResumeFilePath,
-            EmailVerified =  profile.User.EmailVerified
+            EmailVerified =  profile.User.EmailVerified,
+            MobileNumber = profile.User.MobileNumber,
+            MobileVerified = profile.User.MobileVerified
         };
     }
 

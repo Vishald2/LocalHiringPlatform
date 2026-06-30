@@ -17,9 +17,18 @@ declare global {
     interface Window {
         initSendOTP: (config: any) => void;
         sendOtp: any;
+
+        verifyOtp: any;
+    }
+
+    interface Window {
+        verifyOtp: any;
     }
 }
 export default function CandidateProfilePage() {
+
+    const [otp, setOtp] = useState("");
+    const [showOtpBox, setShowOtpBox] = useState(false);
 
     const [profile, setProfile] =
         useState<CandidateProfile>({
@@ -34,7 +43,9 @@ export default function CandidateProfilePage() {
             profileSummary: "",
             isOpenToWork: false,
             profileCompletionPercentage: 0,
-            emailVerified: false
+            emailVerified: false,
+            mobileVerified: false,
+            mobileNumber: null,
         });
 
     const [successMessage, setSuccessMessage] =
@@ -560,26 +571,99 @@ export default function CandidateProfilePage() {
                     </div>
                     <p></p>
                     <div>
-                        <button
-                            type="button"
-                            onClick={() => {
+                        {
+                            profile.mobileNumber &&
+                            !profile.mobileVerified &&
 
-                                window.sendOtp(
-                                    "919034902189",
-                                    (data) => {
-                                        console.log("SUCCESS");
-                                        console.log(data);
-                                    },
-                                    (error) => {
-                                        console.log("ERROR");
-                                        console.log(error);
+                            <div
+                                style={{
+                                    marginTop: "15px"
+                                }}
+                            >
+                                <button
+                                    type="button"
+                                    className="secondary-button"
+                                    onClick={() => {
+
+                                        window.sendOtp(
+                                            "91" + profile.mobileNumber,
+                                            (data: any) => {
+
+                                                console.log("SUCCESS", data);
+
+                                                setShowOtpBox(true);
+                                                alert("OTP sent successfully.");
+                                            },
+                                            (error: any) => {
+
+                                                console.log("ERROR", error);
+
+                                                alert("Unable to send OTP.");
+                                            });
+                                    }}
+                                >
+                                    Verify Mobile
+                                    </button>
+                                    {
+                                        showOtpBox &&
+
+                                        <div style={{ marginTop: "15px" }}>
+
+                                            <input
+                                                type="text"
+                                                placeholder="Enter OTP"
+                                                value={otp}
+                                                onChange={(e) => setOtp(e.target.value)}
+                                            />
+
+                                            <button
+                                                type="button"
+                                                className="secondary-button"
+                                                style={{ marginLeft: "10px" }}
+                                                onClick={() => {
+
+                                                    window.verifyOtp(
+                                                        otp,
+                                                        (data: any) => {
+
+                                                            console.log("VERIFY SUCCESS");
+                                                            console.log(data);
+
+                                                            alert("OTP verified successfully.");
+
+                                                        },
+                                                        (error: any) => {
+
+                                                            console.log("VERIFY FAILED");
+                                                            console.log(error);
+
+                                                            alert("Invalid OTP.");
+
+                                                        }
+                                                    );
+
+                                                }}
+                                            >
+                                                Verify OTP
+                                            </button>
+
+                                        </div>
                                     }
-                                );
+                            </div>
+                        }
+                        {
+                            profile.mobileVerified &&
 
-                            }}
-                        >
-                            Verify Mobile
-                        </button>
+                            <div
+                                style={{
+                                    marginTop: "15px",
+                                    color: "green",
+                                    fontWeight: "bold"
+                                }}
+                            >
+                                ✓ Mobile Verified
+                            </div>
+                        }
                     </div>
                 </div>
 
