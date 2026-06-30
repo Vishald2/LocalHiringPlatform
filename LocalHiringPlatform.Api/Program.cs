@@ -171,6 +171,9 @@ builder.Services.Configure<ResendSettings>(
 builder.Services.Configure<ApplicationSettings>(
     builder.Configuration.GetSection("Application"));
 
+builder.Services.Configure<Msg91Settings>(
+    builder.Configuration.GetSection("Msg91"));
+
 builder.Services.AddScoped<IEmailService,
     ResendEmailService>();
 
