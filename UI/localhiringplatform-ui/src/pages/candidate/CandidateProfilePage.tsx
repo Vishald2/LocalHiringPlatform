@@ -48,7 +48,7 @@ export default function CandidateProfilePage() {
             profileCompletionPercentage: 0,
             emailVerified: false,
             mobileVerified: false,
-            mobileNumber: null,
+            mobileNumber: "",
         });
 
     const [successMessage, setSuccessMessage] =
@@ -67,10 +67,6 @@ export default function CandidateProfilePage() {
 
     const [newMobileNumber,
         setNewMobileNumber] =
-        useState("");
-
-    const [changeMobileOtp,
-        setChangeMobileOtp] =
         useState("");
 
     const handleSendNewMobileOtp = () => {
@@ -264,25 +260,6 @@ export default function CandidateProfilePage() {
             alert("Unable to verify mobile.");
         }
     };
-
-    const handleSendOtp = () => {
-
-        window.sendOtp(
-            "91" + profile.mobileNumber,
-            (data: any) => {
-
-                console.log("SUCCESS", data);
-
-                setShowOtpBox(true);
-                alert("OTP sent successfully.");
-            },
-            (error: any) => {
-
-                console.log("ERROR", error);
-
-                alert("Unable to send OTP.");
-            });
-    }
 
     return (
 
