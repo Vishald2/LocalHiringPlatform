@@ -1,5 +1,6 @@
 using LocalHiringPlatform.Api.Middleware;
 using LocalHiringPlatform.Domain.Configuration;
+using LocalHiringPlatform.Domain.Helpers;
 using LocalHiringPlatform.Domain.Interfaces;
 using LocalHiringPlatform.Domain.Interfaces.MasterDataRepositories;
 using LocalHiringPlatform.Domain.Interfaces.MasterDataServices;
@@ -176,6 +177,8 @@ builder.Services.Configure<ApplicationSettings>(
 
 builder.Services.Configure<Msg91Settings>(
     builder.Configuration.GetSection("Msg91"));
+
+builder.Services.AddHttpClient<Msg91Helper>();
 
 builder.Services.AddHttpClient<ISmsService, Msg91SmsService>(
     (serviceProvider, client) =>

@@ -11,5 +11,8 @@ namespace LocalHiringPlatform.Domain.Configuration
         public string BaseUrl { get; set; } = string.Empty;
         public string AuthKey { get; set; } = string.Empty;
         public string TemplateId { get; set; } = string.Empty;
+        public string WidgetId { get; set; } = string.Empty;
+        public string WidgetAuthToken { get; set; } = string.Empty;
+        public string VerifyAccessTokenEndpoint { get; set; } = string.Empty;
     }
 }

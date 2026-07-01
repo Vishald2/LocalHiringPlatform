@@ -1,30 +1,39 @@
 ﻿using LocalHiringPlatform.Api.DTOs;
 using LocalHiringPlatform.Domain.Interfaces;
+using LocalHiringPlatform.Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
-using static System.Net.WebRequestMethods;
 
-namespace LocalHiringPlatform.Api.Controllers
+namespace LocalHiringPlatform.API.Controllers;
+
+[ApiController]
+[Route("api/[controller]")]
+[Authorize]
+public class MobileVerificationController : ControllerBase
 {
+    private readonly IMobileVerificationService
+        _mobileVerificationService;
 
-    [ApiController]
-    [Route("api/[controller]")]
-    public class MobileVerificationController : ControllerBase
+    public MobileVerificationController(
+        IMobileVerificationService mobileVerificationService)
     {
-        private readonly ISmsService _smsService;
+        _mobileVerificationService =
+            mobileVerificationService;
+    }
 
-        public MobileVerificationController(ISmsService smsService)
-        {
-            _smsService = smsService;
-        }
+    [HttpPost("verify")]
+    public async Task<IActionResult> Verify(VerifyMobileRequestDto request)
+    {
+        var userId = Guid.Parse(
+            User.FindFirstValue(
+                ClaimTypes.NameIdentifier)!);
 
-        [HttpPost("sendotp")]
-        public async Task<IActionResult> SendOtp([FromBody] string mobileNumber)
-        {
-            await _smsService.SendOtpAsync(mobileNumber);
+        await _mobileVerificationService
+            .VerifyMobileAsync(
+                userId,
+                request.AccessToken);
 
-            return Ok();
-        }
+        return Ok();
     }
 }
