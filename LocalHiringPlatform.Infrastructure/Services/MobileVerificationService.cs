@@ -1,9 +1,11 @@
 ﻿using LocalHiringPlatform.Domain.Exceptions;
+using LocalHiringPlatform.Domain.Helpers;
 using LocalHiringPlatform.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace LocalHiringPlatform.Infrastructure.Services
@@ -14,85 +16,89 @@ namespace LocalHiringPlatform.Infrastructure.Services
         private readonly IUserRepository _userRepository;
 
         private readonly IUnitOfWork _unitOfWork;
+        private readonly Msg91Helper _msg91Helper;
 
         public MobileVerificationService(
             IUserRepository userRepository,
-            IUnitOfWork unitOfWork)
+            IUnitOfWork unitOfWork,
+            Msg91Helper msg91Helper)
         {
             _userRepository =
                 userRepository;
 
             _unitOfWork =
                 unitOfWork;
+
+            _msg91Helper = msg91Helper;
         }
 
-        public async Task<string> SendOtpAsync(
-            Guid userId)
+        public async Task VerifyMobileAsync(
+            Guid userId,
+            string accessToken,
+            string mobileNumber)
         {
-            var user = await _userRepository
-                    .GetByIdAsync(userId);
+            var user =
+                await _userRepository.GetByIdAsync(userId);
 
             if (user == null)
             {
                 throw new BusinessException("User not found.");
             }
 
-            var otp = new Random().Next(100000, 999999).ToString();
+            var response =
+                await _msg91Helper.VerifyAccessTokenAsync(
+                    accessToken);
 
-            user.MobileVerificationCode = otp;
+            Console.WriteLine(response);
 
-            user.MobileVerificationCodeExpiry =
-                DateTime.UtcNow
-                    .AddMinutes(5);
 
-            await _unitOfWork
-                .SaveChangesAsync();
 
-            return otp;
-        }
+            var result =
+                JsonSerializer.Deserialize<Msg91VerifyAccessTokenResponse>(
+                    response,
+                    new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    });
 
-        public async Task VerifyOtpAsync(
-            Guid userId,
-            string otp)
-        {
-            var user =
-                await _userRepository
-                    .GetByIdAsync(userId);
 
-            if (user == null)
+            if (result == null)
             {
                 throw new BusinessException(
-                    "User not found.");
+                    "Unable to verify mobile number.");
             }
 
-            if (user.MobileVerificationCode
-                != otp)
+            if (!string.Equals(
+                    result.Type,
+                    "success",
+                    StringComparison.OrdinalIgnoreCase))
             {
                 throw new BusinessException(
-                    "Invalid OTP.");
+                    "Mobile verification failed.");
             }
 
-            if (user.MobileVerificationCodeExpiry
-                < DateTime.UtcNow)
+            var verifiedMobile =
+                result.Message;
+
+            if (verifiedMobile.StartsWith("91"))
+            {
+                verifiedMobile =
+                    verifiedMobile.Substring(2);
+            }
+
+            if (verifiedMobile != mobileNumber)
             {
                 throw new BusinessException(
-                    "OTP expired.");
+                    "Verified mobile number does not match.");
             }
 
-            user.MobileVerified =
-                true;
+            user.MobileNumber = mobileNumber;
 
-            user.MobileVerifiedOn =
-                DateTime.UtcNow;
+            user.MobileVerified = true;
 
-            user.MobileVerificationCode =
-                null;
+            user.MobileVerifiedOn = DateTime.UtcNow;
 
-            user.MobileVerificationCodeExpiry =
-                null;
-
-            await _unitOfWork
-                .SaveChangesAsync();
+            await _unitOfWork.SaveChangesAsync();
         }
     }
 }

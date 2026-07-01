@@ -78,8 +78,9 @@ public class CandidateProfileController : ControllerBase
 
                 ResumeFilePath = profile.ResumeFilePath,
 
-                EmailVerified=profile.EmailVerified
-                
+                EmailVerified=profile.EmailVerified,
+                MobileNumber = profile.MobileNumber,
+                MobileVerified = profile.MobileVerified
             };
 
         return Ok(response);

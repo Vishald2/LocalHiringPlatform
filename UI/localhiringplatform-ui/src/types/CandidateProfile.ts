@@ -12,5 +12,7 @@
     profileCompletionPercentage: number;
     resumeFileName?: string;
     resumeFilePath?: string;
-    emailVerified: boolean
+    emailVerified: boolean;
+    mobileVerified: boolean;
+    mobileNumber: string;
 }

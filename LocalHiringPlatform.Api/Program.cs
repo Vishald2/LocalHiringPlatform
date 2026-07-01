@@ -1,5 +1,6 @@
 using LocalHiringPlatform.Api.Middleware;
 using LocalHiringPlatform.Domain.Configuration;
+using LocalHiringPlatform.Domain.Helpers;
 using LocalHiringPlatform.Domain.Interfaces;
 using LocalHiringPlatform.Domain.Interfaces.MasterDataRepositories;
 using LocalHiringPlatform.Domain.Interfaces.MasterDataServices;
@@ -10,6 +11,7 @@ using LocalHiringPlatform.Infrastructure.Repositories;
 using LocalHiringPlatform.Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Resend;
@@ -165,11 +167,28 @@ builder.Services.AddScoped<
         IAiAnalysisRepository,
         AiAnalysisRepository>();
 
+
+
 builder.Services.Configure<ResendSettings>(
     builder.Configuration.GetSection("Resend"));
 
 builder.Services.Configure<ApplicationSettings>(
     builder.Configuration.GetSection("Application"));
+
+builder.Services.Configure<Msg91Settings>(
+    builder.Configuration.GetSection("Msg91"));
+
+builder.Services.AddHttpClient<Msg91Helper>();
+
+builder.Services.AddHttpClient<ISmsService, Msg91SmsService>(
+    (serviceProvider, client) =>
+    {
+        var settings = serviceProvider
+            .GetRequiredService<IOptions<Msg91Settings>>()
+            .Value;
+
+        client.BaseAddress = new Uri(settings.BaseUrl);
+    });
 
 builder.Services.AddScoped<IEmailService,
     ResendEmailService>();

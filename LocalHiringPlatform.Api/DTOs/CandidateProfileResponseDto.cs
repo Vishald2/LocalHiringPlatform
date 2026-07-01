@@ -31,4 +31,8 @@ public class CandidateProfileResponseDto
     public string? ResumeFilePath { get; set; }
 
     public bool EmailVerified { get; set; }
+
+    public string MobileNumber { get; set; } = string.Empty;
+
+    public bool MobileVerified { get; set; }
 }
