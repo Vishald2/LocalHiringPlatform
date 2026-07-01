@@ -32,8 +32,10 @@ namespace LocalHiringPlatform.Infrastructure.Services
             _msg91Helper = msg91Helper;
         }
 
-        public async Task VerifyMobileAsync(Guid userId,
-                            string accessToken)
+        public async Task VerifyMobileAsync(
+            Guid userId,
+            string accessToken,
+            string mobileNumber)
         {
             var user =
                 await _userRepository.GetByIdAsync(userId);
@@ -84,11 +86,13 @@ namespace LocalHiringPlatform.Infrastructure.Services
                     verifiedMobile.Substring(2);
             }
 
-            if (verifiedMobile != user.MobileNumber)
+            if (verifiedMobile != mobileNumber)
             {
                 throw new BusinessException(
-                    "Verified mobile number does not match the profile mobile number.");
+                    "Verified mobile number does not match.");
             }
+
+            user.MobileNumber = mobileNumber;
 
             user.MobileVerified = true;
 

@@ -115,14 +115,19 @@ export default function JobList() {
                 <button
                     onClick={handleSearch}
                     style={{
-                        marginLeft: "10px"
+                        marginLeft: "10px", width:"100px"
                     }}
+                    className="primary-button"
                 >
                     Search
                 </button>
                 <span>&nbsp;&nbsp;</span>
                 <button
                     onClick={handleClear}
+                    className="primary-button"
+                    style={{
+                        marginLeft: "10px", width: "100px"
+                    }}
                 >
                     Clear
                 </button>
@@ -163,7 +168,8 @@ export default function JobList() {
                         </p>
 
                         <p>
-                            <button
+                            <button className="primary-button"
+                                style={{ width: "120px" }}
                                 onClick={() =>
                                     handleApply(
                                         job.entityId)
@@ -172,13 +178,13 @@ export default function JobList() {
                                 Apply
                             </button>
 
-                            <button
+                            <button className="primary-button"
                                 onClick={() =>
                                     handleSave(
                                         job.entityId)
                                 }
                                 style={{
-                                    marginLeft: "10px"
+                                    marginLeft: "10px", width: "120px"
                                 }}
                             >
                                 Save

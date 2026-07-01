@@ -58,11 +58,14 @@ export default function SavedJobsPage() {
                             {job.state}
                         </p>
 
-                        <button
+                        <button className="primary-button"
                             onClick={() =>
                                 handleRemove(
                                     job.entityId)
                             }
+                            style={{
+                                 width: "120px"
+                            }}
                         >
                             Remove
                         </button>

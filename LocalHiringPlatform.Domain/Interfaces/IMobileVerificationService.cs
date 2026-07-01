@@ -10,6 +10,7 @@ namespace LocalHiringPlatform.Domain.Interfaces
     {
         Task VerifyMobileAsync(
             Guid userId,
-            string accessToken);
+            string accessToken,
+            string mobileNumber);
     }
 }

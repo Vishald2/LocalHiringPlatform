@@ -32,7 +32,8 @@ public class MobileVerificationController : ControllerBase
         await _mobileVerificationService
             .VerifyMobileAsync(
                 userId,
-                request.AccessToken);
+                request.AccessToken,
+                request.MobileNumber);
 
         return Ok();
     }

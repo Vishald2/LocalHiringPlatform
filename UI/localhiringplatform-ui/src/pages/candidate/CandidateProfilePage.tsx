@@ -65,6 +65,41 @@ export default function CandidateProfilePage() {
         setSelectedSkillIds] =
         useState<string[]>([]);
 
+    const [newMobileNumber,
+        setNewMobileNumber] =
+        useState("");
+
+    const [changeMobileOtp,
+        setChangeMobileOtp] =
+        useState("");
+
+    const handleSendNewMobileOtp = () => {
+
+        if (!newMobileNumber) {
+
+            alert("Please enter mobile number.");
+
+            return;
+        }
+
+        window.sendOtp(
+
+            "91" + newMobileNumber,
+
+            () => {
+
+                setShowOtpBox(true);
+
+                alert("OTP sent successfully.");
+
+            },
+
+            () => {
+
+                alert("Unable to send OTP.");
+            });
+    }
+
     function handleFileChange(
         e: React.ChangeEvent<HTMLInputElement>) {
         if (e.target.files &&
@@ -182,12 +217,11 @@ export default function CandidateProfilePage() {
                     const accessToken = data.message;
 
                     await verifyMobile({
-                        accessToken: accessToken
+
+                        accessToken,
+
+                        mobileNumber: newMobileNumber
                     });
-
-                    setShowOtpBox(false);
-
-                    setOtp("");
 
                     async function loadProfile() {
 
@@ -203,6 +237,12 @@ export default function CandidateProfilePage() {
 
                         setSelectedSkillIds(mySkills.map(x => x.skillId));
                     }
+
+                    setOtp("");
+
+                    setNewMobileNumber("");
+
+                    setShowOtpBox(false);
 
                     await loadProfile();
 
@@ -293,10 +333,33 @@ export default function CandidateProfilePage() {
                         </label>
 
                         <div
-                            className="form-control"
-                            title={profile.mobileNumber}
+                            style={{
+                                display: "flex",
+                                alignItems: "center",
+                                gap: "10px"
+                            }}
                         >
-                            {profile.mobileNumber}
+                            <div
+                                className="form-control"
+                                title={profile.mobileNumber}
+                                style={{ flex: 1 }}
+                            >
+                                {profile.mobileNumber}
+                            </div>
+
+                            {
+                                profile.mobileVerified &&
+
+                                <span
+                                    style={{
+                                        color: "green",
+                                        fontWeight: "bold",
+                                        fontSize: "24px"
+                                    }}
+                                >
+                                    ✓
+                                </span>
+                            }
                         </div>
 
                     </div>
@@ -665,61 +728,91 @@ export default function CandidateProfilePage() {
 
                     </div>
                     <p></p>
+
+                    <div className="form-group">
+
+                        <label className="form-label">
+                            Update Mobile Number
+                        </label>
+
+                        <div
+                            style={{
+                                display: "flex",
+                                gap: "10px",
+                                alignItems: "center"
+                            }}
+                        >
+                            <input
+                                className="form-control"
+                                value={newMobileNumber}
+                                onChange={(e) =>
+                                    setNewMobileNumber(e.target.value)
+                                }
+                                style={{ flex: 1 }}
+                            />
+
+                            <button
+                                type="button"
+                                className="secondary-button"
+                                onClick={handleSendNewMobileOtp}
+                                style={{
+                                    width: "140px",
+                                    whiteSpace: "nowrap"
+                                }}
+                            >
+                                Get OTP
+                            </button>
+                        </div>
+
+                    </div>
+
+                    <p></p>
                     <div>
                         {
-                            profile.mobileNumber &&
-                            !profile.mobileVerified &&
-
                             <div
                                 style={{
                                     marginTop: "15px"
                                 }}
                             >
-                                <button
-                                    type="button"
-                                    className="secondary-button"
-                                    onClick={handleSendOtp}
-                                >
-                                    Verify Mobile
-                                    </button>
+                            
                                     {
                                         showOtpBox &&
 
-                                        <div style={{ marginTop: "15px" }}>
+                                        <div
+                                            style={{
+                                                display: "flex",
+                                                gap: "10px",
+                                                alignItems: "center",
+                                                marginTop: "15px"
+                                            }}
+                                        >
 
                                             <input
                                                 type="text"
+                                                className="form-control"
                                                 placeholder="Enter OTP"
                                                 value={otp}
                                                 onChange={(e) => setOtp(e.target.value)}
+                                                style={{ flex: 1 }}
                                             />
 
-                                                <button
-                                                    type="button"
-                                                    className="secondary-button"
-                                                    style={{ marginLeft: "10px" }}
-                                                    onClick={handleVerifyOtp}
-                                                >
-                                                    Verify OTP
-                                                </button>
+                                            <button
+                                                type="button"
+                                                className="secondary-button"
+                                                onClick={handleVerifyOtp}
+                                                style={{
+                                                    width: "160px",
+                                                    whiteSpace: "nowrap"
+                                                }}
+                                            >
+                                                Verify OTP
+                                            </button>
 
                                         </div>
                                     }
                             </div>
                         }
-                        {
-                            profile.mobileVerified &&
 
-                            <div
-                                style={{
-                                    marginTop: "15px",
-                                    color: "green",
-                                    fontWeight: "bold"
-                                }}
-                            >
-                                ✓ Mobile Verified
-                            </div>
-                        }
                     </div>
                 </div>
 

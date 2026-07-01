@@ -2,6 +2,7 @@
 
 export interface VerifyMobileRequest {
     accessToken: string;
+    mobileNumber: string;
 }
 
 export const verifyMobile = async (
