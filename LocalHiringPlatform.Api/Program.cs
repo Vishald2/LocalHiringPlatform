@@ -280,6 +280,12 @@ builder.Services.AddScoped<
 
 var app = builder.Build();
 
+var useRedis =
+    builder.Configuration.GetValue<bool>(
+        "Application:UseRedis");
+
+Console.WriteLine(useRedis);
+
 // Configure the HTTP request pipeline.
 //if (app.Environment.IsDevelopment())
 {
