@@ -16,11 +16,10 @@ public class TestController : ControllerBase
     {
         _redisCacheService = redisCacheService;
     }
-
-    [Authorize]
-    [HttpGet("protected")]
-    public IActionResult Protected()
+    [HttpGet]
+    public IActionResult Test()
     {
+        throw new Exception("This is a test exception for logging purposes.");
         return Ok(new
         {
             Message = "You are authenticated"

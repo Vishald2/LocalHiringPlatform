@@ -15,10 +15,18 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Resend;
-using System.Text;
+using Serilog;
 using StackExchange.Redis;
+using System.Text;
+using Log = Serilog.Log;
+
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Host.UseSerilog((context, services, configuration) =>
+{
+    configuration.ReadFrom.Configuration(context.Configuration);
+});
 
 builder.Services.Configure<GeminiOptions>(
     builder.Configuration.GetSection("Gemini"));
@@ -278,7 +286,19 @@ builder.Services.AddScoped<
     IRedisCacheService,
     RedisCacheService>();
 
+Log.Information(
+    "LocalHire API Started");
+
 var app = builder.Build();
+
+Console.ForegroundColor = ConsoleColor.Green;
+
+Console.WriteLine("======================================");
+Console.WriteLine(" LocalHire API Started");
+Console.WriteLine($" Environment : {builder.Environment.EnvironmentName}");
+Console.WriteLine("======================================");
+
+Console.ResetColor();
 
 var useRedis =
     builder.Configuration.GetValue<bool>(
@@ -297,6 +317,8 @@ Console.WriteLine(useRedis);
 app.UseCors("ReactPolicy");
 
 app.UseStaticFiles();
+
+app.UseMiddleware<RequestLoggingMiddleware>();
 
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 
