@@ -41,4 +41,34 @@ public class TestController : ControllerBase
 
         return Ok(value);
     }
+
+    [HttpGet("redis-ping")]
+    public async Task<IActionResult> RedisPing()
+    {
+        try
+        {
+            await _redisCacheService.SetAsync(
+                "Ping",
+                "Pong");
+
+            var value =
+                await _redisCacheService.GetAsync<string>(
+                    "Ping");
+
+            return Ok(new
+            {
+                Success = true,
+                Value = value
+            });
+        }
+        catch (Exception ex)
+        {
+            return Ok(new
+            {
+                Success = false,
+                Message = ex.Message,
+                InnerException = ex.InnerException?.Message
+            });
+        }
+    }
 }
