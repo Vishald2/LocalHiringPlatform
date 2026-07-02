@@ -47,7 +47,14 @@ namespace LocalHiringPlatform.Infrastructure.Services
 
             if (_appSetting.Value.UseRedis == true)
             {
-                await _redisCacheService.RemoveAsync("Skills");
+                try
+                {
+                    await _redisCacheService.RemoveAsync("Skills");
+                }
+                catch (Exception ex)
+                {
+                    throw;
+                }
             }
         }
 
