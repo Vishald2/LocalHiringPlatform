@@ -290,6 +290,9 @@ export default function CandidateRegisterPage() {
                             Employer
                         </option>
 
+                        <option value="3">
+                            Admin
+                        </option>
                     </select>
                     {
                         errors.role &&
