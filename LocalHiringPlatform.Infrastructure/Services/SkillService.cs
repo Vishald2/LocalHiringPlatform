@@ -49,7 +49,7 @@ namespace LocalHiringPlatform.Infrastructure.Services
             {
                 try
                 {
-                   // await _redisCacheService.RemoveAsync("Skills");
+                    await _redisCacheService.RemoveAsync("Skills");
                 }
                 catch (Exception ex)
                 {

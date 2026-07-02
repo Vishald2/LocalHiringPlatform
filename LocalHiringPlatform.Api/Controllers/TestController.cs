@@ -44,6 +44,7 @@ public class TestController : ControllerBase
 
     [HttpGet("redis-ping")]
     public async Task<IActionResult> RedisPing()
+    
     {
         try
         {
