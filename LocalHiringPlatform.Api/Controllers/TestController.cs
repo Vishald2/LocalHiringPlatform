@@ -10,11 +10,13 @@ public class TestController : ControllerBase
 {
 
     private readonly IRedisCacheService _redisCacheService;
-
+    private readonly ILogger _logger;
     public TestController(
-        IRedisCacheService redisCacheService)
+        IRedisCacheService redisCacheService,
+        ILogger<TestController> logger)
     {
         _redisCacheService = redisCacheService;
+        _logger = logger;
     }
     [HttpGet]
     public IActionResult Test()

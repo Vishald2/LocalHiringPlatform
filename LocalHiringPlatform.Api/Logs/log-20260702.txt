@@ -1,21 +1,97 @@
-2026-07-02 21:17:16.515 +05:30 [INF] Started GET /api/Test
-2026-07-02 21:17:21.172 +05:30 [ERR] Unhandled exception occurred. Request: GET /api/Test
-System.Exception: This is a test exception for logging purposes.
-   at LocalHiringPlatform.Api.Controllers.TestController.Test() in C:\Users\Vishal\source\repos\LocalHiringPlatform\LocalHiringPlatform.Api\Controllers\TestController.cs:line 22
-   at lambda_method3(Closure, Object, Object[])
-   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.SyncActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
-   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeActionMethodAsync()
-   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
-   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeNextActionFilterAsync()
+2026-07-02 22:45:22.420 +05:30 [INF] User profile is available. Using 'C:\Users\Vishal\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-07-02 22:45:22.528 +05:30 [INF] Now listening on: http://localhost:5271
+2026-07-02 22:45:22.602 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-07-02 22:45:22.603 +05:30 [INF] Hosting environment: Development
+2026-07-02 22:45:22.605 +05:30 [INF] Content root path: C:\Users\Vishal\source\repos\LocalHiringPlatform\LocalHiringPlatform.Api
+2026-07-02 22:45:26.488 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5271/api/candidate/profile - null null
+2026-07-02 22:45:26.540 +05:30 [INF] Started GET /api/candidate/profile
+2026-07-02 22:45:26.622 +05:30 [INF] Executing endpoint 'LocalHiringPlatform.Api.Controllers.CandidateProfileController.GetProfile (LocalHiringPlatform.Api)'
+2026-07-02 22:45:26.656 +05:30 [INF] Route matched with {action = "GetProfile", controller = "CandidateProfile"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetProfile() on controller LocalHiringPlatform.Api.Controllers.CandidateProfileController (LocalHiringPlatform.Api).
+2026-07-02 22:45:27.320 +05:30 [WRN] No store type was specified for the decimal property 'CurrentSalary' on entity type 'CandidateProfile'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2026-07-02 22:45:27.324 +05:30 [WRN] No store type was specified for the decimal property 'ExpectedSalary' on entity type 'CandidateProfile'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2026-07-02 22:45:27.325 +05:30 [WRN] No store type was specified for the decimal property 'TotalExperienceYears' on entity type 'CandidateProfile'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2026-07-02 22:45:27.327 +05:30 [WRN] No store type was specified for the decimal property 'MaxSalary' on entity type 'Job'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2026-07-02 22:45:27.328 +05:30 [WRN] No store type was specified for the decimal property 'MinSalary' on entity type 'Job'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2026-07-02 22:45:28.053 +05:30 [ERR] Failed executing DbCommand (51ms) [Parameters=[@__userId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[EntityId], [t].[City], [t].[CreatedOn], [t].[CurrentSalary], [t].[DateOfBirth], [t].[ExpectedSalary], [t].[FullName], [t].[Gender], [t].[IsOpenToWork], [t].[ProfileCompletionPercentage], [t].[ProfileSummary], [t].[ResumeFileName], [t].[ResumeFilePath], [t].[ResumeUrl], [t].[State], [t].[TotalExperienceYears], [t].[UpdatedOn], [t].[UserId], [t].[EntityId0], [t].[CreatedOn0], [t].[Email], [t].[EmailVerificationToken], [t].[EmailVerificationTokenExpiry], [t].[EmailVerified], [t].[EmailVerifiedOn], [t].[IsActive], [t].[MobileNumber], [t].[MobileVerificationCode], [t].[MobileVerificationCodeExpiry], [t].[MobileVerified], [t].[MobileVerifiedOn], [t].[PasswordHash], [t].[Role], [t].[UpdatedOn0], [t0].[EntityId], [t0].[CandidateProfileId], [t0].[CandidateSkillId], [t0].[CreatedOn], [t0].[ExperienceInMonths], [t0].[SkillId], [t0].[UpdatedOn], [t0].[EntityId0], [t0].[CreatedOn0], [t0].[IndustryType], [t0].[IsApproved], [t0].[SkillCategory], [t0].[SkillId0], [t0].[SkillName], [t0].[UpdatedOn0]
+FROM (
+    SELECT TOP(1) [c].[EntityId], [c].[City], [c].[CreatedOn], [c].[CurrentSalary], [c].[DateOfBirth], [c].[ExpectedSalary], [c].[FullName], [c].[Gender], [c].[IsOpenToWork], [c].[ProfileCompletionPercentage], [c].[ProfileSummary], [c].[ResumeFileName], [c].[ResumeFilePath], [c].[ResumeUrl], [c].[State], [c].[TotalExperienceYears], [c].[UpdatedOn], [c].[UserId], [u].[EntityId] AS [EntityId0], [u].[CreatedOn] AS [CreatedOn0], [u].[Email], [u].[EmailVerificationToken], [u].[EmailVerificationTokenExpiry], [u].[EmailVerified], [u].[EmailVerifiedOn], [u].[IsActive], [u].[MobileNumber], [u].[MobileVerificationCode], [u].[MobileVerificationCodeExpiry], [u].[MobileVerified], [u].[MobileVerifiedOn], [u].[PasswordHash], [u].[Role], [u].[UpdatedOn] AS [UpdatedOn0]
+    FROM [CandidateProfiles] AS [c]
+    INNER JOIN [Users] AS [u] ON [c].[UserId] = [u].[EntityId]
+    WHERE [c].[UserId] = @__userId_0
+) AS [t]
+LEFT JOIN (
+    SELECT [c0].[EntityId], [c0].[CandidateProfileId], [c0].[CandidateSkillId], [c0].[CreatedOn], [c0].[ExperienceInMonths], [c0].[SkillId], [c0].[UpdatedOn], [s].[EntityId] AS [EntityId0], [s].[CreatedOn] AS [CreatedOn0], [s].[IndustryType], [s].[IsApproved], [s].[SkillCategory], [s].[SkillId] AS [SkillId0], [s].[SkillName], [s].[UpdatedOn] AS [UpdatedOn0]
+    FROM [CandidateSkills] AS [c0]
+    INNER JOIN [Skills] AS [s] ON [c0].[SkillId] = [s].[EntityId]
+) AS [t0] ON [t].[EntityId] = [t0].[CandidateProfileId]
+ORDER BY [t].[EntityId], [t].[EntityId0], [t0].[EntityId]
+2026-07-02 22:45:28.080 +05:30 [ERR] An exception occurred while iterating over the results of a query for context type 'LocalHiringPlatform.Infrastructure.Data.ApplicationDbContext'.
+Microsoft.Data.SqlClient.SqlException (0x80131904): Invalid object name 'CandidateProfiles'.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__211_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
 --- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+ClientConnectionId:7eed97ca-316d-4615-b73b-383c911ca692
+Error Number:208,State:1,Class:16
+Microsoft.Data.SqlClient.SqlException (0x80131904): Invalid object name 'CandidateProfiles'.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__211_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+ClientConnectionId:7eed97ca-316d-4615-b73b-383c911ca692
+Error Number:208,State:1,Class:16
+2026-07-02 22:45:28.096 +05:30 [INF] Executed action LocalHiringPlatform.Api.Controllers.CandidateProfileController.GetProfile (LocalHiringPlatform.Api) in 1433.6403ms
+2026-07-02 22:45:28.102 +05:30 [INF] Executed endpoint 'LocalHiringPlatform.Api.Controllers.CandidateProfileController.GetProfile (LocalHiringPlatform.Api)'
+2026-07-02 22:45:28.105 +05:30 [ERR] Unhandled exception occurred. Request: GET /api/candidate/profile
+Microsoft.Data.SqlClient.SqlException (0x80131904): Invalid object name 'CandidateProfiles'.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__211_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+   at Microsoft.EntityFrameworkCore.Query.ShapedQueryCompilingExpressionVisitor.SingleOrDefaultAsync[TSource](IAsyncEnumerable`1 asyncEnumerable, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.ShapedQueryCompilingExpressionVisitor.SingleOrDefaultAsync[TSource](IAsyncEnumerable`1 asyncEnumerable, CancellationToken cancellationToken)
+   at LocalHiringPlatform.Infrastructure.Repositories.CandidateProfileRepository.GetByUserIdAsync(Guid userId) in C:\Users\Vishal\source\repos\LocalHiringPlatform\LocalHiringPlatform.Infrastructure\Repositories\CandidateProfileRepository.cs:line 28
+   at LocalHiringPlatform.Infrastructure.Services.CandidateProfileService.GetProfileAsync(Guid userId) in C:\Users\Vishal\source\repos\LocalHiringPlatform\LocalHiringPlatform.Infrastructure\Services\CandidateProfileService.cs:line 37
+   at LocalHiringPlatform.Api.Controllers.CandidateProfileController.GetProfile() in C:\Users\Vishal\source\repos\LocalHiringPlatform\LocalHiringPlatform.Api\Controllers\CandidateProfileController.cs:line 32
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
    at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
    at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
-   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
---- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
    at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
-   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
-   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|7_0(Endpoint endpoint, Task requestTask, ILogger logger)
    at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
    at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at LocalHiringPlatform.Api.Middleware.RequestLoggingMiddleware.InvokeAsync(HttpContext context) in C:\Users\Vishal\source\repos\LocalHiringPlatform\LocalHiringPlatform.Api\Middleware\RequestLoggingMiddleware.cs:line 40
    at LocalHiringPlatform.Api.Middleware.ExceptionHandlingMiddleware.InvokeAsync(HttpContext context) in C:\Users\Vishal\source\repos\LocalHiringPlatform\LocalHiringPlatform.Api\Middleware\ExceptionHandlingMiddleware.cs:line 25
-2026-07-02 21:17:21.199 +05:30 [INF] Completed GET /api/Test 500 4689ms
+ClientConnectionId:7eed97ca-316d-4615-b73b-383c911ca692
+Error Number:208,State:1,Class:16
+2026-07-02 22:45:28.144 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5271/api/candidate/profile - 500 null application/json; charset=utf-8 1657.3995ms

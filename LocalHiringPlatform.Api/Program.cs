@@ -291,15 +291,6 @@ Log.Information(
 
 var app = builder.Build();
 
-Console.ForegroundColor = ConsoleColor.Green;
-
-Console.WriteLine("======================================");
-Console.WriteLine(" LocalHire API Started");
-Console.WriteLine($" Environment : {builder.Environment.EnvironmentName}");
-Console.WriteLine("======================================");
-
-Console.ResetColor();
-
 var useRedis =
     builder.Configuration.GetValue<bool>(
         "Application:UseRedis");
@@ -318,9 +309,11 @@ app.UseCors("ReactPolicy");
 
 app.UseStaticFiles();
 
+app.UseMiddleware<ExceptionHandlingMiddleware>();
+
 app.UseMiddleware<RequestLoggingMiddleware>();
 
-app.UseMiddleware<ExceptionHandlingMiddleware>();
+
 
 app.UseAuthentication();
 
