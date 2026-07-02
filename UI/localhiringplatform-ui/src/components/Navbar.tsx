@@ -66,6 +66,24 @@ export default function Navbar() {
                     Home
                 </Link>
 
+                {token && role === "Admin" && (
+
+                    <>
+                        <Link
+                            className="navbar-link"
+                            to="/mskill">
+                            Skills
+                        </Link>
+
+                        <button
+                            className="navbar-button navbar-logout"
+                            onClick={handleLogout}>
+                            Logout
+                        </button>
+                    </>
+                
+                )}
+
                 {token && role === "Candidate" && (
                     <>
                         <Link
