@@ -16,6 +16,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Resend;
 using System.Text;
+using StackExchange.Redis;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -262,6 +263,20 @@ builder.Services
 builder.Services.AddScoped<
     IJwtTokenService,
     JwtTokenService>();
+
+builder.Services.AddSingleton<IConnectionMultiplexer>(sp =>
+{
+    var configuration =
+        builder.Configuration
+            .GetSection("Redis")
+            .GetValue<string>("ConnectionString");
+
+    return ConnectionMultiplexer.Connect(configuration);
+});
+
+builder.Services.AddScoped<
+    IRedisCacheService,
+    RedisCacheService>();
 
 var app = builder.Build();
 
