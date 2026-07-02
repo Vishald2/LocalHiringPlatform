@@ -268,10 +268,10 @@ builder.Services.AddSingleton<IConnectionMultiplexer>(sp =>
 {
     var configuration =
         builder.Configuration
-            .GetSection("Redis")
-            .GetValue<string>("ConnectionString");
+            .GetValue<string>("Redis:ConnectionString");
 
-    return ConnectionMultiplexer.Connect(configuration);
+    return ConnectionMultiplexer.Connect(
+        configuration!);
 });
 
 builder.Services.AddScoped<

@@ -1,8 +1,10 @@
-﻿using LocalHiringPlatform.Domain.Entities;
+﻿using LocalHiringPlatform.Domain.Configuration;
+using LocalHiringPlatform.Domain.Entities;
 using LocalHiringPlatform.Domain.Interfaces;
 using LocalHiringPlatform.Domain.Interfaces.MasterDataRepositories;
 using LocalHiringPlatform.Domain.Interfaces.MasterDataServices;
 using LocalHiringPlatform.Domain.Models;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,11 +17,19 @@ namespace LocalHiringPlatform.Infrastructure.Services
     {
         private readonly ISkillRepository _skillRepository;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IRedisCacheService _redisCacheService;
+        private readonly IOptions<ApplicationSettings> _appSetting;
 
-        public SkillService(ISkillRepository skillRepository, IUnitOfWork unitOfWork)
+        public SkillService(ISkillRepository skillRepository, 
+            IUnitOfWork unitOfWork, 
+            IRedisCacheService redisCacheService,
+            IOptions<ApplicationSettings> appSetting
+            )
         {
             _skillRepository = skillRepository;
             _unitOfWork = unitOfWork;
+            _redisCacheService = redisCacheService;
+            _appSetting = appSetting;
         }
         public async Task AddSkillAsync(SkillModel skillModel)
         {
@@ -31,12 +41,31 @@ namespace LocalHiringPlatform.Infrastructure.Services
                 IndustryType=skillModel.IndustryType
             };
 
+
            await _skillRepository.AddAsync(skill);
            await  _unitOfWork.SaveChangesAsync();
+
+            if (_appSetting.Value.UseRedis == true)
+            {
+                await _redisCacheService.RemoveAsync("Skills");
+            }
         }
 
         public async Task<List<SkillModel>> GetAllSkillsAsync()
         {
+            const string cacheKey = "Skills";
+
+            if (_appSetting.Value.UseRedis == true)
+            {
+                var cachedSkills =
+                    await _redisCacheService
+                        .GetAsync<List<SkillModel>>(cacheKey);
+
+                if (cachedSkills != null)
+                {
+                    return cachedSkills;
+                }
+            }
 
             List<Skill> skills = await _skillRepository.GetAllSkillsAsync();
 
@@ -49,6 +78,14 @@ namespace LocalHiringPlatform.Infrastructure.Services
                 IndustryType=skill.IndustryType
 
             }).ToList();
+
+            if (_appSetting.Value.UseRedis == true)
+            {
+                await _redisCacheService.SetAsync(
+                    cacheKey,
+                    skillModel,
+                    TimeSpan.FromHours(1));
+            }
 
             return skillModel;
         }
