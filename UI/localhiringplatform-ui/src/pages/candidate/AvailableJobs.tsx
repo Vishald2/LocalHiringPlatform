@@ -29,16 +29,50 @@ export default function JobList() {
         setCity] =
         useState("");
 
+    const [isloading, setIsLoading] = useState(false);
+
     useEffect(() => {
+
+        const token = localStorage.getItem("token");
+
+        const isLoggedIn = !!token;
 
         async function loadJobs() {
 
-            const result = await getJobs();
+            setIsLoading(true);
 
-            setJobs(result);
+            try {
 
+                /*GET RECOMMENDED JOBS IF USER IS LOGGED IN */
+                if (isLoggedIn) {
+                    const result = await getJobs();
+                    setJobs(result);
+                    setIsLoading(false);
+                }
+                else {
+                    /*GET ALL JOBS IF USER IS NOT LOGGED IN */
+                    const result =
+                        await searchJobs({
+                            keyword,
+                            city
+                        });
+                    setJobs(result);
+                    setIsLoading(false);
+                }
+            }
+            catch (error) {
+                console.error("API Request Failed:", error);
+                throw error;
+            }
+            finally {
+                setIsLoading(false);
+            }
         }
+
+
         loadJobs();
+
+
     }, []);
 
     async function handleSearch() {
@@ -134,7 +168,8 @@ export default function JobList() {
 
             </div>
             {
-                jobs.map(job => (
+                !isloading && (
+                    jobs.map(job => (
 
                     <div
                         key={
@@ -193,6 +228,11 @@ export default function JobList() {
                     </div>
 
                 ))
+                )}
+            {
+                isloading && (
+                    <p>Loading...</p>
+                )
             }
         </div>
     );

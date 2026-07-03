@@ -129,6 +129,7 @@ public class JobController
         return NoContent();
     }
 
+    [AllowAnonymous]
     [HttpPost("search")]
     public async Task<IActionResult>SearchJobs(SearchJobsModel model)
     {

@@ -1,4 +1,5 @@
 ﻿using LocalHiringPlatform.Domain.Interfaces;
+using LocalHiringPlatform.Domain.Interfaces.AI;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,13 +12,29 @@ public class TestController : ControllerBase
 
     private readonly IRedisCacheService _redisCacheService;
     private readonly ILogger _logger;
+    private IPromptService _promptService;
+
     public TestController(
         IRedisCacheService redisCacheService,
-        ILogger<TestController> logger)
+        ILogger<TestController> logger,
+        IPromptService promptService)
     {
         _redisCacheService = redisCacheService;
         _logger = logger;
+        _promptService = promptService;
     }
+
+
+    [HttpGet("prompt")]
+    public async Task<IActionResult> TestPrompt()
+    {
+        var prompt =
+            await _promptService.GetPromptAsync(
+                "JobSearchIntentPrompt.txt");
+
+        return Ok(prompt);
+    }
+
     [HttpGet]
     public IActionResult Test()
     {

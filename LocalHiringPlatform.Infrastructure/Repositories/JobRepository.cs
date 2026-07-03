@@ -55,14 +55,6 @@ public class JobRepository : IJobRepository
     {
         var jobs = await _dbContext.Jobs.ToListAsync();
 
-        jobs = await _dbContext.Jobs.Where(j=> j.Title.Contains("Manager")).ToListAsync();
-
-        Console.WriteLine(
-            $"Total Jobs: {jobs.Count}");
-
-        Console.WriteLine(
-            $"Active Jobs: {jobs.Count(x => x.IsActive)}");
-
         IQueryable<Job> query =
             _dbContext.Jobs
                 .Where(x => x.IsActive);

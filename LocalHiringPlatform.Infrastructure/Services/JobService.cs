@@ -269,6 +269,6 @@ public class JobService : IJobService
                     IsActive =
                         job.IsActive
                 })
-            .ToList();
+            .Take(10).ToList();
     }
 }

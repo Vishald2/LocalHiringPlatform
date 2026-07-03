@@ -11,7 +11,7 @@ export default function CandidateRegisterPage() {
 
     const [form, setForm] = useState<CandidateRegisterRequest>({
         email: "",
-        mobileNumber: "",
+        mobileNumber: "0",
         password: "",
         confirmPassword: "",
         acceptTerms: false,
@@ -128,16 +128,16 @@ export default function CandidateRegisterPage() {
 
         // Mobile Number
 
-        if (!form.mobileNumber.trim()) {
-            newErrors.mobileNumber =
-                "Mobile Number is required";
-        }
-        else if (
-            !/^[0-9]{10}$/.test(form.mobileNumber)
-        ) {
-            newErrors.mobileNumber =
-                "Mobile Number must be exactly 10 digits";
-        }
+        // if (!form.mobileNumber.trim()) {
+        //     newErrors.mobileNumber =
+        //         "Mobile Number is required";
+        // }
+        // else if (
+        //     !/^[0-9]{10}$/.test(form.mobileNumber)
+        // ) {
+        //     newErrors.mobileNumber =
+        //         "Mobile Number must be exactly 10 digits";
+        // }
 
         // Password
 
@@ -238,7 +238,7 @@ export default function CandidateRegisterPage() {
 
                 </div>
 
-                <div className="form-group">
+                <div style={{ display: "none" }}>
 
                     <label className="form-label">
                         Mobile Number
@@ -256,10 +256,10 @@ export default function CandidateRegisterPage() {
                     />
 
                     {
-                        errors.mobileNumber &&
-                        <span className="validation-error">
-                            {errors.mobileNumber}
-                        </span>
+                        // errors.mobileNumber &&
+                        // <span className="validation-error">
+                        //     {errors.mobileNumber}
+                        // </span>
                     }
 
                 </div>
@@ -288,10 +288,6 @@ export default function CandidateRegisterPage() {
 
                         <option value="2">
                             Employer
-                        </option>
-
-                        <option value="3">
-                            Admin
                         </option>
                     </select>
                     {

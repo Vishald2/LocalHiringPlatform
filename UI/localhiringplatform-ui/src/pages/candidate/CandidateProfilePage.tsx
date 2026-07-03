@@ -1,4 +1,4 @@
-﻿import { useEffect, useState }
+﻿import {useEffect, useState }
     from "react";
 
 import { getProfile, updateProfile, uploadResume }
@@ -69,6 +69,9 @@ export default function CandidateProfilePage() {
         setNewMobileNumber] =
         useState("");
 
+    const [skillsLoading,
+        setSkillsLoading] = useState(false);
+
     const handleSendNewMobileOtp = () => {
 
         if (!newMobileNumber) {
@@ -137,19 +140,22 @@ export default function CandidateProfilePage() {
 
             const result = await getProfile();
 
-            console.log("tsx");
-
-            console.log(result);
-
             setProfile(result);
 
-            const allSkills = await getAllSkills();
+            setSkillsLoading(true);
 
-            setSkills(allSkills);
+            try {
+                const allSkills = await getAllSkills();
 
-            const mySkills = await getMySkills();
+                setSkills(allSkills);
 
-            setSelectedSkillIds(mySkills.map(x => x.skillId));
+                const mySkills = await getMySkills();
+
+                setSelectedSkillIds(mySkills.map(x => x.skillId));
+            }
+            finally {
+                setSkillsLoading(false);
+            }
         }
 
         loadProfile();
@@ -636,7 +642,9 @@ export default function CandidateProfilePage() {
                         Skills
                     </h3>
 
-                    {
+                    {skillsLoading ? (
+                        <div className="loading-text">Loading skills...</div>
+                    ) : (
                         skills.map(skill => (
 
                             <div
@@ -689,9 +697,9 @@ export default function CandidateProfilePage() {
                                 </label>
 
                             </div>
-                        ))
-                    }
-
+                        )
+                        )
+                        )}
                     <div
                         style={{marginTop: "20px" }}
                     >

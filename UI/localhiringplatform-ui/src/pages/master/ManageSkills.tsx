@@ -19,10 +19,14 @@ export default function ManageSkills() {
     const [successMessage, setSuccessMessage] =
         useState("");
 
+    const [errorMessage, setErrorMessage] =
+        useState("");
+
     async function handleSave() {
 
         try {
 
+            setSuccessMessage("");
             await addSkill(skill);
 
             //const updatedProfile =
@@ -31,12 +35,16 @@ export default function ManageSkills() {
             //setProfile(updatedProfile);
 
             setSuccessMessage(
-                "Profile updated successfully.");
+                "Skill added successfully.");
+
+            alert("Skill added successfully.");
         }
         catch {
 
-            setSuccessMessage(
-                "Unable to update profile.");
+            setErrorMessage(
+                "Unable to add skill or skill already exists.");
+
+            alert("Unable to add skill or skill already exists.");
         }
     }
 
@@ -136,6 +144,15 @@ export default function ManageSkills() {
                     "validation-success"
                 >
                     {successMessage}
+                </div>
+            }
+            {
+                errorMessage &&
+                <div
+                    className=
+                    "validation-error"
+                >
+                    {errorMessage}
                 </div>
             }
         </div>
