@@ -41,8 +41,13 @@ namespace LocalHiringPlatform.Infrastructure.Services
                 IndustryType=skillModel.IndustryType
             };
 
+            if(skill.SkillName=="")
+            {
+                throw new ArgumentException("Skill name cannot be empty.");
+            }
 
-           await _skillRepository.AddAsync(skill);
+
+            await _skillRepository.AddAsync(skill);
            await  _unitOfWork.SaveChangesAsync();
 
             if (_appSetting.Value.UseRedis == true)
