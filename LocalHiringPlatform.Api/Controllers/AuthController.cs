@@ -2,6 +2,7 @@
 using LocalHiringPlatform.Domain.Exceptions;
 using LocalHiringPlatform.Domain.Interfaces;
 using LocalHiringPlatform.Domain.Models;
+using LocalHiringPlatform.Infrastructure.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -14,12 +15,15 @@ namespace LocalHiringPlatform.Api.Controllers
     {
         private readonly IAuthService _authService;
         private readonly IEmailService _emailService;
+        private readonly IJobService _jobService;
 
         public AuthController(IAuthService authService,
-            IEmailService emailService)
+            IEmailService emailService,
+            IJobService jobService)
         {
             _authService = authService;
             _emailService = emailService;
+            _jobService = jobService;
         }
 
         private void ValidatePassword(string password)
@@ -149,6 +153,14 @@ namespace LocalHiringPlatform.Api.Controllers
                     message =
                         "Password changed successfully."
                 });
+        }
+
+        [HttpPost("search")]
+        public async Task<IActionResult> SearchJobs(SearchJobsModel model)
+        {
+            var jobs = await _jobService.SearchJobsAsync(model);
+
+            return Ok(jobs);
         }
     }
 }
