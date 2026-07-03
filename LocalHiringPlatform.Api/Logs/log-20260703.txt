@@ -1,0 +1,35 @@
+2026-07-03 07:58:01.413 +05:30 [INF] User profile is available. Using 'C:\Users\Vishal\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-07-03 07:58:01.679 +05:30 [INF] Now listening on: http://localhost:5271
+2026-07-03 07:58:01.807 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-07-03 07:58:01.811 +05:30 [INF] Hosting environment: Development
+2026-07-03 07:58:01.813 +05:30 [INF] Content root path: C:\Users\Vishal\source\repos\LocalHiringPlatform\LocalHiringPlatform.Api
+2026-07-03 07:58:31.867 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5271/api/candidate/profile - null null
+2026-07-03 07:58:40.414 +05:30 [INF] InvokeAsync called. Vishal
+2026-07-03 07:58:49.680 +05:30 [INF] Started GET /api/candidate/profile
+2026-07-03 07:58:49.827 +05:30 [INF] Executing endpoint 'LocalHiringPlatform.Api.Controllers.CandidateProfileController.GetProfile (LocalHiringPlatform.Api)'
+2026-07-03 07:58:49.855 +05:30 [INF] Route matched with {action = "GetProfile", controller = "CandidateProfile"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetProfile() on controller LocalHiringPlatform.Api.Controllers.CandidateProfileController (LocalHiringPlatform.Api).
+2026-07-03 07:58:56.272 +05:30 [WRN] No store type was specified for the decimal property 'CurrentSalary' on entity type 'CandidateProfile'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2026-07-03 07:58:56.277 +05:30 [WRN] No store type was specified for the decimal property 'ExpectedSalary' on entity type 'CandidateProfile'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2026-07-03 07:58:56.280 +05:30 [WRN] No store type was specified for the decimal property 'TotalExperienceYears' on entity type 'CandidateProfile'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2026-07-03 07:58:56.283 +05:30 [WRN] No store type was specified for the decimal property 'MaxSalary' on entity type 'Job'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2026-07-03 07:58:56.285 +05:30 [WRN] No store type was specified for the decimal property 'MinSalary' on entity type 'Job'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2026-07-03 07:58:57.532 +05:30 [INF] Executed DbCommand (129ms) [Parameters=[@__userId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[EntityId], [t].[City], [t].[CreatedOn], [t].[CurrentSalary], [t].[DateOfBirth], [t].[ExpectedSalary], [t].[FullName], [t].[Gender], [t].[IsOpenToWork], [t].[ProfileCompletionPercentage], [t].[ProfileSummary], [t].[ResumeFileName], [t].[ResumeFilePath], [t].[ResumeUrl], [t].[State], [t].[TotalExperienceYears], [t].[UpdatedOn], [t].[UserId], [t].[EntityId0], [t].[CreatedOn0], [t].[Email], [t].[EmailVerificationToken], [t].[EmailVerificationTokenExpiry], [t].[EmailVerified], [t].[EmailVerifiedOn], [t].[IsActive], [t].[MobileNumber], [t].[MobileVerificationCode], [t].[MobileVerificationCodeExpiry], [t].[MobileVerified], [t].[MobileVerifiedOn], [t].[PasswordHash], [t].[Role], [t].[UpdatedOn0], [t0].[EntityId], [t0].[CandidateProfileId], [t0].[CandidateSkillId], [t0].[CreatedOn], [t0].[ExperienceInMonths], [t0].[SkillId], [t0].[UpdatedOn], [t0].[EntityId0], [t0].[CreatedOn0], [t0].[IndustryType], [t0].[IsApproved], [t0].[SkillCategory], [t0].[SkillId0], [t0].[SkillName], [t0].[UpdatedOn0]
+FROM (
+    SELECT TOP(1) [c].[EntityId], [c].[City], [c].[CreatedOn], [c].[CurrentSalary], [c].[DateOfBirth], [c].[ExpectedSalary], [c].[FullName], [c].[Gender], [c].[IsOpenToWork], [c].[ProfileCompletionPercentage], [c].[ProfileSummary], [c].[ResumeFileName], [c].[ResumeFilePath], [c].[ResumeUrl], [c].[State], [c].[TotalExperienceYears], [c].[UpdatedOn], [c].[UserId], [u].[EntityId] AS [EntityId0], [u].[CreatedOn] AS [CreatedOn0], [u].[Email], [u].[EmailVerificationToken], [u].[EmailVerificationTokenExpiry], [u].[EmailVerified], [u].[EmailVerifiedOn], [u].[IsActive], [u].[MobileNumber], [u].[MobileVerificationCode], [u].[MobileVerificationCodeExpiry], [u].[MobileVerified], [u].[MobileVerifiedOn], [u].[PasswordHash], [u].[Role], [u].[UpdatedOn] AS [UpdatedOn0]
+    FROM [CandidateProfiles] AS [c]
+    INNER JOIN [Users] AS [u] ON [c].[UserId] = [u].[EntityId]
+    WHERE [c].[UserId] = @__userId_0
+) AS [t]
+LEFT JOIN (
+    SELECT [c0].[EntityId], [c0].[CandidateProfileId], [c0].[CandidateSkillId], [c0].[CreatedOn], [c0].[ExperienceInMonths], [c0].[SkillId], [c0].[UpdatedOn], [s].[EntityId] AS [EntityId0], [s].[CreatedOn] AS [CreatedOn0], [s].[IndustryType], [s].[IsApproved], [s].[SkillCategory], [s].[SkillId] AS [SkillId0], [s].[SkillName], [s].[UpdatedOn] AS [UpdatedOn0]
+    FROM [CandidateSkills] AS [c0]
+    INNER JOIN [Skills] AS [s] ON [c0].[SkillId] = [s].[EntityId]
+) AS [t0] ON [t].[EntityId] = [t0].[CandidateProfileId]
+ORDER BY [t].[EntityId], [t].[EntityId0], [t0].[EntityId]
+2026-07-03 07:58:57.849 +05:30 [INF] Executing OkObjectResult, writing value of type 'LocalHiringPlatform.Api.DTOs.CandidateProfileResponseDto'.
+2026-07-03 07:58:57.899 +05:30 [INF] Executed action LocalHiringPlatform.Api.Controllers.CandidateProfileController.GetProfile (LocalHiringPlatform.Api) in 8034.6634ms
+2026-07-03 07:58:57.905 +05:30 [INF] Executed endpoint 'LocalHiringPlatform.Api.Controllers.CandidateProfileController.GetProfile (LocalHiringPlatform.Api)'
+2026-07-03 07:58:57.912 +05:30 [INF] Completed GET /api/candidate/profile 200 8232ms
+2026-07-03 07:59:02.871 +05:30 [INF] Request completed successfully. Vishal
+2026-07-03 07:59:02.901 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5271/api/candidate/profile - 200 null application/json; charset=utf-8 31047.4404ms
