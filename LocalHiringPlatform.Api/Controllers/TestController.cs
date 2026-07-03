@@ -10,17 +10,18 @@ public class TestController : ControllerBase
 {
 
     private readonly IRedisCacheService _redisCacheService;
-
+    private readonly ILogger _logger;
     public TestController(
-        IRedisCacheService redisCacheService)
+        IRedisCacheService redisCacheService,
+        ILogger<TestController> logger)
     {
         _redisCacheService = redisCacheService;
+        _logger = logger;
     }
-
-    [Authorize]
-    [HttpGet("protected")]
-    public IActionResult Protected()
+    [HttpGet]
+    public IActionResult Test()
     {
+        throw new Exception("This is a test exception for logging purposes.");
         return Ok(new
         {
             Message = "You are authenticated"
