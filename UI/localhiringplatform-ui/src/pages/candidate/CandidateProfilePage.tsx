@@ -1,4 +1,4 @@
-﻿import { cache, useEffect, useState }
+﻿import {useEffect, useState }
     from "react";
 
 import { getProfile, updateProfile, uploadResume }
