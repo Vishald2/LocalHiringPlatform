@@ -17,14 +17,15 @@ namespace LocalHiringPlatform.Infrastructure.Services.AI.IntentHandlers
             public AIIntentType IntentType
                 => AIIntentType.Greeting;
 
-            public Task<AIChatResponseModel> HandleAsync(
-                AIIntentModel intent)
+            public Task<AIIntentHandlerResponse> HandleAsync(
+                AIIntentModel intent, AIChatRequestModel request)
             {
                 return Task.FromResult(
-                    new AIChatResponseModel
+                    new AIIntentHandlerResponse
                     {
-                        Reply =
-                            """
+                        Intent = AIIntentType.Greeting.ToString(),
+                        Response =
+                        """
                         Hello! I am LocalHire AI.
 
                         I can help you:

@@ -16,8 +16,8 @@ namespace LocalHiringPlatform.Domain.Interfaces.AI
         {
             AIIntentType IntentType { get; }
 
-            Task<AIChatResponseModel> HandleAsync(
-                AIIntentModel intent);
+            Task<AIIntentHandlerResponse> HandleAsync(
+                AIIntentModel intentModel, AIChatRequestModel request);
         }
     }
 }

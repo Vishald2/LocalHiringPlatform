@@ -2,8 +2,6 @@
 {
     public class AIChatResponseModel
     {
-        public string Reply { get; set; } = "";
-
-        public AIIntentModel? Intent { get; set; }
+        public List<AIIntentHandlerResponse> AIReply { get; set; } = new List<AIIntentHandlerResponse>();
     }
 }
