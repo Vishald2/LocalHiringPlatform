@@ -49,4 +49,5 @@ _ReSharper*/
 LocalHiringPlatform.Api/Logs/
 
 **/Logs/
+/LocalHiringPlatform.Api/Logs/
 /LocalHiringPlatform.Api/Logs/log-20260703.txt
