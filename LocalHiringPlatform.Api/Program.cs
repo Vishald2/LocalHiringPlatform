@@ -2,6 +2,8 @@ using LocalHiringPlatform.Api.Middleware;
 using LocalHiringPlatform.Domain.Configuration;
 using LocalHiringPlatform.Domain.Helpers;
 using LocalHiringPlatform.Domain.Interfaces;
+using LocalHiringPlatform.Domain.Interfaces.AI;
+using LocalHiringPlatform.Domain.Interfaces.AI.LocalHiringPlatform.Domain.Interfaces.AI;
 using LocalHiringPlatform.Domain.Interfaces.MasterDataRepositories;
 using LocalHiringPlatform.Domain.Interfaces.MasterDataServices;
 using LocalHiringPlatform.Domain.Models;
@@ -9,6 +11,8 @@ using LocalHiringPlatform.Infrastructure;
 using LocalHiringPlatform.Infrastructure.Data;
 using LocalHiringPlatform.Infrastructure.Repositories;
 using LocalHiringPlatform.Infrastructure.Services;
+using LocalHiringPlatform.Infrastructure.Services.AI;
+using LocalHiringPlatform.Infrastructure.Services.AI.IntentHandlers.LocalHiringPlatform.Infrastructure.Services.AI.IntentHandlers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -176,7 +180,17 @@ builder.Services.AddScoped<
         IAiAnalysisRepository,
         AiAnalysisRepository>();
 
+builder.Services.AddScoped<IAIChatService, AIChatService>();
 
+builder.Services.AddHttpClient<ILLMService, GeminiLLMService>();
+
+builder.Services.AddScoped<IPromptService, PromptService>();
+
+builder.Services.AddScoped<ILLMService, GeminiLLMService>();
+
+builder.Services.AddScoped<
+    IAIIntentHandler,
+    GreetingIntentHandler>();
 
 builder.Services.Configure<ResendSettings>(
     builder.Configuration.GetSection("Resend"));
