@@ -24,7 +24,7 @@ namespace LocalHiringPlatform.Infrastructure.Services.AI.IntentHandlers
                     new AIIntentHandlerResponse
                     {
                         Intent = AIIntentType.Greeting.ToString(),
-                        Response =
+                        Data =
                         """
                         Hello! I am LocalHire AI.
 

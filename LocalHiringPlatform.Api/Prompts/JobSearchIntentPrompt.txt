@@ -76,7 +76,8 @@ For JobSearch, populate intentAdditionalInfo using ONLY the following properties
     "State": [],
     "MinSalary": "",
     "MaxSalary": "",
-    "ExperienceRequired": "",
+    "MinExperienceRequired": "",
+    "MaxExperienceRequired": "",
     "RequiredSkills": []
 }
 
@@ -143,7 +144,8 @@ Response:
             ],
             "MinSalary":"",
             "MaxSalary":"",
-            "ExperienceRequired":"3",
+            "MinExperienceRequired":"3",
+            "MaxExperienceRequired":"",
             "RequiredSkills":
             [
                 "React"
@@ -169,7 +171,8 @@ Response:
             ],
             "MinSalary":"",
             "MaxSalary":"",
-            "ExperienceRequired":"5",
+            "MinExperienceRequired":"5",
+            "MaxExperienceRequired":"",
             "RequiredSkills":
             [
                 ".NET"
@@ -180,7 +183,7 @@ Response:
 ---------------------------------------------------------
 
 User:
-Hi, help me improve my resume and find anglar and riact jobs in Gurgaon between 10 and 15 lakh.
+Hi, help me improve my resume and find anglar and riact jobs in Gurgaon between 10 and 15 lakh, experience 5 to 10 years.
 
 Response:
 
@@ -194,7 +197,36 @@ Response:
             ],
             "MinSalary":"1000000",
             "MaxSalary":"1500000",
-            "ExperienceRequired":"",
+            "MinExperienceRequired":"5",
+            "MaxExperienceRequired":"10",
+            "RequiredSkills":
+            [
+                "Angular",
+                "React"
+            ]
+        }
+ 
+
+
+---------------------------------------------------------
+
+User:
+Hi, help me improve my resume and find anglar and riact jobs in Gurgaon between 10 and 15 lakh, exp 5 - 10 years.
+
+Response:
+
+        {
+            "City":
+            [
+                "Gurgaon"
+            ],
+            "State":
+            [
+            ],
+            "MinSalary":"1000000",
+            "MaxSalary":"1500000",
+            "MinExperienceRequired":"5",
+            "MaxExperienceRequired":"10",
             "RequiredSkills":
             [
                 "Angular",

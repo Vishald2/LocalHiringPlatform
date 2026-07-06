@@ -29,7 +29,7 @@ namespace LocalHiringPlatform.Infrastructure.Services.AI
             _logger = logger;
         }
 
-        public async Task<AIChatResponseModel> SendMessageAsync(
+        public async Task<AIChatServiceResponse> SendMessageAsync(
             AIChatRequestModel request)
         {
             var promptTemplate =
@@ -66,14 +66,14 @@ namespace LocalHiringPlatform.Infrastructure.Services.AI
 
             if (intent == null)
             {
-                return new AIChatResponseModel
+                return new AIChatServiceResponse
                 {
-                    AIReply = new List<AIIntentHandlerResponse>
+                    Response = new List<AIIntentHandlerResponse>
                     {
                         new AIIntentHandlerResponse
                         {
-                            Intent = "Unknown",
-                            Response = "Sorry, I could not understand your request."
+                            Intent = AIIntentType.Unknown.ToString(),
+                            Data = null
                         }
                     }
                 };
@@ -105,7 +105,7 @@ namespace LocalHiringPlatform.Infrastructure.Services.AI
                         responses.Add(new AIIntentHandlerResponse
                         {
                             Intent = intentModel.IntentType.ToString(),
-                            Response = "Sorry, I could not find a handler for this intent."
+                            Data = "Sorry, I could not find a handler for this intent."
                         });
                     }
                 }
@@ -116,14 +116,14 @@ namespace LocalHiringPlatform.Infrastructure.Services.AI
                     responses.Add(new AIIntentHandlerResponse
                     {
                         Intent = intentModel.IntentType.ToString(),
-                        Response = "Sorry, something went wrong while processing this request."
+                        Data = "Sorry, something went wrong while processing this request."
                     });
                 }
             }
 
-            return new AIChatResponseModel
+            return new AIChatServiceResponse
             {
-                AIReply = responses
+                Response = responses
             };
         }
     }

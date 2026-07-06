@@ -2,6 +2,7 @@
 using LocalHiringPlatform.Domain.Exceptions;
 using LocalHiringPlatform.Domain.Interfaces;
 using LocalHiringPlatform.Domain.Models;
+using LocalHiringPlatform.Domain.Models.AI;
 
 namespace LocalHiringPlatform.Infrastructure.Services;
 
@@ -270,5 +271,16 @@ public class JobService : IJobService
                         job.IsActive
                 })
             .Take(10).ToList();
+    }
+
+    public async Task<List<JobSearchResultModel>> SearchAsync(
+        JobSearchModel model)
+    {
+        if (model == null)
+        {
+            throw new ArgumentNullException(nameof(model));
+        }
+
+        return await _jobRepository.SearchAsync(model);
     }
 }

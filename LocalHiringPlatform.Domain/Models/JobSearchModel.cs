@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LocalHiringPlatform.Domain.Models.AI
 {
-    public class JobSearchAIModel
+    public class JobSearchModel
     {
         public List<string> City { get; set; } = new();
 

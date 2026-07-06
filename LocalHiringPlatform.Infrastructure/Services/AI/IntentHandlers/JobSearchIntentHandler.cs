@@ -1,7 +1,9 @@
 ﻿using Azure.Core;
 using LocalHiringPlatform.Domain.Enums;
+using LocalHiringPlatform.Domain.Interfaces;
 using LocalHiringPlatform.Domain.Interfaces.AI;
 using LocalHiringPlatform.Domain.Interfaces.AI.LocalHiringPlatform.Domain.Interfaces.AI;
+using LocalHiringPlatform.Domain.Models;
 using LocalHiringPlatform.Domain.Models.AI;
 using Microsoft.Identity.Client;
 using System;
@@ -20,10 +22,13 @@ namespace LocalHiringPlatform.Infrastructure.Services.AI.IntentHandlers
 
         private readonly ILLMService _llmService;
         private readonly IPromptService _promptService;
-        public JobSearchIntentHandler(IPromptService promptService, ILLMService llmService)
+        private readonly IJobService _jobService;
+        public JobSearchIntentHandler(IPromptService promptService, ILLMService llmService,
+            IJobService jobService)
         {
             _llmService = llmService;
             _promptService = promptService;
+            _jobService = jobService;
         }
 
         public Task<AIIntentHandlerResponse> HandleAsync(AIIntentModel intentModel, AIChatRequestModel request)
@@ -50,10 +55,35 @@ namespace LocalHiringPlatform.Infrastructure.Services.AI.IntentHandlers
                 jobSearchAIModel = null;
             }
 
+            JobSearchModel? jobSearchModel = null;
+
+            if (jobSearchAIModel != null)
+            {
+                jobSearchModel = new JobSearchModel
+                {
+                    City = jobSearchAIModel?.City ?? new List<string>(),
+                    State = jobSearchAIModel?.State ?? new List<string>(),
+                    RequiredSkills = jobSearchAIModel?.RequiredSkills ?? new List<string>(),
+                    MinExperienceRequired = jobSearchAIModel?.MinExperienceRequired,
+                    MaxExperienceRequired = jobSearchAIModel?.MaxExperienceRequired,
+                    MinSalary = jobSearchAIModel?.MinSalary,
+                    MaxSalary = jobSearchAIModel?.MaxSalary
+                };
+            }
+
+            List<JobSearchResultModel>? jobSearchResultModels = null;
+
+            if (jobSearchModel != null)
+            {
+                // Use the job service to search for jobs
+                jobSearchResultModels = _jobService.SearchAsync(jobSearchModel).Result;
+                // Process the results as needed
+            }
+
             return Task.FromResult(new AIIntentHandlerResponse
             {
                 Intent = IntentType.ToString(),
-                Response = aiReply
+                Data = jobSearchResultModels
             });
         }
     }

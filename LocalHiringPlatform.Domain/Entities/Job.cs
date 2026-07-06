@@ -20,6 +20,8 @@ public class Job : BaseEntity
 
     public int ExperienceRequired { get; set; }
 
+    public int? MaxExperienceRequired { get; set; } = null;
+
     public string? RequiredSkills { get; set; }
 
     public bool IsActive { get; set; } = true;
