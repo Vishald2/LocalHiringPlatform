@@ -25,6 +25,8 @@ import AvailableJobs from "./pages/candidate/AvailableJobs";
 
 import LandingPage from "./pages/Landing/LandingPage";
 
+import AIChatPage from "./pages/AI/AIChatPage";
+
 function App() {
     console.log("App.tsx");
     console.log(import.meta.env.VITE_TEST);
@@ -139,6 +141,10 @@ function App() {
                     <Route
                         path="/"
                         element={<LandingPage />}
+                    />
+                    <Route
+                        path="/aichat"
+                        element={<AIChatPage />}
                     />
                 </Route>
               

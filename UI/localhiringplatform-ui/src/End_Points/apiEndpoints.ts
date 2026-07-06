@@ -2,6 +2,10 @@
 /*GET FROM SWAGGER*/
 export const API_ENDPOINTS =
 {
+    aichat:
+    {
+        root: "/aichat"
+    },
     candidate:
     {
         profile: "/candidate/profile",

@@ -15,6 +15,8 @@
 
     experienceRequired: number;
 
+    maxExperienceRequired: number;
+
     requiredSkills?: string;
 
     isActive: boolean;

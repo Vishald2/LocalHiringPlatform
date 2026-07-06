@@ -8,7 +8,7 @@ namespace LocalHiringPlatform.Domain.Models
 {
     public class JobSearchResultModel
     {
-        public Job Job { get; set; } = new();
+        public JobModel Job { get; set; } = new();
 
         public int MatchScore { get; set; }
     }

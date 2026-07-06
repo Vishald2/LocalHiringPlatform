@@ -18,9 +18,13 @@ public class JobModel
 
     public int ExperienceRequired { get; set; }
 
+    public int? MaxExperienceRequired { get; set; } = null;
+
     public string? RequiredSkills { get; set; }
 
     public bool IsActive { get; set; }
 
     public int ApplicantCount { get; set; }
+
+    public DateTime CreatedOn { get; set; }= DateTime.MinValue;
 }

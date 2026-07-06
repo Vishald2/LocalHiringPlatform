@@ -174,7 +174,22 @@ public class JobRepository : IJobRepository
 
             results.Add(new JobSearchResultModel
             {
-                Job = job,
+                Job = new JobModel
+                {
+                    ApplicantCount = 0,
+                    City = job.City,
+                    Description = job.Description,
+                    EntityId = job.EntityId,
+                    ExperienceRequired = job.ExperienceRequired,
+                    IsActive = job.IsActive,
+                    MaxExperienceRequired = job.MaxExperienceRequired,
+                    MaxSalary = job.MaxSalary,
+                    MinSalary = job.MinSalary,
+                    RequiredSkills = job.RequiredSkills,
+                    State = job.State,
+                    Title = job.Title,
+                    CreatedOn = job.CreatedOn,
+                },
                 MatchScore = matchScore
             });
         }
