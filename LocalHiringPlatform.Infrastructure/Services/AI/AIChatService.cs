@@ -94,6 +94,7 @@ namespace LocalHiringPlatform.Infrastructure.Services.AI
                     var handlerForIntent =
                         _intentHandlers.FirstOrDefault(
                             h => h.IntentType == intentModel.IntentType);
+
                     if (handlerForIntent != null)
                     {
                         var response =
