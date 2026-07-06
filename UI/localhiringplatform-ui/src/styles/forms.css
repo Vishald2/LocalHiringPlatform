@@ -105,6 +105,11 @@
     transition: background-color var(--transition-fast);
 }
 
+    .primary-button:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+
     .primary-button:hover {
         background-color: var(--primary-hover-color);
     }

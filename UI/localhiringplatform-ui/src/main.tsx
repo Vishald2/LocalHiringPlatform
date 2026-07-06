@@ -9,6 +9,7 @@ import "./styles/cards.css";
 import "./styles/tables.css";
 import "./styles/dashboard.css";
 import "./styles/utilities.css";
+import "./styles/aichat.css";
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
