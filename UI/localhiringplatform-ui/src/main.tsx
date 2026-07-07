@@ -10,9 +10,14 @@ import "./styles/tables.css";
 import "./styles/dashboard.css";
 import "./styles/utilities.css";
 import "./styles/aichat.css";
+import { AIChatProvider } from './pages/AI/AIChatContext.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <App />
+        <AIChatProvider>
+
+            <App />
+
+        </AIChatProvider>
   </StrictMode>,
 )

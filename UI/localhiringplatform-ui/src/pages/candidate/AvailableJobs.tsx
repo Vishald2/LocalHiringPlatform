@@ -1,24 +1,24 @@
 ﻿import { useEffect }  from "react";
 import { useState } from "react";
 import {getJobs, searchJobs} from "../../services/JobService";
-import { applyToJob } from "../../services/JobApplicationService";
 import type { Job } from "../../types/Job";
 import { getErrorMessage } from "../../utils/errorHelper";
 import { saveJob } from "../../services/SavedJobService";
+import { handleApply } from "../../utils/HelperFunctions";
 
-async function handleApply(
-    jobId: string) {
-    try {
-        await applyToJob({
-            jobId
-        });
+// async function handleApply(
+//     jobId: string) {
+//     try {
+//         await applyToJob({
+//             jobId
+//         });
 
-        alert("Application submitted");
-    }
-    catch (error) {
-        alert(getErrorMessage(error));
-    }
-}
+//         alert("Application submitted");
+//     }
+//     catch (error) {
+//         alert(getErrorMessage(error));
+//     }
+// }
 export default function JobList() {
 
     const [jobs, setJobs] = useState<Job[]>([]);

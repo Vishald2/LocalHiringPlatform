@@ -1,7 +1,23 @@
 ﻿import type { JobSearchResultModel } from "../../types/AI/JobSearchResultModel";
+import { saveJob } from "../../services/SavedJobService";
+import { getErrorMessage } from "../../utils/errorHelper";
 
 interface Props {
     jobs: JobSearchResultModel[];
+}
+
+async function handleSave(
+    jobId: string) {
+    try {
+
+        await saveJob(jobId);
+
+        alert("Job saved");
+    }
+    catch (error) {
+        alert(
+            getErrorMessage(error));
+    }
 }
 
 export default function JobSearchResults({ jobs }: Props) {
@@ -114,13 +130,15 @@ export default function JobSearchResults({ jobs }: Props) {
                                 </div>
                                 <div>
                                     <div className="job-actions">
-                                        <button style={{ width: "100px" }} className="secondary-button">
-                                            View Details
+                                        <button style={{ width: "100px" }} className="secondary-button"
+                                            onClick={() =>
+                                                handleSave(
+                                                    item.job.entityId)
+                                            }
+                                        >
+                                            Save
                                         </button>
 
-                                        <button style={{ width: "100px" }} className="secondary-button">
-                                            Apply
-                                        </button>
                                     </div>
                                 </div>
 

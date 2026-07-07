@@ -2,22 +2,24 @@
 import { sendMessage } from "../../services/AIChatService";
 import JobSearchResults from "../AI/JobSearchResults";
 
-import type { AIChatResponse } from "../../types/AI/AIChatResponse";
 import type { AIIntentHandlerResponse } from "../../types/AI/AIIntentHandlerResponse";
 import type { JobSearchResultModel } from "../../types/AI/JobSearchResultModel";
 
-        interface ChatMessage {
-        sender: "user" | "assistant";
-
-        text?: string;
-
-        response?: AIChatResponse;
-        }
+import { useAIChat } from "./AIChatContext";
 
         export default function AIChatPage() {
 
-        const [message, setMessage] = useState("");
-            const [messages, setMessages] = useState<ChatMessage[]>([]);
+            const  messages1  = useAIChat();
+
+            console.log("AIChatPage");
+            console.log(messages1);
+
+            const [message, setMessage] = useState("");
+
+            const {
+                messages,
+                setMessages
+            } = useAIChat();
 
             const [loading, setLoading] = useState(false);
 
