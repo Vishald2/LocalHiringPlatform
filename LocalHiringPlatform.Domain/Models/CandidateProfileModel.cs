@@ -38,6 +38,8 @@ namespace LocalHiringPlatform.Domain.Models
 
         public string MobileNumber { get; set; } = string.Empty;
 
+        public string Email { get; set; } = string.Empty;
+
         public bool MobileVerified { get; set; }
     }
 }

@@ -15,4 +15,5 @@
     emailVerified: boolean;
     mobileVerified: boolean;
     mobileNumber: string;
+    email: string;
 }

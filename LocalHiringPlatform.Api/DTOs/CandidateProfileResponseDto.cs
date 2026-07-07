@@ -35,4 +35,6 @@ public class CandidateProfileResponseDto
     public string MobileNumber { get; set; } = string.Empty;
 
     public bool MobileVerified { get; set; }
+
+    public string Email { get; set; }= string.Empty;
 }

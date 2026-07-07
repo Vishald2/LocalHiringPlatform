@@ -80,7 +80,8 @@ public class CandidateProfileController : ControllerBase
 
                 EmailVerified=profile.EmailVerified,
                 MobileNumber = profile.MobileNumber,
-                MobileVerified = profile.MobileVerified
+                MobileVerified = profile.MobileVerified,
+                Email=profile.Email,
             };
 
         return Ok(response);

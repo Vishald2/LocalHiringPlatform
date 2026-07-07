@@ -24,6 +24,8 @@ import CandidateRegisterPage from "./pages/candidate/CandidateRegisterPage";
 import AvailableJobs from "./pages/candidate/AvailableJobs";
 import JobDetailsPage from "./pages/Jobs/ViewJobDetails";
 
+import ProfilePage from "./pages/ProfilePage";
+
 
 import LandingPage from "./pages/Landing/LandingPage";
 
@@ -45,6 +47,14 @@ function App() {
                         element={
                             <ProtectedRoute>
                                 <CandidateProfilePage />
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
+                        path="/cprofilenew"
+                        element={
+                            <ProtectedRoute>
+                                <ProfilePage />
                             </ProtectedRoute>
                         }
                     />

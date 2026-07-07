@@ -49,6 +49,7 @@ export default function CandidateProfilePage() {
             emailVerified: false,
             mobileVerified: false,
             mobileNumber: "",
+            email: ""
         });
 
     const [successMessage, setSuccessMessage] =
