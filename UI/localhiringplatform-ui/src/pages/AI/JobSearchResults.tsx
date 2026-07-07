@@ -28,14 +28,6 @@ export default function JobSearchResults({ jobs }: Props) {
         );
     }
 
-    const formatSalary = (salary?: number) => {
-
-        if (!salary)
-            return "Not specified";
-
-        return `₹${salary.toLocaleString("en-IN")}`;
-    };
-
     const formatLPA = (salary?: number) => {
 
         if (!salary)

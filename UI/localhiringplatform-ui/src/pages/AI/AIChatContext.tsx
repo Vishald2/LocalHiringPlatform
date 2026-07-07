@@ -5,7 +5,7 @@
     type ReactNode
 } from "react";
 
-import type { ChatMessage } from "../types/AI/ChatMessage";
+import type { ChatMessage } from "../../types/AI/ChatMessage";
 
 interface AIChatContextType {
 
