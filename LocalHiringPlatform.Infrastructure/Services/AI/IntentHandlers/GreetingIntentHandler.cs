@@ -28,12 +28,9 @@ namespace LocalHiringPlatform.Infrastructure.Services.AI.IntentHandlers
                         """
                         Hello! I am LocalHire AI.
 
-                        I can help you:
+                        I can help you
 
-                        • Find jobs
-                        • Recommend skills
-                        • Improve your resume
-                        • Answer career questions
+                        find jobs. You just have to give me place and the type of job you are looking for.
                         """
                     });
             }

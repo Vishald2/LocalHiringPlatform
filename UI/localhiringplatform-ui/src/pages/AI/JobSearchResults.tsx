@@ -92,7 +92,7 @@ export default function JobSearchResults({ jobs }: Props) {
                             <div>
                                 <strong>Skills</strong>
 
-                                <div>
+                                <div className="job-skills">
 
                                     {
                                         item.job.requiredSkills
@@ -112,6 +112,17 @@ export default function JobSearchResults({ jobs }: Props) {
                                     }
 
                                 </div>
+                                <div>
+                                    <div className="job-actions">
+                                        <button style={{ width: "100px" }} className="secondary-button">
+                                            View Details
+                                        </button>
+
+                                        <button style={{ width: "100px" }} className="secondary-button">
+                                            Apply
+                                        </button>
+                                    </div>
+                                </div>
 
                             </div>
 
@@ -120,22 +131,6 @@ export default function JobSearchResults({ jobs }: Props) {
                         <hr className="job-divider" />
 
                         <div className="job-footer">
-
-                            <div className="job-score">
-                                Match Score : {item.matchScore}
-                            </div>
-
-                            <div className="job-actions">
-
-                                <button style={{ width: "100px" }} className="secondary-button">
-                                    View Details
-                                </button>
-
-                                <button style={{ width: "100px" }} className="secondary-button">
-                                    Apply
-                                </button>
-
-                            </div>
 
                         </div>
 

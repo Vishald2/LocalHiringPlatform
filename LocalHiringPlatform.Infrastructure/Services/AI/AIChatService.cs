@@ -87,6 +87,8 @@ namespace LocalHiringPlatform.Infrastructure.Services.AI
 
             List<AIIntentHandlerResponse> responses = new List<AIIntentHandlerResponse>();
 
+            bool hasUnknownIntent = false;
+
             foreach (var intentModel in intent)
             {
                 try
@@ -103,23 +105,33 @@ namespace LocalHiringPlatform.Infrastructure.Services.AI
                     }
                     else
                     {
-                        responses.Add(new AIIntentHandlerResponse
-                        {
-                            Intent = intentModel.IntentType.ToString(),
-                            Data = "Sorry, I could not find a handler for this intent."
-                        });
+                        hasUnknownIntent = true;
                     }
                 }
                 catch (Exception ex)
                 {
                     _logger.LogError(ex, "An error occurred while processing the intent.");
 
-                    responses.Add(new AIIntentHandlerResponse
-                    {
-                        Intent = intentModel.IntentType.ToString(),
-                        Data = "Sorry, something went wrong while processing this request."
-                    });
+                    //responses.Add(new AIIntentHandlerResponse
+                    //{
+                    //    Intent = intentModel.IntentType.ToString(),
+                    //    Data = "Sorry, something went wrong while processing this request."
+                    //});
                 }
+            }
+
+            bool hasBusinessIntent =
+    responses.Any(r =>
+        r.Intent != AIIntentType.Greeting.ToString() &&
+        r.Intent != AIIntentType.Unknown.ToString());
+
+            if (hasUnknownIntent && !hasBusinessIntent)
+            {
+                responses.Add(new AIIntentHandlerResponse
+                {
+                    Intent = AIIntentType.Unknown.ToString(),
+                    Data = "I understand your request, but I can't assist with that yet. Currently, I can help with job searches."
+                });
             }
 
             return new AIChatServiceResponse

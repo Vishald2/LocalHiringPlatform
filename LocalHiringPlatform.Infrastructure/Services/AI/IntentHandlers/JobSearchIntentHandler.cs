@@ -71,6 +71,29 @@ namespace LocalHiringPlatform.Infrastructure.Services.AI.IntentHandlers
                 };
             }
 
+            bool hasCity =
+                        jobSearchModel.City != null &&
+                        jobSearchModel.City.Any();
+
+            bool hasSkill =
+                jobSearchModel.RequiredSkills != null &&
+                jobSearchModel.RequiredSkills.Any();
+
+            if (!hasCity || !hasSkill)
+            {
+                return Task.FromResult(new AIIntentHandlerResponse
+                {
+                    Intent = AIIntentType.JobSearch.ToString(),
+                    Data = null,
+                    Message =
+                        "Please specify at least one city and one skill to search for jobs.\n\n" +
+                        "Examples:\n" +
+                        "• .NET jobs in Delhi\n" +
+                        "• Angular jobs in Panipat\n" +
+                        "• React developer in Gurgaon"
+                });
+            }
+
             List<JobSearchResultModel>? jobSearchResultModels = null;
 
             if (jobSearchModel != null)
@@ -80,9 +103,14 @@ namespace LocalHiringPlatform.Infrastructure.Services.AI.IntentHandlers
                 // Process the results as needed
             }
 
+            string msg = jobSearchResultModels != null && jobSearchResultModels.Any()
+                    ? $"Found {jobSearchResultModels.Count} job(s) matching your criteria."
+                    : "No jobs found matching your criteria.";
+
             return Task.FromResult(new AIIntentHandlerResponse
             {
                 Intent = IntentType.ToString(),
+                Message = msg,
                 Data = jobSearchResultModels
             });
         }

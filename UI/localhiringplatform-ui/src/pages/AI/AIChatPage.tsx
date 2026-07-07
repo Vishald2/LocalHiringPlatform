@@ -3,9 +3,8 @@ import { sendMessage } from "../../services/AIChatService";
 import JobSearchResults from "../AI/JobSearchResults";
 
 import type { AIChatResponse } from "../../types/AI/AIChatResponse";
-import type { Job } from "../../types/Job";
-// import "../css/aichat.css";
 import type { AIIntentHandlerResponse } from "../../types/AI/AIIntentHandlerResponse";
+import type { JobSearchResultModel } from "../../types/AI/JobSearchResultModel";
 
         interface ChatMessage {
         sender: "user" | "assistant";
@@ -102,10 +101,22 @@ import type { AIIntentHandlerResponse } from "../../types/AI/AIIntentHandlerResp
 
                     case "JobSearch":
 
+                        if (item.data == null) {
+
+                            return (
+                                <div
+                                    key={index}
+                                    className="chat-bubble ai-bubble"
+                                >
+                                    {item.message}
+                                </div>
+                            );
+                        }
+
                         return (
                             <JobSearchResults
                                 key={index}
-                                jobs={item.data as Job[]}
+                                jobs={item.data as JobSearchResultModel[]}
                             />
                         );
 
