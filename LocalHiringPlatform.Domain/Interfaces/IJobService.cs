@@ -1,4 +1,5 @@
 ﻿using LocalHiringPlatform.Domain.Models;
+using LocalHiringPlatform.Domain.Models.AI;
 
 namespace LocalHiringPlatform.Domain.Interfaces;
 
@@ -16,4 +17,6 @@ public interface IJobService
 
     Task UpdateJobAsync(Guid userId, UpdateJobModel model);
     Task<List<JobModel>> SearchJobsAsync(SearchJobsModel model);
+
+    Task<List<JobSearchResultModel>> SearchAsync(JobSearchModel jobSearchModel);
 }

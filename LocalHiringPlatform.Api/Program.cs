@@ -12,6 +12,7 @@ using LocalHiringPlatform.Infrastructure.Data;
 using LocalHiringPlatform.Infrastructure.Repositories;
 using LocalHiringPlatform.Infrastructure.Services;
 using LocalHiringPlatform.Infrastructure.Services.AI;
+using LocalHiringPlatform.Infrastructure.Services.AI.IntentHandlers;
 using LocalHiringPlatform.Infrastructure.Services.AI.IntentHandlers.LocalHiringPlatform.Infrastructure.Services.AI.IntentHandlers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -191,6 +192,12 @@ builder.Services.AddScoped<ILLMService, GeminiLLMService>();
 builder.Services.AddScoped<
     IAIIntentHandler,
     GreetingIntentHandler>();
+
+builder.Services.AddScoped<
+    IAIIntentHandler,
+    JobSearchIntentHandler>();
+
+
 
 builder.Services.Configure<ResendSettings>(
     builder.Configuration.GetSection("Resend"));

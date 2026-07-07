@@ -13,7 +13,7 @@ namespace LocalHiringPlatform.Domain.Interfaces.AI
     {
         public interface IAIChatService
         {
-            Task<AIChatResponseModel> SendMessageAsync(
+            Task<AIChatServiceResponse> SendMessageAsync(
                 AIChatRequestModel request);
         }
     }

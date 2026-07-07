@@ -3,8 +3,11 @@
 import {getMySavedJobs, removeSavedJob} from "../../services/SavedJobService";
 
 import type { Job } from "../../types/Job";
+import { useNavigate } from "react-router-dom";
 
 export default function SavedJobsPage() {
+
+    const navigate = useNavigate();
 
     const [jobs, setJobs] = useState<Job[]>([]);
 
@@ -20,6 +23,12 @@ export default function SavedJobsPage() {
         loadJobs();
 
     }, []);
+
+    const handleViewDetails = (jobId: string) => {
+
+        navigate(`/jobdetails/${jobId}`);
+
+    };
 
     async function handleRemove(
         jobId: string) {
@@ -58,7 +67,7 @@ export default function SavedJobsPage() {
                             {job.state}
                         </p>
 
-                        <button className="primary-button"
+                        <button className="secondary-button"
                             onClick={() =>
                                 handleRemove(
                                     job.entityId)
@@ -68,6 +77,18 @@ export default function SavedJobsPage() {
                             }}
                         >
                             Remove
+                        </button>
+
+                        <button className="secondary-button"
+                            onClick={() =>
+                                handleViewDetails(
+                                    job.entityId)
+                            }
+                            style={{
+                                width: "120px"
+                            }}
+                        >
+                            View Details
                         </button>
 
                     </div>

@@ -22,8 +22,12 @@ import JobApplicantsPage from "./pages/employer/JobApplicantsPage";
 import ChangePasswordPage from "./pages/candidate/ChangePassword";
 import CandidateRegisterPage from "./pages/candidate/CandidateRegisterPage";
 import AvailableJobs from "./pages/candidate/AvailableJobs";
+import JobDetailsPage from "./pages/Jobs/ViewJobDetails";
+
 
 import LandingPage from "./pages/Landing/LandingPage";
+
+import AIChatPage from "./pages/AI/AIChatPage";
 
 function App() {
     console.log("App.tsx");
@@ -139,6 +143,15 @@ function App() {
                     <Route
                         path="/"
                         element={<LandingPage />}
+                    />
+                    <Route
+                        path="/aichat"
+                        element={<AIChatPage />}
+                    />
+
+                    <Route
+                        path="/jobdetails/:jobId"
+                        element={<JobDetailsPage />}
                     />
                 </Route>
               

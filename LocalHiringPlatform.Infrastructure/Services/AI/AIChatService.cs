@@ -2,6 +2,7 @@
 using LocalHiringPlatform.Domain.Interfaces.AI;
 using LocalHiringPlatform.Domain.Interfaces.AI.LocalHiringPlatform.Domain.Interfaces.AI;
 using LocalHiringPlatform.Domain.Models.AI;
+using Microsoft.Extensions.Logging;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -14,23 +15,26 @@ namespace LocalHiringPlatform.Infrastructure.Services.AI
         private readonly ILLMService _llmService;
 
         private readonly IEnumerable<IAIIntentHandler> _intentHandlers;
+        private readonly ILogger<AIChatService> _logger;
 
         public AIChatService(
             IPromptService promptService,
             ILLMService llmService,
-            IEnumerable<IAIIntentHandler> intentHandlers)
+            IEnumerable<IAIIntentHandler> intentHandlers,
+            ILogger<AIChatService> logger)
         {
             _promptService = promptService;
             _llmService = llmService;
             _intentHandlers = intentHandlers;
+            _logger = logger;
         }
 
-        public async Task<AIChatResponseModel> SendMessageAsync(
+        public async Task<AIChatServiceResponse> SendMessageAsync(
             AIChatRequestModel request)
         {
             var promptTemplate =
                 await _promptService.GetPromptAsync(
-                    "JobSearchIntentPrompt.txt");
+                    "UserIntentPrompt.txt");
 
             var prompt =
                 $"{promptTemplate}\n\nUser Request:\n{request.Message}";
@@ -40,35 +44,38 @@ namespace LocalHiringPlatform.Infrastructure.Services.AI
                     prompt);
 
 
-            AIIntentModel? intent = null;
+            List<AIIntentModel>? intent = null;
 
             try
             {
-                intent =
-                    JsonSerializer.Deserialize<AIIntentModel>(
+                intent = JsonSerializer.Deserialize<List<AIIntentModel>>(
                         aiReply,
                         new JsonSerializerOptions
                         {
                             PropertyNameCaseInsensitive = true,
                             Converters =
                             {
-                new JsonStringEnumConverter()
+                            new JsonStringEnumConverter()
                             }
                         });
             }
             catch
             {
-                intent = new AIIntentModel
-                {
-                    IntentType = AIIntentType.Unknown
-                };
+                intent = null;
             }
 
             if (intent == null)
             {
-                return new AIChatResponseModel
+                return new AIChatServiceResponse
                 {
-                    Reply = "Sorry, I could not understand your request."
+                    Response = new List<AIIntentHandlerResponse>
+                    {
+                        new AIIntentHandlerResponse
+                        {
+                            Intent = AIIntentType.Unknown.ToString(),
+                            Data = null
+                        }
+                    }
                 };
             }
 
@@ -77,20 +84,60 @@ namespace LocalHiringPlatform.Infrastructure.Services.AI
             THE IMPLEMENTATIONS OF IAIIntentHandler INTERFACE.
             This is called the Strategy Pattern
              */
-            var handler =
-                _intentHandlers.FirstOrDefault(
-                    h => h.IntentType == intent.IntentType);
 
-            if (handler == null)
+            List<AIIntentHandlerResponse> responses = new List<AIIntentHandlerResponse>();
+
+            bool hasUnknownIntent = false;
+
+            foreach (var intentModel in intent)
             {
-                return new AIChatResponseModel
+                try
                 {
-                    Reply =
-                        $"Intent '{intent.IntentType}' is not implemented yet."
-                };
+                    var handlerForIntent =
+                        _intentHandlers.FirstOrDefault(
+                            h => h.IntentType == intentModel.IntentType);
+
+                    if (handlerForIntent != null)
+                    {
+                        var response =
+                            await handlerForIntent.HandleAsync(intentModel, request);
+                        responses.Add(response);
+                    }
+                    else
+                    {
+                        hasUnknownIntent = true;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "An error occurred while processing the intent.");
+
+                    //responses.Add(new AIIntentHandlerResponse
+                    //{
+                    //    Intent = intentModel.IntentType.ToString(),
+                    //    Data = "Sorry, something went wrong while processing this request."
+                    //});
+                }
             }
 
-            return await handler.HandleAsync(intent);
+            bool hasBusinessIntent =
+    responses.Any(r =>
+        r.Intent != AIIntentType.Greeting.ToString() &&
+        r.Intent != AIIntentType.Unknown.ToString());
+
+            if (hasUnknownIntent && !hasBusinessIntent)
+            {
+                responses.Add(new AIIntentHandlerResponse
+                {
+                    Intent = AIIntentType.Unknown.ToString(),
+                    Data = "I understand your request, but I can't assist with that yet. Currently, I can help with job searches."
+                });
+            }
+
+            return new AIChatServiceResponse
+            {
+                Response = responses
+            };
         }
     }
 }

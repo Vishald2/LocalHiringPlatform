@@ -66,6 +66,12 @@ export default function Navbar() {
                     Home
                 </Link>
 
+                <Link
+                    className="navbar-link"
+                    to="/aichat">
+                    AI Chat
+                </Link>
+
                 {token && role === "Admin" && (
 
                     <>
