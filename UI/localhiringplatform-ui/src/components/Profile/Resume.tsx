@@ -24,6 +24,7 @@ export default function Resume() {
             emailVerified: false,
             mobileVerified: false,
             mobileNumber: "",
+            email: ""
         });
 
     const [selectedFile,
