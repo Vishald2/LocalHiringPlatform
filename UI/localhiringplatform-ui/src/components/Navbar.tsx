@@ -114,11 +114,10 @@ export default function Navbar() {
                             to="/candidate/myapplications">
                             My Applications
                         </Link>
-
                         <Link
                             className="navbar-link"
-                            to="/cprofile">
-                            Profile
+                            to="/cprofilenew">
+                            Profile New
                         </Link>
                         <Link className="navbar-link"
                             to="/changepassword">

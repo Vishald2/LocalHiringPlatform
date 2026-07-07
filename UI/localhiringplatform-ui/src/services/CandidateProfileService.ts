@@ -10,8 +10,6 @@ export async function getProfile(): Promise<CandidateProfile> {
     const response =
         await api.get<CandidateProfile>(getBaseUrl());
 
-    console.log(response);
-
     return response.data;
 }
 

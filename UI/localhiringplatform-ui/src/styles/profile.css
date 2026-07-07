@@ -1,0 +1,28 @@
+﻿.profile-layout {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 20px;
+    align-items: start;
+}
+
+.profile-menu-item {
+    width: 100%;
+    padding: 12px 15px;
+    border: none;
+    background: white;
+    text-align: left;
+    cursor: pointer;
+    border-left: 3px solid transparent;
+    font-size: 15px;
+}
+
+    .profile-menu-item:hover {
+        background: #f8fafc;
+    }
+
+    .profile-menu-item.active {
+        border-left: 3px solid #2563eb;
+        background: #eff6ff;
+        color: #2563eb;
+        font-weight: 600;
+    }
