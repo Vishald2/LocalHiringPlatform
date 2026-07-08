@@ -18,7 +18,7 @@ namespace LocalHiringPlatform.Domain.Entities.CandidateEducation
         public Guid CandidateEducationEntityId { get; set; }
 
         [ForeignKey(nameof(CourseSpecialization))]
-        public Guid CourseSpecializationId { get; set; }
+        public int CourseSpecializationId { get; set; }
 
         public CandidateEducation CandidateEducation { get; set; } = null!;
 
