@@ -1,6 +1,6 @@
 ﻿namespace LocalHiringPlatform.Domain.Entities;
 
-public class CandidateEducation
+public class CandidateEducationOLD
 {
     public Guid Id { get; set; }
 
