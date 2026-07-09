@@ -1,5 +1,6 @@
 ﻿using LocalHiringPlatform.Domain.Entities;
 using LocalHiringPlatform.Domain.Entities.CandidateEducation;
+using LocalHiringPlatform.Domain.Entities.Workshop;
 using Microsoft.EntityFrameworkCore;
 
 namespace LocalHiringPlatform.Infrastructure.Data;
@@ -39,9 +40,14 @@ public class ApplicationDbContext : DbContext
 
     public DbSet<CourseSpecialization> CourseSpecializations { get; set; }
 
+    public DbSet<Country> Countries { get; set; }
+    public DbSet<State> States { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+
+        modelBuilder.Entity<State>().HasOne<Country>().WithMany();
 
         modelBuilder.Entity<User>()
             .HasIndex(x => x.Email)
