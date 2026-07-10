@@ -25,11 +25,11 @@ namespace LocalHiringPlatform.Infrastructure.Repositories.EducationRepositories
         {
             return await _dbContext.CandidateEducations
                 .Where(x => x.CandidateProfileId == candidateProfileId)
-                .Include(x => x.Education)
+                //.Include(x => x.Education)
                 .Include(x => x.Course)
                 .Include(x => x.University)
                 .Include(x => x.CandidateEducationSpecializations)
-                    .ThenInclude(x => x.CourseSpecialization)
+                 //   .ThenInclude(x => x.CourseSpecialization)
                         .ThenInclude(x => x.Specialization)
                 .OrderByDescending(x => x.IsHighestEducation)
                 .ThenByDescending(x => x.EndYear)
@@ -41,6 +41,11 @@ namespace LocalHiringPlatform.Infrastructure.Repositories.EducationRepositories
         {
             return await _dbContext.CandidateEducations
                 .Include(x => x.CandidateEducationSpecializations)
+                       // .ThenInclude(x => x.CourseSpecialization)
+                            .ThenInclude(x => x.Specialization)
+             //   .Include(x => x.Education)
+                .Include(x => x.Course)
+                .Include(x => x.University)
                 .FirstOrDefaultAsync(x =>
                     x.EntityId == candidateEducationEntityId);
         }

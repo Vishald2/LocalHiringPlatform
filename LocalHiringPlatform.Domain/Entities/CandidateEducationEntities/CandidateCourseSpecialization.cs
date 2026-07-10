@@ -8,11 +8,14 @@ using System.Threading.Tasks;
 
 namespace LocalHiringPlatform.Domain.Entities.CandidateEducationEntities
 {
-    public class CourseSpecialization
+    public class CandidateCourseSpecialization
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int CourseSpecializationId { get; set; }
+        public Guid CandidateEducationSpecializationId { get; set; }
+
+        [ForeignKey(nameof(CandidateProfile))]
+        public Guid ProfileId { get; set; }
 
         [ForeignKey(nameof(Course))]
         public int CourseId { get; set; }
@@ -20,10 +23,10 @@ namespace LocalHiringPlatform.Domain.Entities.CandidateEducationEntities
         [ForeignKey(nameof(Specialization))]
         public int SpecializationId { get; set; }
 
+        public CandidateProfile Profile { get; set; }
+
         public Course Course { get; set; } = null!;
 
         public Specialization Specialization { get; set; } = null!;
-
-        public ICollection<CandidateCourseSpecialization> CandidateEducationSpecializations { get; set; } = new List<CandidateCourseSpecialization>();
     }
 }

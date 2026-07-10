@@ -14,9 +14,6 @@ namespace LocalHiringPlatform.Domain.Entities.CandidateEducationEntities
         [ForeignKey(nameof(CandidateProfile))]
         public Guid CandidateProfileId { get; set; }
 
-        [ForeignKey(nameof(Education))]
-        public int EducationId { get; set; }
-
         [ForeignKey(nameof(Course))]
         public int CourseId { get; set; }
 
@@ -47,12 +44,10 @@ namespace LocalHiringPlatform.Domain.Entities.CandidateEducationEntities
 
         public CandidateProfile CandidateProfile { get; set; } = null!;
 
-        public Education Education { get; set; } = null!;
-
         public Course Course { get; set; } = null!;
 
         public University? University { get; set; }
 
-        public ICollection<CandidateEducationSpecialization> CandidateEducationSpecializations { get; set; } = new List<CandidateEducationSpecialization>();
+        public ICollection<CandidateCourseSpecialization> CandidateEducationSpecializations { get; set; } = new List<CandidateCourseSpecialization>();
     }
 }

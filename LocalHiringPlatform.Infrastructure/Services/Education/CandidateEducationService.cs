@@ -72,7 +72,7 @@ namespace LocalHiringPlatform.Infrastructure.Services.Education
             {
                 CandidateProfileId = candidateProfileId,
 
-                EducationId = model.EducationId,
+               // EducationId = model.EducationId,
                 CourseId = model.CourseId,
                 UniversityId = model.UniversityId,
 
@@ -95,10 +95,10 @@ namespace LocalHiringPlatform.Infrastructure.Services.Education
             {
                 var candidateEducationSpecializations =
                     courseSpecializations.Select(x =>
-                        new CandidateEducationSpecialization
+                        new CandidateCourseSpecialization
                         {
-                            CandidateEducationEntityId = candidateEducation.EntityId,
-                            CourseSpecializationId = x.CourseSpecializationId
+                          //  CandidateEducationEntityId = candidateEducation.EntityId,
+                        //    CourseSpecializationId = x.CourseSpecializationId
                         });
 
                 await _candidateEducationSpecializationRepository
@@ -133,8 +133,8 @@ namespace LocalHiringPlatform.Infrastructure.Services.Education
             {
                 EntityId = education.EntityId,
 
-                EducationId = education.EducationId,
-                EducationName = education.Education.Name,
+              //  EducationId = education.EducationId,
+             //   EducationName = education.Education.Name,
 
                 CourseId = education.CourseId,
                 CourseName = education.Course.Name,
@@ -154,15 +154,15 @@ namespace LocalHiringPlatform.Infrastructure.Services.Education
                 IsCompleted = education.IsCompleted,
                 IsHighestEducation = education.IsHighestEducation,
 
-                CourseSpecializationIds = education
-                    .CandidateEducationSpecializations
-                    .Select(x => x.CourseSpecializationId)
-                    .ToList(),
+             //   CourseSpecializationIds = education
+                //    .CandidateEducationSpecializations
+                //    .Select()
+                //    .ToList(),
 
-                SpecializationNames = education
-                    .CandidateEducationSpecializations
-                    .Select(x => x.CourseSpecialization.Specialization.Name)
-                    .ToList()
+                //SpecializationNames = education
+                //    .CandidateEducationSpecializations
+                //    .Select(x => x.CourseSpecialization.Specialization.Name)
+                //    .ToList()
             };
         }
 
@@ -183,8 +183,8 @@ namespace LocalHiringPlatform.Infrastructure.Services.Education
             {
                 EntityId = x.EntityId,
 
-                EducationId = x.EducationId,
-                EducationName = x.Education.Name,
+                //EducationId = x.EducationId,
+                //EducationName = x.Education.Name,
 
                 CourseId = x.CourseId,
                 CourseName = x.Course.Name,
@@ -204,15 +204,15 @@ namespace LocalHiringPlatform.Infrastructure.Services.Education
                 IsCompleted = x.IsCompleted,
                 IsHighestEducation = x.IsHighestEducation,
 
-                CourseSpecializationIds = x
-                    .CandidateEducationSpecializations
-                    .Select(s => s.CourseSpecializationId)
-                    .ToList(),
+                //CourseSpecializationIds = x
+                //    .CandidateEducationSpecializations
+                //    .Select(s => s.CourseSpecializationId)
+                //    .ToList(),
 
-                SpecializationNames = x
-                    .CandidateEducationSpecializations
-                    .Select(s => s.CourseSpecialization.Specialization.Name)
-                    .ToList()
+                //SpecializationNames = x
+                //    .CandidateEducationSpecializations
+                //    .Select(s => s.CourseSpecialization.Specialization.Name)
+                //    .ToList()
 
             }).ToList();
         }
@@ -255,7 +255,7 @@ namespace LocalHiringPlatform.Infrastructure.Services.Education
             }
 
             // Update fields
-            candidateEducation.EducationId = model.EducationId;
+         //   candidateEducation.EducationId = model.EducationId;
             candidateEducation.CourseId = model.CourseId;
             candidateEducation.UniversityId = model.UniversityId;
             candidateEducation.InstituteName = model.InstituteName;
@@ -271,19 +271,19 @@ namespace LocalHiringPlatform.Infrastructure.Services.Education
             _candidateEducationSpecializationRepository.RemoveRange(
                 candidateEducation.CandidateEducationSpecializations);
 
-            if (courseSpecializations.Any())
-            {
-                var candidateEducationSpecializations =
-                    courseSpecializations.Select(x =>
-                        new CandidateEducationSpecialization
-                        {
-                            CandidateEducationEntityId = candidateEducation.EntityId,
-                            CourseSpecializationId = x.CourseSpecializationId
-                        });
+            //if (courseSpecializations.Any())
+            //{
+            //    var candidateEducationSpecializations =
+            //        courseSpecializations.Select(x =>
+            //            new CandidateCourseSpecialization
+            //            {
+            //                CandidateEducationEntityId = candidateEducation.EntityId,
+            //                CourseSpecializationId = x.CourseSpecializationId
+            //            });
 
-                await _candidateEducationSpecializationRepository
-                    .AddRangeAsync(candidateEducationSpecializations);
-            }
+            //    await _candidateEducationSpecializationRepository
+            //        .AddRangeAsync(candidateEducationSpecializations);
+            //}
 
             await _unitOfWork.SaveChangesAsync();
         }

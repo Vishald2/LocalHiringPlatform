@@ -32,9 +32,9 @@ namespace LocalHiringPlatform.Api.Controllers
             return Ok(result);
         }
 
-        [HttpGet("detail/{candidateEducationEntityId:guid}")]
-        public async Task<IActionResult> GetCandidateEducation(
-            Guid candidateEducationEntityId)
+        [HttpGet("detail")]
+        public async Task<IActionResult> 
+            GetCandidateEducationDetails(Guid candidateEducationEntityId)
         {
             var result =
                 await _candidateEducationService
