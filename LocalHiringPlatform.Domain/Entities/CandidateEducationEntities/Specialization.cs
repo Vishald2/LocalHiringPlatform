@@ -6,25 +6,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LocalHiringPlatform.Domain.Entities.CandidateEducation
+namespace LocalHiringPlatform.Domain.Entities.CandidateEducationEntities
 {
-    public class University
+    public class Specialization
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int UniversityId { get; set; }
+        public int SpecializationId { get; set; }
 
         [Required, MaxLength(50)]
         public string Code { get; set; } = string.Empty;
 
-        [Required, MaxLength(255)]
+        [Required, MaxLength(150)]
         public string Name { get; set; } = string.Empty;
 
-        [MaxLength(100)]
-        public string City { get; set; } = string.Empty;
-
-        [MaxLength(100)]
-        public string State { get; set; } = string.Empty;
+        public int DisplayOrder { get; set; }
 
         public bool IsActive { get; set; } = true;
     }

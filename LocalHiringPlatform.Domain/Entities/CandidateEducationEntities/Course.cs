@@ -6,13 +6,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LocalHiringPlatform.Domain.Entities.CandidateEducation
+namespace LocalHiringPlatform.Domain.Entities.CandidateEducationEntities
 {
-    public class Specialization
+    /* Graduate BSc, Post-Graduate MSc, Doctorate PhD */
+    public class Course
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int SpecializationId { get; set; }
+        public int CourseId { get; set; }
+
+        [ForeignKey(nameof(Education))]
+        public int EducationId { get; set; }
 
         [Required, MaxLength(50)]
         public string Code { get; set; } = string.Empty;
@@ -23,5 +27,9 @@ namespace LocalHiringPlatform.Domain.Entities.CandidateEducation
         public int DisplayOrder { get; set; }
 
         public bool IsActive { get; set; } = true;
+
+        public Education Education { get; set; } = null!;
+
+        public ICollection<CourseSpecialization> CourseSpecializations { get; set; } = new List<CourseSpecialization>();
     }
 }

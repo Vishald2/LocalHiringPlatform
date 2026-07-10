@@ -6,16 +6,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LocalHiringPlatform.Domain.Entities.CandidateEducation
+namespace LocalHiringPlatform.Domain.Entities.CandidateEducationEntities
 {
-    /* Graduate BSc, Post-Graduate MSc, Doctorate PhD */
-    public class Course
+    /* Grad, PG, PhD */
+    public class Education
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int CourseId { get; set; }
-
-        [ForeignKey(nameof(Education))]
         public int EducationId { get; set; }
 
         [Required, MaxLength(50)]
@@ -28,8 +25,6 @@ namespace LocalHiringPlatform.Domain.Entities.CandidateEducation
 
         public bool IsActive { get; set; } = true;
 
-        public Education Education { get; set; } = null!;
-
-        public ICollection<CourseSpecialization> CourseSpecializations { get; set; } = new List<CourseSpecialization>();
+        public ICollection<Course> Courses { get; set; } = new List<Course>();
     }
 }

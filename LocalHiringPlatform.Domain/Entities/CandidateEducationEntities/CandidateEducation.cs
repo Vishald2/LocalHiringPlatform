@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LocalHiringPlatform.Domain.Entities.CandidateEducation
+namespace LocalHiringPlatform.Domain.Entities.CandidateEducationEntities
 {
     /* Graduate-BA, Post-Graduate, Doctorate */
     public class CandidateEducation : BaseEntity

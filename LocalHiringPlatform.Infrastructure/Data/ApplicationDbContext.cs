@@ -1,5 +1,5 @@
 ﻿using LocalHiringPlatform.Domain.Entities;
-using LocalHiringPlatform.Domain.Entities.CandidateEducation;
+using LocalHiringPlatform.Domain.Entities.CandidateEducationEntities;
 using Microsoft.EntityFrameworkCore;
 
 namespace LocalHiringPlatform.Infrastructure.Data;
@@ -29,11 +29,11 @@ public class ApplicationDbContext : DbContext
 
     public DbSet<University> Universities { get; set; }
 
-    public DbSet<Specialization> Specializations { get; set; }
+    public DbSet<Specialization> Specialization { get; set; }
 
     public DbSet<Course> Courses { get; set; }
 
-    public DbSet<Specialization> CandidateEducationSpecializations { get; set; }
+    public DbSet<CandidateEducationSpecialization> CandidateEducationSpecialization { get; set; }
 
     public DbSet<CandidateEducation> CandidateEducations { get; set; }
 

@@ -6,22 +6,25 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LocalHiringPlatform.Domain.Entities.CandidateEducation
+namespace LocalHiringPlatform.Domain.Entities.CandidateEducationEntities
 {
-    /* Grad, PG, PhD */
-    public class Education
+    public class University
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int EducationId { get; set; }
+        public int UniversityId { get; set; }
 
         [Required, MaxLength(50)]
         public string Code { get; set; } = string.Empty;
 
-        [Required, MaxLength(150)]
+        [Required, MaxLength(255)]
         public string Name { get; set; } = string.Empty;
 
-        public int DisplayOrder { get; set; }
+        [MaxLength(100)]
+        public string City { get; set; } = string.Empty;
+
+        [MaxLength(100)]
+        public string State { get; set; } = string.Empty;
 
         public bool IsActive { get; set; } = true;
     }

@@ -1,5 +1,5 @@
 ﻿using LocalHiringPlatform.Domain.Entities;
-using LocalHiringPlatform.Domain.Entities.CandidateEducation;
+using LocalHiringPlatform.Domain.Entities.CandidateEducationEntities;
 using LocalHiringPlatform.Domain.Enums;
 
 public class CandidateProfile : BaseEntity
