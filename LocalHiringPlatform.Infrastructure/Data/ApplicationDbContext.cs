@@ -29,11 +29,11 @@ public class ApplicationDbContext : DbContext
 
     public DbSet<University> Universities { get; set; }
 
-    public DbSet<Specialization> Specialization { get; set; }
+    public DbSet<Specialization> Specializations { get; set; }
 
     public DbSet<Course> Courses { get; set; }
 
-    public DbSet<CandidateCourseSpecialization> CandidateEducationSpecialization { get; set; }
+    public DbSet<CandidateCourseSpecialization> CandidateCourseSpecializations { get; set; }
 
     public DbSet<CandidateEducation> CandidateEducations { get; set; }
 

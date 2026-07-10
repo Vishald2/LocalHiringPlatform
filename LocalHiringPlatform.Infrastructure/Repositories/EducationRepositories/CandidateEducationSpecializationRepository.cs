@@ -20,7 +20,7 @@ namespace LocalHiringPlatform.Infrastructure.Repositories.EducationRepositories
             GetByCandidateEducationEntityIdAsync(
                 Guid candidateEducationEntityId)
         {
-            return await _dbContext.CandidateEducationSpecialization
+            return await _dbContext.CandidateCourseSpecializations
               //  .Where(x => x.CandidateEducationEntityId == candidateEducationEntityId)
               //  .Include(x => x.CourseSpecialization)
              //       .ThenInclude(x => x.Specialization)
@@ -30,14 +30,14 @@ namespace LocalHiringPlatform.Infrastructure.Repositories.EducationRepositories
         public async Task AddRangeAsync(
             IEnumerable<CandidateCourseSpecialization> specializations)
         {
-            await _dbContext.CandidateEducationSpecialization
+            await _dbContext.CandidateCourseSpecializations
                 .AddRangeAsync(specializations);
         }
 
         public void RemoveRange(
             IEnumerable<CandidateCourseSpecialization> specializations)
         {
-            _dbContext.CandidateEducationSpecialization
+            _dbContext.CandidateCourseSpecializations
                 .RemoveRange(specializations);
         }
     }

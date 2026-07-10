@@ -17,7 +17,7 @@ namespace LocalHiringPlatform.Infrastructure.Repositories.EducationRepositories
 
         public async Task<List<Specialization>> GetAllAsync()
         {
-            return await _dbContext.Specialization
+            return await _dbContext.Specializations
                 .Where(x => x.IsActive)
                 .OrderBy(x => x.DisplayOrder)
                 .ThenBy(x => x.Name)
@@ -26,7 +26,7 @@ namespace LocalHiringPlatform.Infrastructure.Repositories.EducationRepositories
 
         public async Task<Specialization?> GetByIdAsync(int specializationId)
         {
-            return await _dbContext.Specialization
+            return await _dbContext.Specializations
                 .FirstOrDefaultAsync(x => x.SpecializationId == specializationId);
         }
     }
