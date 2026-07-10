@@ -24,9 +24,6 @@ namespace LocalHiringPlatform.Domain.Entities.CandidateEducation
 
         public Specialization Specialization { get; set; } = null!;
 
-        public ICollection<CandidateEducationSpecialization>
-            CandidateEducationSpecializations
-        { get; set; }
-            = new List<CandidateEducationSpecialization>();
+        public ICollection<CandidateEducationSpecialization> CandidateEducationSpecializations { get; set; } = new List<CandidateEducationSpecialization>();
     }
 }

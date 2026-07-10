@@ -53,9 +53,6 @@ namespace LocalHiringPlatform.Domain.Entities.CandidateEducation
 
         public University? University { get; set; }
 
-        public ICollection<CandidateEducationSpecialization>
-            CandidateEducationSpecializations
-        { get; set; }
-            = new List<CandidateEducationSpecialization>();
+        public ICollection<CandidateEducationSpecialization> CandidateEducationSpecializations { get; set; } = new List<CandidateEducationSpecialization>();
     }
 }

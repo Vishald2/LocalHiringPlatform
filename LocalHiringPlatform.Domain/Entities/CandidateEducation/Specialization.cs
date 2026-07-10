@@ -23,8 +23,5 @@ namespace LocalHiringPlatform.Domain.Entities.CandidateEducation
         public int DisplayOrder { get; set; }
 
         public bool IsActive { get; set; } = true;
-
-        public ICollection<CourseSpecialization> CourseSpecializations
-        { get; set; } = new List<CourseSpecialization>();
     }
 }

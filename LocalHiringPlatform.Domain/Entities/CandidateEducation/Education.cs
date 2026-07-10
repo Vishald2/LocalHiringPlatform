@@ -24,8 +24,5 @@ namespace LocalHiringPlatform.Domain.Entities.CandidateEducation
         public int DisplayOrder { get; set; }
 
         public bool IsActive { get; set; } = true;
-
-        public ICollection<Course> Courses { get; set; }
-           = new List<Course>();
     }
 }

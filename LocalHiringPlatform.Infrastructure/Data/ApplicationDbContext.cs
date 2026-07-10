@@ -154,7 +154,6 @@ public class ApplicationDbContext : DbContext
             entity.HasOne(x => x.CandidateProfile)
                 .WithMany(x => x.CandidateEducations)
                 .HasForeignKey(x => x.CandidateProfileId)
-                .HasPrincipalKey(x => x.EntityId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             entity.HasOne(x => x.Education)
@@ -175,7 +174,6 @@ public class ApplicationDbContext : DbContext
             entity.HasMany(x => x.CandidateEducationSpecializations)
                 .WithOne(x => x.CandidateEducation)
                 .HasForeignKey(x => x.CandidateEducationEntityId)
-                .HasPrincipalKey(x => x.EntityId)
                 .OnDelete(DeleteBehavior.Cascade);
         });
 
