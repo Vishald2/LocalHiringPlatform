@@ -15,11 +15,11 @@ namespace LocalHiringPlatform.Domain.Interfaces.CandidateEducationInterfaces
 
         Task AddCandidateEducationAsync(
             Guid candidateProfileId,
-            CandidateEducationModel model);
+            CandidateEducationCreateModel model);
 
         Task UpdateCandidateEducationAsync(
             Guid candidateEducationEntityId,
-            CandidateEducationModel model);
+            CandidateEducationCreateModel model);
 
         Task DeleteCandidateEducationAsync(Guid candidateEducationEntityId);
     }

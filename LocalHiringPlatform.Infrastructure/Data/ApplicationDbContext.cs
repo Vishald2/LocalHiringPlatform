@@ -143,7 +143,7 @@ public class ApplicationDbContext : DbContext
         modelBuilder.Entity<CandidateEducation>(entity =>
         {
             entity.HasOne(x => x.CandidateProfile)
-                .WithMany()
+                .WithMany(x => x.CandidateEducations)
                 .HasForeignKey(x => x.CandidateProfileId)
                 .OnDelete(DeleteBehavior.Cascade);
 

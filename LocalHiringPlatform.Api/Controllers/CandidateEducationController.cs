@@ -48,7 +48,7 @@ namespace LocalHiringPlatform.Api.Controllers
 
         [HttpPost]
         public async Task<IActionResult> AddCandidateEducation(
-                           [FromBody] CandidateEducationModel model)
+                           [FromBody] CandidateEducationCreateModel model)
         {
             var userId = User.GetUserId();
 
@@ -62,7 +62,7 @@ namespace LocalHiringPlatform.Api.Controllers
         [HttpPut("{candidateEducationEntityId:guid}")]
         public async Task<IActionResult> UpdateCandidateEducation(
             Guid candidateEducationEntityId,
-            [FromBody] CandidateEducationModel model)
+            [FromBody] CandidateEducationCreateModel model)
         {
             await _candidateEducationService
                 .UpdateCandidateEducationAsync(candidateEducationEntityId, model);

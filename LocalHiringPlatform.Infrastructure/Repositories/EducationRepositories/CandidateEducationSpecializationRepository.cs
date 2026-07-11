@@ -10,12 +10,12 @@ using System.Threading.Tasks;
 
 namespace LocalHiringPlatform.Infrastructure.Repositories.EducationRepositories
 {
-    public class CandidateCourseSpecializationRepository
-         : ICandidateCourseSpecializationRepository
+    public class CandidateEducationSpecializationRepository
+         : ICandidateEducationSpecializationRepository
     {
         private readonly ApplicationDbContext _dbContext;
 
-        public CandidateCourseSpecializationRepository(
+        public CandidateEducationSpecializationRepository(
             ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
@@ -54,6 +54,28 @@ namespace LocalHiringPlatform.Infrastructure.Repositories.EducationRepositories
                 //.Include(x => x.Specialization)
                 //.OrderBy(x => x.Specialization.Name)
                 //.ToListAsync();
+        }
+
+        public async Task AddRangeAsync(
+            IEnumerable<CandidateEducationSpecialization> candidateEducationSpecializations)
+        {
+            await _dbContext.CandidateEducationSpecializations
+                .AddRangeAsync(candidateEducationSpecializations);
+        }
+
+        public void RemoveRange(IEnumerable<CandidateEducationSpecialization> candidateEducationSpecializations)
+        {
+             _dbContext.CandidateEducationSpecializations
+                .RemoveRange(candidateEducationSpecializations);
+        }
+
+        public async Task<List<CandidateEducationSpecialization>> GetByCandidateEducationIdAsync(Guid candidateEducationId)
+        {
+            return await _dbContext.CandidateEducationSpecializations
+                .Where(x => x.CandidateEducationEntityId == candidateEducationId)
+                .Include(x => x.Specialization)
+                .OrderBy(x => x.Specialization.Name)
+                .ToListAsync();
         }
     }
 }

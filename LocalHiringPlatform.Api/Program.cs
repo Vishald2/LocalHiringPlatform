@@ -257,6 +257,10 @@ builder.Services.AddScoped<ISpecializationRepository, SpecializationRepository>(
 
 builder.Services.AddScoped<IUniversityRepository, UniversityRepository>();
 
+builder.Services.AddScoped<ICandidateEducationSpecializationRepository, CandidateEducationSpecializationRepository>();
+
+
+
 //SERVICES
 builder.Services.AddScoped<ICandidateEducationService, CandidateEducationService>();
 /*EDUCATION. END*/
