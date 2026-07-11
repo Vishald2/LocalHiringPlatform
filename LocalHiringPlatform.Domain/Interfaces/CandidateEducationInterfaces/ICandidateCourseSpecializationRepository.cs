@@ -9,12 +9,12 @@ namespace LocalHiringPlatform.Domain.Interfaces.CandidateEducationInterfaces
 {
     public interface ICandidateCourseSpecializationRepository
     {
-        Task<List<CandidateCourseSpecialization>> GetByCandidateProfileIdAsync(Guid candidateProfileId,
+        Task<List<CandidateEducationSpecialization>> GetByCandidateProfileIdAsync(Guid candidateProfileId,
                     int CourseId);
-        Task AddAsync(CandidateCourseSpecialization candidateCourseSpecialization);
+        Task AddAsync(CandidateEducationSpecialization candidateCourseSpecialization);
 
-        void Update(CandidateCourseSpecialization candidateCourseSpecialization);
+        void Update(CandidateEducationSpecialization candidateCourseSpecialization);
 
-        void Delete(CandidateCourseSpecialization candidateCourseSpecialization);
+        void Delete(CandidateEducationSpecialization candidateCourseSpecialization);
     }
 }

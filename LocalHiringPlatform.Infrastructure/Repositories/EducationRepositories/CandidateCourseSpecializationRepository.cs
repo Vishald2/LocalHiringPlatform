@@ -22,27 +22,27 @@ namespace LocalHiringPlatform.Infrastructure.Repositories.EducationRepositories
         }
 
         public async Task AddAsync(
-            CandidateCourseSpecialization candidateCourseSpecialization)
+            CandidateEducationSpecialization candidateCourseSpecialization)
         {
-            await _dbContext.CandidateCourseSpecializations
+            await _dbContext.CandidateEducationSpecializations
                 .AddAsync(candidateCourseSpecialization);
         }
 
         public void Update(
-            CandidateCourseSpecialization candidateCourseSpecialization)
+            CandidateEducationSpecialization candidateCourseSpecialization)
         {
-            _dbContext.CandidateCourseSpecializations
+            _dbContext.CandidateEducationSpecializations
                 .Update(candidateCourseSpecialization);
         }
 
         public void Delete(
-            CandidateCourseSpecialization candidateCourseSpecialization)
+            CandidateEducationSpecialization candidateCourseSpecialization)
         {
-            _dbContext.CandidateCourseSpecializations
+            _dbContext.CandidateEducationSpecializations
                 .Remove(candidateCourseSpecialization);
         }
 
-        public async Task<List<CandidateCourseSpecialization>>
+        public async Task<List<CandidateEducationSpecialization>>
             GetByCandidateProfileIdAsync(
                 Guid candidateProfileId,
                 int courseId)

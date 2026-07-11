@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace LocalHiringPlatform.Domain.Entities.CandidateEducationEntities
 {
-    public class CandidateCourseSpecialization
+    public class CandidateEducationSpecialization
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

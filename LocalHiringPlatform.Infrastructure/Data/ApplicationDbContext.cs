@@ -33,7 +33,7 @@ public class ApplicationDbContext : DbContext
 
     public DbSet<Course> Courses { get; set; }
 
-    public DbSet<CandidateCourseSpecialization> CandidateCourseSpecializations { get; set; }
+    public DbSet<CandidateEducationSpecialization> CandidateEducationSpecializations { get; set; }
 
     public DbSet<CandidateEducation> CandidateEducations { get; set; }
 
@@ -208,7 +208,7 @@ public class ApplicationDbContext : DbContext
             }).IsUnique();
         });
 
-        modelBuilder.Entity<CandidateCourseSpecialization>(entity =>
+        modelBuilder.Entity<CandidateEducationSpecialization>(entity =>
         {
             entity.HasKey(x => x.CandidateEducationSpecializationId);
 
