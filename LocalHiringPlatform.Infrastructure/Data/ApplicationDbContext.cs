@@ -54,17 +54,20 @@ public class ApplicationDbContext : DbContext
         modelBuilder.Entity<Job>()
             .HasOne(x => x.EmployerProfile)
             .WithMany(x => x.Jobs)
-            .HasForeignKey(x => x.EmployerProfileId);
+            .HasForeignKey(x => x.EmployerProfileId)
+            .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.Entity<JobApplication>()
             .HasOne(x => x.Job)
             .WithMany(x => x.JobApplications)
-            .HasForeignKey(x => x.JobId);
+            .HasForeignKey(x => x.JobId)
+            .OnDelete(DeleteBehavior.NoAction);
 
         modelBuilder.Entity<JobApplication>()
             .HasOne(x => x.CandidateProfile)
             .WithMany(x => x.JobApplications)
-            .HasForeignKey(x => x.CandidateProfileId);
+            .HasForeignKey(x => x.CandidateProfileId)
+            .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.Entity<JobApplication>()
             .HasIndex(x =>
@@ -91,13 +94,24 @@ public class ApplicationDbContext : DbContext
                 x.SkillCategory
             }).IsUnique();
 
-        modelBuilder.Entity<SavedJob>().HasIndex(
-            x => new
+        modelBuilder.Entity<SavedJob>(entity =>
+        {
+            entity.HasIndex(x => new
             {
                 x.UserId,
                 x.JobId
-            })
-            .IsUnique();
+            }).IsUnique();
+
+            entity.HasOne(x => x.User)
+                .WithMany(x => x.SavedJobs)
+                .HasForeignKey(x => x.UserId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            entity.HasOne(x => x.Job)
+                .WithMany()
+                .HasForeignKey(x => x.JobId)
+                .OnDelete(DeleteBehavior.NoAction);
+        });
 
         modelBuilder.Entity<AiAnalysis>()
         .HasOne(
@@ -124,34 +138,6 @@ public class ApplicationDbContext : DbContext
                 .WithOne(x => x.Course)
                 .HasForeignKey(x => x.CourseId)
                 .OnDelete(DeleteBehavior.NoAction);
-        });
-
-        modelBuilder.Entity<CandidateCourseSpecialization>(entity =>
-        {
-            entity.HasKey(x => x.CandidateEducationSpecializationId);
-
-            entity.HasOne(x => x.Course)
-                .WithMany()
-                .HasForeignKey(x => x.CourseId)
-                .OnDelete(DeleteBehavior.NoAction);
-
-            entity.HasOne(x => x.Profile)
-                .WithMany()
-                .HasForeignKey(x => x.ProfileId)
-                .OnDelete(DeleteBehavior.NoAction);
-
-            entity.HasOne(x => x.Specialization)
-                .WithMany()
-                .HasForeignKey(x => x.SpecializationId)
-                .OnDelete(DeleteBehavior.NoAction);
-
-            entity.HasIndex(x => new
-            {
-                x.CourseId,
-                x.ProfileId,
-                x.SpecializationId
-            })
-            .IsUnique();
         });
 
         modelBuilder.Entity<CandidateEducation>(entity =>
@@ -211,7 +197,7 @@ public class ApplicationDbContext : DbContext
                 .OnDelete(DeleteBehavior.NoAction);
 
             entity.HasOne(x => x.Specialization)
-                .WithMany()
+                .WithMany(x => x.CourseSpecializations)
                 .HasForeignKey(x => x.SpecializationId)
                 .OnDelete(DeleteBehavior.NoAction);
 
@@ -219,8 +205,29 @@ public class ApplicationDbContext : DbContext
             {
                 x.CourseId,
                 x.SpecializationId
-            })
-            .IsUnique();
+            }).IsUnique();
         });
+
+        modelBuilder.Entity<CandidateCourseSpecialization>(entity =>
+        {
+            entity.HasKey(x => x.CandidateEducationSpecializationId);
+
+            entity.HasOne(x => x.CandidateEducation)
+                .WithMany(x => x.CandidateCourseSpecializations)
+                .HasForeignKey(x => x.CandidateEducationEntityId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.HasOne(x => x.Specialization)
+                .WithMany()
+                .HasForeignKey(x => x.SpecializationId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            entity.HasIndex(x => new
+            {
+                x.CandidateEducationEntityId,
+                x.SpecializationId
+            }).IsUnique();
+        });
+
     }
 }

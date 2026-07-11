@@ -16,20 +16,17 @@ namespace LocalHiringPlatform.Infrastructure.Services.Education
     public class CandidateEducationService : ICandidateEducationService
     {
         private readonly ICandidateEducationRepository _candidateEducationRepository;
-        private readonly ICandidateEducationSpecializationRepository _candidateEducationSpecializationRepository;
         private readonly ICourseSpecializationRepository _courseSpecializationRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly ICandidateProfileRepository _candidateProfileRepository;
 
         public CandidateEducationService(
             ICandidateEducationRepository candidateEducationRepository,
-            ICandidateEducationSpecializationRepository candidateEducationSpecializationRepository,
             ICourseSpecializationRepository courseSpecializationRepository,
             ICandidateProfileRepository candidateProfileRepository,
             IUnitOfWork unitOfWork)
         {
             _candidateEducationRepository = candidateEducationRepository;
-            _candidateEducationSpecializationRepository = candidateEducationSpecializationRepository;
             _courseSpecializationRepository = courseSpecializationRepository;
             _candidateProfileRepository = candidateProfileRepository;
             _unitOfWork = unitOfWork;
@@ -91,19 +88,19 @@ namespace LocalHiringPlatform.Infrastructure.Services.Education
 
             await _candidateEducationRepository.AddAsync(candidateEducation);
 
-            if (courseSpecializations.Any())
-            {
-                var candidateEducationSpecializations =
-                    courseSpecializations.Select(x =>
-                        new CandidateCourseSpecialization
-                        {
-                          //  CandidateEducationEntityId = candidateEducation.EntityId,
-                        //    CourseSpecializationId = x.CourseSpecializationId
-                        });
+            //if (courseSpecializations.Any())
+            //{
+            //    var candidateEducationSpecializations =
+            //        courseSpecializations.Select(x =>
+            //            new CandidateCourseSpecialization
+            //            {
+            //              //  CandidateEducationEntityId = candidateEducation.EntityId,
+            //            //    CourseSpecializationId = x.CourseSpecializationId
+            //            });
 
-                await _candidateEducationSpecializationRepository
-                    .AddRangeAsync(candidateEducationSpecializations);
-            }
+            //    await _candidateEducationSpecializationRepository
+            //        .AddRangeAsync(candidateEducationSpecializations);
+            //}
 
             await _unitOfWork.SaveChangesAsync();
         }
@@ -131,38 +128,24 @@ namespace LocalHiringPlatform.Infrastructure.Services.Education
 
             return new CandidateEducationModel
             {
-                EntityId = education.EntityId,
-
-              //  EducationId = education.EducationId,
-             //   EducationName = education.Education.Name,
-
+                CGPA = education.CGPA,
                 CourseId = education.CourseId,
                 CourseName = education.Course.Name,
-
-                UniversityId = education.UniversityId,
-                UniversityName = education.University?.Name,
-
-                InstituteName = education.InstituteName,
-
-                StartYear = education.StartYear,
                 EndYear = education.EndYear,
-
-                Percentage = education.Percentage,
-                CGPA = education.CGPA,
+                EntityId = education.EntityId,
                 Grade = education.Grade,
-
+                InstituteName = education.InstituteName,
                 IsCompleted = education.IsCompleted,
                 IsHighestEducation = education.IsHighestEducation,
-
-             //   CourseSpecializationIds = education
-                //    .CandidateEducationSpecializations
-                //    .Select()
-                //    .ToList(),
-
-                //SpecializationNames = education
-                //    .CandidateEducationSpecializations
-                //    .Select(x => x.CourseSpecialization.Specialization.Name)
-                //    .ToList()
+                EducationName=education.Course.Education.Name,
+                Code = education.Course.Education.Code,
+                EducationId = education.Course.EducationId,
+                Percentage = education.Percentage,
+                SpecializationNames = education.Course.CourseSpecializations
+                    .Select(s => s.Specialization.Name)
+                    .ToList(),
+                StartYear = education.StartYear,
+                UniversityId = education?.UniversityId,
             };
         }
 
@@ -186,6 +169,8 @@ namespace LocalHiringPlatform.Infrastructure.Services.Education
                 //EducationId = x.EducationId,
                 //EducationName = x.Education.Name,
 
+                //Code = x.Education.Code,
+
                 CourseId = x.CourseId,
                 CourseName = x.Course.Name,
 
@@ -204,15 +189,15 @@ namespace LocalHiringPlatform.Infrastructure.Services.Education
                 IsCompleted = x.IsCompleted,
                 IsHighestEducation = x.IsHighestEducation,
 
-                //CourseSpecializationIds = x
-                //    .CandidateEducationSpecializations
-                //    .Select(s => s.CourseSpecializationId)
-                //    .ToList(),
+                CourseSpecializationIds = x
+                    .Course.CourseSpecializations
+                    .Select(s => s.SpecializationId)
+                    .ToList(),
 
-                //SpecializationNames = x
-                //    .CandidateEducationSpecializations
-                //    .Select(s => s.CourseSpecialization.Specialization.Name)
-                //    .ToList()
+                SpecializationNames = x
+                    .Course.CourseSpecializations
+                    .Select(s => s.Specialization.Name)
+                    .ToList()
 
             }).ToList();
         }
@@ -267,9 +252,9 @@ namespace LocalHiringPlatform.Infrastructure.Services.Education
             candidateEducation.IsCompleted = model.IsCompleted;
             candidateEducation.IsHighestEducation = model.IsHighestEducation;
 
-            // Replace Specializations
-            _candidateEducationSpecializationRepository.RemoveRange(
-                candidateEducation.CandidateEducationSpecializations);
+            //// Replace Specializations
+            //_candidateEducationSpecializationRepository.RemoveRange(
+            //    candidateEducation.CandidateEducationSpecializations);
 
             //if (courseSpecializations.Any())
             //{

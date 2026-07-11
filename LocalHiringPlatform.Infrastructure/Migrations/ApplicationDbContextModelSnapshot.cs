@@ -269,39 +269,31 @@ namespace LocalHiringPlatform.Infrastructure.Migrations
 
             modelBuilder.Entity("LocalHiringPlatform.Domain.Entities.CandidateEducationEntities.CandidateCourseSpecialization", b =>
                 {
-                    b.Property<Guid>("CandidateEducationSpecializationId")
+                    b.Property<int>("CandidateEducationSpecializationId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("CandidateEducationEntityId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("CourseId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("CourseSpecializationId")
-                        .HasColumnType("int");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CandidateEducationSpecializationId"));
 
-                    b.Property<Guid>("ProfileId")
+                    b.Property<Guid>("CandidateEducationEntityId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<int?>("CourseId")
+                        .HasColumnType("int");
 
                     b.Property<int>("SpecializationId")
                         .HasColumnType("int");
 
                     b.HasKey("CandidateEducationSpecializationId");
 
-                    b.HasIndex("CandidateEducationEntityId");
-
-                    b.HasIndex("CourseSpecializationId");
-
-                    b.HasIndex("ProfileId");
+                    b.HasIndex("CourseId");
 
                     b.HasIndex("SpecializationId");
 
-                    b.HasIndex("CourseId", "ProfileId", "SpecializationId")
+                    b.HasIndex("CandidateEducationEntityId", "SpecializationId")
                         .IsUnique();
 
-                    b.ToTable("CandidateEducationSpecialization");
+                    b.ToTable("CandidateCourseSpecializations");
                 });
 
             modelBuilder.Entity("LocalHiringPlatform.Domain.Entities.CandidateEducationEntities.CandidateEducation", b =>
@@ -489,7 +481,7 @@ namespace LocalHiringPlatform.Infrastructure.Migrations
                     b.HasIndex("Code")
                         .IsUnique();
 
-                    b.ToTable("Specialization");
+                    b.ToTable("Specializations");
                 });
 
             modelBuilder.Entity("LocalHiringPlatform.Domain.Entities.CandidateEducationEntities.University", b =>
@@ -789,7 +781,7 @@ namespace LocalHiringPlatform.Infrastructure.Migrations
                     b.HasOne("Job", "Job")
                         .WithMany("JobApplications")
                         .HasForeignKey("JobId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("CandidateProfile");
@@ -810,25 +802,15 @@ namespace LocalHiringPlatform.Infrastructure.Migrations
 
             modelBuilder.Entity("LocalHiringPlatform.Domain.Entities.CandidateEducationEntities.CandidateCourseSpecialization", b =>
                 {
-                    b.HasOne("LocalHiringPlatform.Domain.Entities.CandidateEducationEntities.CandidateEducation", null)
-                        .WithMany("CandidateEducationSpecializations")
-                        .HasForeignKey("CandidateEducationEntityId");
-
-                    b.HasOne("LocalHiringPlatform.Domain.Entities.CandidateEducationEntities.Course", "Course")
-                        .WithMany()
-                        .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                    b.HasOne("LocalHiringPlatform.Domain.Entities.CandidateEducationEntities.CandidateEducation", "CandidateEducation")
+                        .WithMany("CandidateCourseSpecializations")
+                        .HasForeignKey("CandidateEducationEntityId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("LocalHiringPlatform.Domain.Entities.CandidateEducationEntities.CourseSpecialization", null)
-                        .WithMany("CandidateEducationSpecializations")
-                        .HasForeignKey("CourseSpecializationId");
-
-                    b.HasOne("CandidateProfile", "Profile")
-                        .WithMany()
-                        .HasForeignKey("ProfileId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                    b.HasOne("LocalHiringPlatform.Domain.Entities.CandidateEducationEntities.Course", null)
+                        .WithMany("CandidateCourseSpecializations")
+                        .HasForeignKey("CourseId");
 
                     b.HasOne("LocalHiringPlatform.Domain.Entities.CandidateEducationEntities.Specialization", "Specialization")
                         .WithMany()
@@ -836,9 +818,7 @@ namespace LocalHiringPlatform.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("Course");
-
-                    b.Navigation("Profile");
+                    b.Navigation("CandidateEducation");
 
                     b.Navigation("Specialization");
                 });
@@ -893,7 +873,7 @@ namespace LocalHiringPlatform.Infrastructure.Migrations
                         .IsRequired();
 
                     b.HasOne("LocalHiringPlatform.Domain.Entities.CandidateEducationEntities.Specialization", "Specialization")
-                        .WithMany()
+                        .WithMany("CourseSpecializations")
                         .HasForeignKey("SpecializationId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
@@ -927,13 +907,13 @@ namespace LocalHiringPlatform.Infrastructure.Migrations
                     b.HasOne("Job", "Job")
                         .WithMany()
                         .HasForeignKey("JobId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("User", "User")
-                        .WithMany()
+                        .WithMany("SavedJobs")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Job");
@@ -967,17 +947,14 @@ namespace LocalHiringPlatform.Infrastructure.Migrations
 
             modelBuilder.Entity("LocalHiringPlatform.Domain.Entities.CandidateEducationEntities.CandidateEducation", b =>
                 {
-                    b.Navigation("CandidateEducationSpecializations");
+                    b.Navigation("CandidateCourseSpecializations");
                 });
 
             modelBuilder.Entity("LocalHiringPlatform.Domain.Entities.CandidateEducationEntities.Course", b =>
                 {
-                    b.Navigation("CourseSpecializations");
-                });
+                    b.Navigation("CandidateCourseSpecializations");
 
-            modelBuilder.Entity("LocalHiringPlatform.Domain.Entities.CandidateEducationEntities.CourseSpecialization", b =>
-                {
-                    b.Navigation("CandidateEducationSpecializations");
+                    b.Navigation("CourseSpecializations");
                 });
 
             modelBuilder.Entity("LocalHiringPlatform.Domain.Entities.CandidateEducationEntities.Education", b =>
@@ -985,9 +962,16 @@ namespace LocalHiringPlatform.Infrastructure.Migrations
                     b.Navigation("Courses");
                 });
 
+            modelBuilder.Entity("LocalHiringPlatform.Domain.Entities.CandidateEducationEntities.Specialization", b =>
+                {
+                    b.Navigation("CourseSpecializations");
+                });
+
             modelBuilder.Entity("User", b =>
                 {
                     b.Navigation("CandidateProfile");
+
+                    b.Navigation("SavedJobs");
                 });
 #pragma warning restore 612, 618
         }

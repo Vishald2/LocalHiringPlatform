@@ -17,4 +17,6 @@ public class User : BaseEntity
     public DateTime? EmailVerifiedOn { get; set; }
     public DateTime? MobileVerifiedOn { get; set; }
     public CandidateProfile? CandidateProfile { get; set; }
+
+    public ICollection<SavedJob> SavedJobs { get; set; } = new List<SavedJob>();
 }

@@ -28,8 +28,10 @@ namespace LocalHiringPlatform.Domain.Entities.CandidateEducationEntities
 
         public bool IsActive { get; set; } = true;
 
-        public Education Education { get; set; } = null!;
+        public Education Education { get; set; }
 
         public ICollection<CourseSpecialization> CourseSpecializations { get; set; } = new List<CourseSpecialization>();
+
+        public ICollection<CandidateCourseSpecialization> CandidateCourseSpecializations { get; set; } = new List<CandidateCourseSpecialization>();
     }
 }

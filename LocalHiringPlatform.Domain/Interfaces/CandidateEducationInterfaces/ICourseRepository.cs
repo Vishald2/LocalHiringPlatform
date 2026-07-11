@@ -9,8 +9,9 @@ namespace LocalHiringPlatform.Domain.Interfaces.CandidateEducationInterfaces
 {
     public interface ICourseRepository
     {
+        Task<Course?> GetByCourseIdAsync(int courseId);
+
         Task<List<Course>> GetByEducationIdAsync(int educationId);
 
-        Task<Course?> GetByIdAsync(int courseId);
     }
 }

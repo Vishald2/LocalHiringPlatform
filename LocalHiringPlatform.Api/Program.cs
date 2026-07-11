@@ -247,8 +247,6 @@ builder.Services.AddTransient<IResend, ResendClient>();
 /*EDUCATION. START*/
 builder.Services.AddScoped<ICandidateEducationRepository, CandidateEducationRepository>();
 
-builder.Services.AddScoped<ICandidateEducationSpecializationRepository, CandidateEducationSpecializationRepository>();
-
 builder.Services.AddScoped<IEducationRepository, EducationRepository>();
 
 builder.Services.AddScoped<ICourseRepository, CourseRepository>();
@@ -260,8 +258,6 @@ builder.Services.AddScoped<ISpecializationRepository, SpecializationRepository>(
 builder.Services.AddScoped<IUniversityRepository, UniversityRepository>();
 
 //SERVICES
-builder.Services.AddScoped<ICandidateEducationLookupService, CandidateEducationLookupService>();
-
 builder.Services.AddScoped<ICandidateEducationService, CandidateEducationService>();
 /*EDUCATION. END*/
 

@@ -24,30 +24,30 @@ namespace LocalHiringPlatform.Infrastructure.Repositories.EducationRepositories
             Guid candidateProfileId)
         {
             return await _dbContext.CandidateEducations
-                .Where(x => x.CandidateProfileId == candidateProfileId)
-                //.Include(x => x.Education)
-                .Include(x => x.Course)
-                .Include(x => x.University)
-                .Include(x => x.CandidateEducationSpecializations)
-                 //   .ThenInclude(x => x.CourseSpecialization)
-                        .ThenInclude(x => x.Specialization)
-                .OrderByDescending(x => x.IsHighestEducation)
-                .ThenByDescending(x => x.EndYear)
-                .ToListAsync();
+                    .Where(x => x.CandidateProfileId == candidateProfileId)
+                    .Include(x => x.Course)
+                        .ThenInclude(c => c.Education)
+                    .Include(x => x.University)
+                    .Include(x => x.CandidateCourseSpecializations)
+                        .ThenInclude(ccs => ccs.Specialization)
+                    .OrderByDescending(x => x.IsHighestEducation)
+                    .ThenByDescending(x => x.EndYear)
+                    .ToListAsync();
         }
 
         public async Task<CandidateEducation?> GetByEntityIdAsync(
             Guid candidateEducationEntityId)
         {
             return await _dbContext.CandidateEducations
-                .Include(x => x.CandidateEducationSpecializations)
-                       // .ThenInclude(x => x.CourseSpecialization)
-                            .ThenInclude(x => x.Specialization)
-             //   .Include(x => x.Education)
-                .Include(x => x.Course)
-                .Include(x => x.University)
-                .FirstOrDefaultAsync(x =>
-                    x.EntityId == candidateEducationEntityId);
+                .Where(x => x.EntityId == candidateEducationEntityId)
+               .Include(x => x.Course)
+                        .ThenInclude(c => c.Education)
+                    .Include(x => x.University)
+                    .Include(x => x.CandidateCourseSpecializations)
+                        .ThenInclude(ccs => ccs.Specialization)
+                .OrderByDescending(x => x.IsHighestEducation)
+                .ThenByDescending(x => x.EndYear)
+                .FirstOrDefaultAsync();
         }
 
         public async Task AddAsync(

@@ -20,20 +20,19 @@ namespace LocalHiringPlatform.Infrastructure.Repositories.EducationRepositories
             _dbContext = dbContext;
         }
 
+        public async Task<Course?> GetByCourseIdAsync(int courseId)
+        {
+            return await _dbContext.Courses
+                    .FirstOrDefaultAsync(x => x.CourseId == courseId);
+        }
+
         public async Task<List<Course>> GetByEducationIdAsync(int educationId)
         {
             return await _dbContext.Courses
-                .Where(x => x.EducationId == educationId &&
-                            x.IsActive)
-                .OrderBy(x => x.DisplayOrder)
-                .ThenBy(x => x.Name)
-                .ToListAsync();
-        }
-
-        public async Task<Course?> GetByIdAsync(int courseId)
-        {
-            return await _dbContext.Courses
-                .FirstOrDefaultAsync(x => x.CourseId == courseId);
+                    .Where(x => x.EducationId == educationId && x.IsActive)
+                    .OrderBy(x => x.DisplayOrder)
+                    .ThenBy(x => x.Name)
+                    .ToListAsync();
         }
     }
 }

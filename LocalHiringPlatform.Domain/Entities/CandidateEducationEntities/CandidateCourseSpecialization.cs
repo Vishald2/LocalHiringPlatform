@@ -12,20 +12,13 @@ namespace LocalHiringPlatform.Domain.Entities.CandidateEducationEntities
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid CandidateEducationSpecializationId { get; set; }
+        public int CandidateEducationSpecializationId { get; set; }
 
-        [ForeignKey(nameof(CandidateProfile))]
-        public Guid ProfileId { get; set; }
+        public Guid CandidateEducationEntityId { get; set; }
 
-        [ForeignKey(nameof(Course))]
-        public int CourseId { get; set; }
-
-        [ForeignKey(nameof(Specialization))]
         public int SpecializationId { get; set; }
 
-        public CandidateProfile Profile { get; set; }
-
-        public Course Course { get; set; } = null!;
+        public CandidateEducation CandidateEducation { get; set; } = null!;
 
         public Specialization Specialization { get; set; } = null!;
     }

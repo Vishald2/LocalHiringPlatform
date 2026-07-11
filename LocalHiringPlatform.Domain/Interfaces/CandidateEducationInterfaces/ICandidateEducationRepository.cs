@@ -11,7 +11,7 @@ namespace LocalHiringPlatform.Domain.Interfaces.CandidateEducationInterfaces
         {
             Task<List<CandidateEducation>> GetByCandidateProfileIdAsync(Guid candidateProfileId);
 
-            Task<CandidateEducation?> GetByEntityIdAsync(Guid candidateEducationEntityId);
+            Task<CandidateEducation?>GetByEntityIdAsync(Guid candidateEducationEntityId);
 
             Task AddAsync(CandidateEducation candidateEducation);
 
