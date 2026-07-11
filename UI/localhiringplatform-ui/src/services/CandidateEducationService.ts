@@ -8,6 +8,23 @@ function getBaseUrl() {
     return API_ENDPOINTS.candidate.candidateeducation;
 }
 
+export async function getCandidateEducation(
+    candidateEducationEntityId: string)
+    : Promise<CandidateEducationCreateModel> {
+
+    const response =
+        await api.get<CandidateEducationCreateModel>(
+            `${getBaseUrl()}/detail`,
+            {
+                params:
+                {
+                    candidateEducationEntityId
+                }
+            });
+
+    return response.data;
+}
+
 export async function getAllEducations(): Promise<Education[]> {
 
     const url = API_ENDPOINTS.education.root;
