@@ -10,7 +10,16 @@ export const API_ENDPOINTS =
     {
         profile: "/candidate/profile",
         CandidateDashboard: "CandidateDashboard",
-        RecommendedJobs: "recommended-jobs"
+        RecommendedJobs: "recommended-jobs",
+        candidateeducation: "/candidateeducation"
+    },
+    course:
+    {
+        root: "/course"
+    },
+    education:
+    {
+        root: "/education"
     },
     employer:
     {
