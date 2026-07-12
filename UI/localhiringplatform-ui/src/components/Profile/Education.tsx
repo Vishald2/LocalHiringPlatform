@@ -37,6 +37,8 @@ export default function Education() {
 
                 setEducations(result);
 
+                console.log("Educations loaded:", result);
+
             }
             finally {
 
@@ -63,11 +65,37 @@ export default function Education() {
         setShowEditor(true);
     }
 
-    function handleCloseEditor() {
+    async function handleCloseEditor(
+        refresh: boolean) {
+
+        setShowEditor(false);
 
         setSelectedEducationId(null);
 
-        setShowEditor(false);
+        if (refresh) {
+
+            async function loadEducations() {
+
+                setLoading(true);
+
+                try {
+
+                    const result =
+                        await getCandidateEducations();
+
+                    setEducations(result);
+
+                    console.log("Educations loaded:", result);
+
+                }
+                finally {
+
+                    setLoading(false);
+                }
+            }
+
+            await loadEducations();
+        }
     }
 
 

@@ -29,7 +29,7 @@ interface EducationEditorProps {
 
     entityId: string | null;
 
-    onClose: () => void;
+    onClose: (refresh: boolean) => void;
 }
 
 export default function EducationEditor({
@@ -201,7 +201,7 @@ export default function EducationEditor({
                 education);
         }
 
-        onClose();
+        onClose(true);
     }
 
     return (
@@ -284,7 +284,6 @@ export default function EducationEditor({
                     size={8}
                     value={education.courseSpecializationIds.map(String)}
                     onChange={(e) => {
-                        console.log("Onchange1");
                         const selectedIds =
                             Array.from(e.target.selectedOptions)
                                 .map(option => Number(option.value));
@@ -301,9 +300,9 @@ export default function EducationEditor({
 
                             <option
                                 key={item.courseSpecializationId}
-                                value={item.courseSpecializationId}
+                                value={item.specializationId}
                             >
-                                {item.specializationName}
+                                {item.specializationName}-{item.specializationId}
                             </option>
 
                         ))
