@@ -1,4 +1,5 @@
-﻿import { useEffect, useState } from "react";
+﻿/* eslint-disable react-hooks/set-state-in-effect */
+import { useEffect, useState } from "react";
 
 import type { CandidateEducationModel }
     from "../../types/EducationModels/CandidateEducationModel";
@@ -24,27 +25,27 @@ export default function Education() {
     const [selectedEducationId, setSelectedEducationId] =
         useState<string | null>(null);
 
-    useEffect(() => {
+    async function loadEducations() {
 
-        async function loadEducations() {
+        setLoading(true);
 
-            setLoading(true);
+        try {
 
-            try {
+            const result =
+                await getCandidateEducations();
 
-                const result =
-                    await getCandidateEducations();
+            setEducations(result);
 
-                setEducations(result);
+            console.log("Educations loaded:", result);
 
-                console.log("Educations loaded:", result);
-
-            }
-            finally {
-
-                setLoading(false);
-            }
         }
+        finally {
+
+            setLoading(false);
+        }
+    }
+
+    useEffect(() => {
 
         loadEducations();
 
@@ -73,27 +74,6 @@ export default function Education() {
         setSelectedEducationId(null);
 
         if (refresh) {
-
-            async function loadEducations() {
-
-                setLoading(true);
-
-                try {
-
-                    const result =
-                        await getCandidateEducations();
-
-                    setEducations(result);
-
-                    console.log("Educations loaded:", result);
-
-                }
-                finally {
-
-                    setLoading(false);
-                }
-            }
-
             await loadEducations();
         }
     }
