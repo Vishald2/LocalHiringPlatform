@@ -2,15 +2,25 @@
 
 import {
     getCandidateEducation,
-    getAllEducations
-}
-    from "../../services/CandidateEducationService";
+    getAllEducations,
+    updateCandidateEducation
+} from "../../services/CandidateEducationService";
 
 import {
     getCoursesByEducationId
-}
-    from "../../services/CourseService";
-import type { CandidateEducationCreateModel } from "../../types/EducationModels/CandidateEducationCreateModel";
+} from "../../services/CourseService";
+
+import type {
+    CandidateEducationCreateModel
+} from "../../types/EducationModels/CandidateEducationCreateModel";
+
+import {
+    getCourseSpecializationsByCourseId
+} from "../../services/Education/CourseSpecializationService";
+
+import type {
+    CourseSpecializationResponseModel
+} from "../../types/EducationModels/CourseSpecializationResponseModel";
 
 interface EducationEditorProps {
 
@@ -26,6 +36,10 @@ export default function EducationEditor({
     onClose
 
 }: EducationEditorProps) {
+
+    const [courseSpecializations,
+        setCourseSpecializations] =
+        useState<CourseSpecializationResponseModel[]>([]);
 
     const isEditMode =
         entityId !== null;
@@ -72,7 +86,6 @@ export default function EducationEditor({
         useState<CandidateEducationCreateModel>(
             emptyEducation);
 
-
     useEffect(() => {
 
         async function load() {
@@ -95,6 +108,8 @@ export default function EducationEditor({
                     await getCandidateEducation(
                         entityId);
 
+                console.log("CandidateEducation", result)
+
                 setEducation(result);
 
                 const courseList =
@@ -102,6 +117,16 @@ export default function EducationEditor({
                         result.educationId);
 
                 setCourses(courseList);
+
+                const specializationList =
+                    await getCourseSpecializationsByCourseId(
+                        result.courseId);
+
+                setCourseSpecializations(
+                    specializationList);
+
+                console.log("entityId", entityId);
+                console.log("Specializations:", specializationList);
             }
             finally {
 
@@ -131,6 +156,33 @@ export default function EducationEditor({
         }));
     }
 
+    async function handleCourseChanged(
+        e: React.ChangeEvent<HTMLSelectElement>) {
+
+        const courseId =
+            Number(e.target.value);
+
+        const result =
+            await getCourseSpecializationsByCourseId(
+                courseId);
+
+        setCourseSpecializations(result);
+
+        setEducation(prev => ({
+            ...prev,
+            courseId,
+            courseSpecializationIds: []
+        }));
+    }
+
+    async function handleSave() {
+
+        await updateCandidateEducation(
+            education);
+
+        onClose();
+    }
+
     return (
 
         <div className="card">
@@ -147,24 +199,9 @@ export default function EducationEditor({
 
             <hr />
 
-            <p>
-
-                Education Editor Component
-
-            </p>
-
-            {
-                isEditMode &&
-
-                <p>
-
-                    Entity Id:
-                    {" "}
-                    {entityId}
-
-                </p>
-            }
-
+            <label className="form-label">
+                Education
+            </label>
             <select
                 className="form-control"
                 value={education.educationId}
@@ -187,16 +224,14 @@ export default function EducationEditor({
                     ))
                 }
             </select>
-
+            <p></p>
+            <label className="form-label">
+                Course
+            </label>
             <select
                 className="form-control"
                 value={education.courseId}
-                onChange={(e) =>
-                    setEducation({
-                        ...education,
-                        courseId: Number(e.target.value)
-                    })
-                }
+                onChange={handleCourseChanged}
             >
                 <option value={0}>
                     Select Course
@@ -215,6 +250,54 @@ export default function EducationEditor({
                     ))
                 }
             </select>
+            <p></p>
+            <div className="form-group">
+
+                <label className="form-label">
+                    Specializations
+                </label>
+
+                <select
+                    className="form-control education-multiselect"
+                    multiple
+                    size={8}
+                    value={education.courseSpecializationIds.map(String)}
+                    onChange={(e) => {
+                        console.log("Onchange1");
+                        const selectedIds =
+                            Array.from(e.target.selectedOptions)
+                                .map(option => Number(option.value));
+
+                        setEducation({
+                            ...education,
+                            courseSpecializationIds: selectedIds
+                        });
+                    }}
+                >
+
+                    {
+                        courseSpecializations.map(item => (
+
+                            <option
+                                key={item.courseSpecializationId}
+                                value={item.courseSpecializationId}
+                            >
+                                {item.specializationName}
+                            </option>
+
+                        ))
+                    }
+
+                </select>
+
+            </div>
+
+            <button
+                className="primary-button"
+                onClick={handleSave}
+            >
+                Save
+            </button>
 
             <button
                 className="secondary-button"

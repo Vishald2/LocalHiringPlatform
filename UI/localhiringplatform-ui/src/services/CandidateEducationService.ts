@@ -2,7 +2,8 @@
 import type { CandidateEducationModel } from "../types/EducationModels/CandidateEducationModel";
 import { api } from "../infra/apiClient";
 import { API_ENDPOINTS } from "../End_Points/apiEndpoints";
-import type { Education } from "../types/EducationModels/EducationModel";
+
+import type { EducationModel } from "../types/EducationModels/EducationModel";
 
 function getBaseUrl() {
     return API_ENDPOINTS.candidate.candidateeducation;
@@ -25,12 +26,12 @@ export async function getCandidateEducation(
     return response.data;
 }
 
-export async function getAllEducations(): Promise<Education[]> {
+export async function getAllEducations(): Promise<EducationModel[]> {
 
     const url = API_ENDPOINTS.education.root;
 
     const response =
-        await api.get<Education[]>(url);
+        await api.get<EducationModel[]>(url);
 
     return response.data;
 }
@@ -50,6 +51,9 @@ export async function addCandidateEducation(
 
 export async function updateCandidateEducation(
     education: CandidateEducationCreateModel) {
+
+    console.log("updateCandidateEducation-url", getBaseUrl())
+    console.log("education", education);
 
     await api.put(getBaseUrl(), education);
 }

@@ -115,9 +115,12 @@ namespace LocalHiringPlatform.Infrastructure.Services.Education
                 Percentage = candidateEducation.Percentage,
                 StartYear = candidateEducation.StartYear,
                 UniversityId = candidateEducation?.UniversityId,
-                SpecializationNames = candidateEducation.CandidateCourseSpecializations
+                SpecializationNames = candidateEducation?.CandidateCourseSpecializations
                     .Select(s => s.Specialization.Name)
                     .ToList(),
+                CourseSpecializationIds = candidateEducation?.CandidateCourseSpecializations
+                    .Select(s => s.SpecializationId)
+                    .ToList()
             };
         }
 

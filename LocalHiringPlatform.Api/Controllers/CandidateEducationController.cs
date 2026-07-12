@@ -59,11 +59,12 @@ namespace LocalHiringPlatform.Api.Controllers
             return Ok();
         }
 
-        [HttpPut("{candidateEducationEntityId:guid}")]
+        [HttpPut]
         public async Task<IActionResult> UpdateCandidateEducation(
-            Guid candidateEducationEntityId,
-            [FromBody] CandidateEducationCreateModel model)
+                   [FromBody] CandidateEducationCreateModel model)
         {
+            Guid candidateEducationEntityId = model.EntityId ?? Guid.Empty;
+
             await _candidateEducationService
                 .UpdateCandidateEducationAsync(candidateEducationEntityId, model);
 

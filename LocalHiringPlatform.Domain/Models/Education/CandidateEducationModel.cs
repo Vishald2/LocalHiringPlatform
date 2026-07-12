@@ -40,10 +40,10 @@ namespace LocalHiringPlatform.Domain.Models.Education
 
         public bool IsHighestEducation { get; set; }
 
-        public List<int> CourseSpecializationIds { get; set; }
+        public List<int>? CourseSpecializationIds { get; set; }
             = new();
 
-        public List<string> SpecializationNames { get; set; }
-            = new();
+        public List<string>? SpecializationNames { get; set; }
+            
     }
 }

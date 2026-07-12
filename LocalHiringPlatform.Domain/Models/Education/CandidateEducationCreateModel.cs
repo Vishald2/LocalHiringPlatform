@@ -8,6 +8,7 @@ namespace LocalHiringPlatform.Domain.Models.Education
 {
     public class CandidateEducationCreateModel
     {
+        public Guid? EntityId { get; set; }
         public int EducationId { get; set; }
 
         public int CourseId { get; set; }

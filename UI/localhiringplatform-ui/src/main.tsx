@@ -11,6 +11,7 @@ import "./styles/dashboard.css";
 import "./styles/utilities.css";
 import "./styles/aichat.css";
 import "./styles/profile.css";
+import "./styles/education/education.css"
 import { AIChatProvider } from './pages/AI/AIChatContext.tsx';
 
 createRoot(document.getElementById('root')!).render(

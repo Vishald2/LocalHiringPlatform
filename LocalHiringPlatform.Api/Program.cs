@@ -270,7 +270,14 @@ builder.Services.AddScoped<
     CourseRepository>();
 
 
+
+builder.Services.AddScoped<
+    ICourseSpecializationRepository,
+    CourseSpecializationRepository>();
 //SERVICES
+builder.Services.AddScoped<
+    ICourseSpecializationService,
+    CourseSpecializationService>();
 
 builder.Services.AddScoped<
     ICourseService,
