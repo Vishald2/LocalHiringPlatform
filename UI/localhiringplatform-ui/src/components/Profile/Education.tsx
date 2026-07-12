@@ -86,20 +86,19 @@ export default function Education() {
 
         <div>
 
-
-
-            <div className="education-header">
-                <h3>
-                    Education
-                </h3>
-
-                <button
+            <div>
+                <button style={{width:"120px"} }
                     className="primary-button"
                     onClick={handleAdd}
                 >
                     Add Education
                 </button>
+            </div>
 
+            <div className="education-header">
+                <h3>
+                    Educations
+                </h3>
             </div>
 
             {

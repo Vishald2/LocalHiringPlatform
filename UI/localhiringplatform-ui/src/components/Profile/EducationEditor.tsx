@@ -3,7 +3,8 @@
 import {
     getCandidateEducation,
     getAllEducations,
-    updateCandidateEducation
+    updateCandidateEducation,
+    addCandidateEducation
 } from "../../services/CandidateEducationService";
 
 import {
@@ -21,6 +22,8 @@ import {
 import type {
     CourseSpecializationResponseModel
 } from "../../types/EducationModels/CourseSpecializationResponseModel";
+import type { EducationModel } from "../../types/EducationModels/EducationModel";
+import type { CourseModel } from "../../types/EducationModels/CourseModel";
 
 interface EducationEditorProps {
 
@@ -55,7 +58,7 @@ export default function EducationEditor({
 
     const emptyEducation: CandidateEducationCreateModel = {
 
-        entityId: "",
+        entityId: null,
 
         educationId: 0,
 
@@ -101,8 +104,18 @@ export default function EducationEditor({
 
                 setEducationMasters(masters);
 
-                if (!entityId)
+                if (!isEditMode) {
+
+                    setEducation({
+                        ...emptyEducation
+                    });
+
+                    setCourses([]);
+
+                    setCourseSpecializations([]);
+
                     return;
+                }
 
                 const result =
                     await getCandidateEducation(
@@ -177,8 +190,16 @@ export default function EducationEditor({
 
     async function handleSave() {
 
-        await updateCandidateEducation(
-            education);
+        if (isEditMode) {
+
+            await updateCandidateEducation(
+                education);
+        }
+        else {
+
+            await addCandidateEducation(
+                education);
+        }
 
         onClose();
     }

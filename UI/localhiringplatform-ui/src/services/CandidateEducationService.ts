@@ -46,6 +46,10 @@ export async function getCandidateEducations(): Promise<CandidateEducationModel[
 export async function addCandidateEducation(
     education: CandidateEducationCreateModel) {
 
+        
+    console.log("addCandidateEducation-getBaseUrl()", getBaseUrl());
+    console.log(education);
+
     await api.post(getBaseUrl(), education);
 }
 
