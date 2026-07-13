@@ -2,9 +2,14 @@
 /*GET FROM SWAGGER*/
 export const API_ENDPOINTS =
 {
+
     CourseSpecialization:
     {
         root:"/CourseSpecialization"
+    },
+    University:
+    {
+        root: "/university"
     },
     aichat:
     {

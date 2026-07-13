@@ -25,6 +25,16 @@ import type {
 import type { EducationModel } from "../../types/EducationModels/EducationModel";
 import type { CourseModel } from "../../types/EducationModels/CourseModel";
 
+import {
+    getAllUniversities
+}
+    from "../../services/Education/UniversityService";
+
+import type {
+    UniversityResponseModel
+}
+    from "../../types/EducationModels/UniversityResponseModel";
+
 interface EducationEditorProps {
 
     entityId: string | null;
@@ -39,6 +49,10 @@ export default function EducationEditor({
     onClose
 
 }: EducationEditorProps) {
+
+    const [universities,
+        setUniversities] =
+        useState<UniversityResponseModel[]>([]);
 
     const [courseSpecializations,
         setCourseSpecializations] =
@@ -103,6 +117,11 @@ export default function EducationEditor({
                 console.log("Masters:", masters);
 
                 setEducationMasters(masters);
+
+                const universityList =
+                    await getAllUniversities();
+
+                setUniversities(universityList);
 
                 if (!isEditMode) {
 
@@ -190,24 +209,41 @@ export default function EducationEditor({
 
     async function handleSave() {
 
-        if (isEditMode) {
+        setLoading(true);
 
-            await updateCandidateEducation(
-                education);
+        try {
+
+            if (isEditMode) {
+
+                await updateCandidateEducation(
+                    education);
+            }
+            else {
+
+                await addCandidateEducation(
+                    education);
+            }
+
+            onClose(true);
         }
-        else {
+        finally {
 
-            await addCandidateEducation(
-                education);
+            setLoading(false);
         }
-
-        onClose(true);
     }
 
     return (
 
         <div className="card">
+            {
+                loading &&
 
+                <div className="loading-text">
+
+                    Processing...
+
+                </div>
+            }
             <h2>
 
                 {
@@ -219,6 +255,45 @@ export default function EducationEditor({
             </h2>
 
             <hr />
+
+            <div className="form-group">
+
+                <label className="form-label">
+                    University
+                </label>
+
+                <select
+                    className="form-control"
+                    value={education.universityId ?? 0}
+                    onChange={(e) =>
+                        setEducation(prev => ({
+                            ...prev,
+                            universityId:
+                                Number(e.target.value) || undefined
+                        }))
+                    }
+                >
+
+                    <option value={0}>
+                        Select University
+                    </option>
+
+                    {
+                        universities.map(item => (
+
+                            <option
+                                key={item.universityId}
+                                value={item.universityId}
+                            >
+                                {item.name}
+                            </option>
+
+                        ))
+                    }
+
+                </select>
+
+            </div>
 
             <label className="form-label">
                 Education
@@ -315,13 +390,15 @@ export default function EducationEditor({
             <button
                 className="primary-button"
                 onClick={handleSave}
+                disabled={loading}
             >
                 Save
             </button>
 
             <button
                 className="secondary-button"
-                onClick={onClose}
+                onClick={() => onClose(false)}
+                disabled={loading}
             >
                 Back
             </button>
