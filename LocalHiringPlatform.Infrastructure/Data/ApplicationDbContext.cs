@@ -1,6 +1,8 @@
 ﻿using LocalHiringPlatform.Domain.Entities;
 using LocalHiringPlatform.Domain.Entities.CandidateEducationEntities;
+using LocalHiringPlatform.Domain.Entities.Experience;
 using Microsoft.EntityFrameworkCore;
+using CandidateExperience = LocalHiringPlatform.Domain.Entities.Experience.CandidateExperience;
 
 namespace LocalHiringPlatform.Infrastructure.Data;
 
@@ -39,6 +41,8 @@ public class ApplicationDbContext : DbContext
 
     public DbSet<CourseSpecialization> CourseSpecializations { get; set; }
 
+    public DbSet<CandidateExperience> CandidateExperiences { get; set; }
+    public DbSet<CandidateExperienceDetail> CandidateExperienceDetails { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -227,6 +231,16 @@ public class ApplicationDbContext : DbContext
                 x.CandidateEducationEntityId,
                 x.SpecializationId
             }).IsUnique();
+        });
+
+        modelBuilder.Entity<CandidateExperienceDetail>(entity =>
+        {
+            entity.HasKey(x => x.EntityId);
+
+            entity.HasOne(x => x.CandidateExperience)
+                .WithMany(x => x.ExperienceDetails)
+                .HasForeignKey(x => x.CandidateExperienceId)
+                .OnDelete(DeleteBehavior.Cascade);
         });
 
     }
