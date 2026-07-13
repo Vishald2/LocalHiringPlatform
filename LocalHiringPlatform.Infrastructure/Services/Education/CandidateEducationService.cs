@@ -75,6 +75,10 @@ namespace LocalHiringPlatform.Infrastructure.Services.Education
                 IsCompleted = x.IsCompleted,
                 IsHighestEducation = x.IsHighestEducation,
 
+                City = x.City,
+                State= x.State,
+                Country = x.Country,
+
                 CourseSpecializationIds = x
                     .CandidateCourseSpecializations
                     .Select(s => s.SpecializationId)
@@ -115,6 +119,9 @@ namespace LocalHiringPlatform.Infrastructure.Services.Education
                 Percentage = candidateEducation.Percentage,
                 StartYear = candidateEducation.StartYear,
                 UniversityId = candidateEducation?.UniversityId,
+                City = candidateEducation?.City,
+                State = candidateEducation?.State,
+                Country = candidateEducation?.Country,
                 SpecializationNames = candidateEducation?.CandidateCourseSpecializations
                     .Select(s => s.Specialization.Name)
                     .ToList(),
@@ -182,7 +189,10 @@ namespace LocalHiringPlatform.Infrastructure.Services.Education
                 Grade = model.Grade,
 
                 IsCompleted = model.IsCompleted,
-                IsHighestEducation = model.IsHighestEducation
+                IsHighestEducation = model.IsHighestEducation,
+                City= model.City,
+                State = model.State,
+                Country = model.Country
             };
 
             await _candidateEducationRepository.AddAsync(candidateEducation);
@@ -280,6 +290,9 @@ namespace LocalHiringPlatform.Infrastructure.Services.Education
             candidateEducation.Grade = model.Grade;
             candidateEducation.IsCompleted = model.IsCompleted;
             candidateEducation.IsHighestEducation = model.IsHighestEducation;
+            candidateEducation.City = model.City;
+            candidateEducation.State = model.State;
+            candidateEducation.Country = model.Country;
 
             var existingSpecializations =
                 await _candidateEducationSpecializationRepository

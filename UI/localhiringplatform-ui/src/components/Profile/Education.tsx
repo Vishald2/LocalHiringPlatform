@@ -161,8 +161,28 @@ export default function Education() {
                         }
 
                         {candidateeducation.universityName}
-
-
+                        {
+                            candidateeducation.city &&
+                            candidateeducation.universityName &&
+                            " , "
+                        }
+                        {candidateeducation.city}
+                        {
+                            candidateeducation.city &&
+                            candidateeducation.state &&
+                            " , "
+                        }
+                        {candidateeducation.state}
+                        {
+                            candidateeducation.country &&
+                            candidateeducation.state &&
+                            candidateeducation.country.toLowerCase() != "india" &&
+                            " , "
+                        }
+                        {candidateeducation.country
+                            && candidateeducation.country.toLowerCase() != "india" &&
+                            candidateeducation.country
+                        }
 
                         <div className="education-row">
 
@@ -235,14 +255,10 @@ export default function Education() {
                             >
                                 Delete
                             </button>
-
                         </div>
-
                     </div>
-
                 ))
             }
-
         </div>
     );
 }

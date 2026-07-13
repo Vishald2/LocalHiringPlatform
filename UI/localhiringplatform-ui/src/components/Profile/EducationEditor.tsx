@@ -330,6 +330,70 @@ export default function EducationEditor({
 
             </div>
 
+            <div className="form-row">
+
+                <div className="form-group form-group-third">
+
+                    <label className="form-label">
+                        City
+                    </label>
+
+                    <input
+                        type="text"
+                        className="form-control"
+                        value={education.city ?? ""}
+                        onChange={(e) =>
+                            setEducation(prev => ({
+                                ...prev,
+                                city: e.target.value
+                            }))
+                        }
+                    />
+
+                </div>
+
+                <div className="form-group form-group-third">
+
+                    <label className="form-label">
+                        State
+                    </label>
+
+                    <input
+                        type="text"
+                        className="form-control"
+                        value={education.state ?? ""}
+                        onChange={(e) =>
+                            setEducation(prev => ({
+                                ...prev,
+                                state: e.target.value
+                            }))
+                        }
+                    />
+
+                </div>
+
+                <div className="form-group form-group-third">
+
+                    <label className="form-label">
+                        Country
+                    </label>
+
+                    <input
+                        type="text"
+                        className="form-control"
+                        value={education.country ?? ""}
+                        onChange={(e) =>
+                            setEducation(prev => ({
+                                ...prev,
+                                country: e.target.value
+                            }))
+                        }
+                    />
+
+                </div>
+
+            </div>
+
             <label className="form-label">
                 Education
             </label>

@@ -26,6 +26,11 @@ namespace LocalHiringPlatform.Domain.Models.Education
 
         public string? InstituteName { get; set; }
 
+        public string? City { get; set; }
+        public string? State { get; set; }
+        public string? Country { get; set; }
+
+
         public int? StartYear { get; set; }
 
         public int? EndYear { get; set; }

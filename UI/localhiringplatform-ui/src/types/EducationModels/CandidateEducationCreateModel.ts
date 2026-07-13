@@ -9,6 +9,12 @@
 
     instituteName?: string;
 
+    city?: string;
+
+    state?: string;
+
+    country?: string;
+
     startYear?: number;
 
     endYear?: number;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,6 +17,15 @@ namespace LocalHiringPlatform.Domain.Models.Education
         public int? UniversityId { get; set; }
 
         public string? InstituteName { get; set; }
+
+        [MaxLength(200)]
+        public string? City { get; set; } = null;
+
+        [MaxLength(200)]
+        public string? State { get; set; }
+
+        [MaxLength(200)]
+        public string? Country { get; set; }
 
         public int? StartYear { get; set; }
 

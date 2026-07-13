@@ -23,6 +23,15 @@ namespace LocalHiringPlatform.Domain.Entities.CandidateEducationEntities
         [MaxLength(200)]
         public string? InstituteName { get; set; }
 
+        [MaxLength(200)]
+        public string? City { get; set; } = null;
+
+        [MaxLength(200)]
+        public string? State { get; set; }
+
+        [MaxLength(200)]
+        public string? Country { get; set; }
+
         public int? StartYear { get; set; }
 
         public int? EndYear { get; set; }
