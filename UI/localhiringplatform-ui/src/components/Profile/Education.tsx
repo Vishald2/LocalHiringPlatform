@@ -5,6 +5,7 @@ import type { CandidateEducationModel }
     from "../../types/EducationModels/CandidateEducationModel";
 
 import {
+    deleteCandidateEducation,
     getCandidateEducations
 }
     from "../../services/CandidateEducationService";
@@ -89,6 +90,18 @@ export default function Education() {
             />
 
         );
+    }
+    async function handleDelete(
+        entityId: string) {
+
+        if (!window.confirm(
+            "Delete this education?"))
+            return;
+
+        await deleteCandidateEducation(
+            entityId);
+
+        await loadEducations();
     }
     return (
 
@@ -208,6 +221,10 @@ export default function Education() {
 
                             <button
                                 className="secondary-button"
+                                onClick={() =>
+                                    handleDelete(
+                                        candidateeducation.entityId)
+                                }
                             >
                                 Delete
                             </button>
