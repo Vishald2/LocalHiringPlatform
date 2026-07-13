@@ -4,6 +4,7 @@ using LocalHiringPlatform.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LocalHiringPlatform.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260711050535_Second Migration")]
+    partial class SecondMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -267,6 +270,35 @@ namespace LocalHiringPlatform.Infrastructure.Migrations
                     b.ToTable("AiAnalyses");
                 });
 
+            modelBuilder.Entity("LocalHiringPlatform.Domain.Entities.CandidateEducationEntities.CandidateCourseSpecialization", b =>
+                {
+                    b.Property<int>("CandidateEducationSpecializationId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CandidateEducationSpecializationId"));
+
+                    b.Property<Guid>("CandidateEducationEntityId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int?>("CourseId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SpecializationId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CandidateEducationSpecializationId");
+
+                    b.HasIndex("CourseId");
+
+                    b.HasIndex("SpecializationId");
+
+                    b.HasIndex("CandidateEducationEntityId", "SpecializationId")
+                        .IsUnique();
+
+                    b.ToTable("CandidateCourseSpecializations");
+                });
+
             modelBuilder.Entity("LocalHiringPlatform.Domain.Entities.CandidateEducationEntities.CandidateEducation", b =>
                 {
                     b.Property<Guid>("EntityId")
@@ -276,16 +308,11 @@ namespace LocalHiringPlatform.Infrastructure.Migrations
                     b.Property<decimal?>("CGPA")
                         .HasColumnType("decimal(4,2)");
 
-                    b.Property<Guid>("CandidateProfileId")
+                    b.Property<Guid?>("CandidateProfileEntityId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("City")
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<string>("Country")
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                    b.Property<Guid>("CandidateProfileId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("CourseId")
                         .HasColumnType("int");
@@ -316,10 +343,6 @@ namespace LocalHiringPlatform.Infrastructure.Migrations
                     b.Property<int?>("StartYear")
                         .HasColumnType("int");
 
-                    b.Property<string>("State")
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
                     b.Property<int?>("UniversityId")
                         .HasColumnType("int");
 
@@ -328,6 +351,8 @@ namespace LocalHiringPlatform.Infrastructure.Migrations
 
                     b.HasKey("EntityId");
 
+                    b.HasIndex("CandidateProfileEntityId");
+
                     b.HasIndex("CandidateProfileId");
 
                     b.HasIndex("CourseId");
@@ -335,30 +360,6 @@ namespace LocalHiringPlatform.Infrastructure.Migrations
                     b.HasIndex("UniversityId");
 
                     b.ToTable("CandidateEducations");
-                });
-
-            modelBuilder.Entity("LocalHiringPlatform.Domain.Entities.CandidateEducationEntities.CandidateEducationSpecialization", b =>
-                {
-                    b.Property<int>("CandidateEducationSpecializationId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CandidateEducationSpecializationId"));
-
-                    b.Property<Guid>("CandidateEducationEntityId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("SpecializationId")
-                        .HasColumnType("int");
-
-                    b.HasKey("CandidateEducationSpecializationId");
-
-                    b.HasIndex("SpecializationId");
-
-                    b.HasIndex("CandidateEducationEntityId", "SpecializationId")
-                        .IsUnique();
-
-                    b.ToTable("CandidateEducationSpecializations");
                 });
 
             modelBuilder.Entity("LocalHiringPlatform.Domain.Entities.CandidateEducationEntities.Course", b =>
@@ -802,10 +803,37 @@ namespace LocalHiringPlatform.Infrastructure.Migrations
                     b.Navigation("JobApplication");
                 });
 
+            modelBuilder.Entity("LocalHiringPlatform.Domain.Entities.CandidateEducationEntities.CandidateCourseSpecialization", b =>
+                {
+                    b.HasOne("LocalHiringPlatform.Domain.Entities.CandidateEducationEntities.CandidateEducation", "CandidateEducation")
+                        .WithMany("CandidateCourseSpecializations")
+                        .HasForeignKey("CandidateEducationEntityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("LocalHiringPlatform.Domain.Entities.CandidateEducationEntities.Course", null)
+                        .WithMany("CandidateCourseSpecializations")
+                        .HasForeignKey("CourseId");
+
+                    b.HasOne("LocalHiringPlatform.Domain.Entities.CandidateEducationEntities.Specialization", "Specialization")
+                        .WithMany()
+                        .HasForeignKey("SpecializationId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("CandidateEducation");
+
+                    b.Navigation("Specialization");
+                });
+
             modelBuilder.Entity("LocalHiringPlatform.Domain.Entities.CandidateEducationEntities.CandidateEducation", b =>
                 {
-                    b.HasOne("CandidateProfile", "CandidateProfile")
+                    b.HasOne("CandidateProfile", null)
                         .WithMany("CandidateEducations")
+                        .HasForeignKey("CandidateProfileEntityId");
+
+                    b.HasOne("CandidateProfile", "CandidateProfile")
+                        .WithMany()
                         .HasForeignKey("CandidateProfileId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -826,25 +854,6 @@ namespace LocalHiringPlatform.Infrastructure.Migrations
                     b.Navigation("Course");
 
                     b.Navigation("University");
-                });
-
-            modelBuilder.Entity("LocalHiringPlatform.Domain.Entities.CandidateEducationEntities.CandidateEducationSpecialization", b =>
-                {
-                    b.HasOne("LocalHiringPlatform.Domain.Entities.CandidateEducationEntities.CandidateEducation", "CandidateEducation")
-                        .WithMany("CandidateCourseSpecializations")
-                        .HasForeignKey("CandidateEducationEntityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("LocalHiringPlatform.Domain.Entities.CandidateEducationEntities.Specialization", "Specialization")
-                        .WithMany()
-                        .HasForeignKey("SpecializationId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("CandidateEducation");
-
-                    b.Navigation("Specialization");
                 });
 
             modelBuilder.Entity("LocalHiringPlatform.Domain.Entities.CandidateEducationEntities.Course", b =>
@@ -946,6 +955,8 @@ namespace LocalHiringPlatform.Infrastructure.Migrations
 
             modelBuilder.Entity("LocalHiringPlatform.Domain.Entities.CandidateEducationEntities.Course", b =>
                 {
+                    b.Navigation("CandidateCourseSpecializations");
+
                     b.Navigation("CourseSpecializations");
                 });
 

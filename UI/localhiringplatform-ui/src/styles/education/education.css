@@ -1,0 +1,66 @@
+﻿.education-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.education-item {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 16px;
+    background: #fff;
+}
+
+.education-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.education-row {
+    margin-bottom: 6px;
+    margin-top: 6px;
+}
+
+.education-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 16px;
+}
+
+.education-highest {
+    margin-left: 12px;
+    color: green;
+    font-weight: 600;
+}
+
+.dialog-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.45);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.dialog {
+    width: 700px;
+    max-width: 90%;
+    background: #fff;
+    border-radius: 8px;
+    padding: 24px;
+}
+
+.dialog-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.education-multiselect {
+    min-height: 220px;
+}

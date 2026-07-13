@@ -4,16 +4,19 @@ using LocalHiringPlatform.Domain.Helpers;
 using LocalHiringPlatform.Domain.Interfaces;
 using LocalHiringPlatform.Domain.Interfaces.AI;
 using LocalHiringPlatform.Domain.Interfaces.AI.LocalHiringPlatform.Domain.Interfaces.AI;
+using LocalHiringPlatform.Domain.Interfaces.CandidateEducationInterfaces;
 using LocalHiringPlatform.Domain.Interfaces.MasterDataRepositories;
 using LocalHiringPlatform.Domain.Interfaces.MasterDataServices;
 using LocalHiringPlatform.Domain.Models;
 using LocalHiringPlatform.Infrastructure;
 using LocalHiringPlatform.Infrastructure.Data;
 using LocalHiringPlatform.Infrastructure.Repositories;
+using LocalHiringPlatform.Infrastructure.Repositories.EducationRepositories;
 using LocalHiringPlatform.Infrastructure.Services;
 using LocalHiringPlatform.Infrastructure.Services.AI;
 using LocalHiringPlatform.Infrastructure.Services.AI.IntentHandlers;
 using LocalHiringPlatform.Infrastructure.Services.AI.IntentHandlers.LocalHiringPlatform.Infrastructure.Services.AI.IntentHandlers;
+using LocalHiringPlatform.Infrastructure.Services.Education;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -239,6 +242,60 @@ builder.Services.Configure<ResendClientOptions>(o =>
 });
 
 builder.Services.AddTransient<IResend, ResendClient>();
+
+
+/*EDUCATION. START*/
+
+
+builder.Services.AddScoped<
+    IEducationRepository,
+    EducationRepository>();
+builder.Services.AddScoped<ICandidateEducationRepository, CandidateEducationRepository>();
+
+builder.Services.AddScoped<IEducationRepository, EducationRepository>();
+
+builder.Services.AddScoped<ICourseRepository, CourseRepository>();
+
+builder.Services.AddScoped<ICourseSpecializationRepository, CourseSpecializationRepository>();
+
+builder.Services.AddScoped<ISpecializationRepository, SpecializationRepository>();
+
+builder.Services.AddScoped<IUniversityRepository, UniversityRepository>();
+
+builder.Services.AddScoped<ICandidateEducationSpecializationRepository, CandidateEducationSpecializationRepository>();
+
+
+builder.Services.AddScoped<
+    ICourseRepository,
+    CourseRepository>();
+
+
+
+builder.Services.AddScoped<
+    ICourseSpecializationRepository,
+    CourseSpecializationRepository>();
+
+builder.Services.AddScoped<
+    IUniversityRepository,
+    UniversityRepository>();
+
+//SERVICES
+builder.Services.AddScoped<
+    IUniversityService,
+    UniversityService>();
+
+builder.Services.AddScoped<
+    ICourseSpecializationService,
+    CourseSpecializationService>();
+
+builder.Services.AddScoped<
+    ICourseService,
+    CourseService>();
+builder.Services.AddScoped<
+    IEducationService,
+    EducationService>();
+builder.Services.AddScoped<ICandidateEducationService, CandidateEducationService>();
+/*EDUCATION. END*/
 
 builder.Services.AddCors(options =>
 {

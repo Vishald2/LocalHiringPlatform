@@ -1,4 +1,5 @@
 ﻿using LocalHiringPlatform.Domain.Entities;
+using LocalHiringPlatform.Domain.Entities.CandidateEducationEntities;
 using LocalHiringPlatform.Domain.Enums;
 
 public class CandidateProfile : BaseEntity
@@ -40,4 +41,7 @@ public class CandidateProfile : BaseEntity
     JobApplications { get; set; } = new List<JobApplication>();
 
     public ICollection<CandidateSkill> CandidateSkills { get; set; } = new List<CandidateSkill>();
+
+    public ICollection<CandidateEducation> CandidateEducations { get; set; }
+    = new List<CandidateEducation>();
 }

@@ -39,7 +39,12 @@ export default function ProfileMenu({
                 Skills
             </button>
 
-            <button className="profile-menu-item">
+            <button className={
+                selectedMenu === "Education"
+                    ? "profile-menu-item active"
+                    : "profile-menu-item"
+            }
+                onClick={() => onMenuChanged("Education")}>
                 Education
             </button>
 

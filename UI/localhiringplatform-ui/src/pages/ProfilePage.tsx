@@ -5,6 +5,7 @@ import BasicInfo from "../components/Profile/BasicInfo";
 import Skills from "../components/Profile/Skills";
 import Resume from "../components/Profile/Resume";
 import ContactDetails from "../components/Profile/ContactDetails";
+import Education from "../components/Profile/Education";
 
 export default function ProfilePage() {
 
@@ -38,6 +39,10 @@ export default function ProfilePage() {
                     {
                         selectedMenu === "ContactDetails" &&
                         <ContactDetails />
+                    }
+                    {
+                        selectedMenu === "Education" &&
+                        <Education />
                     }
                 </div>
 
