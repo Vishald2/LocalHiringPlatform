@@ -50,6 +50,14 @@ export default function EducationEditor({
 
 }: EducationEditorProps) {
 
+    const currentYear =
+        new Date().getFullYear();
+
+    const years =
+        Array.from(
+            { length: currentYear - 1970 + 6 },
+            (_, index) => currentYear + 5 - index);
+
     const [universities,
         setUniversities] =
         useState<UniversityResponseModel[]>([]);
@@ -295,6 +303,26 @@ export default function EducationEditor({
 
             </div>
 
+            <div className="form-group">
+
+                <label className="form-label">
+                    Institute Name
+                </label>
+
+                <input
+                    type="text"
+                    className="form-control"
+                    value={education.instituteName ?? ""}
+                    onChange={(e) =>
+                        setEducation(prev => ({
+                            ...prev,
+                            instituteName: e.target.value
+                        }))
+                    }
+                />
+
+            </div>
+
             <label className="form-label">
                 Education
             </label>
@@ -386,6 +414,195 @@ export default function EducationEditor({
                 </select>
 
             </div>
+
+            <div className="form-row">
+
+                <div className="form-group form-group-small">
+
+                    <label className="form-label">
+                        Start Year
+                    </label>
+
+                    <select
+                        className="form-control"
+                        value={education.startYear ?? 0}
+                        onChange={(e) =>
+                            setEducation(prev => ({
+                                ...prev,
+                                startYear:
+                                    Number(e.target.value) || undefined
+                            }))
+                        }
+                    >
+
+                        <option value={0}>
+                            Select Year
+                        </option>
+
+                        {
+                            years.reverse().map(year => (
+
+                                <option
+                                    key={year}
+                                    value={year}
+                                >
+                                    {year}
+                                </option>
+
+                            ))
+                        }
+
+                    </select>
+
+                </div>
+
+                <div className="form-group form-group-small">
+
+                    <label className="form-label">
+                        End Year
+                    </label>
+
+                    <select
+                        className="form-control"
+                        value={education.endYear ?? 0}
+                        onChange={(e) =>
+                            setEducation(prev => ({
+                                ...prev,
+                                endYear:
+                                    Number(e.target.value) || undefined
+                            }))
+                        }
+                    >
+
+                        <option value={0}>
+                            Select Year
+                        </option>
+
+                        {
+                            years.reverse().map(year => (
+
+                                <option
+                                    key={year}
+                                    value={year}
+                                >
+                                    {year}
+                                </option>
+
+                            ))
+                        }
+
+                    </select>
+
+                </div>
+            </div>
+            <div className="form-row">
+                    <div className="form-group form-group-third">
+
+                        <label className="form-label">
+                            Percentage
+                        </label>
+
+                        <input
+                            type="number"
+                            step="0.01"
+                            className="form-control"
+                            value={education.percentage ?? ""}
+                            onChange={(e) =>
+                                setEducation(prev => ({
+                                    ...prev,
+                                    percentage:
+                                        e.target.value === ""
+                                            ? undefined
+                                            : Number(e.target.value)
+                                }))
+                            }
+                        />
+
+                    </div>
+
+                    <div className="form-group form-group-third">
+
+                        <label className="form-label">
+                            CGPA
+                        </label>
+
+                        <input
+                            type="number"
+                            step="0.01"
+                            className="form-control"
+                            value={education.cgpa ?? ""}
+                            onChange={(e) =>
+                                setEducation(prev => ({
+                                    ...prev,
+                                    cgpa:
+                                        e.target.value === ""
+                                            ? undefined
+                                            : Number(e.target.value)
+                                }))
+                            }
+                        />
+
+                    </div>
+                    <div className="form-group">
+
+                        <label className="form-label">
+                            Grade
+                        </label>
+
+                        <input
+                            type="text"
+                            className="form-control"
+                            value={education.grade ?? ""}
+                            onChange={(e) =>
+                                setEducation(prev => ({
+                                    ...prev,
+                                    grade: e.target.value
+                                }))
+                            }
+                        />
+
+                    </div>
+
+                </div>
+                <div className="form-row">
+
+                    <label className="checkbox-label">
+
+                        <input
+                            type="checkbox"
+                            checked={education.isCompleted}
+                            onChange={(e) =>
+                                setEducation(prev => ({
+                                    ...prev,
+                                    isCompleted: e.target.checked
+                                }))
+                            }
+                        />
+
+                        Completed
+
+                    </label>
+
+                    <label className="checkbox-label">
+
+                        <input
+                            type="checkbox"
+                            checked={education.isHighestEducation}
+                            onChange={(e) =>
+                                setEducation(prev => ({
+                                    ...prev,
+                                    isHighestEducation: e.target.checked
+                                }))
+                            }
+                        />
+
+                        Highest Education
+
+                    </label>
+
+                </div>
+
+
 
             <button
                 className="primary-button"
