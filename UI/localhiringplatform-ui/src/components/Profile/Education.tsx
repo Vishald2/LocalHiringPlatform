@@ -148,32 +148,23 @@ export default function Education() {
 
                         <div className="education-row">
 
-                            <b>Education:</b>
-
-                            {" "}
-
-                            {candidateeducation.educationName}
+                            {candidateeducation.educationName}-  {candidateeducation.specializationNames.join(", ")}
 
                         </div>
 
+                        {candidateeducation.instituteName}
+
+                        {
+                            candidateeducation.instituteName &&
+                            candidateeducation.universityName &&
+                            " , "
+                        }
+
+                        {candidateeducation.universityName}
+
+
+
                         <div className="education-row">
-
-                            <b>University:</b>
-
-                            {" "}
-
-                            {
-                                candidateeducation.universityName ??
-                                candidateeducation.instituteName
-                            }
-
-                        </div>
-
-                        <div className="education-row">
-
-                            <b>Duration:</b>
-
-                            {" "}
 
                             {candidateeducation.startYear}
 
@@ -189,25 +180,42 @@ export default function Education() {
 
                         <div className="education-row">
 
-                            <b>Specializations:</b>
-
-                            {" "}
-
                             {
-                                candidateeducation.specializationNames.join(", ")
+                                candidateeducation.percentage != null &&
+                                `${candidateeducation.percentage}%`
+                            }
+                            ,
+                            {
+                                candidateeducation.cgpa != null &&
+                                ` CGPA- ${candidateeducation.cgpa}`
+                            }
+                            ,
+                            {
+                                candidateeducation.grade &&
+                                ` Grade ${candidateeducation.grade}`
                             }
 
                         </div>
 
-                        {
-                            candidateeducation.isHighestEducation &&
+                        <div className="education-row">
 
-                            <div className="education-highest">
+                            {
+                                candidateeducation.isCompleted &&
+                                <span>Completed</span>
+                            }
 
-                                Highest Education
+                            {
+                                candidateeducation.isHighestEducation &&
 
-                            </div>
-                        }
+                                <span className="education-highest">
+
+                                    Highest Education
+
+                                </span>
+                            }
+
+                        </div>
+
                         <div className="education-actions">
 
                             <button
@@ -222,8 +230,7 @@ export default function Education() {
                             <button
                                 className="secondary-button"
                                 onClick={() =>
-                                    handleDelete(
-                                        candidateeducation.entityId)
+                                    handleDelete(candidateeducation.entityId)
                                 }
                             >
                                 Delete

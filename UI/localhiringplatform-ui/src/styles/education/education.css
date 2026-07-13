@@ -14,13 +14,14 @@
 }
 
 .education-title {
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 600;
-    margin-bottom: 12px;
+    color: var(--primary-color);
 }
 
 .education-row {
     margin-bottom: 6px;
+    margin-top: 6px;
 }
 
 .education-actions {
@@ -30,9 +31,9 @@
 }
 
 .education-highest {
+    margin-left: 12px;
     color: green;
     font-weight: 600;
-    margin-top: 8px;
 }
 
 .dialog-overlay {

@@ -34,6 +34,7 @@ import type {
     UniversityResponseModel
 }
     from "../../types/EducationModels/UniversityResponseModel";
+import { getErrorMessage } from "../../utils/errorHelper";
 
 interface EducationEditorProps {
 
@@ -227,12 +228,18 @@ export default function EducationEditor({
                     education);
             }
             else {
-
                 await addCandidateEducation(
                     education);
             }
 
             onClose(true);
+        }
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        catch (error: any) {
+
+            console.log(error.response?.data);
+
+            alert(getErrorMessage(error));
         }
         finally {
 
@@ -504,6 +511,8 @@ export default function EducationEditor({
 
                         <input
                             type="number"
+                            min={0}
+                            max={100}
                             step="0.01"
                             className="form-control"
                             value={education.percentage ?? ""}
@@ -528,6 +537,8 @@ export default function EducationEditor({
 
                         <input
                             type="number"
+                            min={0}
+                            max={10}
                             step="0.01"
                             className="form-control"
                             value={education.cgpa ?? ""}

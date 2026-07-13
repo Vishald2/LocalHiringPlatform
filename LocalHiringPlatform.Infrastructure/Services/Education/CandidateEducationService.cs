@@ -131,11 +131,24 @@ namespace LocalHiringPlatform.Infrastructure.Services.Education
     CandidateEducationCreateModel model)
         {
 
+            if (model.Percentage.HasValue &&
+                (model.Percentage < 0 || model.Percentage > 100))
+            {
+                throw new BusinessException(
+                    "Percentage must be between 0 and 100.");
+            }
+
+            if (model.CGPA.HasValue &&
+                (model.CGPA < 0 || model.CGPA > 10))
+            {
+                throw new BusinessException(
+                    "CGPA must be between 0 and 10.");
+            }
+
             Guid candidateProfileId =
                     _candidateProfileRepository
                     .GetByUserIdAsync(userId)
                     .Result.EntityId;
-
 
             // Ensure only one Highest Education
             if (model.IsHighestEducation)
@@ -218,6 +231,20 @@ namespace LocalHiringPlatform.Infrastructure.Services.Education
             Guid candidateEducationEntityId,
             CandidateEducationCreateModel model)
         {
+            if (model.Percentage.HasValue &&
+    (model.Percentage < 0 || model.Percentage > 100))
+            {
+                throw new BusinessException(
+                    "Percentage must be between 0 and 100.");
+            }
+
+            if (model.CGPA.HasValue &&
+                (model.CGPA < 0 || model.CGPA > 10))
+            {
+                throw new BusinessException(
+                    "CGPA must be between 0 and 10.");
+            }
+
             var candidateEducation =
                 await _candidateEducationRepository
                     .GetByEntityIdAsync(candidateEducationEntityId);
