@@ -1,5 +1,5 @@
 ﻿export interface CandidateEducationCreateModel {
-    entityId: string;
+    entityId: string | null;
 
     educationId: number;
 

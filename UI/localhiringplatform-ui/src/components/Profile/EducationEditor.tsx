@@ -25,15 +25,6 @@ import type {
 import type { EducationModel } from "../../types/EducationModels/EducationModel";
 import type { CourseModel } from "../../types/EducationModels/CourseModel";
 
-import {
-    getAllUniversities
-}
-    from "../../services/Education/UniversityService";
-
-import type {
-    UniversityResponseModel
-}
-    from "../../types/EducationModels/UniversityResponseModel";
 import { getErrorMessage } from "../../utils/errorHelper";
 
 interface EducationEditorProps {
@@ -58,10 +49,6 @@ export default function EducationEditor({
         Array.from(
             { length: currentYear - 1970 + 6 },
             (_, index) => currentYear + 5 - index);
-
-    const [universities,
-        setUniversities] =
-        useState<UniversityResponseModel[]>([]);
 
     const [courseSpecializations,
         setCourseSpecializations] =
@@ -126,11 +113,6 @@ export default function EducationEditor({
                 console.log("Masters:", masters);
 
                 setEducationMasters(masters);
-
-                const universityList =
-                    await getAllUniversities();
-
-                setUniversities(universityList);
 
                 if (!isEditMode) {
 
