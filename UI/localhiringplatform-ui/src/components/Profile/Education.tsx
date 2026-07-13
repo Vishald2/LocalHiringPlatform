@@ -155,15 +155,8 @@ export default function Education() {
                         {candidateeducation.instituteName}
 
                         {
-                            candidateeducation.instituteName &&
-                            candidateeducation.universityName &&
-                            " , "
-                        }
-
-                        {candidateeducation.universityName}
-                        {
                             candidateeducation.city &&
-                            candidateeducation.universityName &&
+                            candidateeducation.instituteName &&
                             " , "
                         }
                         {candidateeducation.city}
@@ -186,9 +179,16 @@ export default function Education() {
 
                         <div className="education-row">
 
-                            {candidateeducation.startYear}
+                            {
+                                candidateeducation.startYear &&
+                                candidateeducation.startYear
+                            }
 
-                            {" - "}
+                            {
+                                candidateeducation.startYear &&
+                                (candidateeducation.endYear || !candidateeducation.isCompleted) &&
+                                " - "
+                            }
 
                             {
                                 candidateeducation.isCompleted
@@ -201,18 +201,21 @@ export default function Education() {
                         <div className="education-row">
 
                             {
-                                candidateeducation.percentage != null &&
-                                `${candidateeducation.percentage}%`
-                            }
-                            ,
-                            {
-                                candidateeducation.cgpa != null &&
-                                ` CGPA- ${candidateeducation.cgpa}`
-                            }
-                            ,
-                            {
-                                candidateeducation.grade &&
-                                ` Grade ${candidateeducation.grade}`
+                                [
+                                    candidateeducation.percentage != null
+                                        ? `${candidateeducation.percentage}%`
+                                        : null,
+
+                                    candidateeducation.cgpa != null
+                                        ? `CGPA ${candidateeducation.cgpa}`
+                                        : null,
+
+                                    candidateeducation.grade
+                                        ? `Grade ${candidateeducation.grade}`
+                                        : null
+                                ]
+                                    .filter(Boolean)
+                                    .join(" • ")
                             }
 
                         </div>

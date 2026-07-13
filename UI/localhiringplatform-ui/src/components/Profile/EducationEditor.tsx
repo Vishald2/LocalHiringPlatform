@@ -259,7 +259,7 @@ export default function EducationEditor({
 
                 </div>
             }
-            <h2>
+            <h4>
 
                 {
                     isEditMode
@@ -267,48 +267,9 @@ export default function EducationEditor({
                         : "Add Education"
                 }
 
-            </h2>
+            </h4>
 
             <hr />
-
-            <div className="form-group">
-
-                <label className="form-label">
-                    University
-                </label>
-
-                <select
-                    className="form-control"
-                    value={education.universityId ?? 0}
-                    onChange={(e) =>
-                        setEducation(prev => ({
-                            ...prev,
-                            universityId:
-                                Number(e.target.value) || undefined
-                        }))
-                    }
-                >
-
-                    <option value={0}>
-                        Select University
-                    </option>
-
-                    {
-                        universities.map(item => (
-
-                            <option
-                                key={item.universityId}
-                                value={item.universityId}
-                            >
-                                {item.name}
-                            </option>
-
-                        ))
-                    }
-
-                </select>
-
-            </div>
 
             <div className="form-group">
 
