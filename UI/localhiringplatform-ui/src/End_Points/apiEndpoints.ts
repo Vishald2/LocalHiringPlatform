@@ -2,7 +2,10 @@
 /*GET FROM SWAGGER*/
 export const API_ENDPOINTS =
 {
-
+    CandidateExperience:
+    {
+        root: "/CandidateExperience"
+    },
     CourseSpecialization:
     {
         root:"/CourseSpecialization"

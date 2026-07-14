@@ -13,6 +13,8 @@ export async function getCandidateEducation(
     candidateEducationEntityId: string)
     : Promise<CandidateEducationCreateModel> {
 
+
+
     const response =
         await api.get<CandidateEducationCreateModel>(
             `${getBaseUrl()}/detail`,

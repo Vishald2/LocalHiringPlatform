@@ -26,3 +26,22 @@
         color: #2563eb;
         font-weight: 600;
     }
+
+.profile-actions {
+    display: flex;
+    gap: 12px;
+}
+
+.profile-subtitle {
+    color: #666;
+    margin-top: 4px;
+}
+
+.profile-row {
+    margin-top: 8px;
+}
+
+.profile-summary {
+    margin-top: 12px;
+    color: #555;
+}

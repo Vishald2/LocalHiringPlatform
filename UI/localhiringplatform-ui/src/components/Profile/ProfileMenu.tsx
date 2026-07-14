@@ -57,6 +57,15 @@ export default function ProfileMenu({
                 Resume
             </button>
 
+            <button className={
+                selectedMenu === "Employment"
+                    ? "profile-menu-item active"
+                    : "profile-menu-item"
+            }
+                onClick={() => onMenuChanged("Employment")}>
+                Employment
+            </button>
+
             <button className="profile-menu-item">
                 Security
             </button>
