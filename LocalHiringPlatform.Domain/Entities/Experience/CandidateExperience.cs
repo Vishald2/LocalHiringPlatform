@@ -12,6 +12,8 @@
 
         public string Designation { get; set; } = string.Empty;
 
+        public int IndustryTypeId { get; set; }
+
         public IndustryType? IndustryType { get; set; }
 
         // Location

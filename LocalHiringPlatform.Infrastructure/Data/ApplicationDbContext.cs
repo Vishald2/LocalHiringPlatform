@@ -1,6 +1,7 @@
 ﻿using LocalHiringPlatform.Domain.Entities;
 using LocalHiringPlatform.Domain.Entities.CandidateEducationEntities;
 using LocalHiringPlatform.Domain.Entities.Experience;
+using LocalHiringPlatform.Infrastructure.Data.Seed;
 using Microsoft.EntityFrameworkCore;
 using CandidateExperience = LocalHiringPlatform.Domain.Entities.Experience.CandidateExperience;
 
@@ -42,10 +43,19 @@ public class ApplicationDbContext : DbContext
     public DbSet<CourseSpecialization> CourseSpecializations { get; set; }
 
     public DbSet<CandidateExperience> CandidateExperiences { get; set; }
+
     public DbSet<CandidateExperienceDetail> CandidateExperienceDetails { get; set; }
+
+    public DbSet<IndustryType> industryTypes { get; set; }
+    
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+
+        modelBuilder.ApplyConfigurationsFromAssembly(
+                    typeof(ApplicationDbContext).Assembly);
+
+        SeedMasterData(modelBuilder);
 
         modelBuilder.Entity<User>()
             .HasIndex(x => x.Email)
@@ -212,36 +222,51 @@ public class ApplicationDbContext : DbContext
             }).IsUnique();
         });
 
-        modelBuilder.Entity<CandidateEducationSpecialization>(entity =>
+        //modelBuilder.Entity<CandidateEducationSpecialization>(entity =>
+        //{
+        //    entity.HasKey(x => x.CandidateEducationSpecializationId);
+
+        //    entity.HasOne(x => x.CandidateEducation)
+        //        .WithMany(x => x.CandidateCourseSpecializations)
+        //        .HasForeignKey(x => x.CandidateEducationEntityId)
+        //        .OnDelete(DeleteBehavior.Cascade);
+
+        //    entity.HasOne(x => x.Specialization)
+        //        .WithMany()
+        //        .HasForeignKey(x => x.SpecializationId)
+        //        .OnDelete(DeleteBehavior.NoAction);
+
+        //    entity.HasIndex(x => new
+        //    {
+        //        x.CandidateEducationEntityId,
+        //        x.SpecializationId
+        //    }).IsUnique();
+        //});
+
+        modelBuilder.Entity<CandidateExperience>(entity =>
         {
-            entity.HasKey(x => x.CandidateEducationSpecializationId);
-
-            entity.HasOne(x => x.CandidateEducation)
-                .WithMany(x => x.CandidateCourseSpecializations)
-                .HasForeignKey(x => x.CandidateEducationEntityId)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            entity.HasOne(x => x.Specialization)
-                .WithMany()
-                .HasForeignKey(x => x.SpecializationId)
-                .OnDelete(DeleteBehavior.NoAction);
-
-            entity.HasIndex(x => new
-            {
-                x.CandidateEducationEntityId,
-                x.SpecializationId
-            }).IsUnique();
-        });
-
-        modelBuilder.Entity<CandidateExperienceDetail>(entity =>
-        {
-            entity.HasKey(x => x.EntityId);
-
-            entity.HasOne(x => x.CandidateExperience)
-                .WithMany(x => x.ExperienceDetails)
-                .HasForeignKey(x => x.CandidateExperienceId)
+            entity.HasMany(ce=> ce.ExperienceDetails)
+                .WithOne(ed => ed.CandidateExperience)
+                .HasForeignKey(ed => ed.CandidateExperienceId)
                 .OnDelete(DeleteBehavior.Cascade);
         });
 
+        modelBuilder.Entity<CandidateProfile>(entity=>{
+            entity.HasKey(e =>e.EntityId);
+
+            entity.HasMany(cp => cp.CandidateExperiences)
+                .WithOne(ce => ce.CandidateProfile)
+                .HasForeignKey(ce => ce.CandidateProfileId)
+                .OnDelete(DeleteBehavior.Cascade);  
+        });
+    }
+
+    private static void SeedMasterData(
+    ModelBuilder modelBuilder)
+    {
+        //EducationSeedData.Seed(modelBuilder);
+        //CourseSeedData.Seed(modelBuilder);
+        //SkillSeedData.Seed(modelBuilder);
+        IndustryTypeSeedData.Seed(modelBuilder);
     }
 }

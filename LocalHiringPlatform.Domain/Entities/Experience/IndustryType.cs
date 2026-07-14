@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace LocalHiringPlatform.Domain.Entities.Experience
+﻿namespace LocalHiringPlatform.Domain.Entities.Experience
 {
-    public class IndustryType : BaseEntity
+    public class IndustryType
     {
         public int IndustryTypeId { get; set; }
 
@@ -19,5 +13,7 @@ namespace LocalHiringPlatform.Domain.Entities.Experience
         public bool IsActive { get; set; } = true;
 
         public string Description { get; set; } = string.Empty;
+
+        public ICollection<CandidateExperience> CandidateExperiences { get; set; } = new List<CandidateExperience>();
     }
 }
