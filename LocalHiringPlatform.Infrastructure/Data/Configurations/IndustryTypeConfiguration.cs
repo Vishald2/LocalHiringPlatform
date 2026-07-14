@@ -13,6 +13,8 @@ namespace LocalHiringPlatform.Infrastructure.Data.Configurations
         public void Configure(
             EntityTypeBuilder<IndustryType> entity)
         {
+            entity.ToTable("IndustryTypes");
+
             entity.HasMany(i => i.CandidateExperiences)
                     .WithOne(ce => ce.IndustryType)
                     .HasForeignKey(ce => ce.IndustryTypeId)

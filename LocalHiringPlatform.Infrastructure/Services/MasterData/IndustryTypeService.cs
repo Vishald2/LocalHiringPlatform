@@ -1,5 +1,6 @@
 ﻿using LocalHiringPlatform.Domain.Interfaces;
 using LocalHiringPlatform.Domain.Interfaces.MasterDataServices;
+using LocalHiringPlatform.Domain.Models.MasterData;
 using System;
 using System.Collections.Generic;
 using System.Linq;

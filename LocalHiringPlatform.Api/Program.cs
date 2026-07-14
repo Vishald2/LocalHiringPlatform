@@ -12,11 +12,13 @@ using LocalHiringPlatform.Infrastructure;
 using LocalHiringPlatform.Infrastructure.Data;
 using LocalHiringPlatform.Infrastructure.Repositories;
 using LocalHiringPlatform.Infrastructure.Repositories.EducationRepositories;
+using LocalHiringPlatform.Infrastructure.Repositories.MasterData;
 using LocalHiringPlatform.Infrastructure.Services;
 using LocalHiringPlatform.Infrastructure.Services.AI;
 using LocalHiringPlatform.Infrastructure.Services.AI.IntentHandlers;
 using LocalHiringPlatform.Infrastructure.Services.AI.IntentHandlers.LocalHiringPlatform.Infrastructure.Services.AI.IntentHandlers;
 using LocalHiringPlatform.Infrastructure.Services.Education;
+using LocalHiringPlatform.Infrastructure.Services.MasterData;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -245,8 +247,6 @@ builder.Services.AddTransient<IResend, ResendClient>();
 
 
 /*EDUCATION. START*/
-
-
 builder.Services.AddScoped<
     IEducationRepository,
     EducationRepository>();
@@ -296,6 +296,23 @@ builder.Services.AddScoped<
     EducationService>();
 builder.Services.AddScoped<ICandidateEducationService, CandidateEducationService>();
 /*EDUCATION. END*/
+
+/*Candidate Experience. Start*/
+//builder.Services.AddScoped<ICandidateExperienceRepository,
+//    CandidateExperienceRepository>();
+
+//builder.Services.AddScoped<ICandidateExperienceDetailRepository,
+//    CandidateExperienceDetailRepository>();
+
+//builder.Services.AddScoped<ICandidateExperienceService,
+//    CandidateExperienceService>();
+
+builder.Services.AddScoped<IIndustryTypeService,
+    IndustryTypeService>();
+
+builder.Services.AddScoped<IIndustryTypeRepository,
+    IndustryTypeRepository>();
+/*Experience. End*/
 
 builder.Services.AddCors(options =>
 {

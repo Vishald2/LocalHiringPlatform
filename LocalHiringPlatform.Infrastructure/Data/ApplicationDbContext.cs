@@ -46,7 +46,7 @@ public class ApplicationDbContext : DbContext
 
     public DbSet<CandidateExperienceDetail> CandidateExperienceDetails { get; set; }
 
-    public DbSet<IndustryType> industryTypes { get; set; }
+    public DbSet<IndustryType> IndustryTypes { get; set; }
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
