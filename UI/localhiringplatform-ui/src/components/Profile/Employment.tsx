@@ -68,6 +68,10 @@ export default function Employment() {
         return <div>Loading...</div>;
     }
 
+    function onAdd(event: MouseEvent<HTMLButtonElement, MouseEvent>): void {
+        throw new Error("Function not implemented.");
+    }
+
     return (
 
         <div className="profile-page">
@@ -75,13 +79,12 @@ export default function Employment() {
             <div className="profile-section-header">
 
                 <h2>Employment</h2>
-                <Link
-                    to="/profile/employment/add"
-                    >
-
+                <button
+                    className="primary-button"
+                    onClick={onAdd}
+                >
                     Add Employment
-
-                </Link>
+                </button>
 
             </div>
 
