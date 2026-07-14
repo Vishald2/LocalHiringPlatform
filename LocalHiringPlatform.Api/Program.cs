@@ -5,6 +5,7 @@ using LocalHiringPlatform.Domain.Interfaces;
 using LocalHiringPlatform.Domain.Interfaces.AI;
 using LocalHiringPlatform.Domain.Interfaces.AI.LocalHiringPlatform.Domain.Interfaces.AI;
 using LocalHiringPlatform.Domain.Interfaces.CandidateEducationInterfaces;
+using LocalHiringPlatform.Domain.Interfaces.Experience;
 using LocalHiringPlatform.Domain.Interfaces.MasterDataRepositories;
 using LocalHiringPlatform.Domain.Interfaces.MasterDataServices;
 using LocalHiringPlatform.Domain.Models;
@@ -12,12 +13,14 @@ using LocalHiringPlatform.Infrastructure;
 using LocalHiringPlatform.Infrastructure.Data;
 using LocalHiringPlatform.Infrastructure.Repositories;
 using LocalHiringPlatform.Infrastructure.Repositories.EducationRepositories;
+using LocalHiringPlatform.Infrastructure.Repositories.Experience;
 using LocalHiringPlatform.Infrastructure.Repositories.MasterData;
 using LocalHiringPlatform.Infrastructure.Services;
 using LocalHiringPlatform.Infrastructure.Services.AI;
 using LocalHiringPlatform.Infrastructure.Services.AI.IntentHandlers;
 using LocalHiringPlatform.Infrastructure.Services.AI.IntentHandlers.LocalHiringPlatform.Infrastructure.Services.AI.IntentHandlers;
 using LocalHiringPlatform.Infrastructure.Services.Education;
+using LocalHiringPlatform.Infrastructure.Services.Experience;
 using LocalHiringPlatform.Infrastructure.Services.MasterData;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -298,14 +301,14 @@ builder.Services.AddScoped<ICandidateEducationService, CandidateEducationService
 /*EDUCATION. END*/
 
 /*Candidate Experience. Start*/
-//builder.Services.AddScoped<ICandidateExperienceRepository,
-//    CandidateExperienceRepository>();
+builder.Services.AddScoped<ICandidateExperienceRepository,
+    CandidateExperienceRepository>();
 
 //builder.Services.AddScoped<ICandidateExperienceDetailRepository,
 //    CandidateExperienceDetailRepository>();
 
-//builder.Services.AddScoped<ICandidateExperienceService,
-//    CandidateExperienceService>();
+builder.Services.AddScoped<ICandidateExperienceService,
+    CandidateExperienceService>();
 
 builder.Services.AddScoped<IIndustryTypeService,
     IndustryTypeService>();
