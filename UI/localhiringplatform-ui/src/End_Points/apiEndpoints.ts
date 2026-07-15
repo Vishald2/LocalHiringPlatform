@@ -2,7 +2,14 @@
 /*GET FROM SWAGGER*/
 export const API_ENDPOINTS =
 {
-
+    IndustryTypes:
+    {
+        root:"/master/industrytypes"
+        },
+    CandidateExperience:
+    {
+        root: "/CandidateExperience"
+    },
     CourseSpecialization:
     {
         root:"/CourseSpecialization"

@@ -4,6 +4,7 @@ using LocalHiringPlatform.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LocalHiringPlatform.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260714061426_Add Experience Tables")]
+    partial class AddExperienceTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -669,8 +672,7 @@ namespace LocalHiringPlatform.Infrastructure.Migrations
 
                     b.Property<string>("Code")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -680,164 +682,15 @@ namespace LocalHiringPlatform.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<bool>("IsActive")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(true);
+                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("IndustryTypeId");
 
-                    b.ToTable("IndustryTypes", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            IndustryTypeId = 1,
-                            Code = "IT",
-                            Description = "",
-                            DisplayOrder = 1,
-                            IsActive = true,
-                            Name = "Information Technology"
-                        },
-                        new
-                        {
-                            IndustryTypeId = 2,
-                            Code = "MFG",
-                            Description = "",
-                            DisplayOrder = 2,
-                            IsActive = true,
-                            Name = "Manufacturing"
-                        },
-                        new
-                        {
-                            IndustryTypeId = 3,
-                            Code = "AUTO",
-                            Description = "",
-                            DisplayOrder = 3,
-                            IsActive = true,
-                            Name = "Automobile"
-                        },
-                        new
-                        {
-                            IndustryTypeId = 4,
-                            Code = "RETAIL",
-                            Description = "",
-                            DisplayOrder = 4,
-                            IsActive = true,
-                            Name = "Retail"
-                        },
-                        new
-                        {
-                            IndustryTypeId = 5,
-                            Code = "SALES",
-                            Description = "",
-                            DisplayOrder = 5,
-                            IsActive = true,
-                            Name = "Sales"
-                        },
-                        new
-                        {
-                            IndustryTypeId = 6,
-                            Code = "BPO",
-                            Description = "",
-                            DisplayOrder = 6,
-                            IsActive = true,
-                            Name = "BPO / Call Center"
-                        },
-                        new
-                        {
-                            IndustryTypeId = 7,
-                            Code = "BANK",
-                            Description = "",
-                            DisplayOrder = 7,
-                            IsActive = true,
-                            Name = "Banking & Financial Services"
-                        },
-                        new
-                        {
-                            IndustryTypeId = 8,
-                            Code = "HEALTH",
-                            Description = "",
-                            DisplayOrder = 8,
-                            IsActive = true,
-                            Name = "Healthcare"
-                        },
-                        new
-                        {
-                            IndustryTypeId = 9,
-                            Code = "EDU",
-                            Description = "",
-                            DisplayOrder = 9,
-                            IsActive = true,
-                            Name = "Education"
-                        },
-                        new
-                        {
-                            IndustryTypeId = 10,
-                            Code = "LOG",
-                            Description = "",
-                            DisplayOrder = 10,
-                            IsActive = true,
-                            Name = "Logistics & Supply Chain"
-                        },
-                        new
-                        {
-                            IndustryTypeId = 11,
-                            Code = "CONST",
-                            Description = "",
-                            DisplayOrder = 11,
-                            IsActive = true,
-                            Name = "Construction"
-                        },
-                        new
-                        {
-                            IndustryTypeId = 12,
-                            Code = "HOTEL",
-                            Description = "",
-                            DisplayOrder = 12,
-                            IsActive = true,
-                            Name = "Hospitality"
-                        },
-                        new
-                        {
-                            IndustryTypeId = 13,
-                            Code = "MEDIA",
-                            Description = "",
-                            DisplayOrder = 13,
-                            IsActive = true,
-                            Name = "Media & Entertainment"
-                        },
-                        new
-                        {
-                            IndustryTypeId = 14,
-                            Code = "TELECOM",
-                            Description = "",
-                            DisplayOrder = 14,
-                            IsActive = true,
-                            Name = "Telecommunications"
-                        },
-                        new
-                        {
-                            IndustryTypeId = 15,
-                            Code = "GOVT",
-                            Description = "",
-                            DisplayOrder = 15,
-                            IsActive = true,
-                            Name = "Government"
-                        },
-                        new
-                        {
-                            IndustryTypeId = 16,
-                            Code = "OTHER",
-                            Description = "",
-                            DisplayOrder = 99,
-                            IsActive = true,
-                            Name = "Other"
-                        });
+                    b.ToTable("industryTypes");
                 });
 
             modelBuilder.Entity("LocalHiringPlatform.Domain.Entities.Notification", b =>
