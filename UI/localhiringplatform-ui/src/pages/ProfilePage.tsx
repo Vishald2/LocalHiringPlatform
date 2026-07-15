@@ -32,6 +32,13 @@ export default function ProfilePage() {
         }
     }
 
+    function showEmploymentList() {
+
+        setCandidateExperienceEntityId(undefined);
+
+        setSelectedMenu("Employment");
+    }
+
     return (
 
         <div className="page-container">
@@ -73,6 +80,8 @@ export default function ProfilePage() {
                         <EmploymentEditor
                             mode={selectedMenu}
                             candidateExperienceEntityId=""
+                            onCancel={showEmploymentList}
+                            onSaved={showEmploymentList}
                         />
                     }
 
@@ -81,6 +90,8 @@ export default function ProfilePage() {
                         <EmploymentEditor
                             mode={selectedMenu}
                             candidateExperienceEntityId={candidateExperienceEntityId || ""}
+                            onCancel={showEmploymentList}
+                            onSaved={showEmploymentList}
                         />
                     }
                 </div>

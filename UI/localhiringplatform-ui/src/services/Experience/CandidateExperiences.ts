@@ -28,13 +28,15 @@ export async function getCandidateExperience(
     candidateExperienceEntityId: string):
     Promise<CandidateExperienceCreateModel> {
 
-    const response = await axios.get<CandidateExperienceCreateModel>(
-        `${getBaseUrl()}/candidateexperience/detail`,
-        {
-            params: {
-                candidateExperienceEntityId
-            }
-        });
+    const response =
+        await api.get<CandidateExperienceResponseModel>(
+            `${getBaseUrl()}/detail`,
+            {
+                params:
+                {
+                    candidateExperienceEntityId
+                }
+            });
 
     return response.data;
 }
@@ -42,22 +44,23 @@ export async function getCandidateExperience(
 export async function addCandidateExperience(
     model: CandidateExperienceCreateModel): Promise<void> {
 
-    await axios.post(
-        `${getBaseUrl()}/candidateexperience`,
+    console.log(model);
+
+    await api.post(
+        `${getBaseUrl()}`,
         model);
 }
 
 export async function updateCandidateExperience(
     model: CandidateExperienceCreateModel): Promise<void> {
 
-    await axios.put(
-        `${getBaseUrl()}/candidateexperience`,
+    await api.put(`${getBaseUrl()}`,
         model);
 }
 
 export async function deleteCandidateExperience(
     candidateExperienceEntityId: string): Promise<void> {
 
-    await axios.delete(
-        `${getBaseUrl()}/candidateexperience/${candidateExperienceEntityId}`);
+    await api.delete(
+        `${getBaseUrl()}/${candidateExperienceEntityId}`);
 }

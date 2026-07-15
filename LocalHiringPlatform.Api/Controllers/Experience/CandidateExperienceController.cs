@@ -39,11 +39,13 @@ namespace LocalHiringPlatform.Api.Controllers.Experience
             var userId =
                 User.GetUserId();
 
-            return Ok(
-                await _candidateExperienceService
+            var result = await _candidateExperienceService
                     .GetDetailAsync(
                         userId,
-                        candidateExperienceEntityId));
+                        candidateExperienceEntityId);
+
+            return Ok(result
+                );
         }
 
         [HttpPost]
