@@ -7,8 +7,7 @@ import Resume from "../components/Profile/Resume";
 import ContactDetails from "../components/Profile/ContactDetails";
 import Education from "../components/Profile/Education";
 import Employment from "../components/Profile/Employment";
-import EmploymentAddPage from "../components/Profile/EmploymentAddPage";
-import EmploymentEditPage from "../components/Profile/EmploymentEditPage";
+import EmploymentEditor from "../components/Profile/EmploymentEditor";
 
 export default function ProfilePage() {
 
@@ -18,6 +17,20 @@ export default function ProfilePage() {
     const [candidateExperienceEntityId,
         setCandidateExperienceEntityId] =
         useState<string | undefined>();
+
+    function openEmploymentEditor(
+        entityId?: string,
+        mode?: string) {
+
+        if (mode === "EmploymentAdd") {
+            setCandidateExperienceEntityId(undefined);
+            setSelectedMenu("EmploymentAdd");
+        }
+        else if (mode === "EmploymentEdit") {
+            setCandidateExperienceEntityId(entityId);
+            setSelectedMenu("EmploymentEdit");
+        }
+    }
 
     return (
 
@@ -45,7 +58,7 @@ export default function ProfilePage() {
                     }
                     {
                         selectedMenu === "Employment" &&
-                        <Employment />
+                        <Employment openEmploymentEditor={openEmploymentEditor} />
                     }
                     {
                         selectedMenu === "ContactDetails" &&
@@ -56,33 +69,18 @@ export default function ProfilePage() {
                         <Education />
                     }
                     {
-                        selectedMenu === "Employment" &&
-                        <Employment
-                            onAdd={() => {
-
-                                setCandidateExperienceEntityId(undefined);
-
-                                setSelectedMenu("EmploymentAdd");
-                            }}
-
-                            onEdit={(entityId) => {
-
-                                setCandidateExperienceEntityId(entityId);
-
-                                setSelectedMenu("EmploymentEdit");
-                            }}
+                        selectedMenu === "EmploymentAdd" &&
+                        <EmploymentEditor
+                            mode={selectedMenu}
+                            candidateExperienceEntityId=""
                         />
                     }
 
                     {
-                        selectedMenu === "EmploymentAdd" &&
-                        <EmploymentAddPage />
-                    }
-
-                    {
                         selectedMenu === "EmploymentEdit" &&
-                        <EmploymentEditPage
-                            entityId={candidateExperienceEntityId!}
+                        <EmploymentEditor
+                            mode={selectedMenu}
+                            candidateExperienceEntityId={candidateExperienceEntityId || ""}
                         />
                     }
                 </div>

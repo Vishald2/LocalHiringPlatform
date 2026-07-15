@@ -1,6 +1,7 @@
 ﻿export interface EmploymentEditorProps {
 
-    mode: "add" | "edit";
+    mode: string;
+    candidateExperienceEntityId: string | undefined;
 
 }
 
@@ -13,7 +14,7 @@ export default function EmploymentEditor(
 
             <h1>
                 {
-                    props.mode === "add"
+                    props.mode === "EmploymentAdd"
                         ? "Add Employment"
                         : "Edit Employment"
                 }

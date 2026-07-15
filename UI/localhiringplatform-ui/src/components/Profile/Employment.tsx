@@ -8,8 +8,19 @@ import {
 
 import type { CandidateExperienceResponseModel }
     from "../../types/Experience/CandidateExperienceResponseModel";
+interface Props {
 
-export default function Employment() {
+    openEmploymentEditor: (entityId?: string, mode?: string) => void;
+
+}
+
+export default function Employment(
+    {
+        openEmploymentEditor
+
+    }: Props
+
+) {
 
     const [experiences, setExperiences] =
         useState<CandidateExperienceResponseModel[]>([]);
@@ -68,8 +79,8 @@ export default function Employment() {
         return <div>Loading...</div>;
     }
 
-    function onAdd(event: MouseEvent<HTMLButtonElement, MouseEvent>): void {
-        throw new Error("Function not implemented.");
+    function onAdd(): void {
+        openEmploymentEditor("", "EmploymentAdd");
     }
 
     return (
@@ -79,12 +90,12 @@ export default function Employment() {
             <div className="profile-section-header">
 
                 <h2>Employment</h2>
-                <button
-                    className="primary-button"
+                <Link to="#"
+                    className="link-button"
                     onClick={onAdd}
                 >
                     Add Employment
-                </button>
+                </Link>
 
             </div>
 
@@ -178,7 +189,9 @@ export default function Employment() {
                         <div className="profile-actions">
 
                             <Link
-                                to={`/profile/employment/edit/${experience.entityId}`}
+                                onClick={() => openEmploymentEditor(experience.entityId, "EmploymentEdit")}
+                                //to={`/profile/employment/edit/${experience.entityId}`}
+                                to="#"
                                 className="link-button">
 
                                 Edit
