@@ -112,19 +112,21 @@ export default function EmploymentEditor(
 
         <div className="editor-container">
 
-            <h1>
+            <h3>
                 {
                     props.mode === "EmploymentAdd"
                         ? "Add Employment"
                         : "Edit Employment"
                 }
-            </h1>
+            </h3>
 
-            <div className="form-group">
+            <div className="editor-form">
 
-                <label>Company Name</label>
+                <div className="form-group form-editor-div">
 
-                <input
+                <label className="form-label">Company Name</label>
+
+                <input className="form-control"
                     type="text"
                     value={model.companyName}
                     onChange={e =>
@@ -136,11 +138,11 @@ export default function EmploymentEditor(
 
             </div>
 
-            <div className="form-group">
+                <div className="form-group form-editor-div">
 
-                <label>Designation</label>
+                <label className="form-label">Designation</label>
 
-                <input
+                <input className="form-control"
                     type="text"
                     value={model.designation}
                     onChange={e =>
@@ -152,11 +154,11 @@ export default function EmploymentEditor(
 
             </div>
 
-            <div className="form-group">
+                <div className="form-group form-editor-div">
 
-                <label>Industry</label>
+                <label className="form-label">Industry</label>
 
-                <select
+                <select className="form-control"
                     value={model.industryTypeId}
                     onChange={e =>
                         setModel({
@@ -186,11 +188,11 @@ export default function EmploymentEditor(
 
             </div>
 
-            <div className="form-group">
+                <div className="form-group form-editor-div">
 
-                <label>City</label>
+                <label className="form-label">City</label>
 
-                <input
+                <input className="form-control"
                     type="text"
                     value={model.city}
                     onChange={e =>
@@ -202,11 +204,11 @@ export default function EmploymentEditor(
 
             </div>
 
-            <div className="form-group">
+                <div className="form-group form-editor-div">
 
-                <label>State</label>
+                <label className="form-label">State</label>
 
-                <input
+                <input className="form-control"
                     type="text"
                     value={model.state}
                     onChange={e =>
@@ -218,11 +220,11 @@ export default function EmploymentEditor(
 
             </div>
 
-            <div className="form-group">
+                <div className="form-group form-editor-div">
 
-                <label>Country</label>
+                <label className="form-label">Country</label>
 
-                <input
+                <input className="form-control"
                     type="text"
                     value={model.country}
                     onChange={e =>
@@ -234,11 +236,11 @@ export default function EmploymentEditor(
 
             </div>
 
-            <div className="form-group">
+                <div className="form-group form-editor-div">
 
-                <label>Start Date</label>
+                <label className="form-label">Start Date</label>
 
-                <input
+                <input className="form-control"
                     type="date"
                     value={model.startDate}
                     onChange={e =>
@@ -250,11 +252,11 @@ export default function EmploymentEditor(
 
             </div>
 
-            <div className="form-group">
+                <div className="form-group form-editor-div">
 
-                <label>
+                    <label className="form-label">
 
-                    <input
+                        <input className="form-control" style={{width:"100px"} }
                         type="checkbox"
                         checked={model.isCurrentCompany}
                         onChange={e =>
@@ -267,17 +269,17 @@ export default function EmploymentEditor(
                             })}
                     />
 
-                    {" "}Current Company
+                        {" "} Current Company
 
                 </label>
 
             </div>
 
-            <div className="form-group">
+                <div className="form-group form-editor-div">
 
-                <label>End Date</label>
+                <label className="form-label">End Date</label>
 
-                <input
+                <input className="form-control"
                     type="date"
                     disabled={model.isCurrentCompany}
                     value={model.endDate ?? ""}
@@ -293,11 +295,11 @@ export default function EmploymentEditor(
 
             </div>
 
-            <div className="form-group">
+                <div className="form-group form-editor-div">
 
-                <label>Summary</label>
+                <label className="form-label">Summary</label>
 
-                <textarea
+                <textarea className="form-control"
                     rows={5}
                     value={model.summary}
                     onChange={e =>
@@ -309,24 +311,22 @@ export default function EmploymentEditor(
 
             </div>
 
-            <div className="button-panel">
+                <div className="profile-actions form-editor-div">
+                    <button 
+                        className="primary-button"
+                        onClick={save}
+                    >
+                        Save
+                    </button>
 
-                <button
-                    className="primary-button"
-                    onClick={save}
-                >
-                    Save
-                </button>
-
-                <button
-                    className="secondary-button"
-                    onClick={props.onCancel}
-                >
-                    Cancel
-                </button>
-
-            </div>
-
+                    <button
+                        className="secondary-button"
+                        onClick={props.onCancel}
+                    >
+                        Cancel
+                    </button>
+                </div>
+                </div>
         </div>
 
     );

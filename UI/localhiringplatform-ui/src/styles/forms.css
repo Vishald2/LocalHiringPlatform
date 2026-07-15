@@ -176,3 +176,22 @@
     gap: 8px;
     margin-right: 24px;
 }
+
+.editor-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.form-group-full {
+    grid-column: 1 / span 2;
+}
+
+.editor-container {
+    max-width: 900px;
+    margin: auto;
+}
+
+.form-editor-div {
+    width: 250px
+}
