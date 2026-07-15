@@ -1,6 +1,4 @@
-﻿import axios from "axios";
-
-import { API_ENDPOINTS }
+﻿import { API_ENDPOINTS }
     from "../../End_Points/apiEndpoints";
 
 import type { CandidateExperienceResponseModel } from "../../types/Experience/CandidateExperienceResponseModel";

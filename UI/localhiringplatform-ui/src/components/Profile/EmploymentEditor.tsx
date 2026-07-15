@@ -46,22 +46,22 @@ export default function EmploymentEditor(
             summary: ""
         });
 
-    async function loadIndustryTypes() {
+    // async function loadIndustryTypes() {
 
-        const response =
-            await getIndustryTypes();
+    //     const response =
+    //         await getIndustryTypes();
 
-        setIndustryTypes(response);
-    }
+    //     setIndustryTypes(response);
+    // }
 
-    async function loadMasters() {
+    // async function loadMasters() {
 
-        await loadIndustryTypes();
+    //     await loadIndustryTypes();
 
-        // Later
-        // await loadStates();
-        // await loadCountries();
-    }
+    //     // Later
+    //     // await loadStates();
+    //     // await loadCountries();
+    // }
 
     useEffect(() => {
         async function loadProfile() {
