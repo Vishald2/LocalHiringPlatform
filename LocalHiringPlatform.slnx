@@ -2,5 +2,7 @@
   <Project Path="LocalHiringPlatform.Api/LocalHiringPlatform.Api.csproj" Id="9ffda7de-684a-491f-82b4-b33391885a69" />
   <Project Path="LocalHiringPlatform.Domain/LocalHiringPlatform.Domain.csproj" Id="b913ed92-d9b0-4de2-b9af-61f91c34d026" />
   <Project Path="LocalHiringPlatform.Infrastructure/LocalHiringPlatform.Infrastructure.csproj" Id="b185d342-b5eb-4021-bb9f-50a9990e4146" />
+  <Project Path="LocalHiringPlatform.ServiceBus/LocalHiringPlatform.ServiceBus.csproj" Id="d0193395-eeb8-4878-af37-27e0a1ce70ea" />
+  <Project Path="LocalHiringPlatform.Worker/LocalHiringPlatform.Worker.csproj" Id="0aebd0c5-d772-40cb-9f82-1822a2c29b05" />
   <Project Path="UI/UI.csproj" Id="9f1a7301-01b7-4f13-bb52-50546a438972" />
 </Solution>

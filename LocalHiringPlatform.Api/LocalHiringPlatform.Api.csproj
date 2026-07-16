@@ -25,6 +25,7 @@
   <ItemGroup>
     <ProjectReference Include="..\LocalHiringPlatform.Domain\LocalHiringPlatform.Domain.csproj" />
     <ProjectReference Include="..\LocalHiringPlatform.Infrastructure\LocalHiringPlatform.Infrastructure.csproj" />
+    <ProjectReference Include="..\LocalHiringPlatform.ServiceBus\LocalHiringPlatform.ServiceBus.csproj" />
   </ItemGroup>
 
   <ItemGroup>

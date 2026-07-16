@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>dotnet-LocalHiringPlatform.Worker-514fec69-7da4-4355-a732-5679e16bec85</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Messaging.ServiceBus" Version="7.20.2" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.WindowsServices" Version="8.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LocalHiringPlatform.Domain\LocalHiringPlatform.Domain.csproj" />
+    <ProjectReference Include="..\LocalHiringPlatform.Infrastructure\LocalHiringPlatform.Infrastructure.csproj" />
+    <ProjectReference Include="..\LocalHiringPlatform.ServiceBus\LocalHiringPlatform.ServiceBus.csproj" />
+  </ItemGroup>
+</Project>
