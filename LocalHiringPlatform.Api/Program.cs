@@ -1,3 +1,4 @@
+using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
 using LocalHiringPlatform.Api.Middleware;
 using LocalHiringPlatform.Domain.Configuration;
 using LocalHiringPlatform.Domain.Helpers;
@@ -22,6 +23,12 @@ using LocalHiringPlatform.Infrastructure.Services.AI.IntentHandlers.LocalHiringP
 using LocalHiringPlatform.Infrastructure.Services.Education;
 using LocalHiringPlatform.Infrastructure.Services.Experience;
 using LocalHiringPlatform.Infrastructure.Services.MasterData;
+using LocalHiringPlatform.ServiceBus.Extensions;
+using LocalHiringPlatform.ServiceBus.Interfaces;
+using LocalHiringPlatform.ServiceBus.Messages;
+using LocalHiringPlatform.ServiceBus.Services;
+using LocalHiringPlatform.Worker;
+using LocalHiringPlatform.Worker.Handlers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -205,7 +212,11 @@ builder.Services.AddScoped<
     IAIIntentHandler,
     JobSearchIntentHandler>();
 
+builder.Services.AddServiceBus(builder.Configuration);
 
+builder.Services.AddSingleton<IServiceBusPublisher, ServiceBusPublisher>();
+
+builder.Services.AddSingleton<IServiceBusConsumer, ServiceBusConsumer>();
 
 builder.Services.Configure<ResendSettings>(
     builder.Configuration.GetSection("Resend"));
@@ -248,6 +259,17 @@ builder.Services.Configure<ResendClientOptions>(o =>
 
 builder.Services.AddTransient<IResend, ResendClient>();
 
+builder.Services.AddServiceBus(builder.Configuration);
+
+builder.Services.AddServiceBus(builder.Configuration);
+
+builder.Services.AddHostedService<ServiceBusWorker>();
+
+builder.Services.AddScoped<
+    IMessageHandler<OutboundEmailMessage>,
+    EmailMessageHandler>();
+
+//builder.Services.AddInfrastructure(builder.Configuration);
 
 /*EDUCATION. START*/
 builder.Services.AddScoped<

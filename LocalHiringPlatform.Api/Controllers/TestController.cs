@@ -1,5 +1,7 @@
 ﻿using LocalHiringPlatform.Domain.Interfaces;
 using LocalHiringPlatform.Domain.Interfaces.AI;
+using LocalHiringPlatform.ServiceBus.Interfaces;
+using LocalHiringPlatform.ServiceBus.Messages;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,19 +15,43 @@ public class TestController : ControllerBase
     private readonly IRedisCacheService _redisCacheService;
     private readonly ILogger _logger;
     private IPromptService _promptService;
+    private readonly IServiceBusPublisher _serviceBusPublisher;
 
     public TestController(
         IRedisCacheService redisCacheService,
         ILogger<TestController> logger,
-        IPromptService promptService)
+        IPromptService promptService,
+        IServiceBusPublisher serviceBusPublisher
+        )
     {
         _redisCacheService = redisCacheService;
         _logger = logger;
         _promptService = promptService;
+        _serviceBusPublisher = serviceBusPublisher;
+
+
+
+
+        
+    }
+
+    [HttpPost("publish")]
+    public async Task<IActionResult> PublishAsync()
+    {
+        var message = new OutboundEmailMessage
+        {
+            To = "vishald3511@gmail.com",
+            Subject = "Azure Service Bus Test",
+            HtmlBody = "<h2>Hello from LocalHire</h2>"
+        };
+
+       await _serviceBusPublisher.PublishAsync(message);
+
+        return Ok();
     }
 
 
-    [HttpGet("prompt")]
+        [HttpGet("prompt")]
     public async Task<IActionResult> TestPrompt()
     {
         var prompt =
