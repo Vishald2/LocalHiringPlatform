@@ -30,9 +30,9 @@ public class EmailMessageHandler : IMessageHandler<OutboundEmailMessage>
 
         var message2 = new EmailRequestModel
         {
-            To = "vishald3511@gmail.com",
-            Subject = "Azure Service Bus Test",
-            HtmlBody = "<h2>Hello from LocalHire</h2>"
+            To = message.To,
+            Subject = message.Subject,
+            HtmlBody = message.HtmlBody
         };
 
 

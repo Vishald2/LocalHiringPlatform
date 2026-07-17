@@ -10,6 +10,8 @@ namespace LocalHiringPlatform.ServiceBus.Messages
     {
         public string To { get; set; } = string.Empty;
 
+        public string From { get; set; } = "no-reply@getlocalhire.com";
+
         public string Subject { get; set; } = string.Empty;
 
         public string HtmlBody { get; set; } = string.Empty;

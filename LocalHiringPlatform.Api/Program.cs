@@ -259,16 +259,6 @@ builder.Services.Configure<ResendClientOptions>(o =>
 
 builder.Services.AddTransient<IResend, ResendClient>();
 
-builder.Services.AddServiceBus(builder.Configuration);
-
-builder.Services.AddServiceBus(builder.Configuration);
-
-builder.Services.AddHostedService<ServiceBusWorker>();
-
-builder.Services.AddScoped<
-    IMessageHandler<OutboundEmailMessage>,
-    EmailMessageHandler>();
-
 //builder.Services.AddInfrastructure(builder.Configuration);
 
 /*EDUCATION. START*/

@@ -96,6 +96,7 @@ namespace LocalHiringPlatform.ServiceBus.Services
 
             if (string.IsNullOrWhiteSpace(messageType))
             {
+                await args.CompleteMessageAsync(args.Message);
                 throw new InvalidOperationException(
                     "MessageType property is empty.");
             }
