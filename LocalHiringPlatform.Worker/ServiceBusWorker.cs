@@ -1,3 +1,4 @@
+using LocalHiringPlatform.Domain.Models;
 using LocalHiringPlatform.ServiceBus.Interfaces;
 using LocalHiringPlatform.ServiceBus.Messages;
 
@@ -19,21 +20,21 @@ namespace LocalHiringPlatform.Worker
         protected override async Task ExecuteAsync(
             CancellationToken stoppingToken)
         {
-            _consumer.RegisterHandler<OutboundEmailMessage>(
+            _consumer.RegisterHandler<EmailRequestModel>(
                 HandleOutboundEmailAsync);
 
             await _consumer.StartAsync(stoppingToken);
         }
 
         private async Task HandleOutboundEmailAsync(
-            OutboundEmailMessage message,
+            EmailRequestModel message,
             CancellationToken cancellationToken)
         {
             using var scope = _scopeFactory.CreateScope();
 
             var handler =
                 scope.ServiceProvider.GetRequiredService<
-                    IMessageHandler<OutboundEmailMessage>>();
+                    IMessageHandler<EmailRequestModel>>();
 
             await handler.HandleAsync(
                 message,

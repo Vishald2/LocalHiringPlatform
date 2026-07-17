@@ -6,7 +6,7 @@ using LocalHiringPlatform.ServiceBus.Services;
 
 namespace LocalHiringPlatform.Worker.Handlers;
 
-public class EmailMessageHandler : IMessageHandler<OutboundEmailMessage>
+public class EmailMessageHandler : IMessageHandler<EmailRequestModel>
 {
     private readonly IEmailService _emailService;
     private readonly ILogger<EmailMessageHandler> _logger;
@@ -20,7 +20,7 @@ public class EmailMessageHandler : IMessageHandler<OutboundEmailMessage>
     }
 
     public async Task HandleAsync(
-        OutboundEmailMessage message,
+        EmailRequestModel message,
         CancellationToken cancellationToken)
     {
         _logger.LogInformation(
@@ -28,7 +28,7 @@ public class EmailMessageHandler : IMessageHandler<OutboundEmailMessage>
             message.To);
 
 
-        var message2 = new EmailRequestModel
+        var emailRequestModel = new EmailRequestModel
         {
             To = message.To,
             Subject = message.Subject,
@@ -36,7 +36,7 @@ public class EmailMessageHandler : IMessageHandler<OutboundEmailMessage>
         };
 
 
-        await _emailService.SendEmailAsync(message2);
+        await _emailService.SendEmailAsync(emailRequestModel);
 
         _logger.LogInformation(
             "Email sent successfully to {Email}",

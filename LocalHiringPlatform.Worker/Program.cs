@@ -17,7 +17,7 @@ builder.Services.AddServiceBus(builder.Configuration);
 builder.Services.AddSingleton<IServiceBusConsumer,ServiceBusConsumer>();
 
 builder.Services.AddScoped<
-    IMessageHandler<OutboundEmailMessage>,
+    IMessageHandler<EmailRequestModel>,
     EmailMessageHandler>();
 
 builder.Services.AddScoped<

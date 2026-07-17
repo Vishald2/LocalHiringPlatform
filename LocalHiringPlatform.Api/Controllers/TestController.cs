@@ -1,5 +1,6 @@
 ﻿using LocalHiringPlatform.Domain.Interfaces;
 using LocalHiringPlatform.Domain.Interfaces.AI;
+using LocalHiringPlatform.Domain.Models;
 using LocalHiringPlatform.ServiceBus.Interfaces;
 using LocalHiringPlatform.ServiceBus.Messages;
 using Microsoft.AspNetCore.Authorization;
@@ -38,7 +39,7 @@ public class TestController : ControllerBase
     [HttpPost("publish")]
     public async Task<IActionResult> PublishAsync()
     {
-        var message = new OutboundEmailMessage
+        var message = new EmailRequestModel
         {
             To = "vishald3511@gmail.com",
             Subject = "Azure Service Bus Test",

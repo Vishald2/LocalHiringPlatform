@@ -5,6 +5,7 @@ using LocalHiringPlatform.Domain.Exceptions;
 using LocalHiringPlatform.Domain.Interfaces;
 using LocalHiringPlatform.Domain.Models;
 using LocalHiringPlatform.Infrastructure.EmailTemplates;
+using LocalHiringPlatform.ServiceBus.Interfaces;
 using Microsoft.Extensions.Options;
 
 namespace LocalHiringPlatform.Infrastructure.Services;
@@ -19,6 +20,7 @@ public class AuthService : IAuthService
     private readonly IJwtTokenService _jwtTokenService;
     private readonly IEmailService _emailService;
     private readonly IOptions<ApplicationSettings> _applicationSettings;
+    private readonly IServiceBusPublisher _serviceBusPublisher;
 
     public AuthService(IUserRepository userRepository,
         ICandidateProfileRepository candidateProfileRepository,
@@ -26,7 +28,8 @@ public class AuthService : IAuthService
         IUnitOfWork unitOfWork,
         IJwtTokenService jwtTokenService,
         IEmailService emailService,
-        IOptions<ApplicationSettings> applicationSettings)
+        IOptions<ApplicationSettings> applicationSettings,
+        IServiceBusPublisher serviceBusPublisher)
     {
         _userRepository = userRepository;
         _candidateProfileRepository = candidateProfileRepository;
@@ -35,6 +38,7 @@ public class AuthService : IAuthService
         _jwtTokenService = jwtTokenService;
         _emailService = emailService;
         _applicationSettings = applicationSettings;
+        _serviceBusPublisher = serviceBusPublisher;
     }
 
     public async Task RegisterCandidateAsync(RegisterCandidateModel model)
@@ -103,7 +107,8 @@ public class AuthService : IAuthService
 
         };
 
-       await _emailService?.SendEmailAsync(emailRequestModel);
+        /*PUBLISHING MESSAGE TO AZURE MESSAGE QUEUE*/
+        await _serviceBusPublisher.PublishAsync(emailRequestModel);
 
     }
 
