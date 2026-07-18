@@ -90,13 +90,13 @@ jobs:
         run: |
           az webapp show `
             --name localhire-worker `
-            --resource-group localhirerg
+            --resource-group localhire-rg
 
       - name: Deploy Worker
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'localhire-worker'
-          resource-group-name: 'localhirerg'
+          resource-group-name: 'localhire-rg'
           slot-name: 'Production'
           package: .
           
