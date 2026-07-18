@@ -46,11 +46,19 @@ public class AuthService : IAuthService
             throw new BusinessException("Email already exists");
         }
 
-        var existingMobile = await _userRepository.GetByMobileAsync(model.MobileNumber);
-
-        if (existingMobile != null)
+        if (model.MobileNumber == "0" || model.MobileNumber == "")
         {
-            throw new BusinessException("Mobile number already exists");
+            model.MobileNumber = null;
+        }
+
+        if (model.MobileNumber != null)
+        {
+            var existingMobile = await _userRepository.GetByMobileAsync(model.MobileNumber);
+
+            if (existingMobile != null)
+            {
+                throw new BusinessException("Mobile number already exists");
+            }
         }
 
         var user = new User
