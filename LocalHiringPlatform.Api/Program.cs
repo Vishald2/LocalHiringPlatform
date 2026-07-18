@@ -1,4 +1,3 @@
-using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
 using LocalHiringPlatform.Api.Middleware;
 using LocalHiringPlatform.Domain.Configuration;
 using LocalHiringPlatform.Domain.Helpers;
@@ -25,10 +24,7 @@ using LocalHiringPlatform.Infrastructure.Services.Experience;
 using LocalHiringPlatform.Infrastructure.Services.MasterData;
 using LocalHiringPlatform.ServiceBus.Extensions;
 using LocalHiringPlatform.ServiceBus.Interfaces;
-using LocalHiringPlatform.ServiceBus.Messages;
 using LocalHiringPlatform.ServiceBus.Services;
-using LocalHiringPlatform.Worker;
-using LocalHiringPlatform.Worker.Handlers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
