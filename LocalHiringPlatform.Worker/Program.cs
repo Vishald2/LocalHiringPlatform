@@ -20,10 +20,6 @@ builder.Services.AddScoped<
     IMessageHandler<EmailRequestModel>,
     EmailMessageHandler>();
 
-builder.Services.AddScoped<
-    IEmailService,
-    ResendEmailService>();
-
 builder.Services.AddScoped<IEmailService, ResendEmailService>();
 
 builder.Services.AddHttpClient<ResendClient>();
@@ -40,7 +36,7 @@ builder.Services.Configure<ResendSettings>(
     builder.Configuration.GetSection("Resend"));
 
 
-
+builder.Services.AddWindowsService();
 
 var host = builder.Build();
 host.Run();

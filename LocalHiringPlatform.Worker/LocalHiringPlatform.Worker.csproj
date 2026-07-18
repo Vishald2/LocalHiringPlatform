@@ -18,4 +18,10 @@
     <ProjectReference Include="..\LocalHiringPlatform.Infrastructure\LocalHiringPlatform.Infrastructure.csproj" />
     <ProjectReference Include="..\LocalHiringPlatform.ServiceBus\LocalHiringPlatform.ServiceBus.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="appsettings.json">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
 </Project>
