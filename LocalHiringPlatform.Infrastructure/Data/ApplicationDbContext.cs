@@ -63,7 +63,9 @@ public class ApplicationDbContext : DbContext
 
         modelBuilder.Entity<User>()
             .HasIndex(x => x.MobileNumber)
-            .IsUnique();
+            .IsUnique()
+            .HasFilter("[MobileNumber] IS NOT NULL");
+
 
         modelBuilder.Entity<Job>()
             .HasOne(x => x.EmployerProfile)
