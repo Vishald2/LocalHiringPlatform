@@ -85,15 +85,18 @@ jobs:
         run: |
           az account show
 
-      - name: List Web Apps
+      - name: Check Worker App
         shell: pwsh
         run: |
-          az webapp list --output table
+          az webapp show `
+            --name localhire-worker `
+            --resource-group localhirerg
 
       - name: Deploy Worker
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'localhire-worker'
+          resource-group-name: 'localhirerg'
           slot-name: 'Production'
           package: .
           
