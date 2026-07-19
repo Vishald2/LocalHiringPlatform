@@ -8,8 +8,11 @@ namespace LocalHiringPlatform.ServiceBus.Interfaces
 {
     public interface IServiceBusConsumer
     {
-        void RegisterHandler<T>(
+        void RegisterHandlerOLD<T>(
             Func<T, CancellationToken, Task> handler);
+
+        void RegisterHandler(string messageType, 
+            Func<string, CancellationToken, Task> handler);
 
         Task StartAsync(
             CancellationToken cancellationToken = default);

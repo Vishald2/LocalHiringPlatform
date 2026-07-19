@@ -9,6 +9,8 @@ using System.Text.Json;
 
 namespace LocalHiringPlatform.ServiceBus.Services
 {
+    // The class must declare the generic parameter T
+
     public class ServiceBusConsumer : IServiceBusConsumer,
                                         IAsyncDisposable
     {
@@ -16,8 +18,10 @@ namespace LocalHiringPlatform.ServiceBus.Services
         private readonly ServiceBusProcessor _processor;
         private readonly ILogger<ServiceBusConsumer> _logger;
 
-        private readonly Dictionary<string, Func<string, CancellationToken, Task>>
-                _handlers = new();
+        private readonly Dictionary<string, Func<string, CancellationToken, Task>> 
+            _handlers =
+         new Dictionary<string, Func<string, CancellationToken, Task>>();
+
 
         private readonly IServiceScopeFactory _scopeFactory;
 
@@ -36,7 +40,14 @@ namespace LocalHiringPlatform.ServiceBus.Services
                 options.Value.QueueName);
         }
 
-        public void RegisterHandler<T>(
+        public void RegisterHandler(string messageType,
+    Func<string, CancellationToken, Task> handler)
+        {
+
+            _handlers[messageType]=handler;
+        }
+
+        public void RegisterHandlerOLD<T>(
             Func<T, CancellationToken, Task> handler)
         {
 
@@ -101,7 +112,13 @@ namespace LocalHiringPlatform.ServiceBus.Services
                     "MessageType property is empty.");
             }
 
-            if (!_handlers.TryGetValue(messageType, out var handlerWrapper))
+            //if (!_handlers.TryGetValue(messageType, out var handlerWrapper))
+            //{
+            //    throw new InvalidOperationException(
+            //        $"No handler registered for '{messageType}'.");
+            //}
+
+            if (!_handlers.TryGetValue(messageType, out var handler))
             {
                 throw new InvalidOperationException(
                     $"No handler registered for '{messageType}'.");
@@ -113,7 +130,9 @@ namespace LocalHiringPlatform.ServiceBus.Services
 
             try
             {
-                await handlerWrapper(json, args.CancellationToken);
+                await handler(json, args.CancellationToken);
+
+               // await handlerWrapper(json, args.CancellationToken);
 
                 await args.CompleteMessageAsync(args.Message);
             }
