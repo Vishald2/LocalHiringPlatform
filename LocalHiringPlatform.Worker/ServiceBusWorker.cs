@@ -1,6 +1,7 @@
 using LocalHiringPlatform.Domain.Models;
 using LocalHiringPlatform.ServiceBus.Interfaces;
 using LocalHiringPlatform.ServiceBus.Messages;
+using System.Text.Json;
 
 namespace LocalHiringPlatform.Worker
 {
@@ -23,7 +24,33 @@ namespace LocalHiringPlatform.Worker
             _consumer.RegisterHandler<EmailRequestModel>(
                 HandleOutboundEmailAsync);
 
+            _consumer.RegisterHandler2(typeof(EmailRequestModel).Name,
+                HandleOutboundEmailAsync2);
+
             await _consumer.StartAsync(stoppingToken);
+        }
+
+        private async Task HandleOutboundEmailAsync2(
+          string json,
+          CancellationToken cancellationToken)
+        {
+            using var scope = _scopeFactory.CreateScope();
+
+            var handler =
+                scope.ServiceProvider.GetRequiredService<
+                    IMessageHandler<EmailRequestModel>>();
+
+            var emailRequestModel = JsonSerializer.Deserialize<EmailRequestModel>(json);
+
+            if (emailRequestModel == null)
+            {
+                throw new InvalidOperationException(
+                    $"Unable to deserialize message to {typeof(EmailRequestModel).Name}.");
+            }
+
+            await handler.HandleAsync(
+                emailRequestModel,
+                cancellationToken);
         }
 
         private async Task HandleOutboundEmailAsync(

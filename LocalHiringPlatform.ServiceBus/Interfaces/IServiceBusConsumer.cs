@@ -11,6 +11,9 @@ namespace LocalHiringPlatform.ServiceBus.Interfaces
         void RegisterHandler<T>(
             Func<T, CancellationToken, Task> handler);
 
+        void RegisterHandler2(string messageType, 
+            Func<string, CancellationToken, Task> handler);
+
         Task StartAsync(
             CancellationToken cancellationToken = default);
 
