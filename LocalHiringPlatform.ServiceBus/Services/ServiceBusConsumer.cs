@@ -18,10 +18,8 @@ namespace LocalHiringPlatform.ServiceBus.Services
         private readonly ServiceBusProcessor _processor;
         private readonly ILogger<ServiceBusConsumer> _logger;
 
-        private readonly Dictionary<string, Func<string, CancellationToken, Task>>
-                _handlers = new();
-
-        private readonly Dictionary<string, Func<string, CancellationToken, Task>> _handlers2 =
+        private readonly Dictionary<string, Func<string, CancellationToken, Task>> 
+            _handlers =
          new Dictionary<string, Func<string, CancellationToken, Task>>();
 
 
@@ -42,27 +40,14 @@ namespace LocalHiringPlatform.ServiceBus.Services
                 options.Value.QueueName);
         }
 
-        public void RegisterHandler2(string messageType,
+        public void RegisterHandler(string messageType,
     Func<string, CancellationToken, Task> handler)
         {
 
-            _handlers2[messageType]=handler;
-
-            //_handlers[typeof(T).Name] = async (json, cancellationToken) =>
-            //{
-            //    var message = JsonSerializer.Deserialize<T>(json);
-
-            //    if (message == null)
-            //    {
-            //        throw new InvalidOperationException(
-            //            $"Unable to deserialize message to {typeof(T).Name}.");
-            //    }
-
-            //    await handler(message, cancellationToken);
-            //};
+            _handlers[messageType]=handler;
         }
 
-        public void RegisterHandler<T>(
+        public void RegisterHandlerOLD<T>(
             Func<T, CancellationToken, Task> handler)
         {
 
@@ -127,13 +112,13 @@ namespace LocalHiringPlatform.ServiceBus.Services
                     "MessageType property is empty.");
             }
 
-            if (!_handlers.TryGetValue(messageType, out var handlerWrapper))
-            {
-                throw new InvalidOperationException(
-                    $"No handler registered for '{messageType}'.");
-            }
+            //if (!_handlers.TryGetValue(messageType, out var handlerWrapper))
+            //{
+            //    throw new InvalidOperationException(
+            //        $"No handler registered for '{messageType}'.");
+            //}
 
-            if (!_handlers2.TryGetValue(messageType, out var handlerWrapper2))
+            if (!_handlers.TryGetValue(messageType, out var handler))
             {
                 throw new InvalidOperationException(
                     $"No handler registered for '{messageType}'.");
@@ -145,7 +130,7 @@ namespace LocalHiringPlatform.ServiceBus.Services
 
             try
             {
-                await handlerWrapper2(json, args.CancellationToken);
+                await handler(json, args.CancellationToken);
 
                // await handlerWrapper(json, args.CancellationToken);
 

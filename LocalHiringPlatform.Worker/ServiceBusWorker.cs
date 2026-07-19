@@ -21,16 +21,16 @@ namespace LocalHiringPlatform.Worker
         protected override async Task ExecuteAsync(
             CancellationToken stoppingToken)
         {
-            _consumer.RegisterHandler<EmailRequestModel>(
-                HandleOutboundEmailAsync);
+            //_consumer.RegisterHandler<EmailRequestModel>(
+            //    HandleOutboundEmailAsync);
 
-            _consumer.RegisterHandler2(typeof(EmailRequestModel).Name,
-                HandleOutboundEmailAsync2);
+            _consumer.RegisterHandler(typeof(EmailRequestModel).Name,
+                HandleOutboundEmailAsync);
 
             await _consumer.StartAsync(stoppingToken);
         }
 
-        private async Task HandleOutboundEmailAsync2(
+        private async Task HandleOutboundEmailAsync(
           string json,
           CancellationToken cancellationToken)
         {
@@ -53,7 +53,7 @@ namespace LocalHiringPlatform.Worker
                 cancellationToken);
         }
 
-        private async Task HandleOutboundEmailAsync(
+        private async Task HandleOutboundEmailAsyncOLD(
             EmailRequestModel message,
             CancellationToken cancellationToken)
         {
