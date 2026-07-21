@@ -12,6 +12,7 @@ namespace LocalHiringPlatform.Infrastructure.Services
 
         private readonly ResendSettings _settings;
         private readonly ILogger _logger;
+        private readonly IKeyVaultService _keyVaultService;
 
         public ResendEmailService(
             IResend resend,
