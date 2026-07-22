@@ -383,19 +383,19 @@ builder.Services.AddScoped<
     IJwtTokenService,
     JwtTokenService>();
 
-builder.Services.AddSingleton<IConnectionMultiplexer>(sp =>
-{
-    var configuration =
-        builder.Configuration
-            .GetValue<string>("Redis:ConnectionString");
+//builder.Services.AddSingleton<IConnectionMultiplexer>(sp =>
+//{
+//    var configuration =
+//        builder.Configuration
+//            .GetValue<string>("Redis:ConnectionString");
 
-    return ConnectionMultiplexer.Connect(
-        configuration!);
-});
+//    return ConnectionMultiplexer.Connect(
+//        configuration!);
+//});
 
-builder.Services.AddScoped<
-    IRedisCacheService,
-    RedisCacheService>();
+//builder.Services.AddScoped<
+//    IRedisCacheService,
+//    RedisCacheService>();
 
 Log.Information(
     "LocalHire API Started");
