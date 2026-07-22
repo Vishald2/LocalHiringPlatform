@@ -17,7 +17,7 @@ namespace LocalHiringPlatform.Worker
             _consumer = consumer;
             _scopeFactory = scopeFactory;
         }
-
+            
         protected override async Task ExecuteAsync(
             CancellationToken stoppingToken)
         {

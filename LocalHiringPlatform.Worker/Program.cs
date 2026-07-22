@@ -28,42 +28,12 @@ builder.Services.AddScoped<IEmailService, ResendEmailService>();
 builder.Services.AddHttpClient<ResendClient>();
 
 
+var resendApiKey = builder.Configuration["Resend:ApiKey"];
 
-var keyVaultUrl = builder.Configuration["KeyVault:Url"]!;
-
-//var secretClient = new SecretClient(
-//    new Uri(keyVaultUrl),
-//    new DefaultAzureCredential());
-
-
-TokenCredential credential;
-
-if (builder.Environment.IsDevelopment())
+if (string.IsNullOrWhiteSpace(resendApiKey))
 {
-    credential = new AzureCliCredential();
+    throw new Exception("Resend:ApiKey is missing.");
 }
-else
-{
-    credential = new DefaultAzureCredential(new DefaultAzureCredentialOptions
-    {
-        ExcludeManagedIdentityCredential = true
-    });
-}
-
-var secretClient = new SecretClient(
-    new Uri(keyVaultUrl),
-    credential);
-
-
-
-var resendApiKey = secretClient
-    .GetSecretAsync("ResendApiKey")
-    .GetAwaiter()
-    .GetResult()
-    .Value
-    .Value;
-
-Console.WriteLine(resendApiKey);
 
 builder.Services.Configure<ResendClientOptions>(o =>
 {
@@ -77,7 +47,6 @@ builder.Services.Configure<ResendSettings>(
 
 
 builder.Services.AddWindowsService();
-builder.Services.AddSingleton<IKeyVaultService, KeyVaultService>();
 
 var host = builder.Build();
 host.Run();
