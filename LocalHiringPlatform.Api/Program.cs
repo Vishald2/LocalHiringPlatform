@@ -427,4 +427,6 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+app.MapGet("/version", () => "2026-07-22");
+
 app.Run();
