@@ -13,19 +13,19 @@ namespace LocalHiringPlatform.Api.Controllers;
 public class TestController : ControllerBase
 {
 
-    private readonly IRedisCacheService _redisCacheService;
+   // private readonly IRedisCacheService _redisCacheService;
     private readonly ILogger _logger;
     private IPromptService _promptService;
     private readonly IServiceBusPublisher _serviceBusPublisher;
 
     public TestController(
-        IRedisCacheService redisCacheService,
+      //  IRedisCacheService redisCacheService,
         ILogger<TestController> logger,
         IPromptService promptService,
         IServiceBusPublisher serviceBusPublisher
         )
     {
-        _redisCacheService = redisCacheService;
+      //  _redisCacheService = redisCacheService;
         _logger = logger;
         _promptService = promptService;
         _serviceBusPublisher = serviceBusPublisher;
@@ -72,49 +72,49 @@ public class TestController : ControllerBase
         });
     }
 
-    [HttpGet("redis-test")]
-    public async Task<IActionResult> RedisTest()
-    {
-        await _redisCacheService.SetAsync(
-            "TestKey",
-            "Hello Redis",
-            TimeSpan.FromMinutes(5));
+    //[HttpGet("redis-test")]
+    //public async Task<IActionResult> RedisTest()
+    //{
+    //    await _redisCacheService.SetAsync(
+    //        "TestKey",
+    //        "Hello Redis",
+    //        TimeSpan.FromMinutes(5));
 
-        var value =
-            await _redisCacheService.GetAsync<string>(
-                "TestKey");
+    //    var value =
+    //        await _redisCacheService.GetAsync<string>(
+    //            "TestKey");
 
-        return Ok(value);
-    }
+    //    return Ok(value);
+    //}
 
-    [HttpGet("redis-ping")]
-    public async Task<IActionResult> RedisPing()
+    //[HttpGet("redis-ping")]
+    //public async Task<IActionResult> RedisPing()
     
-    {
-        try
-        {
-            await _redisCacheService.SetAsync(
-                "Ping",
-                "Pong");
+    //{
+    //    try
+    //    {
+    //        await _redisCacheService.SetAsync(
+    //            "Ping",
+    //            "Pong");
 
-            var value =
-                await _redisCacheService.GetAsync<string>(
-                    "Ping");
+    //        var value =
+    //            await _redisCacheService.GetAsync<string>(
+    //                "Ping");
 
-            return Ok(new
-            {
-                Success = true,
-                Value = value
-            });
-        }
-        catch (Exception ex)
-        {
-            return Ok(new
-            {
-                Success = false,
-                Message = ex.Message,
-                InnerException = ex.InnerException?.Message
-            });
-        }
-    }
+    //        return Ok(new
+    //        {
+    //            Success = true,
+    //            Value = value
+    //        });
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //        return Ok(new
+    //        {
+    //            Success = false,
+    //            Message = ex.Message,
+    //            InnerException = ex.InnerException?.Message
+    //        });
+    //    }
+    //}
 }
