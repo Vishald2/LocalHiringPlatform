@@ -14,6 +14,8 @@ using Resend;
 
 var builder = Host.CreateApplicationBuilder(args);
 
+Console.WriteLine("WORKER VERSION 2");
+
 builder.Services.AddHostedService<ServiceBusWorker>();
 builder.Services.AddServiceBus(builder.Configuration);
 
