@@ -75,15 +75,15 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_73B2A85909864D94902F40DC091B91E4 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_AD965DA1F1FB41D3BE33E945F34DA9D0 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_388AE11D79F548D18015BBE624050E2A }}
+          client-id: ${{ secrets.AZURE_CLIENT_ID}}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID}}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID}}
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'localhire-api'
+          app-name: ${{ secrets.AZURE_WEBAPP_NAME }}
           slot-name: 'Production'
           package: .
           
