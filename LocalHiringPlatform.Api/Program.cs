@@ -39,6 +39,11 @@ using Log = Serilog.Log;
 
 var builder = WebApplication.CreateBuilder(args);
 
+Console.WriteLine("====================================");
+Console.WriteLine(builder.Configuration["AzureServiceBus:ConnectionString"] ?? "<NULL>");
+Console.WriteLine(builder.Configuration["AzureServiceBus:QueueName"] ?? "<NULL>");
+Console.WriteLine("====================================");
+
 builder.Host.UseSerilog((context, services, configuration) =>
 {
     configuration.ReadFrom.Configuration(context.Configuration);
