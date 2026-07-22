@@ -1,7 +1,7 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Deploy Worker
+name: Deploy localhire-B326-worker
 
 on:
   push:
@@ -34,21 +34,6 @@ jobs:
       - name: Publish
         run: dotnet publish LocalHiringPlatform.Worker/LocalHiringPlatform.Worker.csproj --configuration Release --no-build --output "${{env.DOTNET_ROOT}}/worker"
         
-      - name: Prepare WebJob package
-        shell: pwsh
-        run: |
-          $publish = "${{ env.DOTNET_ROOT }}/worker"
-
-          $jobPath = Join-Path $publish "App_Data/jobs/continuous/LocalHireWorker"
-
-          New-Item -ItemType Directory -Force -Path $jobPath | Out-Null
-
-          Get-ChildItem $publish -Exclude "App_Data" | ForEach-Object {
-              Copy-Item $_.FullName $jobPath -Recurse -Force
-          }
-
-          "LocalHiringPlatform.Worker.exe" | Out-File "$jobPath/run.cmd" -Encoding ascii
-
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
@@ -76,9 +61,9 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_73B2A85909864D94902F40DC091B91E4 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_AD965DA1F1FB41D3BE33E945F34DA9D0 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_388AE11D79F548D18015BBE624050E2A }}
+          client-id: ${{ secrets.AZURE_CLIENT_ID}}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID}}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID}}
 
       - name: Show Azure Account
         shell: pwsh
@@ -89,14 +74,14 @@ jobs:
         shell: pwsh
         run: |
           az webapp show `
-            --name localhire-worker `
-            --resource-group localhire-rg
+            --name localhire-B326-worker `
+            --resource-group localhire-B326-rg
 
       - name: Deploy Worker
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'localhire-worker'
-          resource-group-name: 'localhire-rg'
+          app-name: 'localhire-B326-worker'
+          resource-group-name: 'localhire-B326-rg'
           slot-name: 'Production'
           package: .
           
