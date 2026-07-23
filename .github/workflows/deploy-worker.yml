@@ -52,11 +52,17 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: worker-app
+          path: worker
 
-      - name: Show downloaded files
+      - name: Prepare WebJob Package
         shell: pwsh
         run: |
-          Get-ChildItem -Path . -Recurse
+          New-Item -ItemType Directory -Force -Path deploy\App_Data\jobs\continuous\EmailSender
+
+          Copy-Item `
+            -Path worker\* `
+            -Destination deploy\App_Data\jobs\continuous\EmailSender `
+            -Recurse
 
       - name: Login to Azure
         uses: azure/login@v2
@@ -70,18 +76,15 @@ jobs:
         run: |
           az account show
 
-      - name: Check Worker App
+      - name: Show deployment package
         shell: pwsh
         run: |
-          az webapp show `
-            --name localhire-B326-worker `
-            --resource-group localhire-B326-rg
+          Get-ChildItem deploy -Recurse
 
-      - name: Deploy Worker
+      - name: Deploy WebJob
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'localhire-B326-worker'
-          resource-group-name: 'localhire-B326-rg'
+          app-name: 'localhire-B326-worker-win'
           slot-name: 'Production'
-          package: .
+          package: deploy
           
