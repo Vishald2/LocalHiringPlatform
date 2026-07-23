@@ -38,6 +38,8 @@ export default function CandidateRegisterPage() {
 
     const navigate = useNavigate();
 
+    const [loading, setLoading] = useState(false);
+
     function handleInputChange(
         field: keyof CandidateRegisterRequest,
         value: string | boolean | number
@@ -72,7 +74,11 @@ export default function CandidateRegisterPage() {
                 role: Number(form.role)
             };
 
+            setLoading(true);
+
             await registerCandidate(request);
+
+            setLoading(false);
 
             setSuccessMessage("Candidate registered successfully");
 
@@ -87,6 +93,9 @@ export default function CandidateRegisterPage() {
             setErrorMessage(errorMessage);
 
             alert("Error registering candidate: " + errorMessage);
+        }
+        finally {
+            setLoading(false);
         }
     }
     function validateForm() {
@@ -394,7 +403,7 @@ export default function CandidateRegisterPage() {
                     className="primary-button"
                     onClick={handleRegister}
                 >
-                    Register
+                    {loading ? "Registering..." : "Register"}
                 </button>
 
                 {

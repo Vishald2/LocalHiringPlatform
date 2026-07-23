@@ -9,12 +9,17 @@ export default function LoginPage() {
         password: ""
     });
 
+    const [loading, setLoading] = useState(false);
+
     const navigate = useNavigate();
 
     async function handleLogin() {
 
         try {
             console.log("Login...");
+
+            setLoading(true);
+
             const response = await login({
                 emailOrMobile: form.emailOrMobile,
                 password: form.password
@@ -41,6 +46,9 @@ export default function LoginPage() {
                 alert(error.message);
             }
         }
+        finally {
+            setLoading(false);
+        }
     }
 
     return (
@@ -48,9 +56,9 @@ export default function LoginPage() {
 
             <div className="form-card">
 
-                <h2 className="form-title">
+                <h3 className="form-title">
                     Candidate Login
-                </h2>
+                </h3>
 
                 <div className="form-group">
 
@@ -93,7 +101,7 @@ export default function LoginPage() {
                 <button
                     className="primary-button"
                     onClick={handleLogin}>
-                    Login
+                    {loading ? "Signing in..." : "Login"}
                 </button>
 
                 <div className="form-footer">
