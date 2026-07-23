@@ -14,6 +14,8 @@ using Resend;
 
 var builder = Host.CreateApplicationBuilder(args);
 
+Console.WriteLine(builder.Environment.EnvironmentName);
+
 Console.WriteLine("WORKER VERSION 2");
 
 builder.Services.AddHostedService<ServiceBusWorker>();
@@ -24,7 +26,7 @@ builder.Services.AddSingleton<IServiceBusConsumer,ServiceBusConsumer>();
 builder.Services.AddScoped<
     IMessageHandler<EmailRequestModel>,
     EmailMessageHandler>();
-
+Console.WriteLine("STEP -1");
 builder.Services.AddScoped<IEmailService, ResendEmailService>();
 
 builder.Services.AddHttpClient<ResendClient>();

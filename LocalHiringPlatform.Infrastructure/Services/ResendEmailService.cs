@@ -1,4 +1,5 @@
-﻿using LocalHiringPlatform.Domain.Interfaces;
+﻿using DocumentFormat.OpenXml.Wordprocessing;
+using LocalHiringPlatform.Domain.Interfaces;
 using LocalHiringPlatform.Domain.Models;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -12,7 +13,6 @@ namespace LocalHiringPlatform.Infrastructure.Services
 
         private readonly ResendSettings _settings;
         private readonly ILogger _logger;
-        private readonly IKeyVaultService _keyVaultService;
 
         public ResendEmailService(
             IResend resend,
@@ -44,8 +44,18 @@ namespace LocalHiringPlatform.Infrastructure.Services
 
             try
             {
+                
                 _logger.LogInformation("Sending email to {Email}", request.To);
+
+                _logger.LogInformation("Resend API Key Prefix: {Prefix}", _settings.ApiKey);
+                _logger.LogInformation("From Email: {FromEmail}", _settings.FromEmail);
+
                 var response = await _resend.EmailSendAsync(message);
+
+                _logger.LogInformation("Resend Id: {Id}", response.Content);
+                _logger.LogInformation("Resend Response: {@Response}", response);
+
+                // var response = await _resend.EmailSendAsync(message);
 
                 _logger.LogInformation("Successfully sent email to {Email}", request.To);
 

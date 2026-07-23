@@ -39,7 +39,7 @@ public class EmailMessageHandler : IMessageHandler<EmailRequestModel>
         await _emailService.SendEmailAsync(emailRequestModel);
 
         _logger.LogInformation(
-            "Email sent successfully to {Email}",
+            "Email sent successfully to {Email}. Time:" + DateTime.Now.ToShortTimeString(),
             message.To);
     }
 }

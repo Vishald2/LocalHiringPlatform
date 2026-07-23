@@ -93,6 +93,7 @@ namespace LocalHiringPlatform.ServiceBus.Services
         private async Task ProcessMessageAsync(
             ProcessMessageEventArgs args)
         {
+            
             var json = args.Message.Body.ToString();
 
             if (!args.Message.ApplicationProperties.TryGetValue(
@@ -125,8 +126,9 @@ namespace LocalHiringPlatform.ServiceBus.Services
             }
 
             _logger.LogInformation(
-                "Processing message of type {MessageType}",
-                messageType);
+                "Processing MessageId={MessageId}, DeliveryCount={DeliveryCount}, type={messageType}",
+                args.Message.MessageId,
+                args.Message.DeliveryCount, messageType);
 
             try
             {
