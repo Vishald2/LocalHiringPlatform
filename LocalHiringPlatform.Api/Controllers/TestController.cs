@@ -20,7 +20,7 @@ public class TestController : ControllerBase
         ILogger<TestController> logger,
         IPromptService promptService,
         IServiceBusPublisher serviceBusPublisher
-        )
+    )
     {
         _logger = logger;
         _promptService = promptService;
