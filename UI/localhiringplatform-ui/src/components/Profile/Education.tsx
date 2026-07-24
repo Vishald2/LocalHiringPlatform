@@ -105,7 +105,7 @@ export default function Education() {
     }
     return (
 
-        <div>
+        <div className="page-container">
 
             <div>
                 <button style={{width:"120px"} }

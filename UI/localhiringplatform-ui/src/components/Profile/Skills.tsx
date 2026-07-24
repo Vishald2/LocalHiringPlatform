@@ -76,9 +76,9 @@ export default function Skills() {
     }}
 >
 
-    <h3>
+    <h4>
         Skills
-    </h3>
+    </h4>
 
     {skillsLoading ? (
         <div className="loading-text">Loading skills...</div>

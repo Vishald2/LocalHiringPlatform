@@ -89,7 +89,7 @@ export default function Employment(
 
             <div className="profile-section-header">
 
-                <h2>Employment</h2>
+                <h4>Employment</h4>
                 <Link to="#"
                     className="link-button"
                     onClick={onAdd}

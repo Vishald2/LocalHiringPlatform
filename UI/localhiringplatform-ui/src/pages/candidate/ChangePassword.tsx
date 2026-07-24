@@ -70,9 +70,9 @@ export default function ChangePasswordPage() {
 
             <div className="form-card form-card-large">
 
-                <h2 className="form-title">
+                <h4 className="form-title">
                     Change Password
-                </h2>
+                </h4>
 
                 <form onSubmit={handleSubmit}>
 

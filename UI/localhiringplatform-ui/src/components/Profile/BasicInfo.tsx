@@ -93,9 +93,9 @@ export default function BasicInfo() {
                     }}
                 >
 
-                    <h2 className="form-title">
-                        Candidate Profile
-                    </h2>
+                    <h4 className="form-title">
+                        Basic Information
+                    </h4>
 
                     <div className="form-group">
 

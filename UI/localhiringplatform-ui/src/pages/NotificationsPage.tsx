@@ -52,9 +52,9 @@ export default function NotificationsPage() {
 
             <div className="dashboard-header">
 
-                <h1 className="dashboard-title">
+                <h4 className="dashboard-title">
                     Notifications
-                </h1>
+                </h4>
 
                 <p className="dashboard-subtitle">
                     View your latest updates.

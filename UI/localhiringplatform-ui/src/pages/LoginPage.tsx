@@ -55,11 +55,6 @@ export default function LoginPage() {
         <div className="center-page">
 
             <div className="form-card">
-
-                <h3 className="form-title">
-                    Candidate Login
-                </h3>
-
                 <div className="form-group">
 
                     <label className="form-label">

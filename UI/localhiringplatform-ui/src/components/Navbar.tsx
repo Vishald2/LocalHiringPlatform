@@ -114,11 +114,7 @@ export default function Navbar() {
                             to="/candidate/myapplications">
                             My Applications
                         </Link>
-                        <Link
-                            className="navbar-link"
-                            to="/cprofilenew">
-                            Profile New
-                        </Link>
+
                         <Link className="navbar-link"
                             to="/changepassword">
                             Change Password
@@ -132,7 +128,11 @@ export default function Navbar() {
                                 ` (${unreadCount})`
                             }
                         </Link>
-
+                        <Link
+                            className="navbar-link"
+                            to="/cprofilenew">
+                            Profile
+                        </Link>
                         <button
                             className="navbar-button navbar-logout"
                             onClick={handleLogout}>

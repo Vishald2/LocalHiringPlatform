@@ -57,10 +57,6 @@ export default function DashboardPage() {
         <div className="page-container dashboard-page">
 
             <div className="dashboard-header">
-
-                <h1 className="dashboard-title">
-                    Candidate Dashboard
-                </h1>
                 {
                     !emailVerified && (
 

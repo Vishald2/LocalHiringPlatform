@@ -217,9 +217,9 @@ export default function CandidateRegisterPage() {
 
             <div className="form-card form-card-large">
 
-                <h2 className="form-title">
+                <h4 className="form-title">
                     Registration
-                </h2>
+                </h4>
 
                 <div className="form-group">
 
