@@ -146,7 +146,7 @@ export default function ContactDetails() {
 
 
     return (
-        <div>
+        <div className="page-container">
 
             <div className="form-group">
 

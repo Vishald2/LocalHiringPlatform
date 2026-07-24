@@ -22,11 +22,11 @@ export default function MyApplicationsPage() {
     }, []);
 
     return (
-        <div>
+        <div className="page-container">
 
-            <h2>
+            <h4>
                 My Applications
-            </h2>
+            </h4>
 
             {
                 applications.map(

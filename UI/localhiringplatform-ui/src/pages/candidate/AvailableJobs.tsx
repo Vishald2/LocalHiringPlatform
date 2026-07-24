@@ -112,11 +112,11 @@ export default function JobList() {
     }
 
     return (
-        <div>
+        <div className="page-container">
 
-            <h2>
+            <h4>
                 Available Jobs
-            </h2>
+            </h4>
 
             <div
                 style={{

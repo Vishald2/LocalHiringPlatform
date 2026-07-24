@@ -41,11 +41,11 @@ export default function SavedJobsPage() {
     }
 
     return (
-        <div>
+        <div className="page-container">
 
-            <h2>
+            <h4>
                 Saved Jobs
-            </h2>
+            </h4>
 
             {
                 jobs.map(job => (
