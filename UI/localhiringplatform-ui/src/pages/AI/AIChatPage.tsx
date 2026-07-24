@@ -203,44 +203,34 @@
 
         </div>
 
-                        <textarea
-                            rows={4}
-                            value={message}
-                            disabled={loading}
-                            onChange={(e) => setMessage(e.target.value)}
-                            onKeyDown={(e) => {
+                   <div className="chat-input-panel">
+                       <textarea
+                           rows={3}
+                           value={message}
+                           disabled={loading}
+                           onChange={(e) => setMessage(e.target.value)}
+                           onKeyDown={(e) => {
+                               if (
+                                   e.key === "Enter" &&
+                                   !e.shiftKey &&
+                                   message.trim()
+                               ) {
+                                   e.preventDefault();
+                                   handleSend();
+                               }
+                           }}
+                           placeholder="Ask me anything..."
+                           className="chat-textarea"
+                       />
 
-                                if (
-                                    e.key === "Enter" &&
-                                    !e.shiftKey &&
-                                    message.trim()
-                                ) {
-
-                                    e.preventDefault();
-
-                                    handleSend();
-                                }
-
-                            }}
-                            placeholder="Ask me anything..."
-                            style={{ width: "100%" }}
-                        />
-
-        </div>
-
-        <div style={{ marginTop: "20px" }}>
-
-            <button style={{ width: "100px" }}
-                className="primary-button"
-                onClick={handleSend}
-                disabled={loading}
-            >
-                {
-                    loading
-                        ? "Thinking..."
-                        : "Send"
-                }
-            </button>
+                       <button
+                           className="primary-button"
+                           onClick={handleSend}
+                           disabled={loading}
+                       >
+                           {loading ? "Thinking..." : "Send"}
+                       </button>
+                   </div>
         </div>
 
         </div>

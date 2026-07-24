@@ -1,0 +1,17 @@
+﻿.chat-input-panel {
+    display: flex;
+    gap: 10px;
+    align-items: flex-end;
+}
+
+.chat-textarea {
+    flex: 0 0 50%;
+    height: 80px; /* Fixed height */
+    resize: none; /* or none */
+}
+
+.chat-input-panel .primary-button {
+    width: 100px;
+    height: 42px; /* Adjust to match textarea if desired */
+    flex-shrink: 0;
+}
