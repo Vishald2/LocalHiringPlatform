@@ -1,5 +1,4 @@
 ﻿using LocalHiringPlatform.Domain.Interfaces.AI;
-using LocalHiringPlatform.Domain.Interfaces.AI.LocalHiringPlatform.Domain.Interfaces.AI;
 using LocalHiringPlatform.Domain.Models.AI;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

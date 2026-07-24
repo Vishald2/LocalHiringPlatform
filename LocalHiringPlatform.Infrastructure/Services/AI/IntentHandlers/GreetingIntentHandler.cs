@@ -1,17 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using LocalHiringPlatform.Domain.Enums;
+using LocalHiringPlatform.Domain.Interfaces.AI;
+using LocalHiringPlatform.Domain.Models.AI;
 
 namespace LocalHiringPlatform.Infrastructure.Services.AI.IntentHandlers
 {
-    using global::LocalHiringPlatform.Domain.Enums;
-    using global::LocalHiringPlatform.Domain.Interfaces.AI.LocalHiringPlatform.Domain.Interfaces.AI;
-    using global::LocalHiringPlatform.Domain.Models.AI;
-
-    namespace LocalHiringPlatform.Infrastructure.Services.AI.IntentHandlers
-    {
         public class GreetingIntentHandler : IAIIntentHandler
         {
             public AIIntentType IntentType
@@ -36,4 +28,3 @@ namespace LocalHiringPlatform.Infrastructure.Services.AI.IntentHandlers
             }
         }
     }
-}

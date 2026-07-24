@@ -1,18 +1,9 @@
-﻿using Azure.Core;
-using LocalHiringPlatform.Domain.Enums;
+﻿using LocalHiringPlatform.Domain.Enums;
 using LocalHiringPlatform.Domain.Interfaces;
 using LocalHiringPlatform.Domain.Interfaces.AI;
-using LocalHiringPlatform.Domain.Interfaces.AI.LocalHiringPlatform.Domain.Interfaces.AI;
 using LocalHiringPlatform.Domain.Models;
 using LocalHiringPlatform.Domain.Models.AI;
-using Microsoft.Identity.Client;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace LocalHiringPlatform.Infrastructure.Services.AI.IntentHandlers
 {
