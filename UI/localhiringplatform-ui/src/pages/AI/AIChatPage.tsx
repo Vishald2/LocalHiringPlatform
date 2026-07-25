@@ -1,4 +1,4 @@
-﻿        import { useState } from "react";
+﻿        import { useEffect, useState } from "react";
         import { sendMessage } from "../../services/AIChatService";
         import JobSearchResults from "../AI/JobSearchResults";
 
@@ -6,131 +6,143 @@
         import type { JobSearchResultModel } from "../../types/AI/JobSearchResultModel";
 
         import { useAIChat } from "./AIChatContext";
+import { getConnection, pingServer } from "../../services/SignalR/SignalRService";
 
-                export default function AIChatPage() {
+export default function AIChatPage() {
 
-                    const  messages1  = useAIChat();
+    const messages1 = useAIChat();
 
-                    console.log("AIChatPage");
-                    console.log(messages1);
+    console.log("AIChatPage");
+    console.log(messages1);
 
-                    const [message, setMessage] = useState("");
+    const [message, setMessage] = useState("");
 
-                    const {
-                        messages,
-                        setMessages
-                    } = useAIChat();
+    const {
+        messages,
+        setMessages
+    } = useAIChat();
 
-                    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(false);
 
-                const handleSend = async () => {
+    const handleSend = async () => {
 
-                if (!message.trim())
-                return;
+        if (!message.trim())
+            return;
 
-                const userMessage = message;
+        const userMessage = message;
+
+        setMessages(prev => [
+            ...prev,
+            {
+                sender: "user",
+                text: userMessage
+            }
+        ]);
+
+        setMessage("");
+
+        try {
+
+            setLoading(true);
+
+            try {
+
+                const response =
+                    await sendMessage({
+                        message: userMessage
+                    });
+
+                console.log(response);
 
                 setMessages(prev => [
                     ...prev,
                     {
-                    sender: "user",
-                    text: userMessage
+                        sender: "assistant",
+                        response: response
                     }
                 ]);
+            }
+            catch (error) {
+                console.log("Error sending message:", error);
+                throw error;
+            }
+            finally {
+                setLoading(false);
+            }
+        }
+        catch (error) {
 
-                setMessage("");
+            console.error(error);
 
-                try {
-
-                    setLoading(true);
-
-                    try {
-
-                        const response =
-                            await sendMessage({
-                                message: userMessage
-                            });
-
-                        console.log(response);
-
-                        setMessages(prev => [
-                            ...prev,
-                            {
-                                sender: "assistant",
-                                response: response
-                            }
-                        ]);
-                    }
-                    catch (error) {
-                        console.log("Error sending message:", error);
-                        throw error;
-                    }
-                        finally {
-                            setLoading(false);
-                        }
+            setMessages(prev => [
+                ...prev,
+                {
+                    sender: "assistant",
+                    text: "Sorry, something went wrong."
                 }
-                catch (error) {
+            ]);
+        }
+    };
 
-                console.error(error);
+    const renderIntent = (
+        item: AIIntentHandlerResponse,
+        index: number
+    ) => {
 
-                    setMessages(prev => [
-                        ...prev,
-                        {
-                        sender: "assistant",
-                        text: "Sorry, something went wrong."
-                        }
-                    ]);
+        switch (item.intent) {
+
+            case "Greeting":
+
+                return (
+                    <div
+                        key={index}
+                        style={{ marginBottom: "15px" }}
+                    >
+                        {item.data as string}
+                    </div>
+                );
+
+            case "JobSearch":
+
+                if (item.data == null) {
+
+                    return (
+                        <div
+                            key={index}
+                            className="chat-bubble ai-bubble"
+                        >
+                            {item.message}
+                        </div>
+                    );
                 }
-                };
 
-                    const renderIntent = (
-                        item: AIIntentHandlerResponse,
-                        index: number
-                    ) => {
+                return (
+                    <JobSearchResults
+                        key={index}
+                        jobs={item.data as JobSearchResultModel[]}
+                    />
+                );
 
-                        switch (item.intent) {
+            default:
 
-                            case "Greeting":
+                return (
+                    <pre key={index}>
+                        {JSON.stringify(item.data, null, 2)}
+                    </pre>
+                );
+        }
+    };
 
-                                return (
-                                    <div
-                                        key={index}
-                                        style={{ marginBottom: "15px" }}
-                                    >
-                                        {item.data as string}
-                                    </div>
-                                );
+    useEffect(() => {
 
-                            case "JobSearch":
+       
 
-                                if (item.data == null) {
+    }, []);
 
-                                    return (
-                                        <div
-                                            key={index}
-                                            className="chat-bubble ai-bubble"
-                                        >
-                                            {item.message}
-                                        </div>
-                                    );
-                                }
-
-                                return (
-                                    <JobSearchResults
-                                        key={index}
-                                        jobs={item.data as JobSearchResultModel[]}
-                                    />
-                                );
-
-                            default:
-
-                                return (
-                                    <pre key={index}>
-                                        {JSON.stringify(item.data, null, 2)}
-                                    </pre>
-                                );
-                        }
-                    };
+    const handleSignalR = async () => {
+        await getConnection();
+        pingServer()
+    }
 
    return (
         <div className="page-container">
@@ -229,6 +241,12 @@
                            disabled={loading}
                        >
                            {loading ? "Thinking..." : "Send"}
+                       </button>
+                       <button
+                           className="primary-button"
+                           onClick={handleSignalR}
+                       >
+                           SignalR
                        </button>
                    </div>
         </div>

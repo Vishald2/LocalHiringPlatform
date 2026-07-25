@@ -30,12 +30,17 @@ import ProfilePage from "./pages/ProfilePage";
 import LandingPage from "./pages/Landing/LandingPage";
 
 import AIChatPage from "./pages/AI/AIChatPage";
+import { SignalRConnection } from "./components/SignalR/SignalRConnection";
 
 function App() {
     console.log("App.tsx");
     console.log(import.meta.env.VITE_TEST);
     console.log(import.meta.env.VITE_API_BASE_URL);
     return (
+                <>
+
+            <SignalRConnection />
+
         <BrowserRouter>
             <Routes>
                 <Route element={<MainLayout />}>
@@ -166,7 +171,9 @@ function App() {
                 </Route>
               
             </Routes>
-        </BrowserRouter>
+            </BrowserRouter>
+
+            </>
     );
 }
 
