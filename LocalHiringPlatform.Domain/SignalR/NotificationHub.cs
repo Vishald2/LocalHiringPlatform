@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.SignalR;
+using System.Security.Claims;
 
 namespace LocalHiringPlatform.Api.Hubs
 {
@@ -6,7 +7,14 @@ namespace LocalHiringPlatform.Api.Hubs
     {
         public override async Task OnConnectedAsync()
         {
-            Console.WriteLine($"Connected: {Context.ConnectionId}");
+            var userId =
+                Context.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            Console.WriteLine($"####");
+            Console.WriteLine($"Connected User : {userId}");
+
+            Console.WriteLine($"Connection Id : {Context.ConnectionId}");
+            Console.WriteLine($"####");
 
             await base.OnConnectedAsync();
         }

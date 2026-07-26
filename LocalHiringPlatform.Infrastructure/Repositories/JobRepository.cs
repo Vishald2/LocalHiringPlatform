@@ -1,4 +1,5 @@
-﻿using LocalHiringPlatform.Domain.Entities;
+﻿using DocumentFormat.OpenXml.Office2010.Excel;
+using LocalHiringPlatform.Domain.Entities;
 using LocalHiringPlatform.Domain.Interfaces;
 using LocalHiringPlatform.Domain.Models;
 using LocalHiringPlatform.Domain.Models.AI;
@@ -353,5 +354,25 @@ public class JobRepository : IJobRepository
 
         return null;
     }
-    /*AI SEARCHING CODE. END*/
+
+    public async Task<InternalJobDataModel?> GetInternalJobDataAsync(Guid jobEntityId)
+    {
+        var jobData= await _dbContext.Jobs.Include(job=>job.EmployerProfile)
+            .FirstOrDefaultAsync(
+                x => x.EntityId == jobEntityId);
+
+        InternalJobDataModel? internalJobDataModel = null;
+
+        if (jobData != null)
+        {
+            internalJobDataModel = new InternalJobDataModel
+            {
+                EmployerUserId = jobData.EmployerProfile.UserId,
+                JobId = jobData.EntityId,
+                Title = jobData.Title,
+            };
+        }
+
+        return internalJobDataModel;
+    }
 }

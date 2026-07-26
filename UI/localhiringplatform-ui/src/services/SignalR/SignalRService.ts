@@ -12,9 +12,13 @@ export async function getConnection(): Promise<HubConnection> {
     }
 
     connection = new HubConnectionBuilder()
-        .withUrl(`${API_BASE_URL}/notificationHub`)
-        .withAutomaticReconnect()
-        .build();
+    .withUrl(`${API_BASE_URL}/notificationHub`, {
+        accessTokenFactory: () => {
+            return localStorage.getItem("token") ?? "";
+        }
+    })
+    .withAutomaticReconnect()
+    .build();
 
     await connection.start();
 

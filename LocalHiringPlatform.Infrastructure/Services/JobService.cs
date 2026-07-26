@@ -47,7 +47,7 @@ public class JobService : IJobService
             throw new BusinessException(
                 "Please verify your email before posting jobs.");
         }
-        
+
 
         var job = new Job
         {
@@ -228,7 +228,7 @@ public class JobService : IJobService
             .SaveChangesAsync();
     }
 
-    public async Task<List<JobModel>>SearchJobsAsync(SearchJobsModel model)
+    public async Task<List<JobModel>> SearchJobsAsync(SearchJobsModel model)
     {
         var jobs =
             await _jobRepository
@@ -282,5 +282,10 @@ public class JobService : IJobService
         }
 
         return await _jobRepository.SearchAsync(model);
+    }
+
+    public async Task<InternalJobDataModel?> GetInternalJobDataAsync(Guid jobEntityId)
+    {
+       return await _jobRepository.GetInternalJobDataAsync(jobEntityId);
     }
 }

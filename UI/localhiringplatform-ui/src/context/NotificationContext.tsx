@@ -14,6 +14,10 @@ export interface NotificationContextType {
     ): void;
 
     clearNotifications(): void;
+
+    start(): Promise<void>;
+
+    stop(): Promise<void>;
 }
 
 export const NotificationContext =
@@ -21,5 +25,7 @@ export const NotificationContext =
         notifications: [],
         addNotification: () => { },
         removeNotification: () => { },
-        clearNotifications: () => { }
+        clearNotifications: () => { },
+        start: async () => { },
+        stop: async () => { }
     });

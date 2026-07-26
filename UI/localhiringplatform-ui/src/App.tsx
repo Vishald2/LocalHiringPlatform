@@ -30,7 +30,7 @@ import ProfilePage from "./pages/ProfilePage";
 import LandingPage from "./pages/Landing/LandingPage";
 
 import AIChatPage from "./pages/AI/AIChatPage";
-import { SignalRConnection } from "./components/SignalR/SignalRConnection";
+//import { SignalRConnection } from "./components/SignalR/SignalRConnection";
 
 function App() {
     console.log("App.tsx");
@@ -39,7 +39,7 @@ function App() {
     return (
                 <>
 
-            <SignalRConnection />
+   
 
         <BrowserRouter>
             <Routes>

@@ -1,16 +1,16 @@
 ﻿import { useEffect, useRef } from "react";
-import { useContext} from "react";
-import { NotificationContext } from "../../context/NotificationContext";
-import { NotificationHub } from "../../services/SignalR/NotificationHub";
+// import { useContext} from "react";
+// import { NotificationContext } from "../../context/NotificationContext";
+import { SignalRClient } from "../../services/SignalR/SignalRClient";
 
 export function SignalRConnection() {
 
-    const {
-        addNotification
-    } = useContext(NotificationContext);
+    // const {
+    //     addNotification
+    // } = useContext(NotificationContext);
 
     const notificationHub = useRef(
-        new NotificationHub()
+        new SignalRClient()
     );
 
     useEffect(() => {
@@ -21,18 +21,20 @@ export function SignalRConnection() {
             return;
         }
 
-        const startConnection = async () => {
+        // const startConnection = async () => {
 
-            await hub.start();
+        //  //   await hub.start();
 
-            hub.onNotification(notification => {
-                console.log("Notification Received", notification);
-                addNotification(notification);
+        //     console.log("Adding Callback function");
 
-            });
-        };
+        //     hub.onNotification(notification => {
+        //         console.log("Notification Received, ConnectionId-", notification, notificationHub.current);
+        //         addNotification(notification);
 
-        startConnection();
+        //     });
+        // };
+
+        // startConnection();
 
         return () => {
 

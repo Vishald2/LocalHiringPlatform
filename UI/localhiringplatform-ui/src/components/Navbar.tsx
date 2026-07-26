@@ -1,8 +1,17 @@
 ﻿import { Link, useNavigate } from "react-router-dom";
 import { getUnreadCount } from "../services/NotificationService";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import { useContext } from "react";
+import { NotificationContext } from "../context/NotificationContext";
+
 
 export default function Navbar() {
+
+    const [showNotifications,
+        setShowNotifications] =
+        useState(false);
+
+    const { stop, clearNotifications } = useContext(NotificationContext);
 
     const navigate = useNavigate();
 
@@ -15,6 +24,12 @@ export default function Navbar() {
     console.log("Token:", token, "Role:", role);
 
     const [unreadCount, setUnreadCount] = useState(0);
+
+    const {
+        notifications
+    } = useContext(NotificationContext);
+
+    const notificationRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
 
@@ -36,12 +51,34 @@ export default function Navbar() {
             loadUnreadCount();
         }
 
+        const handleClickOutside = (event: MouseEvent) => {
+
+            if (
+                notificationRef.current &&
+                !notificationRef.current.contains(event.target as Node)
+            ) {
+                setShowNotifications(false);
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+
     }, [token]);
 
     function handleLogout() {
 
         localStorage.removeItem("token");
         localStorage.removeItem("role");
+
+        stop();
+
+        clearNotifications();
+
+
 
         navigate("/login");
     }
@@ -51,7 +88,6 @@ export default function Navbar() {
         <nav className="navbar">
 
             <div className="navbar-brand">
-
                 <Link to="/">
                     Local Hiring Platform
                 </Link>
@@ -97,6 +133,7 @@ export default function Navbar() {
                             to="/savedjobs">
                             Saved Jobs
                         </Link>
+                       
                         <Link
                             className="navbar-link"
                             to="/dashboard">
@@ -143,6 +180,7 @@ export default function Navbar() {
 
                 {token && role === "Employer" && (
                     <>
+
                         <Link
                             className="navbar-link"
                             to="/edashboard">
@@ -176,7 +214,49 @@ export default function Navbar() {
                             to="/employer/candidates">
                             Search Candidates
                         </Link>
+                        <div
+                            className="notification-container"
+                            ref={notificationRef}
+                        >
 
+                            <div
+                                className="notification-icon"
+                                onClick={() =>
+                                    setShowNotifications(!showNotifications)
+                                }
+                            >
+                                🔔
+
+                                {
+                                    notifications.length > 0 &&
+                                    <span className="notification-badge">
+                                        {notifications.length}
+                                    </span>
+                                }
+                            </div>
+
+                            {
+                                showNotifications &&
+
+                                <div className="notification-panel">
+
+                                    {
+                                        notifications.map((notification, index) => (
+
+                                            <div
+                                                key={index}
+                                                className="notification-item"
+                                            >
+                                                {notification.message}
+                                            </div>
+
+                                        ))
+                                    }
+
+                                </div>
+                            }
+
+                        </div>
                         <button
                             className="navbar-button navbar-logout"
                             onClick={handleLogout}>

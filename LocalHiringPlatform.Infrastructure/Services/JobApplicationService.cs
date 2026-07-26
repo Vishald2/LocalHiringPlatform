@@ -131,16 +131,28 @@ public class JobApplicationService
         {
             Type = NotificationType.JobApplied,
             Title = "New Application",
-            Message = "Rahul applied for Software Engineer",
+            Message = $"{candidateProfile.FullName} applied for Software Engineer",
             CreatedOn = DateTime.UtcNow
         };
 
-        await _hubContext
-            .Clients
-            .All
-            .SendAsync(
-            "ReceiveNotification",
-            notificationModel);
+        InternalJobDataModel? internalJobDataModel = 
+                await _jobRepository.GetInternalJobDataAsync(model.JobId);
+
+        string  employerUserId = "";
+
+        if(internalJobDataModel != null)
+           employerUserId = internalJobDataModel.EmployerUserId.ToString();
+
+        if (employerUserId != "")
+        {
+            await _hubContext
+                .Clients
+                .User(employerUserId)
+                .SendAsync(
+                    "ReceiveNotification",
+                    notificationModel
+                );
+        }
     }
 
     public async Task<List<ApplicantModel>> GetAllApplicantsByEmployerProfile(Guid userId)

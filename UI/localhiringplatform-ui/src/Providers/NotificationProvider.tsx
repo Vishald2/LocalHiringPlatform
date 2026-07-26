@@ -1,6 +1,7 @@
-﻿import { useMemo, useState } from "react";
+﻿import { useCallback, useEffect, useMemo, useState } from "react";
 import { NotificationContext } from "../context/NotificationContext";
 import type { NotificationModel } from "../types/SignalR/NotificationModel";
+import { SignalRClient } from "../services/SignalR/SignalRClient";
 
 interface Props {
     children: React.ReactNode;
@@ -11,7 +12,7 @@ export function NotificationProvider({ children }: Props) {
     const [notifications, setNotifications] =
         useState<NotificationModel[]>([]);
 
-    const addNotification = (
+    const addNotification = useCallback((
         notification: NotificationModel
     ) => {
 
@@ -21,9 +22,9 @@ export function NotificationProvider({ children }: Props) {
             ...previous,
             notification
         ]);
-    };
+    },[]);
 
-    const removeNotification = (
+    const removeNotification = useCallback((
         notificationId: string
     ) => {
 
@@ -33,25 +34,61 @@ export function NotificationProvider({ children }: Props) {
                     notification.entityId !== notificationId
             )
         );
-    };
+    },[]);
 
-    const clearNotifications = () => {
+    const clearNotifications = useCallback(() => {
 
         setNotifications([]);
-    };
+    },[]);
+
+    const signalRClient = useMemo(
+        () => new SignalRClient(),
+        []
+    );
+
+    const start = useCallback(async () => {
+        await signalRClient.start();
+    },[]);
+
+    const stop = useCallback(async () => {
+        await signalRClient.stop();
+    },[]);
+
+    useEffect(() => {
+
+        signalRClient.onNotification(notification => {
+
+            console.log("Notification Received");
+
+            addNotification(notification);
+
+        });
+
+        return () => {
+            signalRClient.offNotification();
+        };
+
+    });
 
     const value = useMemo(() => ({
         notifications,
         addNotification,
         removeNotification,
-        clearNotifications
+        clearNotifications,
+        start,
+        stop
     }), [
-        notifications
+        notifications,
+        addNotification,
+        removeNotification,
+        clearNotifications,
+        start,
+        stop
     ]);
 
     return (
                 <NotificationContext.Provider value={value}>
                     {children}
                 </NotificationContext.Provider>
-            );
+    );
 }
