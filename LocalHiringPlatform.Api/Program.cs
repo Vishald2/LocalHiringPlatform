@@ -197,7 +197,7 @@ builder.Services.AddSingleton<IServiceBusConsumer, ServiceBusConsumer>();
 // =========================================================================
 // 7. AI & LLM SERVICES
 // =========================================================================
-builder.Services.AddHttpClient<ILLMService, GeminiLLMService>();
+builder.Services.AddScoped<ILLMService, GeminiLLMService>();
 builder.Services.AddScoped<IPromptService, PromptService>();
 builder.Services.AddScoped<IAiMatchingService, AiMatchingService>();
 builder.Services.AddScoped<IAiAnalysisRepository, AiAnalysisRepository>();
