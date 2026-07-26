@@ -11,16 +11,24 @@ import "./styles/dashboard.css";
 import "./styles/utilities.css";
 import "./styles/aichat.css";
 import "./styles/profile.css";
+import "./styles/notifications.css";
 import "./styles/education/education.css"
 import "./styles/AI Pages/AIChatPage.css"
 import { AIChatProvider } from './pages/AI/AIChatContext.tsx';
+import { NotificationProvider } from './Providers/NotificationProvider.tsx';
 
 createRoot(document.getElementById('root')!).render(
-  <StrictMode>
+    <>
+    <StrictMode>
         <AIChatProvider>
 
-            <App />
+            <NotificationProvider>
+
+                <App />
+
+            </NotificationProvider>
 
         </AIChatProvider>
-  </StrictMode>,
+    </StrictMode>
+    </>,
 )

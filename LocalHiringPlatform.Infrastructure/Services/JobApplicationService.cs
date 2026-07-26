@@ -1,8 +1,11 @@
-﻿using LocalHiringPlatform.Domain.Entities;
+﻿using LocalHiringPlatform.Api.Hubs;
+using LocalHiringPlatform.Domain.Entities;
+using LocalHiringPlatform.Domain.Enums;
 using LocalHiringPlatform.Domain.Exceptions;
 using LocalHiringPlatform.Domain.Interfaces;
 using LocalHiringPlatform.Domain.Models;
 using LocalHiringPlatform.Infrastructure.Repositories;
+using Microsoft.AspNetCore.SignalR;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace LocalHiringPlatform.Infrastructure.Services;
@@ -19,6 +22,7 @@ public class JobApplicationService
     private IUserRepository _userRepository;
     private readonly IUnitOfWork _unitOfWork;
     private readonly INotificationService _notificationService;
+    private readonly IHubContext<NotificationHub> _hubContext;
     IJobRepository _jobRepository;
     ICandidateSkillRepository _candidateSkillRepository;
     public JobApplicationService(
@@ -29,6 +33,7 @@ public class JobApplicationService
         INotificationService notificationService,
         IJobRepository jobRepository,
         ICandidateSkillRepository candidateSkillRepository,
+        IHubContext<NotificationHub> hubContext,
         IUnitOfWork unitOfWork)
     {
         _jobApplicationRepository = jobApplicationRepository;
@@ -38,6 +43,7 @@ public class JobApplicationService
         _notificationService = notificationService;
         _jobRepository = jobRepository;
         _candidateSkillRepository = candidateSkillRepository;
+        _hubContext = hubContext;
         _unitOfWork = unitOfWork;
     }
 
@@ -120,6 +126,33 @@ public class JobApplicationService
 
         await _unitOfWork
             .SaveChangesAsync();
+
+        var notificationModel = new NotificationModel
+        {
+            Type = NotificationType.JobApplied,
+            Title = "New Application",
+            Message = $"{candidateProfile.FullName} applied for Software Engineer",
+            CreatedOn = DateTime.UtcNow
+        };
+
+        InternalJobDataModel? internalJobDataModel = 
+                await _jobRepository.GetInternalJobDataAsync(model.JobId);
+
+        string  employerUserId = "";
+
+        if(internalJobDataModel != null)
+           employerUserId = internalJobDataModel.EmployerUserId.ToString();
+
+        if (employerUserId != "")
+        {
+            await _hubContext
+                .Clients
+                .User(employerUserId)
+                .SendAsync(
+                    "ReceiveNotification",
+                    notificationModel
+                );
+        }
     }
 
     public async Task<List<ApplicantModel>> GetAllApplicantsByEmployerProfile(Guid userId)

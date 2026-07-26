@@ -1,23 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using LocalHiringPlatform.Domain.Enums;
+using LocalHiringPlatform.Domain.Models.AI;
 
 namespace LocalHiringPlatform.Domain.Interfaces.AI
 {
-    using global::LocalHiringPlatform.Domain.Enums;
-    using global::LocalHiringPlatform.Domain.Models.AI;
-    using LocalHiringPlatform.Domain.Interfaces.AI;
-
-    namespace LocalHiringPlatform.Domain.Interfaces.AI
+    public interface IAIIntentHandler
     {
-        public interface IAIIntentHandler
-        {
-            AIIntentType IntentType { get; }
+        AIIntentType IntentType { get; }
 
-            Task<AIIntentHandlerResponse> HandleAsync(
-                AIIntentModel intentModel, AIChatRequestModel request);
-        }
+        Task<AIIntentHandlerResponse> HandleAsync(
+            AIIntentModel intentModel, AIChatRequestModel request);
     }
 }

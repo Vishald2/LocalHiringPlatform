@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { NotificationContext} from "../context/NotificationContext";
 import { useNavigate } from "react-router-dom";
 import { login } from "../services/AuthService";
 
@@ -12,6 +13,8 @@ export default function LoginPage() {
     const [loading, setLoading] = useState(false);
 
     const navigate = useNavigate();
+
+    const { start } = useContext(NotificationContext);
 
     async function handleLogin() {
 
@@ -30,6 +33,10 @@ export default function LoginPage() {
                 response.token);
 
             localStorage.setItem("role", response.role);
+
+            console.log("SignalR Connecting...");
+
+            await start();
 
             console.log("Login successful. Token:", response.token, "Role:", response.role);
 

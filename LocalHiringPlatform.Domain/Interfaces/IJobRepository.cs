@@ -18,4 +18,6 @@ public interface IJobRepository
     Task<List<Job>>SearchAsync(string? keyword, string? city);
 
     Task<List<JobSearchResultModel>> SearchAsync(JobSearchModel jobSearchModel);
+
+    Task<InternalJobDataModel?> GetInternalJobDataAsync(Guid jobEntityId);
 }
