@@ -68,11 +68,14 @@ builder.Services.AddHttpClient();
 builder.Services.AddSignalR();
 builder.Services.AddEndpointsApiExplorer();
 
+var frontendUrl =
+    builder.Configuration["Application:FrontendUrl"]!;
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("ReactPolicy", policy =>
     {
-        policy.WithOrigins("http://localhost:5173")
+        policy.WithOrigins(frontendUrl)
               .AllowAnyHeader()
               .AllowAnyMethod()
               .AllowCredentials();
