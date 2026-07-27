@@ -64,6 +64,9 @@ builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("Jwt"))
 // 3. CORE FRAMEWORK SERVICES (HTTP, CORS, SIGNALR, API/SWAGGER)
 // =========================================================================
 builder.Services.AddControllers();
+
+builder.Services.AddApplicationInsightsTelemetry();
+
 builder.Services.AddHttpClient();
 builder.Services.AddSignalR();
 builder.Services.AddEndpointsApiExplorer();
