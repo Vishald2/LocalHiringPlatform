@@ -139,11 +139,6 @@ export default function AIChatPage() {
 
     }, []);
 
-    const handleSignalR = async () => {
-        await getConnection();
-        pingServer()
-    }
-
    return (
         <div className="page-container">
 
@@ -241,12 +236,6 @@ export default function AIChatPage() {
                            disabled={loading}
                        >
                            {loading ? "Thinking..." : "Send"}
-                       </button>
-                       <button
-                           className="primary-button"
-                           onClick={handleSignalR}
-                       >
-                           SignalR
                        </button>
                    </div>
         </div>
