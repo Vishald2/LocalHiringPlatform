@@ -23,14 +23,21 @@ export default function DashboardPage() {
 
         async function loadProfile() {
 
+            const start = performance.now();
+
             const profile = await getProfile();
 
-            console.log("Profile");
-            console.log(profile);
+            console.log(
+                `Load Profile: ${performance.now() - start} ms`
+            );
 
             setProfileCompletion(profile.profileCompletionPercentage);
 
             setEmailVerified(profile.emailVerified);
+
+            console.log(
+                `Set Profile ${performance.now() - start} ms`
+            );
         }
 
         loadProfile();
@@ -40,9 +47,11 @@ export default function DashboardPage() {
     useEffect(() => {
 
         async function loadDashboard() {
-
+            const start = performance.now();
             const result = await getCandidateDashboard();
-
+            console.log(
+                `Load Dashboard: ${performance.now() - start} ms`
+            );
             console.log("Dashboard data:", result);
 
             setDashboard(result);

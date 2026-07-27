@@ -5,7 +5,9 @@ using LocalHiringPlatform.Domain.Models;
 using LocalHiringPlatform.Infrastructure.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 using System.Security.Claims;
+using Microsoft.Extensions.Logging;
 
 namespace LocalHiringPlatform.Api.Controllers
 {
@@ -17,13 +19,17 @@ namespace LocalHiringPlatform.Api.Controllers
         private readonly IEmailService _emailService;
         private readonly IJobService _jobService;
 
+        private readonly ILogger<AuthController> _logger;
+
         public AuthController(IAuthService authService,
             IEmailService emailService,
-            IJobService jobService)
+            IJobService jobService,
+            ILogger<AuthController> logger  )
         {
             _authService = authService;
             _emailService = emailService;
             _jobService = jobService;
+            _logger = logger;
         }
 
         private void ValidatePassword(string password)
@@ -96,6 +102,7 @@ namespace LocalHiringPlatform.Api.Controllers
         public async Task<IActionResult>
         Login(LoginRequest request)
         {
+            var sw = Stopwatch.StartNew();
             try
             {
                 var model = new LoginModel
@@ -106,6 +113,10 @@ namespace LocalHiringPlatform.Api.Controllers
                 };
 
                 var response = await _authService.LoginAsync(model);
+
+                _logger.LogInformation("User lookup: {Time} ms", sw.ElapsedMilliseconds);
+
+                sw.Stop();
 
                 return Ok(response);
             }

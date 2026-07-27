@@ -264,6 +264,11 @@ builder.Services.AddScoped<ICandidateExperienceService, CandidateExperienceServi
 builder.Services.AddScoped<IIndustryTypeRepository, IndustryTypeRepository>();
 builder.Services.AddScoped<IIndustryTypeService, IndustryTypeService>();
 
+builder.Services.AddScoped<ICandidateProfileService, CandidateProfileService>();
+
+
+
+
 
 // =========================================================================
 // 9. APPLICATION BUILD & PIPELINE

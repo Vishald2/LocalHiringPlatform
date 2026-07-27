@@ -25,6 +25,8 @@ export async function login(
 
     console.log({ API_BASE_URL });
 
+    const start = performance.now();
+
     const response = await fetch(
         `${API_BASE_URL}/api/auth/login`,
         {
@@ -34,6 +36,11 @@ export async function login(
             },
             body: JSON.stringify(request)
         });
+
+    console.log(
+        `Login API: ${performance.now() - start} ms`
+    );
+
 
     if (!response.ok) {
 
