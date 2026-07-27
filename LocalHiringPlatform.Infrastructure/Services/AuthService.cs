@@ -50,6 +50,7 @@ public class AuthService : IAuthService
     public async Task RegisterCandidateAsync(RegisterCandidateModel model)
     {
         var sw = Stopwatch.StartNew();
+
         var existingEmail = await _userRepository.GetByEmailAsync(model.Email);
 
         if (existingEmail != null)

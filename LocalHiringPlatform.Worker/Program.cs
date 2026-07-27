@@ -14,6 +14,8 @@ using Resend;
 
 var builder = Host.CreateApplicationBuilder(args);
 
+builder.Services.AddApplicationInsightsTelemetry();
+
 Console.WriteLine(builder.Environment.EnvironmentName);
 
 Console.WriteLine("WORKER VERSION 2");
