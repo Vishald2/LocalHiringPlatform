@@ -68,6 +68,7 @@ namespace LocalHiringPlatform.Api.Controllers
         [HttpPost("register-candidate")]
         public async Task<IActionResult> RegisterCandidate(RegisterCandidateRequest request)
         {
+            var sw = Stopwatch.StartNew();
             try
             {
                 var model =
@@ -84,6 +85,7 @@ namespace LocalHiringPlatform.Api.Controllers
 
                 await _authService.RegisterCandidateAsync(model);
 
+                _logger.LogInformation("Total Register Time Controller: {Time} ms", sw.ElapsedMilliseconds);
                 return Ok(new
                 {
                     Message = "Candidate registered successfully"

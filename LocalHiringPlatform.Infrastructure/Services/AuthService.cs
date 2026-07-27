@@ -6,7 +6,9 @@ using LocalHiringPlatform.Domain.Interfaces;
 using LocalHiringPlatform.Domain.Models;
 using LocalHiringPlatform.Infrastructure.EmailTemplates;
 using LocalHiringPlatform.ServiceBus.Interfaces;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using System.Diagnostics;
 
 namespace LocalHiringPlatform.Infrastructure.Services;
 
@@ -21,6 +23,7 @@ public class AuthService : IAuthService
     private readonly IEmailService _emailService;
     private readonly IOptions<ApplicationSettings> _applicationSettings;
     private readonly IServiceBusPublisher _serviceBusPublisher;
+    private readonly ILogger<AuthService> _logger;
 
     public AuthService(IUserRepository userRepository,
         ICandidateProfileRepository candidateProfileRepository,
@@ -29,7 +32,9 @@ public class AuthService : IAuthService
         IJwtTokenService jwtTokenService,
         IEmailService emailService,
         IOptions<ApplicationSettings> applicationSettings,
-        IServiceBusPublisher serviceBusPublisher)
+        IServiceBusPublisher serviceBusPublisher,
+        ILogger<AuthService> logger
+        )
     {
         _userRepository = userRepository;
         _candidateProfileRepository = candidateProfileRepository;
@@ -39,10 +44,12 @@ public class AuthService : IAuthService
         _emailService = emailService;
         _applicationSettings = applicationSettings;
         _serviceBusPublisher = serviceBusPublisher;
+        _logger = logger;
     }
 
     public async Task RegisterCandidateAsync(RegisterCandidateModel model)
     {
+        var sw = Stopwatch.StartNew();
         var existingEmail = await _userRepository.GetByEmailAsync(model.Email);
 
         if (existingEmail != null)
@@ -65,6 +72,8 @@ public class AuthService : IAuthService
             }
         }
 
+        _logger.LogInformation("Auth Service Step 1: {Time} ms", sw.ElapsedMilliseconds);
+
         var user = new User
         {
             Email = model.Email,
@@ -76,7 +85,12 @@ public class AuthService : IAuthService
             EmailVerificationTokenExpiry = DateTime.UtcNow.AddHours(24)
         };
 
+        _logger.LogInformation("Auth Service Step 2: {Time} ms", sw.ElapsedMilliseconds);
+
+
         await _userRepository.AddAsync(user);
+
+        _logger.LogInformation("Auth Service Step 3: {Time} ms", sw.ElapsedMilliseconds);
 
         if (user.Role == UserRole.Candidate)
         {
@@ -98,9 +112,12 @@ public class AuthService : IAuthService
             await _employerProfileRepository.AddAsync(profile);
         }
 
+        _logger.LogInformation("Auth Service Step 4: {Time} ms", sw.ElapsedMilliseconds);
 
 
         await _unitOfWork.SaveChangesAsync();
+
+        _logger.LogInformation("Auth Service Step 5: {Time} ms", sw.ElapsedMilliseconds);
 
         /*SEND VERIIFCATION MAIL*/
 
@@ -117,6 +134,8 @@ public class AuthService : IAuthService
 
         /*PUBLISHING MESSAGE TO AZURE MESSAGE QUEUE*/
         await _serviceBusPublisher.PublishAsync(emailRequestModel);
+
+        _logger.LogInformation("Auth Service Step 6: {Time} ms", sw.ElapsedMilliseconds);
 
     }
 
