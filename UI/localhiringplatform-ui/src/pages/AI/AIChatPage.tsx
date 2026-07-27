@@ -1,12 +1,11 @@
-﻿        import { useEffect, useState } from "react";
-        import { sendMessage } from "../../services/AIChatService";
-        import JobSearchResults from "../AI/JobSearchResults";
+﻿import { useEffect, useState } from "react";
+import { sendMessage } from "../../services/AIChatService";
+import JobSearchResults from "../AI/JobSearchResults";
 
-        import type { AIIntentHandlerResponse } from "../../types/AI/AIIntentHandlerResponse";
-        import type { JobSearchResultModel } from "../../types/AI/JobSearchResultModel";
+import type { AIIntentHandlerResponse } from "../../types/AI/AIIntentHandlerResponse";
+import type { JobSearchResultModel } from "../../types/AI/JobSearchResultModel";
 
-        import { useAIChat } from "./AIChatContext";
-import { getConnection, pingServer } from "../../services/SignalR/SignalRService";
+import { useAIChat } from "./AIChatContext";
 
 export default function AIChatPage() {
 
