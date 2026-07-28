@@ -10,14 +10,14 @@ namespace LocalHiringPlatform.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class TestController : ControllerBase
+public class ATestController : ControllerBase
 {
     private readonly ILogger _logger;
     private IPromptService _promptService;
     private readonly IServiceBusPublisher _serviceBusPublisher;
 
-    public TestController(
-        ILogger<TestController> logger,
+    public ATestController(
+        ILogger<ATestController> logger,
         IPromptService promptService,
         IServiceBusPublisher serviceBusPublisher
     )
@@ -39,6 +39,24 @@ public class TestController : ControllerBase
 
        await _serviceBusPublisher.PublishAsync(message);
 
+
+
         return Ok();
+    }
+
+    [HttpGet("LogMessage")]
+    public async Task<IActionResult> LogMessage()
+    {
+        _logger.LogInformation("Message from TestController at : " +  DateTime.Now.ToString());
+
+        return Ok("Message from TestController at : " + DateTime.Now.ToString());
+    }
+
+    [HttpGet("LogException")]
+    public async Task<IActionResult> LogException()
+    {
+        _logger.LogError("LogExceptio- Error log at: "  +DateTime.Now.ToString());
+
+        throw new Exception("Exception thrown by TestController(LogException) at: " + DateTime.Now.ToString());
     }
 }

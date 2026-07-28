@@ -104,6 +104,8 @@ namespace LocalHiringPlatform.Api.Controllers
         public async Task<IActionResult>
         Login(LoginRequest request)
         {
+            _logger.LogInformation("=== DEV Application Insights Test ===");
+
             var sw = Stopwatch.StartNew();
             try
             {
