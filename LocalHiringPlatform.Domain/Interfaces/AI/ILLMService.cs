@@ -10,5 +10,7 @@ namespace LocalHiringPlatform.Domain.Interfaces.AI
     {
         Task<string> GenerateAsync(
             string prompt);
+
+        IAsyncEnumerable<string> StreamAsync(string prompt, CancellationToken cancellationToken);
     }
 }

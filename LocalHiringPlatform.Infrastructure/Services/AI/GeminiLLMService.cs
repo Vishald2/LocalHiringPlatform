@@ -3,6 +3,7 @@ using LocalHiringPlatform.Domain.Exceptions;
 using LocalHiringPlatform.Domain.Interfaces.AI;
 using Microsoft.Extensions.Options;
 using System.Net.Http.Json;
+using System.Runtime.CompilerServices;
 using System.Text.Json;
 
 namespace LocalHiringPlatform.Infrastructure.Services.AI
@@ -23,26 +24,9 @@ namespace LocalHiringPlatform.Infrastructure.Services.AI
         public async Task<string> GenerateAsync(
             string prompt)
         {
-            var url =
-                $"{_options.GeminiEndpoint}{_options.ApiKey}";
+            var url = BuildUrl(stream: false);
 
-            var requestBody =
-                new
-                {
-                    contents = new[]
-                    {
-                new
-                {
-                    parts = new[]
-                    {
-                        new
-                        {
-                            text = prompt
-                        }
-                    }
-                }
-                    }
-                };
+            var requestBody = BuildRequestBody(prompt);
 
             var response =
                 await _httpClient.PostAsJsonAsync(
@@ -58,21 +42,10 @@ namespace LocalHiringPlatform.Infrastructure.Services.AI
             }
 
             var geminiResponse =
-                JsonSerializer.Deserialize<GeminiResponse>(
-                    responseContent,
-                    new JsonSerializerOptions
-                    {
-                        PropertyNameCaseInsensitive = true
-                    });
+                DeserializeResponse(responseContent);
 
             var aiReply =
-                geminiResponse?
-                    .Candidates
-                    .FirstOrDefault()?
-                    .Content
-                    .Parts
-                    .FirstOrDefault()?
-                    .Text;
+                ExtractText(geminiResponse);
 
             if (string.IsNullOrWhiteSpace(aiReply))
             {
@@ -86,6 +59,122 @@ namespace LocalHiringPlatform.Infrastructure.Services.AI
                 .Trim();
 
             return aiReply;
+        }
+
+        public async IAsyncEnumerable<string> StreamAsync(
+            string prompt,
+            [EnumeratorCancellation] CancellationToken cancellationToken = default)
+        {
+            var url = BuildUrl(stream: true);
+
+            var requestBody = BuildRequestBody(prompt);
+
+           // yield break;
+
+            var request = new HttpRequestMessage(
+    HttpMethod.Post,
+    url);
+
+            request.Content = JsonContent.Create(requestBody);
+
+            var response = await _httpClient.SendAsync(
+                request,
+                HttpCompletionOption.ResponseHeadersRead,
+                cancellationToken);
+
+            response.EnsureSuccessStatusCode();
+
+            await using var stream =
+                await response.Content.ReadAsStreamAsync(cancellationToken);
+
+            using var reader = new StreamReader(stream);
+
+            while (!reader.EndOfStream)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+
+                var line = await reader.ReadLineAsync(cancellationToken);
+
+                Console.WriteLine(line);
+
+                if (string.IsNullOrWhiteSpace(line))
+                {
+                    continue;
+                }
+
+                if (!line.StartsWith("data:"))
+                {
+                    continue;
+                }
+
+                var json = line["data:".Length..].Trim();
+
+                if (string.IsNullOrWhiteSpace(json))
+                {
+                    continue;
+                }
+
+                var geminiResponse = DeserializeResponse(json);
+
+                var token = ExtractText(geminiResponse);
+
+                if (!string.IsNullOrWhiteSpace(token))
+                {
+                    yield return token;
+                }
+            }
+        }
+
+        private object BuildRequestBody(string prompt)
+        {
+            return new
+            {
+                contents = new[]
+                {
+            new
+            {
+                parts = new[]
+                {
+                    new
+                    {
+                        text = prompt
+                    }
+                }
+            }
+        }
+            };
+        }
+
+        private string BuildUrl(bool stream)
+        {
+            if (stream)
+            {
+                return $"{_options.GeminiStreamingEndpoint}{_options.ApiKey}";
+            }
+
+            return $"{_options.GeminiEndpoint}{_options.ApiKey}";
+        }
+
+        private GeminiResponse? DeserializeResponse(string json)
+        {
+            return JsonSerializer.Deserialize<GeminiResponse>(
+                json,
+                new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                });
+        }
+
+        private static string? ExtractText(
+                GeminiResponse? response)
+        {
+            return response?
+                .Candidates
+                .FirstOrDefault()?
+                .Content
+                .Parts
+                .FirstOrDefault()?
+                .Text;
         }
     }
 }

@@ -11,5 +11,7 @@ namespace LocalHiringPlatform.Domain.Configuration
         public string ApiKey { get; set; } = string.Empty;
 
         public string GeminiEndpoint { get; set; } = string.Empty;
+
+        public string GeminiStreamingEndpoint {  get; set; } = string.Empty;
     }
 }
