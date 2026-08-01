@@ -18,3 +18,10 @@ export async function sendMessage(
 
     return response.data;
 }
+
+export async function sendMessageToStreamingHub(userMessage: string) {
+
+    await api.post("/AIChat/stream", {
+        message: userMessage
+    });
+}

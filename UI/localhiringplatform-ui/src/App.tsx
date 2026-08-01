@@ -30,6 +30,7 @@ import ProfilePage from "./pages/ProfilePage";
 import LandingPage from "./pages/Landing/LandingPage";
 
 import AIChatPage from "./pages/AI/AIChatPage";
+import { AIStreamingConnection } from "./components/SignalR/AIStreamingConnection";
 //import { SignalRConnection } from "./components/SignalR/SignalRConnection";
 
 function App() {
@@ -39,7 +40,7 @@ function App() {
     return (
                 <>
 
-   
+            <AIStreamingConnection />
 
         <BrowserRouter>
             <Routes>

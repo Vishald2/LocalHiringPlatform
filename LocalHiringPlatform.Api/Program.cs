@@ -9,6 +9,7 @@ using LocalHiringPlatform.Domain.Interfaces.Experience;
 using LocalHiringPlatform.Domain.Interfaces.MasterDataRepositories;
 using LocalHiringPlatform.Domain.Interfaces.MasterDataServices;
 using LocalHiringPlatform.Domain.Models;
+using LocalHiringPlatform.Domain.SignalR;
 using LocalHiringPlatform.Infrastructure;
 using LocalHiringPlatform.Infrastructure.Data;
 using LocalHiringPlatform.Infrastructure.Repositories;
@@ -218,6 +219,8 @@ internal class Program
         builder.Services.AddScoped<IAiMatchingService, AiMatchingService>();
         builder.Services.AddScoped<IAiAnalysisRepository, AiAnalysisRepository>();
         builder.Services.AddScoped<IAIChatService, AIChatService>();
+        builder.Services.AddScoped<IAIStreamingService, AIStreamingService>();
+        builder.Services.AddScoped<IAIStreamingChatService, AIStreamingChatService>();
 
         // Intent Handlers
         builder.Services.AddScoped<IAIIntentHandler, GreetingIntentHandler>();
@@ -304,6 +307,7 @@ internal class Program
 
         app.MapControllers();
         app.MapHub<NotificationHub>("/notificationHub");
+        app.MapHub<AIHub>("/aiHub");
 
         Console.WriteLine($"Log-{builder.Configuration["ApplicationInsights:ConnectionString"]}");
         app.Run();
