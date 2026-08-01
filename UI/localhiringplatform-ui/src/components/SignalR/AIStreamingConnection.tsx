@@ -1,4 +1,4 @@
-﻿import { useEffect, useRef } from "react";
+﻿import { useEffect } from "react";
 //import { StreamingHubClient } from "../../services/SignalR/StreamingHubClient";
 import { aiHubClient } from "../../services/SignalR/StreamingHubClient"
 export function AIStreamingConnection() {
@@ -25,8 +25,6 @@ export function AIStreamingConnection() {
         startConnection();
 
         return () => {
-
-            hub.offMessage();
 
             hub.stop();
 
