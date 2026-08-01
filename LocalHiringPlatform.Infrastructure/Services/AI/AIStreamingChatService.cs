@@ -23,7 +23,7 @@ namespace LocalHiringPlatform.Infrastructure.Services.AI
         public async Task StreamAsync(
             string userId,
             AIStreamingRequest aIStreamingRequest,
-             CancellationToken cancellationToken)
+            CancellationToken cancellationToken)
         {
             try
             {

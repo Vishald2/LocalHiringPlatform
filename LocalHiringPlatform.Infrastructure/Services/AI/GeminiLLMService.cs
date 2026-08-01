@@ -72,8 +72,8 @@ namespace LocalHiringPlatform.Infrastructure.Services.AI
            // yield break;
 
             var request = new HttpRequestMessage(
-    HttpMethod.Post,
-    url);
+                                                HttpMethod.Post,
+                                                url);
 
             request.Content = JsonContent.Create(requestBody);
 

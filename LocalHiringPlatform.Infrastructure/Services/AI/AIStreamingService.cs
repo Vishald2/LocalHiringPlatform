@@ -25,9 +25,8 @@ namespace LocalHiringPlatform.Infrastructure.Services.AI
             string employerUserId = "";
 
             await _hubContext
-            .Clients
-            .User(employerUserId)
-            .SendAsync("ReceiveNotification", message);
+            .Clients.All
+            .SendAsync("ReceiveAIMessage", message);
         }
     }
 }

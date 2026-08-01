@@ -16,16 +16,20 @@ namespace LocalHiringPlatform.Infrastructure.Services.AI
         private readonly IEnumerable<IAIIntentHandler> _intentHandlers;
         private readonly ILogger<AIChatService> _logger;
 
+        private readonly IAIStreamingService _aiStreamingService;
+
         public AIChatService(
             IPromptService promptService,
             ILLMService llmService,
             IEnumerable<IAIIntentHandler> intentHandlers,
-            ILogger<AIChatService> logger)
+            ILogger<AIChatService> logger,
+            IAIStreamingService aiStreamingService)
         {
             _promptService = promptService;
             _llmService = llmService;
             _intentHandlers = intentHandlers;
             _logger = logger;
+            _aiStreamingService = aiStreamingService;
         }
 
         public async Task<AIChatServiceResponse> SendMessageAsync(
@@ -120,9 +124,9 @@ namespace LocalHiringPlatform.Infrastructure.Services.AI
             }
 
             bool hasBusinessIntent =
-    responses.Any(r =>
-        r.Intent != AIIntentType.Greeting.ToString() &&
-        r.Intent != AIIntentType.Unknown.ToString());
+                    responses.Any(r =>
+                    r.Intent != AIIntentType.Greeting.ToString() &&
+                    r.Intent != AIIntentType.Unknown.ToString());
 
             if (hasUnknownIntent && !hasBusinessIntent)
             {
@@ -137,6 +141,18 @@ namespace LocalHiringPlatform.Infrastructure.Services.AI
             {
                 Response = responses
             };
+        }
+
+        // This method is used to stream the AI response to the client in real-time.
+        void StreamResponse(string userId, string message)
+        {
+            _aiStreamingService.SendAsync(
+                userId,
+                new AIStreamMessage
+                {
+                    Type = AIStreamMessageType.Token,
+                    Content = message
+                });
         }
     }
 }

@@ -1,5 +1,5 @@
-﻿import { useEffect, useState } from "react";
-import { sendMessage } from "../../services/AIChatService";
+﻿import { useEffect, useRef, useState } from "react";
+import { sendMessage, sendMessageToStreamingHub } from "../../services/AIChatService";
 import JobSearchResults from "../AI/JobSearchResults";
 
 import type { AIIntentHandlerResponse } from "../../types/AI/AIIntentHandlerResponse";
@@ -7,12 +7,12 @@ import type { JobSearchResultModel } from "../../types/AI/JobSearchResultModel";
 
 import { useAIChat } from "./AIChatContext";
 
+import { aiHubClient } from "../../services/SignalR/StreamingHubClient"
+import type { AIStreamMessage } from "../../types/AI/AIStreamMessage";
+import { AIStreamMessageType } from "../../types/AI/AIStreamMessageType";
+import ReactMarkdown from "react-markdown";
+
 export default function AIChatPage() {
-
-    const messages1 = useAIChat();
-
-    console.log("AIChatPage");
-    console.log(messages1);
 
     const [message, setMessage] = useState("");
 
@@ -24,6 +24,28 @@ export default function AIChatPage() {
     const [loading, setLoading] = useState(false);
 
     const handleSend = async () => {
+
+        console.log("calling-sendMessageToStreamingHub()");
+
+        setMessages(previous => [
+            ...previous,
+            {
+                sender: "user",
+                text: message
+            },
+            {
+                sender: "assistant",
+                text: ""
+            }
+        ]);
+
+      //  await sendMessageToStreamingHub(message);
+
+     //   setMessage("");
+
+       // console.log(resp);
+
+      //  return;
 
         if (!message.trim())
             return;
@@ -132,11 +154,59 @@ export default function AIChatPage() {
         }
     };
 
+    const handleMessage = (streamMessage: AIStreamMessage) => {
+
+        switch (streamMessage.type) {
+
+            case AIStreamMessageType.Token:
+
+                setMessages(previous => {
+
+                    return previous.map((message, index) => {
+
+                        if (index !== previous.length - 1)
+                            return message;
+
+                        if (message.sender !== "assistant")
+                            return message;
+
+                        return {
+                            ...message,
+                            text: (message.text ?? "") + (streamMessage.content ?? "")
+                        };
+                    });
+
+                });
+
+                break;
+
+            case AIStreamMessageType.Completed:
+
+                console.log("Completed");
+
+                break;
+
+            case AIStreamMessageType.Error:
+
+                console.error(streamMessage.content);
+
+                break;
+        }
+    };
+
     useEffect(() => {
 
-       
+        aiHubClient.onMessage(handleMessage);
+
+        return () => {
+
+            aiHubClient.offMessage(handleMessage);
+
+        };
 
     }, []);
+
+  
 
    return (
         <div className="page-container">
@@ -178,14 +248,28 @@ export default function AIChatPage() {
 
                     {
                         m.sender === "user"
-                            ? m.text
-                            : <div>
+                            ? (
+                                <div>{m.text}</div>
+                            )
+                            : (
+                                <>
                                     {
-                                        m.response?.response.map((item, index) =>
+                                        m.text &&
+                                        (
+                                            <ReactMarkdown>
+                                                {m.text}
+                                            </ReactMarkdown>
+                                        )
+                                    }
+
+                                    {
+                                        m.response &&
+                                        m.response.response.map((item, index) =>
                                             renderIntent(item, index)
                                         )
                                     }
-                            </div>
+                                </>
+                            )
                     }
 
                 </div>
