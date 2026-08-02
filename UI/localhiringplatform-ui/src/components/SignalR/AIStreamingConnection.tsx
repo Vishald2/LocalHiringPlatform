@@ -1,11 +1,6 @@
 ﻿import { useEffect } from "react";
-//import { StreamingHubClient } from "../../services/SignalR/StreamingHubClient";
 import { aiHubClient } from "../../services/SignalR/StreamingHubClient"
 export function AIStreamingConnection() {
-
-    // const aiHub = useRef(
-    //     new StreamingHubClient()
-    // );
 
     useEffect(() => {
 
@@ -16,12 +11,6 @@ export function AIStreamingConnection() {
             await hub.start();
 
             console.log("AI Streaming Connection started, connectionId: ", hub.connectionId);
-
-            // hub.onMessage(message => {
-
-            //     console.log("AI Message:", message);
-
-            // });
         };
 
         startConnection();

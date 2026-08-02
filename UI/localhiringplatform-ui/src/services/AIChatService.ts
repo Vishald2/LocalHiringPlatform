@@ -22,6 +22,8 @@ export async function sendMessage(
 
 export async function sendMessageToStreamingHub(userMessage: string) {
 
+    await aiHubClient.ensureConnected();
+
     const connectionID = aiHubClient.connectionId;
 
     console.log("Sending message to streaming hub. ConnectionID:", connectionID, "Message:", userMessage);

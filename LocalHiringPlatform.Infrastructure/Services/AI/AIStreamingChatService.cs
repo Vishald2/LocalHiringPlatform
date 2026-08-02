@@ -40,14 +40,7 @@ namespace LocalHiringPlatform.Infrastructure.Services.AI
             {
                 _logger.LogError(ex, "Error while streaming AI response.");
 
-                await _aiStreamingService.SendAsync(
-                    userId,
-                    aIStreamingRequest.connectionId,
-                    new AIStreamMessage
-                    {
-                        Type = AIStreamMessageType.Error,
-                        Content = "Unable to generate AI response."
-                    });
+                await SendErrorAsync(aIStreamingRequest.connectionId, "Error while generating AI response.");
 
                 throw;
             }
@@ -56,7 +49,6 @@ namespace LocalHiringPlatform.Infrastructure.Services.AI
         private Task SendTokenAsync(string userId, string connectionId, string token)
         {
             return _aiStreamingService.SendAsync(
-                userId,
                 connectionId,
                 new AIStreamMessage
                 {
@@ -67,7 +59,6 @@ namespace LocalHiringPlatform.Infrastructure.Services.AI
         private Task SendCompletedAsync(string userId, string connectionId)
         {
             return _aiStreamingService.SendAsync(
-                userId,
                 connectionId,
                 new AIStreamMessage
                 {
@@ -75,10 +66,9 @@ namespace LocalHiringPlatform.Infrastructure.Services.AI
                 });
         }
 
-        private Task SendErrorAsync(string userId, string connectionId, string message)
+        private Task SendErrorAsync(string connectionId, string message)
         {
             return _aiStreamingService.SendAsync(
-                userId,
                 connectionId,
                 new AIStreamMessage
                 {

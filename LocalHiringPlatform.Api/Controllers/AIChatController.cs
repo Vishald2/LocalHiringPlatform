@@ -1,7 +1,6 @@
 ﻿using LocalHiringPlatform.Api.Extensions;
 using LocalHiringPlatform.Domain.Interfaces.AI;
 using LocalHiringPlatform.Domain.Models.AI;
-using LocalHiringPlatform.Infrastructure.Services.AI;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -34,8 +33,8 @@ namespace LocalHiringPlatform.Api.Controllers
             return Ok(response);
         }
 
-        [HttpPost("stream")]
-       // [Authorize]
+        [HttpPost("stream-REMOVEINCLUDINGDASH")]
+        [Authorize]
         public async Task<IActionResult> Stream([FromBody] AIStreamingRequest model, CancellationToken cancellationToken)
         {
             string userId="";   // however you're currently extracting it

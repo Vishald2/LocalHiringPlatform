@@ -1,5 +1,5 @@
 ﻿import { useEffect, useState } from "react";
-import { sendMessage, sendMessageToStreamingHub } from "../../services/AIChatService";
+import { sendMessage } from "../../services/AIChatService";
 import JobSearchResults from "../AI/JobSearchResults";
 
 import type { AIIntentHandlerResponse } from "../../types/AI/AIIntentHandlerResponse";
@@ -39,13 +39,12 @@ export default function AIChatPage() {
             }
         ]);
 
-       await sendMessageToStreamingHub(message);
 
-       setMessage("");
+       // await sendMessageToStreamingHub(message);
 
-       //console.log(resp);
+       // setMessage("");
 
-       return;
+       // return;
 
         if (!message.trim())
             return;

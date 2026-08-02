@@ -19,16 +19,14 @@ import { NotificationProvider } from './Providers/NotificationProvider.tsx';
 
 createRoot(document.getElementById('root')!).render(
     <>
-
+    <StrictMode>
         <AIChatProvider>
-
             <NotificationProvider>
 
                 <App />
 
             </NotificationProvider>
-
         </AIChatProvider>
-
+    </StrictMode>
     </>,
 )
