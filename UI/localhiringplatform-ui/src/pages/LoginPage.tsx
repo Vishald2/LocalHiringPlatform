@@ -34,7 +34,7 @@ export default function LoginPage() {
 
             localStorage.setItem("role", response.role);
 
-            console.log("SignalR Connecting...");
+            console.log("Notification SignalR Connecting...");
 
             await start();
 

@@ -12,6 +12,16 @@ namespace LocalHiringPlatform.Domain.SignalR
     {
         public override async Task OnConnectedAsync()
         {
+            Console.WriteLine("####");
+
+            Console.WriteLine($"Claim UserId      : {Context.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value}");
+
+            Console.WriteLine($"UserIdentifier    : {Context.UserIdentifier}");
+
+            Console.WriteLine($"Connection Id     : {Context.ConnectionId}");
+
+            Console.WriteLine("####");
+
             var userId =
                 Context.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 

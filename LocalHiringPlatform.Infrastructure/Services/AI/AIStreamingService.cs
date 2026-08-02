@@ -1,13 +1,10 @@
 ﻿using LocalHiringPlatform.Domain.Interfaces.AI;
+using LocalHiringPlatform.Domain.Models.AI;
 using LocalHiringPlatform.Domain.SignalR;
 using Microsoft.AspNetCore.SignalR;
 
 namespace LocalHiringPlatform.Infrastructure.Services.AI
 {
-    using LocalHiringPlatform.Domain.Models;
-    using LocalHiringPlatform.Domain.Models.AI;
-    using Microsoft.AspNetCore.SignalR;
-
     public class AIStreamingService : IAIStreamingService
     {
         private readonly IHubContext<AIHub> _hubContext;
@@ -18,15 +15,14 @@ namespace LocalHiringPlatform.Infrastructure.Services.AI
             _hubContext = hubContext;
         }
 
-        public async Task SendAsync(
-            string userId,
+        public Task SendAsync(
+            string connectionId,
             AIStreamMessage message)
         {
-            string employerUserId = "";
-
-            await _hubContext
-            .Clients.All
-            .SendAsync("ReceiveAIMessage", message);
+            Console.WriteLine("Sending token to connectionId: " + connectionId);
+            return _hubContext
+                .Clients.Client(connectionId)
+                .SendAsync("ReceiveAIMessage", message);
         }
     }
 }

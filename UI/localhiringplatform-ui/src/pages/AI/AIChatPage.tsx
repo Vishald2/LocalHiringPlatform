@@ -39,13 +39,12 @@ export default function AIChatPage() {
             }
         ]);
 
-      //  await sendMessageToStreamingHub(message);
 
-     //   setMessage("");
+       // await sendMessageToStreamingHub(message);
 
-       // console.log(resp);
+       // setMessage("");
 
-      //  return;
+       // return;
 
         if (!message.trim())
             return;
