@@ -18,15 +18,40 @@ namespace LocalHiringPlatform.Infrastructure.Services.AI
             _hubContext = hubContext;
         }
 
-        public async Task SendAsync(
-            string userId,
+        public Task CompleteAsync(string userId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task ErrorAsync(string userId, string error)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task ProgressAsync(string userId, string progress)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task SendAsync(
+            string userId, 
+            string connectionId,
             AIStreamMessage message)
         {
-            string employerUserId = "";
+            Console.WriteLine("Sending token to connectionId: " + connectionId);
+            return _hubContext
+                .Clients.Client(connectionId)
+                .SendAsync("ReceiveAIMessage", message);
+        }
 
-            await _hubContext
-            .Clients.All
-            .SendAsync("ReceiveAIMessage", message);
+        public Task StatusAsync(string userId, string status)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task TokenAsync(string userId, string token)
+        {
+            throw new NotImplementedException();
         }
     }
 }

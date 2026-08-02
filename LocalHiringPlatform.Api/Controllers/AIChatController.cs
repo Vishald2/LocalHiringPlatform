@@ -38,7 +38,16 @@ namespace LocalHiringPlatform.Api.Controllers
        // [Authorize]
         public async Task<IActionResult> Stream([FromBody] AIStreamingRequest model, CancellationToken cancellationToken)
         {
-            var userId = User.GetUserId().ToString();   // however you're currently extracting it
+            string userId="";   // however you're currently extracting it
+
+            try
+            {
+                if(User.Identity != null && User.Identity.IsAuthenticated)
+                    userId = User.GetUserId().ToString();
+            }
+            catch { }
+
+            
 
             await _aiStreamingChatService.StreamAsync(
                 userId,

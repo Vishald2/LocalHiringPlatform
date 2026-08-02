@@ -9,6 +9,8 @@ namespace LocalHiringPlatform.Domain.Interfaces.AI
 {
     public interface IAIStreamingChatService
     {
-        Task StreamAsync(string userId, AIStreamingRequest message, CancellationToken cancellationToken);
+        Task StreamAsync(string userId,
+            AIStreamingRequest message, 
+            CancellationToken cancellationToken);
     }
 }

@@ -15,6 +15,8 @@ export function AIStreamingConnection() {
 
             await hub.start();
 
+            console.log("AI Streaming Connection started, connectionId: ", hub.connectionId);
+
             // hub.onMessage(message => {
 
             //     console.log("AI Message:", message);

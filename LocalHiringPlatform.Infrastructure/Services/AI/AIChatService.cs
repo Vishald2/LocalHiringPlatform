@@ -142,17 +142,5 @@ namespace LocalHiringPlatform.Infrastructure.Services.AI
                 Response = responses
             };
         }
-
-        // This method is used to stream the AI response to the client in real-time.
-        void StreamResponse(string userId, string message)
-        {
-            _aiStreamingService.SendAsync(
-                userId,
-                new AIStreamMessage
-                {
-                    Type = AIStreamMessageType.Token,
-                    Content = message
-                });
-        }
     }
 }

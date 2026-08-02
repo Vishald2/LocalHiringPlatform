@@ -17,6 +17,10 @@ export class StreamingHubClient {
             .build();
     }
 
+    public get connectionId(): string | undefined {
+        return this.connection.connectionId;
+    }
+
     public async start(): Promise<void> {
 
         if (this.connection.state === signalR.HubConnectionState.Disconnected) {

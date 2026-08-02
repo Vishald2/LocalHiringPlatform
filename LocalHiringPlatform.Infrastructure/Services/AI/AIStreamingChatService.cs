@@ -31,10 +31,10 @@ namespace LocalHiringPlatform.Infrastructure.Services.AI
                 {
                     Console.WriteLine("Token: {0}", token);
 
-                    await SendTokenAsync(userId, token);
+                    await SendTokenAsync(userId, aIStreamingRequest.connectionId, token);
                 }
 
-                await SendCompletedAsync(userId);
+                await SendCompletedAsync(userId, aIStreamingRequest.connectionId);
             }
             catch (Exception ex)
             {
@@ -42,6 +42,7 @@ namespace LocalHiringPlatform.Infrastructure.Services.AI
 
                 await _aiStreamingService.SendAsync(
                     userId,
+                    aIStreamingRequest.connectionId,
                     new AIStreamMessage
                     {
                         Type = AIStreamMessageType.Error,
@@ -52,31 +53,33 @@ namespace LocalHiringPlatform.Infrastructure.Services.AI
             }
         }
 
-        private Task SendTokenAsync(string userId, string token)
+        private Task SendTokenAsync(string userId, string connectionId, string token)
         {
             return _aiStreamingService.SendAsync(
                 userId,
+                connectionId,
                 new AIStreamMessage
                 {
                     Type = AIStreamMessageType.Token,
                     Content = token
                 });
         }
-
-        private Task SendCompletedAsync(string userId)
+        private Task SendCompletedAsync(string userId, string connectionId)
         {
             return _aiStreamingService.SendAsync(
                 userId,
+                connectionId,
                 new AIStreamMessage
                 {
                     Type = AIStreamMessageType.Completed
                 });
         }
 
-        private Task SendErrorAsync(string userId, string message)
+        private Task SendErrorAsync(string userId, string connectionId, string message)
         {
             return _aiStreamingService.SendAsync(
                 userId,
+                connectionId,
                 new AIStreamMessage
                 {
                     Type = AIStreamMessageType.Error,
