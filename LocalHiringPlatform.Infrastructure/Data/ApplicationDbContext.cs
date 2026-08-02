@@ -1,7 +1,6 @@
 ﻿using LocalHiringPlatform.Domain.Entities;
 using LocalHiringPlatform.Domain.Entities.CandidateEducationEntities;
 using LocalHiringPlatform.Domain.Entities.Experience;
-using LocalHiringPlatform.Infrastructure.Data.Seed;
 using Microsoft.EntityFrameworkCore;
 using CandidateExperience = LocalHiringPlatform.Domain.Entities.Experience.CandidateExperience;
 
@@ -55,7 +54,7 @@ public class ApplicationDbContext : DbContext
         modelBuilder.ApplyConfigurationsFromAssembly(
                     typeof(ApplicationDbContext).Assembly);
 
-        SeedMasterData(modelBuilder);
+        //SeedMasterData(modelBuilder);
 
         modelBuilder.Entity<User>()
             .HasIndex(x => x.Email)
@@ -144,14 +143,5 @@ public class ApplicationDbContext : DbContext
         });
 
 
-    }
-
-    private static void SeedMasterData(
-    ModelBuilder modelBuilder)
-    {
-        //EducationSeedData.Seed(modelBuilder);
-        //CourseSeedData.Seed(modelBuilder);
-        //SkillSeedData.Seed(modelBuilder);
-        IndustryTypeSeedData.Seed(modelBuilder);
     }
 }

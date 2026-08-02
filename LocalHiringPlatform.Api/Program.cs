@@ -12,6 +12,7 @@ using LocalHiringPlatform.Domain.Models;
 using LocalHiringPlatform.Domain.SignalR;
 using LocalHiringPlatform.Infrastructure;
 using LocalHiringPlatform.Infrastructure.Data;
+using LocalHiringPlatform.Infrastructure.Data.SeedClasses;
 using LocalHiringPlatform.Infrastructure.Repositories;
 using LocalHiringPlatform.Infrastructure.Repositories.EducationRepositories;
 using LocalHiringPlatform.Infrastructure.Repositories.Experience;
@@ -35,7 +36,7 @@ using System.Text;
 
 internal class Program
 {
-    private static void Main(string[] args)
+    private static async Task Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
 
@@ -290,7 +291,20 @@ internal class Program
         // 9. APPLICATION BUILD & PIPELINE
         // =========================================================================
 
+        builder.Services.AddScoped<DatabaseSeeder>();
+
+
         var app = builder.Build();
+
+
+
+        using (var scope = app.Services.CreateScope())
+        {
+            var seeder =
+                scope.ServiceProvider.GetRequiredService<DatabaseSeeder>();
+
+          await  seeder.SeedAsync();
+        }
 
         // Configure the HTTP request pipeline
         app.UseSwagger();

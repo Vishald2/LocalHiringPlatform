@@ -1,0 +1,142 @@
+﻿[
+  {
+    "Code": "DU",
+    "Name": "University of Delhi",
+    "City": "Delhi",
+    "State": "Delhi",
+    "IsActive": true
+  },
+  {
+    "Code": "JNU",
+    "Name": "Jawaharlal Nehru University",
+    "City": "Delhi",
+    "State": "Delhi",
+    "IsActive": true
+  },
+  {
+    "Code": "PU",
+    "Name": "Panjab University",
+    "City": "Chandigarh",
+    "State": "Chandigarh",
+    "IsActive": true
+  },
+  {
+    "Code": "KUK",
+    "Name": "Kurukshetra University",
+    "City": "Kurukshetra",
+    "State": "Haryana",
+    "IsActive": true
+  },
+  {
+    "Code": "MDU",
+    "Name": "Maharshi Dayanand University",
+    "City": "Rohtak",
+    "State": "Haryana",
+    "IsActive": true
+  },
+  {
+    "Code": "GJU",
+    "Name": "Guru Jambheshwar University of Science and Technology",
+    "City": "Hisar",
+    "State": "Haryana",
+    "IsActive": true
+  },
+  {
+    "Code": "PTU",
+    "Name": "IK Gujral Punjab Technical University",
+    "City": "Kapurthala",
+    "State": "Punjab",
+    "IsActive": true
+  },
+  {
+    "Code": "PUCHD",
+    "Name": "Punjab University",
+    "City": "Chandigarh",
+    "State": "Chandigarh",
+    "IsActive": true
+  },
+  {
+    "Code": "AKTU",
+    "Name": "Dr. A.P.J. Abdul Kalam Technical University",
+    "City": "Lucknow",
+    "State": "Uttar Pradesh",
+    "IsActive": true
+  },
+  {
+    "Code": "MU",
+    "Name": "University of Mumbai",
+    "City": "Mumbai",
+    "State": "Maharashtra",
+    "IsActive": true
+  },
+  {
+    "Code": "PUUNE",
+    "Name": "Savitribai Phule Pune University",
+    "City": "Pune",
+    "State": "Maharashtra",
+    "IsActive": true
+  },
+  {
+    "Code": "OU",
+    "Name": "Osmania University",
+    "City": "Hyderabad",
+    "State": "Telangana",
+    "IsActive": true
+  },
+  {
+    "Code": "JNTUH",
+    "Name": "Jawaharlal Nehru Technological University Hyderabad",
+    "City": "Hyderabad",
+    "State": "Telangana",
+    "IsActive": true
+  },
+  {
+    "Code": "VTU",
+    "Name": "Visvesvaraya Technological University",
+    "City": "Belagavi",
+    "State": "Karnataka",
+    "IsActive": true
+  },
+  {
+    "Code": "BU",
+    "Name": "Bangalore University",
+    "City": "Bengaluru",
+    "State": "Karnataka",
+    "IsActive": true
+  },
+  {
+    "Code": "ANNA",
+    "Name": "Anna University",
+    "City": "Chennai",
+    "State": "Tamil Nadu",
+    "IsActive": true
+  },
+  {
+    "Code": "CU",
+    "Name": "University of Calcutta",
+    "City": "Kolkata",
+    "State": "West Bengal",
+    "IsActive": true
+  },
+  {
+    "Code": "GUJ",
+    "Name": "Gujarat University",
+    "City": "Ahmedabad",
+    "State": "Gujarat",
+    "IsActive": true
+  },
+  {
+    "Code": "RU",
+    "Name": "University of Rajasthan",
+    "City": "Jaipur",
+    "State": "Rajasthan",
+    "IsActive": true
+  },
+  {
+    "Code": "LPU",
+    "Name": "Lovely Professional University",
+    "City": "Phagwara",
+    "State": "Punjab",
+    "IsActive": true
+  }
+]
