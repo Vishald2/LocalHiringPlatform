@@ -77,15 +77,23 @@ namespace LocalHiringPlatform.Infrastructure.Services.AI
 
             request.Content = JsonContent.Create(requestBody);
 
+            //await using var stream =
+            //    await response.Content.ReadAsStreamAsync(cancellationToken);
+
+            Stream stream;
+
+            #if true
+                        stream = File.OpenRead(@"D:\AIResponses\GeminiResponse.txt");
+            #else
             var response = await _httpClient.SendAsync(
-                request,
-                HttpCompletionOption.ResponseHeadersRead,
-                cancellationToken);
+                                request,
+                                HttpCompletionOption.ResponseHeadersRead,
+                                cancellationToken);
 
             response.EnsureSuccessStatusCode();
 
-            await using var stream =
-                await response.Content.ReadAsStreamAsync(cancellationToken);
+            stream = await response.Content.ReadAsStreamAsync(cancellationToken);
+            #endif
 
             using var reader = new StreamReader(stream);
 
