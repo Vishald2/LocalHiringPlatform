@@ -12,6 +12,7 @@ using LocalHiringPlatform.Domain.Models;
 using LocalHiringPlatform.Domain.SignalR;
 using LocalHiringPlatform.Infrastructure;
 using LocalHiringPlatform.Infrastructure.Data;
+using LocalHiringPlatform.Infrastructure.Data.SeedClasses;
 using LocalHiringPlatform.Infrastructure.Repositories;
 using LocalHiringPlatform.Infrastructure.Repositories.EducationRepositories;
 using LocalHiringPlatform.Infrastructure.Repositories.Experience;
@@ -26,6 +27,7 @@ using LocalHiringPlatform.ServiceBus.Extensions;
 using LocalHiringPlatform.ServiceBus.Interfaces;
 using LocalHiringPlatform.ServiceBus.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -35,7 +37,7 @@ using System.Text;
 
 internal class Program
 {
-    private static void Main(string[] args)
+    private static async Task Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
 
@@ -290,7 +292,29 @@ internal class Program
         // 9. APPLICATION BUILD & PIPELINE
         // =========================================================================
 
+        builder.Services.AddScoped<DatabaseSeeder>();
+
+
         var app = builder.Build();
+
+
+        if (args.Contains("--seed"))
+        {
+            if (!ConfirmSeed(builder.Configuration, builder.Environment))
+            {
+                Console.WriteLine("Seed cancelled.");
+                return;
+            }
+
+            using (var scope = app.Services.CreateScope())
+            {
+                var seeder =
+                    scope.ServiceProvider.GetRequiredService<DatabaseSeeder>();
+
+                await seeder.SeedAsync();
+            }
+            return;
+        }
 
         // Configure the HTTP request pipeline
         app.UseSwagger();
@@ -312,4 +336,39 @@ internal class Program
         Console.WriteLine($"Log-{builder.Configuration["ApplicationInsights:ConnectionString"]}");
         app.Run();
     }
+
+    private static bool ConfirmSeed(
+    IConfiguration configuration,
+    IHostEnvironment environment)
+    {
+        Console.WriteLine();
+        Console.WriteLine("=========================================");
+        Console.WriteLine("      LOCALHIRE DATABASE SEEDER");
+        Console.WriteLine("=========================================");
+        Console.WriteLine();
+
+        Console.WriteLine($"Environment : {environment.EnvironmentName}");
+
+        var connectionString =
+            configuration.GetConnectionString("DefaultConnection");
+
+        var builder =
+            new SqlConnectionStringBuilder(connectionString);
+
+        Console.WriteLine($"Server      : {builder.DataSource}");
+        Console.WriteLine($"Database    : {builder.InitialCatalog}");
+        Console.WriteLine();
+
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        Console.WriteLine("This operation will insert demo data.");
+        Console.ResetColor();
+
+        Console.WriteLine();
+        Console.Write("Type YES to continue: ");
+
+        var input = Console.ReadLine();
+
+        return input == "YES";
+    }
+
 }

@@ -1,0 +1,134 @@
+﻿[
+  {
+    "CourseCode": "BTECH",
+    "SpecializationCode": "CSE"
+  },
+  {
+    "CourseCode": "BTECH",
+    "SpecializationCode": "IT"
+  },
+  {
+    "CourseCode": "BTECH",
+    "SpecializationCode": "ECE"
+  },
+  {
+    "CourseCode": "BTECH",
+    "SpecializationCode": "EEE"
+  },
+  {
+    "CourseCode": "BTECH",
+    "SpecializationCode": "ME"
+  },
+  {
+    "CourseCode": "BTECH",
+    "SpecializationCode": "CE"
+  },
+  {
+    "CourseCode": "BE",
+    "SpecializationCode": "CSE"
+  },
+  {
+    "CourseCode": "BE",
+    "SpecializationCode": "IT"
+  },
+  {
+    "CourseCode": "BE",
+    "SpecializationCode": "ECE"
+  },
+  {
+    "CourseCode": "BE",
+    "SpecializationCode": "EEE"
+  },
+  {
+    "CourseCode": "BE",
+    "SpecializationCode": "ME"
+  },
+  {
+    "CourseCode": "BE",
+    "SpecializationCode": "CE"
+  },
+  {
+    "CourseCode": "BCA",
+    "SpecializationCode": "GEN"
+  },
+  {
+    "CourseCode": "BSC",
+    "SpecializationCode": "GEN"
+  },
+  {
+    "CourseCode": "BCOM",
+    "SpecializationCode": "GEN"
+  },
+  {
+    "CourseCode": "BA",
+    "SpecializationCode": "GEN"
+  },
+  {
+    "CourseCode": "BBA",
+    "SpecializationCode": "GEN"
+  },
+  {
+    "CourseCode": "BPHARM",
+    "SpecializationCode": "GEN"
+  },
+  {
+    "CourseCode": "MTECH",
+    "SpecializationCode": "CSE"
+  },
+  {
+    "CourseCode": "MTECH",
+    "SpecializationCode": "IT"
+  },
+  {
+    "CourseCode": "MTECH",
+    "SpecializationCode": "AI"
+  },
+  {
+    "CourseCode": "MTECH",
+    "SpecializationCode": "DS"
+  },
+  {
+    "CourseCode": "MCA",
+    "SpecializationCode": "GEN"
+  },
+  {
+    "CourseCode": "MBA",
+    "SpecializationCode": "MBAFIN"
+  },
+  {
+    "CourseCode": "MBA",
+    "SpecializationCode": "MBAHR"
+  },
+  {
+    "CourseCode": "MBA",
+    "SpecializationCode": "MBAMKT"
+  },
+  {
+    "CourseCode": "MSC",
+    "SpecializationCode": "GEN"
+  },
+  {
+    "CourseCode": "DIPCS",
+    "SpecializationCode": "CSE"
+  },
+  {
+    "CourseCode": "DIPME",
+    "SpecializationCode": "ME"
+  },
+  {
+    "CourseCode": "ITIFTR",
+    "SpecializationCode": "ME"
+  },
+  {
+    "CourseCode": "ITIELC",
+    "SpecializationCode": "EEE"
+  },
+  {
+    "CourseCode": "PHDCS",
+    "SpecializationCode": "CSE"
+  },
+  {
+    "CourseCode": "PHDMGT",
+    "SpecializationCode": "MBAMKT"
+  }
+]

@@ -1,0 +1,20 @@
+﻿[
+  {
+    "SkillName": "C#",
+    "SkillCategory": 1,
+    "IndustryType": "IT",
+    "IsApproved": true
+  },
+  {
+    "SkillName": ".NET",
+    "SkillCategory": 1,
+    "IndustryType": "IT",
+    "IsApproved": true
+  },
+  {
+    "SkillName": "ASP.NET Core",
+    "SkillCategory": 1,
+    "IndustryType": "IT",
+    "IsApproved": true
+  }
+]
