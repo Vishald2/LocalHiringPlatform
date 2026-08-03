@@ -1,0 +1,80 @@
+﻿[
+  {
+    "Code": "CSE",
+    "Name": "Computer Science Engineering",
+    "DisplayOrder": 1,
+    "IsActive": true
+  },
+  {
+    "Code": "IT",
+    "Name": "Information Technology",
+    "DisplayOrder": 2,
+    "IsActive": true
+  },
+  {
+    "Code": "ECE",
+    "Name": "Electronics and Communication Engineering",
+    "DisplayOrder": 3,
+    "IsActive": true
+  },
+  {
+    "Code": "EEE",
+    "Name": "Electrical Engineering",
+    "DisplayOrder": 4,
+    "IsActive": true
+  },
+  {
+    "Code": "ME",
+    "Name": "Mechanical Engineering",
+    "DisplayOrder": 5,
+    "IsActive": true
+  },
+  {
+    "Code": "CE",
+    "Name": "Civil Engineering",
+    "DisplayOrder": 6,
+    "IsActive": true
+  },
+  {
+    "Code": "AI",
+    "Name": "Artificial Intelligence",
+    "DisplayOrder": 7,
+    "IsActive": true
+  },
+  {
+    "Code": "DS",
+    "Name": "Data Science",
+    "DisplayOrder": 8,
+    "IsActive": true
+  },
+  {
+    "Code": "CYBER",
+    "Name": "Cyber Security",
+    "DisplayOrder": 9,
+    "IsActive": true
+  },
+  {
+    "Code": "MBAFIN",
+    "Name": "Finance",
+    "DisplayOrder": 10,
+    "IsActive": true
+  },
+  {
+    "Code": "MBAHR",
+    "Name": "Human Resources",
+    "DisplayOrder": 11,
+    "IsActive": true
+  },
+  {
+    "Code": "MBAMKT",
+    "Name": "Marketing",
+    "DisplayOrder": 12,
+    "IsActive": true
+  },
+  {
+    "Code": "GEN",
+    "Name": "General",
+    "DisplayOrder": 13,
+    "IsActive": true
+  }
+]

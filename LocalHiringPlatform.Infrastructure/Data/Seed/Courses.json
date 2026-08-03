@@ -1,107 +1,128 @@
 ﻿[
   {
-    "EducationId": 1,
+    "EducationCode": "UG",
     "Code": "BTECH",
     "Name": "Bachelor of Technology",
     "DisplayOrder": 1,
     "IsActive": true
   },
   {
-    "EducationId": 1,
+    "EducationCode": "UG",
     "Code": "BE",
     "Name": "Bachelor of Engineering",
     "DisplayOrder": 2,
     "IsActive": true
   },
   {
-    "EducationId": 1,
+    "EducationCode": "UG",
     "Code": "BCA",
     "Name": "Bachelor of Computer Applications",
     "DisplayOrder": 3,
     "IsActive": true
   },
   {
-    "EducationId": 2,
-    "Code": "MTECH",
-    "Name": "Master of Technology",
+    "EducationCode": "UG",
+    "Code": "BSC",
+    "Name": "Bachelor of Science",
     "DisplayOrder": 4,
     "IsActive": true
   },
   {
-    "EducationId": 2,
-    "Code": "MCA",
-    "Name": "Master of Computer Applications",
+    "EducationCode": "UG",
+    "Code": "BCOM",
+    "Name": "Bachelor of Commerce",
     "DisplayOrder": 5,
     "IsActive": true
   },
   {
-    "EducationId": 2,
-    "Code": "MBA",
-    "Name": "Master of Business Administration",
+    "EducationCode": "UG",
+    "Code": "BA",
+    "Name": "Bachelor of Arts",
     "DisplayOrder": 6,
     "IsActive": true
   },
   {
-    "EducationId": 1,
-    "Code": "BSC",
-    "Name": "Bachelor of Science",
+    "EducationCode": "UG",
+    "Code": "BBA",
+    "Name": "Bachelor of Business Administration",
     "DisplayOrder": 7,
     "IsActive": true
   },
   {
-    "EducationId": 1,
-    "Code": "BCOM",
-    "Name": "Bachelor of Commerce",
+    "EducationCode": "UG",
+    "Code": "BPHARM",
+    "Name": "Bachelor of Pharmacy",
     "DisplayOrder": 8,
     "IsActive": true
   },
   {
-    "EducationId": 1,
-    "Code": "BA",
-    "Name": "Bachelor of Arts",
+    "EducationCode": "PG",
+    "Code": "MTECH",
+    "Name": "Master of Technology",
     "DisplayOrder": 9,
     "IsActive": true
   },
   {
-    "EducationId": 3,
-    "Code": "DIP",
-    "Name": "Diploma",
+    "EducationCode": "PG",
+    "Code": "MCA",
+    "Name": "Master of Computer Applications",
     "DisplayOrder": 10,
     "IsActive": true
   },
   {
-    "EducationId": 4,
-    "Code": "ITI",
-    "Name": "ITI",
+    "EducationCode": "PG",
+    "Code": "MBA",
+    "Name": "Master of Business Administration",
     "DisplayOrder": 11,
     "IsActive": true
   },
   {
-    "EducationId": 5,
-    "Code": "PHD",
-    "Name": "Doctor of Philosophy",
+    "EducationCode": "PG",
+    "Code": "MSC",
+    "Name": "Master of Science",
     "DisplayOrder": 12,
     "IsActive": true
   },
   {
-    "EducationId": 1,
-    "Code": "BBA",
-    "Name": "Bachelor of Business Administration",
+    "EducationCode": "DIP",
+    "Code": "DIPCS",
+    "Name": "Diploma in Computer Science",
     "DisplayOrder": 13,
     "IsActive": true
   },
   {
-    "EducationId": 1,
-    "Code": "BPHARM",
-    "Name": "Bachelor of Pharmacy",
+    "EducationCode": "DIP",
+    "Code": "DIPME",
+    "Name": "Diploma in Mechanical Engineering",
     "DisplayOrder": 14,
     "IsActive": true
   },
   {
-    "EducationId": 2,
-    "Code": "MSC",
-    "Name": "Master of Science",
+    "EducationCode": "ITI",
+    "Code": "ITIFTR",
+    "Name": "ITI Fitter",
     "DisplayOrder": 15,
+    "IsActive": true
+  },
+  {
+    "EducationCode": "ITI",
+    "Code": "ITIELC",
+    "Name": "ITI Electrician",
+    "DisplayOrder": 16,
+    "IsActive": true
+  },
+  {
+    "EducationCode": "PHD",
+    "Code": "PHDCS",
+    "Name": "PhD in Computer Science",
+    "DisplayOrder": 17,
+    "IsActive": true
+  },
+  {
+    "EducationCode": "PHD",
+    "Code": "PHDMGT",
+    "Name": "PhD in Management",
+    "DisplayOrder": 18,
     "IsActive": true
   }
 ]

@@ -8,17 +8,22 @@
 
   <ItemGroup>
     <None Remove="Data\Seed\Courses.json" />
+    <None Remove="Data\Seed\CourseSpecializations.json" />
     <None Remove="Data\Seed\Educations.json" />
     <None Remove="Data\Seed\IndustryTypes.json" />
     <None Remove="Data\Seed\Jobs-Batch1.json" />
     <None Remove="Data\Seed\Jobs\Batch-2.json" />
     <None Remove="Data\Seed\Jobs\TextFile1.txt" />
     <None Remove="Data\Seed\Skills.json" />
+    <None Remove="Data\Seed\Specializations.json" />
     <None Remove="Data\Seed\Universities.json" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="Data\Seed\Courses.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Seed\CourseSpecializations.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Data\Seed\Educations.json">
@@ -46,6 +51,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Data\Seed\Skills.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Seed\Specializations.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Data\Seed\Universities.json">

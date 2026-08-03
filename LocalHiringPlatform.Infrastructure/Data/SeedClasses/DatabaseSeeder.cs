@@ -19,18 +19,22 @@ namespace LocalHiringPlatform.Infrastructure.Data.SeedClasses
 
         public async Task SeedAsync()
         {
-            // await SeedIndustryTypesAsync();
-            // await SeedSkillsAsync();
-            // await SeedUniversitiesAsync();
-            // await SeedEmployerAsync();
+            //await SeedIndustryTypesAsync();
+            //await SeedSkillsAsync();
+            //await SeedUniversitiesAsync();
+            //await SeedEmployerAsync();
             //await SeedJobsAsync();
-
-            // await SeedCandidateUsersAsync();
-            //  await SeedCandidateProfilesAsync();
-
+            //await SeedCandidateUsersAsync();
+            //await SeedCandidateProfilesAsync();
             //await SeedCandidateSkillsAsync();
+            //await SeedEducationsAsync();
+            //await SeedCoursesAsync();
 
-            SeedEducationsAsync();
+        //    await SeedSpecializationsAsync();
+
+         //   await SeedCourseSpecializationsAsync();
+
+            await SeedCandidateEducationsAsync();
 
             // Later
             // await SeedSkillsAsync();
@@ -38,10 +42,211 @@ namespace LocalHiringPlatform.Infrastructure.Data.SeedClasses
             // await SeedJobsAsync();
         }
 
+        private async Task SeedCandidateEducationsAsync()
+        {
+            if (await _dbContext.CandidateEducations.AnyAsync())
+                return;
+
+            var candidates = await _dbContext.CandidateProfiles.ToListAsync();
+
+            var universities = await _dbContext.Universities.ToListAsync();
+
+            var courseDictionary = await _dbContext.Courses
+                .ToDictionaryAsync(x => x.Code);
+
+            var courseSpecializations = await _dbContext.CourseSpecializations
+                .GroupBy(x => x.CourseId)
+                .ToDictionaryAsync(x => x.Key, x => x.ToList());
+
+            Random random = new();
+
+            foreach (var candidate in candidates)
+            {
+                string courseCode;
+
+                switch (random.Next(100))
+                {
+                    case < 35:
+                        courseCode = "BTECH";
+                        break;
+
+                    case < 55:
+                        courseCode = "BCA";
+                        break;
+
+                    case < 65:
+                        courseCode = "BSC";
+                        break;
+
+                    case < 75:
+                        courseCode = "MCA";
+                        break;
+
+                    case < 85:
+                        courseCode = "MBA";
+                        break;
+
+                    case < 90:
+                        courseCode = "MTECH";
+                        break;
+
+                    case < 95:
+                        courseCode = "DIPCS";
+                        break;
+
+                    default:
+                        courseCode = "BCOM";
+                        break;
+                }
+
+                var course = courseDictionary[courseCode];
+
+                var university =
+                    universities[random.Next(universities.Count)];
+
+                int endYear =
+                    DateTime.Now.Year -
+                    (int)candidate.TotalExperienceYears;
+
+                int duration =
+                    courseCode.StartsWith("M") ? 2 :
+                    courseCode.StartsWith("DIP") ? 3 :
+                    4;
+
+                int startYear = endYear - duration;
+
+                var education = new CandidateEducation
+                {
+                    CandidateProfileId = candidate.EntityId,
+                    CourseId = course.CourseId,
+                    UniversityId = university.UniversityId,
+                    InstituteName = university.Name,
+                    City = university.City,
+                    State = university.State,
+                    Country = "India",
+                    StartYear = startYear,
+                    EndYear = endYear,
+                    Percentage = random.Next(60, 91),
+                    CGPA = null,
+                    Grade = null,
+                    IsCompleted = true,
+                    IsHighestEducation = true
+                };
+
+                _dbContext.CandidateEducations.Add(education);
+
+                if (courseSpecializations.TryGetValue(
+                        course.CourseId,
+                        out var specializations))
+                {
+                    var specialization =
+                        specializations[random.Next(specializations.Count)];
+
+                    _dbContext.CandidateEducationSpecializations.Add(
+                        new CandidateEducationSpecialization
+                        {
+                            CandidateEducation = education,
+                            SpecializationId = specialization.SpecializationId
+                        });
+                }
+            }
+
+            await _dbContext.SaveChangesAsync();
+        }
+
+        private async Task SeedCourseSpecializationsAsync()
+        {
+            if (await _dbContext.CourseSpecializations.AnyAsync())
+                return;
+
+            var items =
+                await ReadJsonAsync<CourseSpecializationSeedModel>(
+                    "CourseSpecializations.json");
+
+            var courses = await _dbContext.Courses
+                .ToDictionaryAsync(
+                    x => x.Code,
+                    x => x.CourseId);
+
+            var specializations = await _dbContext.Specializations
+                .ToDictionaryAsync(
+                    x => x.Code,
+                    x => x.SpecializationId);
+
+            foreach (var item in items)
+            {
+                if (!courses.TryGetValue(item.CourseCode, out var courseId))
+                    throw new InvalidOperationException($"Course '{item.CourseCode}' not found.");
+
+                if (!specializations.TryGetValue(item.SpecializationCode, out var specializationId))
+                    throw new InvalidOperationException($"Specialization '{item.SpecializationCode}' not found.");
+
+                _dbContext.CourseSpecializations.Add(
+                    new CourseSpecialization
+                    {
+                        CourseId = courseId,
+                        SpecializationId = specializationId
+                    });
+            }
+
+            await _dbContext.SaveChangesAsync();
+        }
+
+        private async Task SeedSpecializationsAsync()
+        {
+            if (await _dbContext.Specializations.AnyAsync())
+                return;
+
+            var specializations =
+                await ReadJsonAsync<Specialization>("Specializations.json");
+
+            _dbContext.Specializations.AddRange(specializations);
+
+            await _dbContext.SaveChangesAsync();
+        }
+
+        private async Task SeedCoursesAsync()
+        {
+            if (await _dbContext.Courses.AnyAsync())
+                return;
+
+            var items =
+                await ReadJsonAsync<CourseSeedModel>("Courses.json");
+
+            var educations =
+                await _dbContext.Educations
+                    .ToDictionaryAsync(
+                        x => x.Code,
+                        x => x.EducationId);
+
+            foreach (var item in items)
+            {
+                if (!educations.TryGetValue(
+                        item.EducationCode,
+                        out var educationId))
+                {
+                    throw new Exception(
+                        $"Education '{item.EducationCode}' not found.");
+                }
+
+                _dbContext.Courses.Add(
+                    new Course
+                    {
+                        EducationId = educationId,
+                        Code = item.Code,
+                        Name = item.Name,
+                        DisplayOrder = item.DisplayOrder,
+                        IsActive = item.IsActive
+                    });
+            }
+
+            await _dbContext.SaveChangesAsync();
+        }
+
         private async Task SeedEducationsAsync()
         {
-            //if (await _dbContext.Educations.AnyAsync())
-            //    return;
+            if (await _dbContext.Educations.AnyAsync())
+                return;
 
             var educations =
                 await ReadJsonAsync<Education>("Educations.json");
