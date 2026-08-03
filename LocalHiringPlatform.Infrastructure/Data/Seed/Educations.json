@@ -1,0 +1,32 @@
+﻿[
+  {
+    "Code": "UG",
+    "Name": "Undergraduate",
+    "DisplayOrder": 1,
+    "IsActive": true
+  },
+  {
+    "Code": "PG",
+    "Name": "Postgraduate",
+    "DisplayOrder": 2,
+    "IsActive": true
+  },
+  {
+    "Code": "DIP",
+    "Name": "Diploma",
+    "DisplayOrder": 3,
+    "IsActive": true
+  },
+  {
+    "Code": "ITI",
+    "Name": "ITI",
+    "DisplayOrder": 4,
+    "IsActive": true
+  },
+  {
+    "Code": "PHD",
+    "Name": "Doctorate",
+    "DisplayOrder": 5,
+    "IsActive": true
+  }
+]

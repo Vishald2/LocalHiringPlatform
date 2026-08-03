@@ -1,0 +1,107 @@
+﻿[
+  {
+    "EducationId": 1,
+    "Code": "BTECH",
+    "Name": "Bachelor of Technology",
+    "DisplayOrder": 1,
+    "IsActive": true
+  },
+  {
+    "EducationId": 1,
+    "Code": "BE",
+    "Name": "Bachelor of Engineering",
+    "DisplayOrder": 2,
+    "IsActive": true
+  },
+  {
+    "EducationId": 1,
+    "Code": "BCA",
+    "Name": "Bachelor of Computer Applications",
+    "DisplayOrder": 3,
+    "IsActive": true
+  },
+  {
+    "EducationId": 2,
+    "Code": "MTECH",
+    "Name": "Master of Technology",
+    "DisplayOrder": 4,
+    "IsActive": true
+  },
+  {
+    "EducationId": 2,
+    "Code": "MCA",
+    "Name": "Master of Computer Applications",
+    "DisplayOrder": 5,
+    "IsActive": true
+  },
+  {
+    "EducationId": 2,
+    "Code": "MBA",
+    "Name": "Master of Business Administration",
+    "DisplayOrder": 6,
+    "IsActive": true
+  },
+  {
+    "EducationId": 1,
+    "Code": "BSC",
+    "Name": "Bachelor of Science",
+    "DisplayOrder": 7,
+    "IsActive": true
+  },
+  {
+    "EducationId": 1,
+    "Code": "BCOM",
+    "Name": "Bachelor of Commerce",
+    "DisplayOrder": 8,
+    "IsActive": true
+  },
+  {
+    "EducationId": 1,
+    "Code": "BA",
+    "Name": "Bachelor of Arts",
+    "DisplayOrder": 9,
+    "IsActive": true
+  },
+  {
+    "EducationId": 3,
+    "Code": "DIP",
+    "Name": "Diploma",
+    "DisplayOrder": 10,
+    "IsActive": true
+  },
+  {
+    "EducationId": 4,
+    "Code": "ITI",
+    "Name": "ITI",
+    "DisplayOrder": 11,
+    "IsActive": true
+  },
+  {
+    "EducationId": 5,
+    "Code": "PHD",
+    "Name": "Doctor of Philosophy",
+    "DisplayOrder": 12,
+    "IsActive": true
+  },
+  {
+    "EducationId": 1,
+    "Code": "BBA",
+    "Name": "Bachelor of Business Administration",
+    "DisplayOrder": 13,
+    "IsActive": true
+  },
+  {
+    "EducationId": 1,
+    "Code": "BPHARM",
+    "Name": "Bachelor of Pharmacy",
+    "DisplayOrder": 14,
+    "IsActive": true
+  },
+  {
+    "EducationId": 2,
+    "Code": "MSC",
+    "Name": "Master of Science",
+    "DisplayOrder": 15,
+    "IsActive": true
+  }
+]

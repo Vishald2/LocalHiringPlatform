@@ -7,13 +7,42 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Data\Seed\Courses.json" />
+    <None Remove="Data\Seed\Educations.json" />
     <None Remove="Data\Seed\IndustryTypes.json" />
+    <None Remove="Data\Seed\Jobs-Batch1.json" />
+    <None Remove="Data\Seed\Jobs\Batch-2.json" />
+    <None Remove="Data\Seed\Jobs\TextFile1.txt" />
     <None Remove="Data\Seed\Skills.json" />
     <None Remove="Data\Seed\Universities.json" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Data\Seed\Courses.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Seed\Educations.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Data\Seed\IndustryTypes.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Seed\Jobs\Batch-2.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Seed\Jobs\Jobs-Batch1.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Seed\Jobs\Java.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Seed\Jobs\Python-AI.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Seed\Jobs\Node.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Seed\Jobs\TextFile1.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Data\Seed\Skills.json">
