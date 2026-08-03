@@ -19,27 +19,157 @@ namespace LocalHiringPlatform.Infrastructure.Data.SeedClasses
 
         public async Task SeedAsync()
         {
-            //await SeedIndustryTypesAsync();
-            //await SeedSkillsAsync();
-            //await SeedUniversitiesAsync();
-            //await SeedEmployerAsync();
-            //await SeedJobsAsync();
-            //await SeedCandidateUsersAsync();
-            //await SeedCandidateProfilesAsync();
-            //await SeedCandidateSkillsAsync();
-            //await SeedEducationsAsync();
-            //await SeedCoursesAsync();
+            await SeedIndustryTypesAsync();
+            await SeedSkillsAsync();
+            await SeedUniversitiesAsync();
+            await SeedEmployerAsync();
+            await SeedJobsAsync();
+            await SeedCandidateUsersAsync();
+            await SeedCandidateProfilesAsync();
+            await SeedCandidateSkillsAsync();
+            await SeedEducationsAsync();
+            await SeedCoursesAsync();
 
-        //    await SeedSpecializationsAsync();
-
-         //   await SeedCourseSpecializationsAsync();
-
+            await SeedSpecializationsAsync();
+            await SeedCourseSpecializationsAsync();
             await SeedCandidateEducationsAsync();
+            await SeedCandidateExperiencesAsync();
+            await SeedJobApplicationsAsync();
+        }
 
-            // Later
-            // await SeedSkillsAsync();
-            // await SeedCompaniesAsync();
-            // await SeedJobsAsync();
+        private async Task SeedJobApplicationsAsync()
+        {
+            if (await _dbContext.JobApplications.AnyAsync())
+                return;
+
+            var candidates = await _dbContext.CandidateProfiles
+                .ToListAsync();
+
+            var jobs = await _dbContext.Jobs
+                .ToListAsync();
+
+            string[] statuses =
+            {
+        "Applied",
+        "Applied",
+        "Applied",
+        "Shortlisted",
+        "Interview Scheduled",
+        "Rejected",
+        "Hired"
+    };
+
+            Random random = new();
+
+            foreach (var candidate in candidates)
+            {
+                int applicationCount = random.Next(3, 6);
+
+                var selectedJobIds = new HashSet<Guid>();
+
+                while (selectedJobIds.Count < applicationCount)
+                {
+                    selectedJobIds.Add(
+                        jobs[random.Next(jobs.Count)].EntityId);
+                }
+
+                foreach (var jobId in selectedJobIds)
+                {
+                    _dbContext.JobApplications.Add(
+                        new JobApplication
+                        {
+                            JobId = jobId,
+                            CandidateProfileId = candidate.EntityId,
+                            AppliedOn = DateTime.UtcNow.AddDays(-random.Next(1, 90)),
+                            Status = statuses[random.Next(statuses.Length)]
+                        });
+                }
+            }
+
+            await _dbContext.SaveChangesAsync();
+        }
+
+        private async Task SeedCandidateExperiencesAsync()
+        {
+            if (await _dbContext.CandidateExperiences.AnyAsync())
+                return;
+
+            var candidates = await _dbContext.CandidateProfiles.ToListAsync();
+
+            var industries = await _dbContext.IndustryTypes
+                .ToDictionaryAsync(x => x.Code);
+
+            var companies = new[]
+            {
+        new { Name = "TCS", Industry = "IT" },
+        new { Name = "Infosys", Industry = "IT" },
+        new { Name = "Wipro", Industry = "IT" },
+        new { Name = "HCL Technologies", Industry = "IT" },
+        new { Name = "Tech Mahindra", Industry = "IT" },
+        new { Name = "Accenture", Industry = "IT" },
+        new { Name = "Capgemini", Industry = "IT" },
+        new { Name = "Cognizant", Industry = "IT" },
+        new { Name = "IBM India", Industry = "IT" },
+        new { Name = "Microsoft India", Industry = "IT" }
+    };
+
+            string[] designations =
+            {
+        "Software Engineer",
+        ".NET Developer",
+        "Java Developer",
+        "Python Developer",
+        "React Developer",
+        "Full Stack Developer",
+        "Backend Developer",
+        "Frontend Developer",
+        "Senior Software Engineer",
+        "Technical Lead"
+    };
+
+            Random random = new();
+
+            foreach (var candidate in candidates)
+            {
+                int experienceYears = (int)candidate.TotalExperienceYears;
+
+                if (experienceYears <= 0)
+                    continue;
+
+                var company = companies[random.Next(companies.Length)];
+
+                int industryTypeId = industries[company.Industry].IndustryTypeId;
+
+                _dbContext.CandidateExperiences.Add(
+                    new CandidateExperience
+                    {
+                        CandidateProfileId = candidate.EntityId,
+
+                        CompanyName = company.Name,
+
+                        Designation = designations[random.Next(designations.Length)],
+
+                        IndustryTypeId = industryTypeId,
+
+                        City = candidate.City,
+
+                        State = candidate.State,
+
+                        Country = "India",
+
+                        StartDate = DateOnly.FromDateTime(
+                            DateTime.Today.AddYears(-experienceYears)),
+
+                        EndDate = null,
+
+                        IsCurrentCompany = true,
+
+                        Summary =
+                            $"{experienceYears} years of professional experience in software development."
+                    });
+            }
+
+            await _dbContext.SaveChangesAsync();
         }
 
         private async Task SeedCandidateEducationsAsync()
